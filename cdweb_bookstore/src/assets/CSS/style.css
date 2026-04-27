@@ -1,5 +1,102 @@
 @charset "UTF-8";
 
+/* Header */
+.header__menu {
+    padding: 24px 0;
+}
+
+.header__menu ul li {
+    list-style: none;
+    display: inline-block;
+    margin-right: 50px;
+    position: relative;
+}
+
+.header__menu ul li .header__menu__dropdown {
+    position: absolute;
+    left: 0;
+    top: 50px;
+    background: #222222;
+    width: 180px;
+    z-index: 9;
+    padding: 5px 0;
+    -webkit-transition: all, 0.3s;
+    -moz-transition: all, 0.3s;
+    -ms-transition: all, 0.3s;
+    -o-transition: all, 0.3s;
+    transition: all, 0.3s;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.header__menu ul li .header__menu__dropdown li {
+    margin-right: 0;
+    display: block;
+}
+
+.header__menu ul li .header__menu__dropdown li:hover>a {
+    color: red;
+}
+
+.header__menu ul li .header__menu__dropdown li a {
+    text-transform: capitalize;
+    color: #ffffff;
+    font-weight: 400;
+    padding: 5px 15px;
+}
+
+.header__menu ul li.active a {
+    color: red;
+}
+
+.header__menu ul li:hover .header__menu__dropdown {
+    top: 30px;
+    opacity: 1;
+    visibility: visible;
+}
+
+.header__menu ul li:hover>a {
+    color: red;
+}
+
+.header__menu ul li:last-child {
+    margin-right: 0;
+}
+
+.header__menu ul li a {
+    font-size: 14px;
+    color: #252525;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1px;
+    -webkit-transition: all, 0.3s;
+    -moz-transition: all, 0.3s;
+    -ms-transition: all, 0.3s;
+    -o-transition: all, 0.3s;
+    transition: all, 0.3s;
+    padding: 5px 0;
+    display: block;
+}
+.header__menu ul li .header__menu__dropdown__level2 {
+    position: absolute;
+    left: 100%;
+    top: 0;
+    background: #333333;
+    width: 180px;
+    z-index: 9;
+    padding: 5px 0;
+    transition: all 0.3s;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.header__menu ul li .header__menu__dropdown li:hover > .header__menu__dropdown__level2 {
+    top: 0;
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Root */
 :root {
     --blue: #3259ea;
     --indigo: #a200fc;
@@ -2975,7 +3072,7 @@ textarea.form-control, .widget_search textarea.search-field {
     }
 }
 
-.btn, .shop_table.cart .button, .woocommerce-MyAccount-content .button, .single-product .related.products .yith-wcwl-add-to-wishlist a, .single-product .upsells.products .yith-wcwl-add-to-wishlist a, .single_add_to_cart_button {
+.btn1, .shop_table.cart .button, .woocommerce-MyAccount-content .button, .single-product .related.products .yith-wcwl-add-to-wishlist a, .single-product .upsells.products .yith-wcwl-add-to-wishlist a, .single_add_to_cart_button {
     display: inline-block;
     font-weight: 400;
     color: #161619;
@@ -5763,17 +5860,6 @@ input[type=submit].btn-block, input[type=reset].btn-block, input[type=button].bt
     outline: none
 }
 
-.custom-range:focus::-webkit-slider-thumb {
-    box-shadow: 0 0 0 1px #fff, none
-}
-
-.custom-range:focus::-moz-range-thumb {
-    box-shadow: 0 0 0 1px #fff, none
-}
-
-.custom-range:focus::-ms-thumb {
-    box-shadow: 0 0 0 1px #fff, none
-}
 
 .custom-range::-moz-focus-outer {
     border: 0
@@ -20877,7 +20963,6 @@ a.text-red-1:hover, a.text-red-1:focus {
 }
 
 .text-hide {
-    font: 0/0 a;
     color: transparent;
     text-shadow: none;
     background-color: transparent;
@@ -29290,7 +29375,7 @@ div.wpforms-container-full .wpforms-form input[type=email]:disabled, div.wpforms
 }
 
 .site-footer_v12 .footer-top-row div.wpforms-container-full .wpforms-form .wpforms-submit-container button[type=submit] {
-    font-size: 0;
+    font-size: 15px;
     padding: .815rem 1.25rem !important;
     color: #fff;
     background-color: #161619;
@@ -29299,14 +29384,6 @@ div.wpforms-container-full .wpforms-form input[type=email]:disabled, div.wpforms
     border-bottom-right-radius: .25rem
 }
 
-.site-footer_v12 .footer-top-row div.wpforms-container-full .wpforms-form .wpforms-submit-container button[type=submit]:before {
-    content: "\f11a";
-    font-family: Flaticon;
-    font-size: 1.25rem;
-    color: #fff;
-    display: inline-block;
-    line-height: 1.7
-}
 
 .site-footer_v12 .footer-top-row div.wpforms-container-full .wpforms-form label.wpforms-error {
     position: absolute;

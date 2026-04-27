@@ -2255,7 +2255,7 @@ ol {
 
 
 /*---------------------
-  Shop Cart
+  Shop Cart.js
 -----------------------*/
 
 .shoping-cart {
@@ -3170,13 +3170,27 @@ ol {
 /*---------------------
   Map
 -----------------------*/
+.map-container {
+    display: flex;
+    justify-content: center;
+    margin: 40px 0;
+}
 
+.map-container iframe {
+    display: block;
+    margin: 0 auto;
+    width: 90%;
+}
 .map {
     height: 500px;
     position: relative;
+    align-self: center;
 }
 
 .map iframe {
+    width: 100%;
+}
+.map iframe:after {
     width: 100%;
 }
 
@@ -3212,8 +3226,8 @@ ol {
 }
 
 .map .map-inside .inside-widget:after {
-    position: absolute;
-    left: 50%;
+    position: relative;
+    /* left: 50%; */
     bottom: -30px;
     -webkit-transform: translateX(-6px);
     -ms-transform: translateX(-6px);
