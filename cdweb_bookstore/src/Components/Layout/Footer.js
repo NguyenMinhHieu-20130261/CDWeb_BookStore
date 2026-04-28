@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export const Footer = () => {
     return (
         <footer className="site-footer_v12">
@@ -14,19 +16,19 @@ export const Footer = () => {
                                         <ul id="menu-footer-widget-menu-1" className="menu">
                                             <li id="menu-item-203"
                                                 className="menu-item menu-item-type-post_type menu-item-object-page menu-item-203">
-                                                <a href="https://bookworm.madrasthemes.com/about-us/">Về chúng tôi</a>
+                                                <Link to="/aboutus">Về chúng tôi</Link>
                                             </li>
                                             <li id="menu-item-211"
                                                 className="menu-item menu-item-type-post_type menu-item-object-page menu-item-211">
-                                                <a href="https://bookworm.madrasthemes.com/contact-us/">Chính sách</a>
+                                                <Link to="/policy">Chính sách</Link>
                                             </li>
                                             <li id="menu-item-216"
                                                 className="menu-item menu-item-type-post_type menu-item-object-page menu-item-216">
-                                                <a href="https://bookworm.madrasthemes.com/blog/">Đánh dấu sách</a></li>
+                                                <Link to="/bookmark">Đánh dấu sách</Link></li>
                                             <li id="menu-item-218"
                                                 className="menu-item menu-item-type-post_type menu-item-object-page menu-item-218">
-                                                <a href="https://bookworm.madrasthemes.com/my-account/">Đăng nhập/Đăng
-                                                    ký</a>
+                                                <Link to="/login">Đăng nhập/Đăng
+                                                    ký</Link>
                                             </li>
                                         </ul>
                                     </div>
@@ -41,17 +43,17 @@ export const Footer = () => {
                                         <ul id="menu-footer-widget-menu-2" className="menu">
                                             <li id="menu-item-225"
                                                 className="menu-item menu-item-type-post_type menu-item-object-page menu-item-225">
-                                                <a href="https://bookworm.madrasthemes.com/faq/">Trung tâm trợ giúp</a>
+                                                <a href="https://bookworm.madrasthemes.com/faq/" target="_blank" rel="noopener noreferrer">Trung tâm trợ giúp</a>
                                             </li>
                                             <li id="menu-item-220"
                                                 className="menu-item menu-item-type-post_type menu-item-object-page menu-item-220">
-                                                <a href="https://bookworm.madrasthemes.com/about-us/">Trả hàng</a></li>
+                                                <a href="https://bookworm.madrasthemes.com/about-us/" target="_blank" rel="noopener noreferrer">Trả hàng</a></li>
                                             <li id="menu-item-223"
                                                 className="menu-item menu-item-type-post_type menu-item-object-page menu-item-223">
-                                                <a href="https://bookworm.madrasthemes.com/contact-us/">Liên hệ</a></li>
+                                                <Link to="/contact">Liên hệ</Link></li>
                                             <li id="menu-item-224"
                                                 className="menu-item menu-item-type-post_type menu-item-object-page menu-item-224">
-                                                <a href="https://bookworm.madrasthemes.com/shop/">Tìm cửa hàng</a></li>
+                                                <Link to="/contact">Tìm cửa hàng</Link></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -64,18 +66,18 @@ export const Footer = () => {
                                         <ul id="menu-footer-widget-menu-3" className="menu">
                                             <li id="menu-item-226"
                                                 className="menu-item menu-item-type-post_type menu-item-object-page menu-item-226">
-                                                <a href="https://bookworm.madrasthemes.com/faq/">Chính sách trả hàng</a>
+                                                <a href="https://bookworm.madrasthemes.com/faq/" target="_blank" rel="noopener noreferrer">Chính sách trả hàng</a>
                                             </li>
                                             <li id="menu-item-229"
                                                 className="menu-item menu-item-type-post_type menu-item-object-page menu-item-229">
-                                                <a href="https://bookworm.madrasthemes.com/terms-conditions/">Điều khoản
+                                                <a href="https://bookworm.madrasthemes.com/terms-conditions/" target="_blank" rel="noopener noreferrer">Điều khoản
                                                     sử dụng</a></li>
                                             <li id="menu-item-232"
                                                 className="menu-item menu-item-type-post_type menu-item-object-page menu-item-232">
-                                                <a href="https://bookworm.madrasthemes.com/checkout/">Bảo mật</a></li>
+                                                <Link to="/">Bảo mật</Link></li>
                                             <li id="menu-item-233"
                                                 className="menu-item menu-item-type-post_type menu-item-object-page menu-item-233">
-                                                <a href="https://bookworm.madrasthemes.com/about-us/">Riêng tư</a></li>
+                                                <a href="https://bookworm.madrasthemes.com/about-us/" target="_blank" rel="noopener noreferrer">Riêng tư</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -97,28 +99,28 @@ export const Footer = () => {
                                                 765 999 111</a>
                                         </div>
                                         <ul className="list-unstyled mb-0 d-flex ml-0">
-                                            <li className="btn pl-0">
-                                                <a className="link-black-100" href="#">
+                                            <li className="btn1 pl-0">
+                                                <a className="link-black-100" href="https://instagram.com" target="_blank" rel="noopener noreferrer">
                                                     <span className="fab fa-instagram"></span>
                                                 </a>
                                             </li>
-                                            <li className="btn">
-                                                <a className="link-black-100" href="#">
+                                            <li className="btn1">
+                                                <a className="link-black-100" href="https://facebook.com" target="_blank" rel="noopener noreferrer">
                                                     <span className="fab fa-facebook-f"></span>
                                                 </a>
                                             </li>
-                                            <li className="btn">
-                                                <a className="link-black-100" href="#">
+                                            <li className="btn1">
+                                                <a className="link-black-100" href="https://youtube.com" target="_blank" rel="noopener noreferrer">
                                                     <span className="fab fa-youtube"></span>
                                                 </a>
                                             </li>
-                                            <li className="btn">
-                                                <a className="link-black-100" href="#">
+                                            <li className="btn1">
+                                                <a className="link-black-100" href="https://twitter.com" target="_blank" rel="noopener noreferrer">
                                                     <span className="fab fa-twitter"></span>
                                                 </a>
                                             </li>
-                                            <li className="btn">
-                                                <a className="link-black-100" href="#">
+                                            <li className="btn1">
+                                                <a className="link-black-100" href="https://pinterest.com" target="_blank" rel="noopener noreferrer">
                                                     <span className="fab fa-pinterest"></span>
                                                 </a>
                                             </li>
@@ -157,9 +159,10 @@ export const Footer = () => {
                                                 <input type="hidden" name="wpforms[author]" value="2"/>
                                                 <input type="hidden" name="wpforms[post_id]" value="651"/>
                                                 <button type="submit" name="wpforms[submit]" id="wpforms-submit-441"
-                                                        className="wpforms-submit btn btn-primary-green text-white px-3 py-2 font-size-4 border-0"
-                                                        data-alt-text="Sending..." data-submit-text="Submit"
-                                                        aria-live="assertive" value="wpforms-submit">Submit
+                                                    className=" btn1 submit-btn btn-primary-green text-white"
+                                                    data-alt-text="Sending..." data-submit-text="Submit"
+                                                    aria-live="assertive" value="wpforms-submit">Submit
+                                                    <i className="fa-solid fa-reply"></i>
                                                 </button>
                                             </div>
                                         </form>

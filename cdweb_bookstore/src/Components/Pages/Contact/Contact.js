@@ -24,8 +24,8 @@ export const InforContact = () => {
                                 id="bwgb-e657dce">
                                 <div className="wp-block-bwgb-group bwgb-group ml-xl-4" id="bwgb-ebf02f6">
                                     <div className="wp-block-bwgb-group bwgb-group mb-4 mb-lg-7" id="bwgb-9c49078">
-                                        <h2 className="font-weight medium font-size-10 mb-4 mb-lg-7 wp-block-heading">Contact
-                                            Information</h2>
+                                        <h2 className="font-weight medium font-size-10 mb-4 mb-lg-7 wp-block-heading">
+                                            Thông tin liên hệ</h2>
                                         <p><em>We will answer any questions you may have about our online sales, rights
                                             or partnership service right here.</em></p>
                                     </div>

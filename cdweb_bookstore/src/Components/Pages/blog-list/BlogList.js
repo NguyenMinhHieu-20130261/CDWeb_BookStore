@@ -449,16 +449,16 @@ const BlogList = () => {
                     </li>
                     <li className="flex-shrink-0 flex-md-shrink-1 page-item d-none d-sm-block">
                         <a className="page-link"
-                           href="https://bookworm.madrasthemes.com/blog/style-v2/page/2/">2</a>
+                           href="">2</a>
                     </li>
                     <li className="flex-shrink-0 flex-md-shrink-1 page-item d-none d-sm-block">
                         <a className="page-link"
-                           href="https://bookworm.madrasthemes.com/blog/style-v2/page/3/">3</a>
+                           href="">3</a>
                     </li>
                 </ul>
                 <ul className="pagination pagination__custom justify-content-md-center flex-nowrap flex-md-wrap overflow-auto overflow-md-visble mb-0">
                     <li className="flex-shrink-0 flex-md-shrink-1 page-item next">
-                        <a className="page-link" href="https://bookworm.madrasthemes.com/blog/style-v2/page/2/">
+                        <a className="page-link" href="">
                             Next </a>
                     </li>
                 </ul>
