@@ -56,30 +56,32 @@ export const Header = () => {
                             </div>
                             <div className="site-branding pr-md-7 mx-md-0">
                                 <h1 className="beta site-title site-title text-uppercase font-weight-bold font-size-5 m-0 ">
-                                    <a href="" rel="home">GoldLeaf</a></h1>
+                                    <Link to="/home" rel="home">GoldLeaf</Link>
+                                </h1>
                             </div>
                             <div className="d-flex align-items-center ml-auto header-icons-links">
-                                <a id="sidebarNavToggler-my_account" href="../pages/Login.html" role="button"
-                                   aria-controls="registerLoginForm" aria-haspopup="true" aria-expanded="false"
-                                   data-unfold-event="click" data-unfold-hide-on-scroll="false"
-                                   data-unfold-target="#registerLoginForm"
-                                   data-unfold-type="css-animation" data-unfold-overlay="{
-                            &quot;className&quot;: &quot;u-sidebar-bg-overlay&quot;,
-                            &quot;background&quot;: &quot;rgba(0, 0, 0, .7)&quot;,
-                            &quot;animationSpeed&quot;: 500
-                        }" data-unfold-animation-in="fadeInRight" data-unfold-animation-out="fadeOutRight"
-                                   data-unfold-duration="500">
+                                <Link to="/login" 
+                                    id="sidebarNavToggler-my_account" role="button"
+                                    aria-controls="registerLoginForm" aria-haspopup="true" aria-expanded="false"
+                                    data-unfold-event="click" data-unfold-hide-on-scroll="false"
+                                    data-unfold-target="#registerLoginForm"
+                                    data-unfold-type="css-animation" data-unfold-overlay="{
+                                    &quot;className&quot;: &quot;u-sidebar-bg-overlay&quot;,
+                                    &quot;background&quot;: &quot;rgba(0, 0, 0, .7)&quot;,
+                                    &quot;animationSpeed&quot;: 500
+                                    }" data-unfold-animation-in="fadeInRight" data-unfold-animation-out="fadeOutRight"
+                                    data-unfold-duration="500">
                                     <div
                                         className="d-flex align-items-center text-white font-size-2 text-lh-sm position-relative">
                                         <i className="fa-solid fa-user font-size-5 text-dark"></i>
                                         <div className="ml-2 d-none d-lg-block text-dark">
-                                        <span className="text-secondary-gray-1090 font-size-1">
+                                        <span to="" className="text-secondary-gray-1090 font-size-1">
                                             Đăng nhập </span>
                                             <div>Tài khoản</div>
                                         </div>
                                     </div>
-                                </a>
-                                <a id="sidebarNavToggler-my_cart" href="../pages/Shoping-cart.html" role="button"
+                                </Link>
+                                <Link id="sidebarNavToggler-my_cart" to={"/cart"} role="button"
                                    aria-controls="offcanvasCart" aria-haspopup="true" aria-expanded="false"
                                    data-unfold-event="click" data-unfold-hide-on-scroll="false"
                                    data-unfold-target="#offcanvasCart"
@@ -109,7 +111,7 @@ export const Header = () => {
                                             </div>
                                         </div>
                                     </div>
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -121,9 +123,9 @@ export const Header = () => {
                                 <nav className="header__menu">
                                     <ul>
                                         <li><Link to={"/home"}>Trang Chủ</Link></li>
-                                        <li><a href="">Danh mục sách</a>
+                                        <li><Link to={"/productlist"}>Danh mục sách</Link>
                                             <ul className="header__menu__dropdown">
-                                                <li><a href="">Hài kịch</a>
+                                                <li><Link to="">Hài kịch</Link>
                                                     <ul className="header__menu__dropdown__level2">
                                                         <li><Link to={""}>Hài Việt</Link></li>
                                                         <li><Link to={""}>Hài Trung</Link></li>
@@ -134,7 +136,7 @@ export const Header = () => {
                                                 <li><Link to={""}>Tình cảm</Link></li>
                                             </ul>
                                         </li>
-                                        <li><Link to={"/listblogs"}>Tin Tức</Link></li>
+                                        <li><Link to={"/bloglist"}>Tin Tức</Link></li>
                                         <li><Link to={"/contact"}>Liên Hệ</Link></li>
                                     </ul>
                                 </nav>

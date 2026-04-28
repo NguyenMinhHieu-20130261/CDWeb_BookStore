@@ -1,10 +1,13 @@
 
 import {createBrowserRouter} from "react-router-dom";
-import {Home} from "../components/Pages/Home/Home";
-import BlogDetail from "../components/Pages/BlogDetail/BlogDetail";
-import BookDetail from "../components/Pages/BookDetail/BookDetail";
-import {Contact} from "../components/Pages/Contact/Contact";
-import Cart from "../components/Pages/ShoppingCart/Cart";
+import {Home} from "../components/Pages/home/Home";
+import BlogDetail from "../components/Pages/blog-detail/BlogDetail";
+import BlogList from "../components/Pages/blog-list/BlogList";
+import ProductDetail from "../components/Pages/product-detail/ProductDetail";
+import ProductList from "../components/Pages/product-list/ProductList";
+import {Contact} from "../components/Pages/contact/Contact";
+import Cart from "../components/Pages/shopping-cart/Cart";
+import Checkout from "../components/Pages/Checkout/Checkout";
 import App from "../App";
 
 export const webRouter = createBrowserRouter([{
@@ -18,14 +21,14 @@ export const webRouter = createBrowserRouter([{
             path: "home",
             element: <Home/>,
         }, {
-            path: "listbooks",
-            // element: <ListBooks/>,
+            path: "productlist",
+            element: <ProductList/>,
         }, {
-            path: "bookdetail",
-            element: <BookDetail/>,
+            path: "productdetail",
+            element: <ProductDetail/>,
         }, {
-            path: "listblogs",
-            // element: <ListBlog/>,
+            path: "bloglist",
+            element: <BlogList/>,
         }, {
             path: "blogdetail",
             element: <BlogDetail/>,
@@ -35,6 +38,18 @@ export const webRouter = createBrowserRouter([{
         }, {
             path: "cart",
             element: <Cart/>,
+        }, {
+            path: "checkout",
+            element: <Checkout/>,
+        // }, {
+        //     path: "aboutus",
+        //     element: <AboutUs/>,
+        // }, {
+        //     path: "Login",
+        //     element: <Login/>,
+        // }, {
+        //     path: "SignUp",
+        //     element: <SignUp/>,
         }
     ]
 }]);

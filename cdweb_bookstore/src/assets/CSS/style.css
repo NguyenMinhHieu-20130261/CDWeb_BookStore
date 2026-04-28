@@ -3088,7 +3088,9 @@ textarea.form-control, .widget_search textarea.search-field {
     border-radius: .25rem;
     transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out
 }
-
+.submit-btn{
+    min-height: max-content;
+}
 @media (prefers-reduced-motion: reduce) {
     .btn, .shop_table.cart .button, .woocommerce-MyAccount-content .button, .single-product .related.products .yith-wcwl-add-to-wishlist a, .single-product .upsells.products .yith-wcwl-add-to-wishlist a, .single_add_to_cart_button {
         transition: none
@@ -29381,7 +29383,11 @@ div.wpforms-container-full .wpforms-form input[type=email]:disabled, div.wpforms
     background-color: #161619;
     border-color: #161619;
     border-top-right-radius: .25rem;
-    border-bottom-right-radius: .25rem
+    border-bottom-right-radius: .25rem;
+    height: 3.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center
 }
 
 
