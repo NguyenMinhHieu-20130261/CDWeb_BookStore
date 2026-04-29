@@ -1,9 +1,9 @@
-    import {Banner} from "./Banner";
-    import {TopBook} from "./TopBook";
-    import {NewBooks} from "./NewBooks";
-    import {Advertise} from "./Advertise";
-    import {Categories} from "./Categories";
-    import {Features} from "./Features";
+    import {Banner} from "./sub-components/Banner";
+    import {TopBook} from "./sub-components/TopBook";
+    import {NewBooks} from "./sub-components/NewBooks";
+    import {Advertise} from "./sub-components/Advertise";
+    import {Categories} from "./sub-components/Categories";
+    import {Features} from "./sub-components/Features";
 
     export const Home = () => {
         return (

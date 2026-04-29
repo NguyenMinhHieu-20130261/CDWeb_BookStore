@@ -1,10 +1,9 @@
 import React from "react";
-import Pagination from "../../general/Pagination";
-import BreadCrumb from "../../general/Breadcrumb";
+import Pagination from "../../components/general/Pagination";
+import BreadCrumb from "../../components/general/Breadcrumb";
 import Sidebar from "./sub-components/Sidebar";
 import ProductGrid from "./sub-components/ProductGrid";
-import "../../../assets/css/style-produc.css"
-
+import "../../assets/css/style-produc.css"
 const ProductList = () => {
     return (
         <>
@@ -12,19 +11,20 @@ const ProductList = () => {
             <div className="site-content space-bottom-3 mt-8">
                 <div className="container">
                     <div className="row content-container">
-                        <div id="primary" className="content-area order-2">
+                        <div id="primary" className="content-area order-2 mx-2"
+                        >
                             <main id="main" className="site-main" role="main">
                                 <header className="woocommerce-products-header">
                                 </header>
                                 <div className="woocommerce-notices-wrapper"></div>
-                                <div className="position-relative mb-6">
+                                <div className="position-relative mb-3">
                                     <div
                                         className="wp-block-bwgb-products-carousel bwgb-products-carousel bookworm-recommended-block bwgb-297e8e9 bwgb-products-carousel__style-v2"
                                         id="bwgb-297e8e9">
                                         <div className="wp-block-bwgb-products-carousel__inner">
                                             <header
-                                                className="mb-5 justify-content-between align-items-center bwgb-products-carousel__block-header text-center ">
-                                                <h2 className="bwgb-products-carousel__block-title font-size-7 mb-3 mb-md-0">
+                                                className=" justify-content-between align-items-center bwgb-products-carousel__block-header text-center ">
+                                                <h2 className="bwgb-products-carousel__block-title font-size-7 mb-md-0">
                                                     Recommended Books</h2>
                                             </header>
                                             <div className="wp-block-bwgb-products-carousel__content"
@@ -36,7 +36,7 @@ const ProductList = () => {
                                 <div className="container p-0">
                                     <div
                                         className="shop-control-bar d-lg-flex justify-content-between align-items-center mb-5 text-center text-md-left">
-                                        <div className="shop-control-bar__left mb-4 m-lg-0">
+                                        <div className="shop-control-bar__left mb-3 m-lg-0">
                                             <p className="woocommerce-result-count m-0">
                                                 Showing 13&ndash;24 of 89 results </p>
                                         </div>

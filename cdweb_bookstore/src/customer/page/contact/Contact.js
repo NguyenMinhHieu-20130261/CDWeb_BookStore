@@ -1,5 +1,5 @@
-import "./../../../assets/css/style-checkout.css"
-import "./../../../assets/css/style.css"
+import "./../../assets/css/style-checkout.css"
+import "../../assets/css/style.css"
 
 
 export const Map = () => {

@@ -10,10 +10,10 @@ const Sidebar = () => {
                 {/* Categories Widget */}
                 <Category/>
                 
-                {/* Price Filter Widget */}
+                {/* Popular Books Widget */}
                 <PriceFilter/>
                 <div id="woocommerce_products-3"
-                        className="widget border p-4d875 woocommerce widget_products">
+                        className="widget border p-3d2 woocommerce widget_products">
                     <div className="widget-head" id="widgetHeading-woocommerce_products-3">
                         <a className="d-flex align-items-center justify-content-between text-dark"
                             href="#" data-toggle="collapse"

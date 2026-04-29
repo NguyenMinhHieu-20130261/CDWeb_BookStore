@@ -2,7 +2,7 @@ import React from "react";
 
 const PriceFilter = () => {
     return (
-        <div id="woocommerce_price_filter-2" className="widget border p-4d875 woocommerce widget_price_filter">
+        <div id="woocommerce_price_filter-2" className="widget border p-3d2 woocommerce widget_price_filter">
             <div className="widget-head" id="widgetHeading-woocommerce_price_filter-2">
                 <a className="d-flex align-items-center justify-content-between text-dark"
                    href="#" data-toggle="collapse"

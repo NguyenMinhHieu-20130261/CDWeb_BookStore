@@ -60,7 +60,7 @@ export const Header = () => {
                                 </h1>
                             </div>
                             <div className="d-flex align-items-center ml-auto header-icons-links">
-                                <Link to="/login" 
+                                <Link to="/sign-in" 
                                     id="sidebarNavToggler-my_account" role="button"
                                     aria-controls="registerLoginForm" aria-haspopup="true" aria-expanded="false"
                                     data-unfold-event="click" data-unfold-hide-on-scroll="false"
@@ -123,7 +123,7 @@ export const Header = () => {
                                 <nav className="header__menu">
                                     <ul>
                                         <li><Link to={"/home"}>Trang Chủ</Link></li>
-                                        <li><Link to={"/productlist"}>Danh mục sách</Link>
+                                        <li><Link to={"/product-list"}>Danh mục sách</Link>
                                             <ul className="header__menu__dropdown">
                                                 <li><Link to="">Hài kịch</Link>
                                                     <ul className="header__menu__dropdown__level2">
@@ -136,7 +136,7 @@ export const Header = () => {
                                                 <li><Link to={""}>Tình cảm</Link></li>
                                             </ul>
                                         </li>
-                                        <li><Link to={"/bloglist"}>Tin Tức</Link></li>
+                                        <li><Link to={"/blog-list"}>Tin Tức</Link></li>
                                         <li><Link to={"/contact"}>Liên Hệ</Link></li>
                                     </ul>
                                 </nav>
