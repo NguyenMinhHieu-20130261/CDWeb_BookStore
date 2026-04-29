@@ -3,7 +3,7 @@ import React from "react";
 const Category = () => {
     return (
         <div id="woocommerce_product_categories-2"
-             className="widget border p-4d875 woocommerce widget_product_categories">
+             className="widget border p-3d2 woocommerce widget_product_categories">
             <div className="widget-head" id="widgetHeading-woocommerce_product_categories-2">
                 <a className="d-flex align-items-center justify-content-between text-dark"
                    href="#" data-toggle="collapse"

@@ -1,4 +1,4 @@
-import "./../../../assets/css/style-cart.css"
+import "../../assets/css/style-cart.css"
 
 export const PageLink = () => {
     return (

@@ -2,6 +2,7 @@ import bannerImage1 from '../../../assets/img/Banner/banner1.jpg';
 import bannerImage2 from '../../../assets/img/Banner/banner2.jpg';
 import bannerImage3 from '../../../assets/img/Banner/banner3.jpg';
 import bannerImage4 from '../../../assets/img/Banner/banner4.jpg';
+
 export const Banner = () => {
     return (<div className="wp-block-bwgb-columns bwgb-columns bwgb-62e911d" id="bwgb-62e911d">
         <div className="container">

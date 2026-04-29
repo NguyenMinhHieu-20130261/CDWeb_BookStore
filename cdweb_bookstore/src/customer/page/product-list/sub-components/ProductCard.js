@@ -2,7 +2,7 @@ import React from "react";
 
 const ProductCard = ({ product }) => {
     return (
-        <li className="add-to-wishlist-after_add_to_cart product type-product post-108 status-publish first instock product_cat-cookbooks product_cat-cooking-education-reference product_cat-c has-post-thumbnail taxable shipping-taxable purchasable product-type-simple col">
+        <li className="add-to-wishlist-after_add_to_cart product product-card type-product post-108 status-publish first instock product_cat-cookbooks product_cat-cooking-education-reference product_cat-c has-post-thumbnail taxable shipping-taxable purchasable product-type-simple col">
             <div className="bookworm-product-grid">
                 <div className="product__inner overflow-hidden p-3 p-md-4d875">
                     <div className="position-relative d-block">

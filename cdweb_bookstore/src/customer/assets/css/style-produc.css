@@ -96,9 +96,11 @@
 }
 .content-container {
     display: flex;
-    align-items: center;
+    align-items: baseline;
 }
-
+.page-item.active .page-link:hover {
+    background-color: #161619 !important;
+}
 .content-container > :first-child {
     flex: 1;
 }
