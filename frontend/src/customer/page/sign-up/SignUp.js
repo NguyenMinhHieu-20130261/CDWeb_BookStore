@@ -1,7 +1,7 @@
 import React from "react";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import Breadcrumb from "../../components/general/Breadcrumb";
-import {registerUser} from "../../../store/ApiRequest";
+import {registerUser} from "../../../Store/ApiRequest";
 
 import {useDispatch} from "react-redux";
 
