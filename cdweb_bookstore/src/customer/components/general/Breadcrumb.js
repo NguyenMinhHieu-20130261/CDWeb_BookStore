@@ -5,7 +5,7 @@ const Breadcrumb = ({location}) => {
 
     const pathNameMap = {
         '/sign-in': 'Đăng nhập',
-        // '/sign-up': 'Đăng ký',
+        '/sign-up': 'Đăng ký',
         '/forgot-password': 'Quên mật khẩu',
         '/user/account': 'Thông tin tài khoản',
         // '/user/order': 'Đơn hàng của tôi',
