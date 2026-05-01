@@ -12,6 +12,7 @@ export const loginUser = async (user, dispatch, navigate) => {
     } catch (err) {
         dispatch(loginFailure());
         console.log("Login failed")
+        throw err;
     }
 }
 export const registerUser = async (user, dispatch, navigate) => {

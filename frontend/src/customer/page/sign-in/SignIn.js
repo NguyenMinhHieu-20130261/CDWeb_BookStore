@@ -11,13 +11,18 @@ const SignIn = () => {
     const location = useLocation();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const handleLogin = (e) => {
+    const [errorMessage, setErrorMessage] = React.useState("");
+    const handleLogin = async (e) => {
         e.preventDefault();
         const newUser = {
             username: username,
             password: password
         };
-        loginUser(newUser, dispatch, navigate)
+        try {
+            await loginUser(newUser, dispatch, navigate);
+        } catch (error) {
+            setErrorMessage("Tài khoản hoặc mật khẩu không đúng");
+        }
     }
     return (
         <>
@@ -50,14 +55,20 @@ const SignIn = () => {
                                                       />
                                             </div>
 
-                                            <div className="d-flex mb-5 align-items-center">
-
+                                            <div className=" mb-5 align-items-center">
+                                            {errorMessage && (
+                                                <div className="error" role="alert">
+                                                    {errorMessage}
+                                                </div>
+                                            )}
                                             <span className="ml-auto">
                                                 <Link to={"/forgot-password"}
                                                 className="forgot-pass">Quên mật khẩu</Link></span>
                                             </div>
-
-                                            <button className="button_login" style={{textAlign: "center", padding :"15px"}} onClick={handleLogin}>Đăng nhập</button>
+                                 
+                                            <button className="button_login" 
+                                            type="submit" 
+                                            style={{textAlign: "center", padding :"15px"}}>Đăng nhập</button>
 
                                             <span className="d-block text-center my-4 text-muted"> Đăng nhập với:</span>
 

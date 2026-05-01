@@ -10,7 +10,7 @@ export const Header = () => {
                     <div className="container py-3 py-md-4">
                         <div className="d-flex align-items-center position-relative flex-wrap">
                             <div className="d-none d-xl-flex align-items-center mt-3 mt-md-0 mr-md-auto">
-                                <a href="mailto:info@bookworm.com" className="mr-4 mb-4 mb-md-0">
+                                <Link to="mailto:info@bookworm.com" className="mr-4 mb-4 mb-md-0">
                                     <div className="d-flex align-items-center text-dark font-size-2 text-lh-sm">
                                         <i className="fa-regular fa-circle-question font-size-5 mt-2 mr-1"></i>
                                         <div className="ml-2">
@@ -21,8 +21,8 @@ export const Header = () => {
                                             </div>
                                         </div>
                                     </div>
-                                </a>
-                                <a href="tel:+1246-345-0695">
+                                </Link>
+                                <Link to="tel:+1246-345-0695">
                                     <div className="d-flex align-items-center text-dark font-size-2 text-lh-sm">
                                         <i className="fa-solid fa-phone font-size-5 mt-2 mr-1"></i>
                                         <div className="ml-2">
@@ -33,18 +33,13 @@ export const Header = () => {
                                             </div>
                                         </div>
                                     </div>
-                                </a>
+                                </Link>
                             </div>
                             <div className="offcanvas-toggler d-xl-none mr-4">
-                                <a id="offcanvasNavToggler" href="javascript:;" role="button"
+                                <Link id="offcanvasNavToggler" to="javascript:;" role="button"
                                    className="cat-menu text-dark" aria-controls="offcanvasNav" aria-haspopup="true"
                                    aria-expanded="false" data-unfold-event="click" data-unfold-hide-on-scroll="false"
-                                   data-unfold-target="#offcanvasNav"
-                                   data-unfold-type="css-animation" data-unfold-overlay="{
-                        &quot;className&quot;: &quot;u-sidebar-bg-overlay&quot;,
-                        &quot;background&quot;: &quot;rgba(0, 0, 0, .7)&quot;,
-                        &quot;animationSpeed&quot;: 100
-                    }" data-unfold-animation-in="fadeInLeft" data-unfold-animation-out="fadeOutLeft"
+                                   dadata-unfold-animation-in="fadeInLeft" data-unfold-animation-out="fadeOutLeft"
                                    data-unfold-duration="100">
                                     <svg width="20px" height="18px">
                                         <path fill-rule="evenodd" fill="rgb(25, 17, 11)"
@@ -54,7 +49,7 @@ export const Header = () => {
                                         <path fill-rule="evenodd" fill="rgb(25, 17, 11)"
                                               d="M-0.000,16.000 L20.000,16.000 L20.000,18.000 L-0.000,18.000 L-0.000,16.000 Z"/>
                                     </svg>
-                                </a>
+                                </Link>
                             </div>
                             <div className="site-branding pr-md-7 mx-md-0">
                                 <h1 className="beta site-title site-title text-uppercase font-weight-bold font-size-5 m-0 ">
@@ -78,7 +73,7 @@ export const Header = () => {
                                         </>
                                    ):(
                                         <>
-                                            <Link id="sidebarNavToggler-my_account" to="sign-in">
+                                            <Link id="sidebarNavToggler-my_account" to="/sign-in">
                                                 <div
                                                     className="d-flex align-items-center text-white font-size-2 text-lh-sm position-relative">
                                                     <i className="fa-solid fa-user font-size-5 text-dark"></i>
