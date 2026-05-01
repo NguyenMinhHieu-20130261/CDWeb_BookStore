@@ -1,6 +1,7 @@
 import "./../../assets/css/style-checkout.css"
 import "../../assets/css/style.css"
-
+import Breadcrumb from "../../components/general/Breadcrumb";
+import React from "react";
 
 export const Map = () => {
     return (
@@ -155,6 +156,7 @@ export const InforContact = () => {
 export const Contact = () => {
     return (
         <main id="main" className="site-main" role="main">
+            <Breadcrumb/>
             <div id="post-207" className=" article__page post-207 page type-page status-publish hentry">
                 <div className="page__header py-3 py-lg-7 ">
                     <h6 className="font-weight-medium font-size-7 text-center my-1">Contact Us</h6>
