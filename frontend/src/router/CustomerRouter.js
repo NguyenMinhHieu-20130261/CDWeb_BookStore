@@ -9,6 +9,7 @@ import Checkout from "../customer/page/checkout/Checkout";
 import ProductDetail from "../customer/page/product-detail/ProductDetail";
 import SignIn from "../customer/page/sign-in/SignIn";
 import SignUp from "../customer/page/sign-up/SignUp";
+import NotFound from "../customer/page/not-found/NotFound";
 
 import {Header} from "../customer/components/layout/Header";
 import {Footer} from "../customer/components/layout/Footer";

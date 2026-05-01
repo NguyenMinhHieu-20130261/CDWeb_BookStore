@@ -4,7 +4,7 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
 import store from "../src/Store/Store";
-import webRouter from "./router/CustomerRouter";
+// import webRouter from "./router/CustomerRouter";
 import {Provider} from "react-redux";
 import App from "./App";
 
