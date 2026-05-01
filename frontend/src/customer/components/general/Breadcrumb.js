@@ -15,7 +15,7 @@ const Breadcrumb = () => {
         '/cart': 'Giỏ hàng',
         // '/user/order': 'Đơn hàng của tôi',
         // '/user/wishlist': 'Sản phẩm yêu thích',
-        '/checkout': 'Thanh toán',
+        '/check-out': 'Thanh toán',
         '/product-list': 'Tất cả sản phẩm',
     };
 
