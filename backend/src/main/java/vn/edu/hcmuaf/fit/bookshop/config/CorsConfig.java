@@ -1,4 +1,4 @@
-package vn.edu.hcmuaf.fit.bookshop.backend;
+package vn.edu.hcmuaf.fit.bookshop.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
