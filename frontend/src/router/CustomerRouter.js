@@ -10,6 +10,7 @@ import ProductDetail from "../customer/page/product-detail/ProductDetail";
 import SignIn from "../customer/page/sign-in/SignIn";
 import SignUp from "../customer/page/sign-up/SignUp";
 import NotFound from "../customer/page/not-found/NotFound";
+import ForgotPassword from "../customer/page/forgot-password/ForgotPassword";
 
 import {Header} from "../customer/components/layout/Header";
 import {Footer} from "../customer/components/layout/Footer";
@@ -23,6 +24,7 @@ const CustomerRouter = () => {
                 <Route path="/home" element={<Home/>}/>
                 <Route path="/sign-in" element={<SignIn/>}/>
                 <Route path="/sign-up" element={<SignUp/>}/>
+                <Route path="/forgot-password" element={<ForgotPassword/>}/>
                 <Route path="/product-list" element={<ProductList/>}/>
                 <Route path="/product-detail" element={<ProductDetail/>}/>
                 <Route path="/blog-list" element={<BlogList/>}/>
