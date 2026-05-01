@@ -36,14 +36,18 @@ const SignIn = () => {
                                             <div className="form-group first">
                                                 <p> Tên đăng nhập</p>
                                                 <input type="text" className="form-control" id="username"
-                                                       name="username" required
-                                                       onChange={(e) => setUsername(e.target.value)}/>
+                                                        name="username" required
+                                                        onChange={(e) => setUsername(e.target.value)}
+                                                        style ={{padding: "2px 10px"}}
+                                                       />
                                             </div>
                                             <div className="form-group last mb-4">
                                                 <p>Mật khẩu</p>
                                                 <input type="password" className="form-control" id="password"
                                                        name="password" required
-                                                       onChange={(e) => setPassword(e.target.value)}/>
+                                                       onChange={(e) => setPassword(e.target.value)}
+                                                       style ={{padding: "2px 10px"}}
+                                                      />
                                             </div>
 
                                             <div className="d-flex mb-5 align-items-center">
@@ -52,9 +56,9 @@ const SignIn = () => {
                                                 <Link to={"/forgot-password"}
                                                 className="forgot-pass">Quên mật khẩu</Link></span>
                                             </div>
-                                            <button className="button_login" style={{textDecoration: "none"}} onClick={handleLogin}>
-                                                <p> Đăng nhập</p>
-                                            </button>
+
+                                            <button className="button_login" style={{textAlign: "center", padding :"15px"}} onClick={handleLogin}>Đăng nhập</button>
+
                                             <span className="d-block text-center my-4 text-muted"> Đăng nhập với:</span>
 
                                             <div className="social-login text-center">

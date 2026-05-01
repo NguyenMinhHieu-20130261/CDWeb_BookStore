@@ -1,6 +1,8 @@
 import {Link} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 export const Header = () => {
+    const user = useSelector(state => state.auth.login.currentUser);
     return (
         <header id="site-header" className="site-header site-header__v12 mb-7 pb-1">
             <div className="masthead">
@@ -60,58 +62,35 @@ export const Header = () => {
                                 </h1>
                             </div>
                             <div className="d-flex align-items-center ml-auto header-icons-links">
-                                <Link to="/sign-in" 
-                                    id="sidebarNavToggler-my_account" role="button"
-                                    aria-controls="registerLoginForm" aria-haspopup="true" aria-expanded="false"
-                                    data-unfold-event="click" data-unfold-hide-on-scroll="false"
-                                    data-unfold-target="#registerLoginForm"
-                                    data-unfold-type="css-animation" data-unfold-overlay="{
-                                    &quot;className&quot;: &quot;u-sidebar-bg-overlay&quot;,
-                                    &quot;background&quot;: &quot;rgba(0, 0, 0, .7)&quot;,
-                                    &quot;animationSpeed&quot;: 500
-                                    }" data-unfold-animation-in="fadeInRight" data-unfold-animation-out="fadeOutRight"
-                                    data-unfold-duration="500">
-                                    <div
-                                        className="d-flex align-items-center text-white font-size-2 text-lh-sm position-relative">
-                                        <i className="fa-solid fa-user font-size-5 text-dark"></i>
-                                        <div className="ml-2 d-none d-lg-block text-dark">
-                                        <span to="" className="text-secondary-gray-1090 font-size-1">
-                                            Đăng nhập </span>
-                                            <div>Tài khoản</div>
-                                        </div>
-                                    </div>
-                                </Link>
-                                <Link id="sidebarNavToggler-my_cart" to={"/cart"} role="button"
-                                   aria-controls="offcanvasCart" aria-haspopup="true" aria-expanded="false"
-                                   data-unfold-event="click" data-unfold-hide-on-scroll="false"
-                                   data-unfold-target="#offcanvasCart"
-                                   data-unfold-type="css-animation" data-unfold-overlay="{
-                            &quot;className&quot;: &quot;u-sidebar-bg-overlay&quot;,
-                            &quot;background&quot;: &quot;rgba(0, 0, 0, .7)&quot;,
-                            &quot;animationSpeed&quot;: 500
-                        }" data-unfold-animation-in="fadeInRight" data-unfold-animation-out="fadeOutRight"
-                                   data-unfold-duration="500" className="d-block nav-link text-dark ml-4">
-                                    <div
-                                        className="d-flex align-items-center text-white font-size-2 text-lh-sm position-relative">
-                                    <span
-                                        className="position-absolute width-16 height-16 rounded-circle d-flex align-items-center justify-content-center font-size-n9 left-0 top-0 ml-n2 mt-n1 text-white bg-dark">
-                                        <span className="cart-contents-count">
-                                            0
-                                        </span> </span>
-                                        <Link to={"/cart"}>
-                                        <i className="fa-solid fa-cart-shopping font-size-5 text-dark"></i>
-                                        </Link>
-                                        <div className="ml-2 d-none d-lg-block text-dark">
-                                        <span className="text-secondary-gray-1090 font-size-1">
-                                            Giỏ hàng </span>
-                                            <div><span className="cart-contents-total">
-                                                <span className="woocommerce-Price-amount amount"><span
-                                                    className="woocommerce-Price-currencySymbol">&#036;</span>0.00</span>
-                                            </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </Link>
+                                {user?(
+                                        <>
+                                            <Link id="sidebarNavToggler-my_account">
+                                                <div
+                                                    className="d-flex align-items-center text-white font-size-2 text-lh-sm position-relative">
+                                                    <i className="fa-solid fa-user font-size-5 text-dark"></i>
+                                                    <div className="ml-2 d-none d-lg-block text-dark">
+                                            <span className="text-secondary-gray-1090 font-size-1">
+                                                Xin chào </span>
+                                                        <div>{user.username}</div>
+                                                    </div>
+                                                </div>
+                                            </Link>
+                                        </>
+                                   ):(
+                                        <>
+                                            <Link id="sidebarNavToggler-my_account" to="sign-in">
+                                                <div
+                                                    className="d-flex align-items-center text-white font-size-2 text-lh-sm position-relative">
+                                                    <i className="fa-solid fa-user font-size-5 text-dark"></i>
+                                                    <div className="ml-2 d-none d-lg-block text-dark">
+                                            <span className="text-secondary-gray-1090 font-size-1">
+                                                Đăng nhập </span>
+                                                        <div>Tài khoản</div>
+                                                    </div>
+                                                </div>
+                                            </Link>
+                                        </>
+                                    )}
                             </div>
                         </div>
                     </div>

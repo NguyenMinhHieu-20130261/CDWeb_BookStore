@@ -8,6 +8,7 @@ import vn.edu.hcmuaf.fit.bookshop.entity.User;
 import vn.edu.hcmuaf.fit.bookshop.entity.Role;
 import vn.edu.hcmuaf.fit.bookshop.repository.UserRepository;
 import vn.edu.hcmuaf.fit.bookshop.repository.RoleRepository;
+// import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -18,7 +19,9 @@ public class ShopController {
 
     @Autowired
     private RoleRepository roleRepository;
-
+    
+    // private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(); 
+    
     // LOGIN
     @PostMapping("/signin")
     public ResponseEntity<?> login(@RequestBody Map<String, String> req) {
@@ -29,7 +32,8 @@ public class ShopController {
         User user = userRepository.findByUsername(username)
                 .orElse(null);
 
-        if (user == null || !user.getPassword().equals(password)) {
+        // if (user == null || !encoder.matches(password, user.getPassword())) {
+        if (user == null || !password.equals(user.getPassword())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body("Sai username hoặc password");
         }
@@ -58,10 +62,10 @@ public class ShopController {
                     .body("Username đã tồn tại");
         }
 
-        // if (userRepository.findByEmail(email).isPresent()) {
-        //     return ResponseEntity.status(HttpStatus.CONFLICT)
-        //             .body("Email đã được sử dụng");
-        // }
+        if (userRepository.findByEmail(email).isPresent()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("Email đã được sử dụng");
+        }
 
         Role role = roleRepository.findByName("USER")
             .orElseThrow(() -> new RuntimeException("Role USER không tồn tại"));
