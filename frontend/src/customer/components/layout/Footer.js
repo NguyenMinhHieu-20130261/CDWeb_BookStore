@@ -9,7 +9,8 @@ export const Footer = () => {
                         <div className="row footer-top-row">
                             <div className="col-md-4 col-lg-2 mb-5 mb-lg-0">
                                 <div id="nav_menu-2" className="widget widget_nav_menu mb-6 mb-lg-8">
-                                    <h4 className="widget-title font-size-3 font-weight-medium mb-2 mb-xl-5 pb-xl-1">Khám
+                                    <h4 className="widget-title font-size-3 font-weight-medium mb-2 mb-xl-5 pb-xl-1">
+                                        Khám
                                         phá
                                     </h4>
                                     <div className="menu-footer-widget-menu-1-container">
