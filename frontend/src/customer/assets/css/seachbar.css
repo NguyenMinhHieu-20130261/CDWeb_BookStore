@@ -1,0 +1,367 @@
+/* Base styles */
+.input-wrapper {
+    display: flex;
+    background-color: white;
+    width: 40%;
+    border-radius: 10px;
+    height: 2.5rem;
+    padding: 0 15px;
+    box-shadow: 0 0 8px #dddddd;
+    align-items: center;
+    margin-left: 240px;
+}
+.input-wrapper-sidebar{
+    display: flex;
+    background-color: white;
+    border-radius: 10px;
+    height: 2.5rem;
+    padding: 0 15px;
+    box-shadow: 0 0 8px #dddddd;
+    align-items: center;
+    width: 90%;
+    margin: 10px 0 10px 10px;
+}
+
+.searchInput {
+    background-color: transparent;
+    border: none;
+    font-size: 1.1rem;
+    width: 100%;
+    margin-left: 5px;
+    height: 100%;
+}
+
+.searchInput:focus {
+    outline: none;
+}
+
+#search-icon {
+    color: royalblue;
+}
+
+.search-results {
+    position: absolute;
+    top: 65%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 8px #dddddd;
+    border-radius: 5px;
+    margin-top: 1rem;
+    max-height: 300px;
+    overflow: auto;
+    z-index: 999;
+}
+.search-results-sidebar{
+    position: relative;
+    top: 65%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 8px #dddddd;
+    border-radius: 5px;
+    max-height: 300px;
+    overflow: auto;
+    z-index: 999;
+}
+.result-sidebar.result-notfound-sidebar{
+    font-size: 14px;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    color: black;
+    display: flex;
+    align-items: center;
+    z-index: 999;
+}
+.result,
+.result-notfound {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    color: black;
+    display: flex;
+    align-items: center;
+}
+.result-sidebar p{
+    font-size: 14px;
+}
+
+.result:hover {
+    background-color: #efefef;
+}
+
+.result:last-child {
+    border-bottom: none;
+}
+
+.result a {
+    color: #333;
+    text-decoration: none;
+}
+
+.result a:hover {
+    text-decoration: underline;
+}
+
+.imageSearch {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin: 0 10px;
+    z-index: 999;
+}
+
+.header-icons-links{
+    margin-left: auto;
+}
+
+.left-sidebar{
+    display: none;
+}
+.responsive-user{
+    display: none;
+}
+.sidebarNav-my_cart{
+    margin-left: 1rem;
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 1200px) {
+    .input-wrapper {
+        width: 50%;
+        margin: auto;
+        display: flex;
+    }
+    .site-branding{
+        margin: auto;
+    }
+    .site-branding h1{
+        font-size: 20px;
+    }
+    .search-results {
+        width: 50%;
+    }
+    .responsive-user{
+        display: flex;
+    }
+    .normal-user{
+        display: none;
+    }
+}
+@media (max-width: 768px) {
+    #site-header{
+        display: block;
+        width: 100%;
+    }
+    .input-wrapper {
+        display: none;
+    }
+    .site-branding h1{
+        font-size: 20px;
+        margin: auto;
+        z-index: 999;
+    }
+
+    .searchInput {
+        font-size: 1rem;
+    }
+
+    .search-results {
+        width: 100%;
+    }
+
+    .result,
+    .result-notfound {
+        padding: 8px;
+    }
+
+    .imageSearch {
+        width: 40px;
+        height: 40px;
+    }
+
+    .site-title {
+        width: 100%;
+        text-align: center;
+    }
+    .left-sidebar{
+        display: flex;
+    }
+    .left-sidebar-icon{
+        font-size: 25px;
+    }
+    .responsive-user{
+        display: flex;
+    }
+    .normal-user{
+        display: none;
+    }
+    .header-icons-links{
+        margin: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .input-wrapper {
+        display: none;
+    }
+
+    .searchInput {
+        font-size: 0.9rem;
+    }
+
+    .search-results {
+        width: 100%;
+    }
+
+    .result,
+    .result-notfound {
+        padding: 6px;
+    }
+
+    .imageSearch {
+        width: 30px;
+        height: 30px;
+    }
+
+    .site-title {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* Styles for responsive menu */
+.menu-icon {
+    display: none;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.menu-icon div {
+    width: 100%;
+    height: 3px;
+    background-color: black;
+    margin: 6px 0;
+}
+
+@media (max-width: 768px) {
+    .header__menu {
+        display: none;
+        flex-direction: column;
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 200px;
+        background-color: white;
+        box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+        z-index: 1000;
+        padding-top: 20px;
+    }
+
+    .header__menu ul {
+        flex-direction: column;
+    }
+
+    .header__menu ul li {
+        margin: 10px 0;
+    }
+
+    .header__menu--open {
+        display: flex;
+    }
+
+    .menu-icon {
+        display: block;
+        position: absolute;
+        top: 15px;
+        left: 15px;
+    }
+}
+
+/*SideBar*/
+/* Sidebar.css */
+.show-left-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding-top: 60px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 998;
+}
+
+.show-left-sidebar.open {
+    transform: translateX(0);
+}
+
+/* Sidebar Links */
+.show-left-sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.show-left-sidebar ul li {
+    padding: 15px;
+    border-bottom: 1px solid #444;
+}
+
+.show-left-sidebar ul li a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s ease;
+}
+
+.show-left-sidebar ul li a:hover {
+    background-color: #575757;
+}
+
+/* Submenu */
+.left-sidebar-menu-dropdown {
+    display: none;
+    background-color: #444;
+}
+
+.left-sidebar-menu-dropdown.show {
+    display: block;
+}
+
+.left-sidebar-menu-dropdown li {
+    padding: 10px 30px;
+    border-bottom: 1px solid #555;
+}
+
+/* Close Button */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #444;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.close-btn:hover {
+    background-color: #575757;
+}
+
+/* Active Submenu */
+.show-left-sidebar ul li span {
+    cursor: pointer;
+    display: block;
+}
