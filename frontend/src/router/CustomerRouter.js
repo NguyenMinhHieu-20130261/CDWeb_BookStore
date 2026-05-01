@@ -29,7 +29,7 @@ const CustomerRouter = () => {
                 <Route path="/contact" element={<Contact/>}/>
                 <Route path="/cart" element={<Cart/>}/>
                 <Route path="/checkout" element={<Checkout/>}/>
-                {/* <Route path="/not-found" element={<NotFound/>}/> */}
+                <Route path="/not-found" element={<NotFound/>}/>
             </Routes>
             <Footer/>
         </div>
