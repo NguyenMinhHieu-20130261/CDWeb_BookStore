@@ -2,6 +2,7 @@ package vn.edu.hcmuaf.fit.bookshop.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "users")
@@ -27,5 +28,13 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
- 
+
+    @Column(name = "created_at")
+    private Date createdAt;
+
+    @Column(name = "updated_at")
+    private Date updatedAt;
+
+    @Column(name = "is_locked")
+    private Boolean isLocked;
 }

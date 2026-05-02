@@ -3,18 +3,19 @@ package vn.edu.hcmuaf.fit.bookshop.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Entity
-@Table(name = "roles")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
+@Entity
+@Table(name = "roles")
 public class Role {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, unique = true)
-    private String name;
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
+    private EnumRole description;
 }
