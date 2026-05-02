@@ -1,0 +1,236 @@
+[33mcommit 9713c80eacbf0d15a9a755f549b24b0c51230c1b[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mNguyenMinhHieu[m[33m)[m
+Merge: 2ddc1dd 16e792a
+Author: Nguyễn Minh Hiếu-20130261 <116085957+NguyenMinhHieu-20130261@users.noreply.github.com>
+Date:   Sun May 3 00:14:09 2026 +0700
+
+    Merge pull request #25 from NguyenMinhHieu-20130261/main
+    
+    pull code
+
+[33mcommit 16e792a5bb120f879eb0c85164c196a36fa8bded[m
+Merge: 13820b3 f6096a7
+Author: TranHungKhanhTam <162553467+TranHungKhanhTam@users.noreply.github.com>
+Date:   Sun May 3 00:11:17 2026 +0700
+
+    Merge pull request #24 from NguyenMinhHieu-20130261/khanhtam
+    
+    my orders customer fe
+
+[33mcommit f6096a7a394c9d195d00708bf615c6cb747df10c[m
+Author: TranHungKhanhTam <21130527@st.hcmuaf.edu.vn>
+Date:   Sun May 3 00:09:24 2026 +0700
+
+    my orders customer fe
+
+[33mcommit 13820b32b98c16e3e64c60f432c4301e66dcc75f[m
+Merge: 2272ace 61bd86c
+Author: TranHungKhanhTam <162553467+TranHungKhanhTam@users.noreply.github.com>
+Date:   Sun May 3 00:07:24 2026 +0700
+
+    Merge pull request #23 from NguyenMinhHieu-20130261/khanhtam
+    
+    my account customer fe
+
+[33mcommit 61bd86c5617ff59137ea04231c4f155797a79956[m
+Author: TranHungKhanhTam <21130527@st.hcmuaf.edu.vn>
+Date:   Sun May 3 00:06:35 2026 +0700
+
+    my account customer fe
+
+[33mcommit 2272acef917457d679f7e15cf5f70072478822d4[m
+Merge: 302df5e 8007687
+Author: TranHungKhanhTam <162553467+TranHungKhanhTam@users.noreply.github.com>
+Date:   Sun May 3 00:04:46 2026 +0700
+
+    Merge pull request #22 from NguyenMinhHieu-20130261/khanhtam
+    
+    home customer fe
+
+[33mcommit 80076872b23c3e64d44251a1fb0190a1f4889507[m
+Author: TranHungKhanhTam <21130527@st.hcmuaf.edu.vn>
+Date:   Sun May 3 00:03:27 2026 +0700
+
+    home customer fe
+
+[33mcommit 302df5e87c1ecd374a71446d5b94a8e0d2055ec4[m
+Merge: 8d0d286 b059200
+Author: TranHungKhanhTam <162553467+TranHungKhanhTam@users.noreply.github.com>
+Date:   Sat May 2 23:59:34 2026 +0700
+
+    Merge pull request #21 from NguyenMinhHieu-20130261/khanhtam
+    
+    blog list customer fe
+
+[33mcommit b059200c333b1f86c763e831506d6fe07c802964[m
+Author: TranHungKhanhTam <21130527@st.hcmuaf.edu.vn>
+Date:   Sat May 2 23:58:32 2026 +0700
+
+    blog list customer fe
+
+[33mcommit 8d0d286221bd3c2cda224d645f9cc9668fc109e7[m
+Merge: 9f0e8ce 8674880
+Author: TranHungKhanhTam <162553467+TranHungKhanhTam@users.noreply.github.com>
+Date:   Sat May 2 23:55:15 2026 +0700
+
+    Merge pull request #20 from NguyenMinhHieu-20130261/khanhtam
+    
+    general components customer fe
+
+[33mcommit 86748802c5ca6fda49a50c3009de8a4465679ea3[m
+Author: TranHungKhanhTam <21130527@st.hcmuaf.edu.vn>
+Date:   Sat May 2 23:53:40 2026 +0700
+
+    general components customer fe
+
+[33mcommit 9f0e8ced1ca11fc9b318b1e46f9e061bad6c0930[m
+Merge: 66d26ee 4633e97
+Author: TranHungKhanhTam <162553467+TranHungKhanhTam@users.noreply.github.com>
+Date:   Sat May 2 23:49:32 2026 +0700
+
+    Merge pull request #19 from NguyenMinhHieu-20130261/khanhtam
+    
+    img customer
+
+[33mcommit 4633e97d6505546adce20862c888979e36b4edd3[m
+Author: TranHungKhanhTam <21130527@st.hcmuaf.edu.vn>
+Date:   Sat May 2 23:48:23 2026 +0700
+
+    img customer
+
+[33mcommit 66d26ee5d29cc0da4d087c288d4f40b70120c5c5[m
+Merge: 2ddc1dd 2393713
+Author: TranHungKhanhTam <162553467+TranHungKhanhTam@users.noreply.github.com>
+Date:   Sat May 2 23:45:52 2026 +0700
+
+    Merge pull request #18 from NguyenMinhHieu-20130261/khanhtam
+    
+    css customer fe update
+
+[33mcommit 2393713a96e1924706865ae585135581dd1d7ac5[m
+Author: TranHungKhanhTam <21130527@st.hcmuaf.edu.vn>
+Date:   Sat May 2 23:44:38 2026 +0700
+
+    css customer fe update
+
+[33mcommit 2ddc1ddffae3158aca115f75eec7ec404b6cd7a2[m
+Merge: 1ee58f7 239f514
+Author: Nguyễn Minh Hiếu-20130261 <116085957+NguyenMinhHieu-20130261@users.noreply.github.com>
+Date:   Sat May 2 21:53:31 2026 +0700
+
+    Merge pull request #17 from NguyenMinhHieu-20130261/NguyenMinhHieu
+    
+    Merge pull request #16 from NguyenMinhHieu-20130261/main
+
+[33mcommit 239f514f0f63f026d4f9ad23be244c90f6f3e97f[m
+Merge: 62286f3 1ee58f7
+Author: Nguyễn Minh Hiếu-20130261 <116085957+NguyenMinhHieu-20130261@users.noreply.github.com>
+Date:   Sat May 2 21:53:16 2026 +0700
+
+    Merge pull request #16 from NguyenMinhHieu-20130261/main
+    
+    fix
+
+[33mcommit 1ee58f7b2d3699d7d9bea4c78d41ced924123c9e[m
+Merge: 0ac666f 2c63604
+Author: Nguyễn Minh Hiếu-20130261 <116085957+NguyenMinhHieu-20130261@users.noreply.github.com>
+Date:   Sat May 2 21:52:43 2026 +0700
+
+    Merge pull request #15 from NguyenMinhHieu-20130261/khanhtam
+    
+    Merge pull request #14 from NguyenMinhHieu-20130261/main
+
+[33mcommit 2c636040a74eda031e6d5e1293f657a2cabd9516[m
+Merge: 2023260 0ac666f
+Author: Nguyễn Minh Hiếu-20130261 <116085957+NguyenMinhHieu-20130261@users.noreply.github.com>
+Date:   Sat May 2 21:52:23 2026 +0700
+
+    Merge pull request #14 from NguyenMinhHieu-20130261/main
+    
+     chỉnh lại branch
+
+[33mcommit 0ac666f2e909c11051b975464a954516e5d47797[m
+Merge: 8f16bd8 62286f3
+Author: Nguyễn Minh Hiếu-20130261 <116085957+NguyenMinhHieu-20130261@users.noreply.github.com>
+Date:   Sat May 2 02:52:55 2026 -1000
+
+    Merge pull request #13 from NguyenMinhHieu-20130261/NguyenMinhHieu
+    
+    chỉnh lại chức năng login,register (thêm encoder)
+
+[33mcommit 62286f3c253b0fb93f4a4e54e47b33f3c6f712fd[m
+Author: Nguyen Minh Hieu <20130261@st.hcmuaf.edu.vn>
+Date:   Fri May 1 19:53:07 2026 -1000
+
+    chỉnh lại chức năng login,register (thêm encoder)
+
+[33mcommit 8f16bd80471ed85073fb3ebb47c87e7dba76d7de[m
+Merge: e988ac5 90dd3e4
+Author: Nguyễn Minh Hiếu-20130261 <116085957+NguyenMinhHieu-20130261@users.noreply.github.com>
+Date:   Fri May 1 07:48:29 2026 -1000
+
+    Merge pull request #12 from NguyenMinhHieu-20130261/NguyenMinhHieu
+    
+    Nguyen minh hieu
+
+[33mcommit e988ac5c67fa9ccf8596388e19b0d1ff1d32b48d[m
+Merge: 1d8ab10 7ab7cee
+Author: Nguyễn Minh Hiếu-20130261 <116085957+NguyenMinhHieu-20130261@users.noreply.github.com>
+Date:   Fri May 1 06:43:51 2026 -1000
+
+    Merge pull request #11 from NguyenMinhHieu-20130261/NguyenMinhHieu
+    
+    tạo trang notfound, thêm cảnh báo lỗi khi user đăng nhập sai
+
+[33mcommit 1d8ab10464440155a3af31ce1003b72cf7cd463b[m
+Merge: ebd7703 bf5060c
+Author: Nguyễn Minh Hiếu-20130261 <116085957+NguyenMinhHieu-20130261@users.noreply.github.com>
+Date:   Fri May 1 04:44:07 2026 -1000
+
+    Merge pull request #10 from NguyenMinhHieu-20130261/NguyenMinhHieu
+    
+    chỉnh navbar trên header hiển thị tên user khi đã đăng nhập
+
+[33mcommit ebd7703594a12f77959177e6df36d37e54b28219[m
+Merge: 003855f 8faa791
+Author: Nguyễn Minh Hiếu-20130261 <116085957+NguyenMinhHieu-20130261@users.noreply.github.com>
+Date:   Fri May 1 03:13:55 2026 -1000
+
+    Merge pull request #9 from NguyenMinhHieu-20130261/NguyenMinhHieu
+    
+    thêm db, repo, entity cho backend, chỉnh lại chức năng sign-in và thê…
+
+[33mcommit 90dd3e46ec2f978c64fd8290d106990645630b88[m
+Author: Nguyen Minh Hieu <20130261@st.hcmuaf.edu.vn>
+Date:   Fri May 1 00:50:13 2026 -1000
+
+    chia components blog detail và checkout
+
+[33mcommit e9284434ecc73828ac97cefe6d57fa0f8099d1d5[m
+Author: Nguyen Minh Hieu <20130261@st.hcmuaf.edu.vn>
+Date:   Fri May 1 00:16:25 2026 -1000
+
+    chia components blog-list
+
+[33mcommit 7ab7ceeb5ecde9c3d351ce9f3ce994a4cf38c472[m
+Author: Nguyen Minh Hieu <20130261@st.hcmuaf.edu.vn>
+Date:   Thu Apr 30 23:45:35 2026 -1000
+
+    tạo trang notfound, thêm cảnh báo lỗi khi user đăng nhập sai
+
+[33mcommit bf5060c38f69bef545b25b419df94b9eb78da8a9[m
+Author: Nguyen Minh Hieu <20130261@st.hcmuaf.edu.vn>
+Date:   Thu Apr 30 21:45:35 2026 -1000
+
+    chỉnh navbar trên header hiển thị tên user khi đã đăng nhập
+
+[33mcommit 003855fc7ceaa35b19f76d6448575269bb46f668[m
+Merge: f39f6bd 057afec
+Author: Nguyễn Minh Hiếu-20130261 <116085957+NguyenMinhHieu-20130261@users.noreply.github.com>
+Date:   Thu Apr 30 20:39:10 2026 -1000
+
+    Merge pull request #8 from NguyenMinhHieu-20130261/NguyenMinhHieu
+    
+    chỉnh config và thêm controller đăng nhập
+
+[33mcommit f39f6bd10f4b9a0b25c4de323a9115e0690b256f[m
+Merge
