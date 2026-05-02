@@ -63,7 +63,7 @@ table td, table th {
 
 .lgdBsd .group-input button {
     display: flex;
-    padding: 6px;
+    padding: 10px;
     -webkit-box-pack: center;
     justify-content: center;
     -webkit-box-align: center;
@@ -85,4 +85,27 @@ table td, table th {
 .lgdBsd .group-input input {
     width: 40px;
     margin: 0px 4px;
+}
+
+.image-gallery-thumbnail.active, .image-gallery-thumbnail:focus, .image-gallery-thumbnail:hover {
+    outline: none;
+    border: 2px solid #dee2e6 !important;
+}
+
+.image-gallery-thumbnail-image, .image-gallery-image {
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+}
+
+.add-wishlist-button a {
+    color: #161619;
+    font-size: 17px;
+}
+
+.add-wishlist-button a:hover {
+    color: #f75454;
+}
+
+.react-multi-carousel-list {
+    padding: 10px 0 10px 0;
 }

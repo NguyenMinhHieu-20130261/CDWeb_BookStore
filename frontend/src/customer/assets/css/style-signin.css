@@ -8,16 +8,11 @@
 .content {
     display: flex;
     align-items: center;
-    height: 800px;
+    /*height: 800px;*/
 }
 p {
     color: #b3b3b3;
     font-weight: 300; }
-
-h1, h2, h3, h4, h5, h6,
-.h1, .h2, .h3, .h4, .h5, .h6 {
-    font-family: "Roboto", sans-serif; }
-
 a {
     -webkit-transition: .3s all ease;
     -o-transition: .3s all ease;
@@ -85,10 +80,6 @@ h2 {
     -webkit-box-shadow: none;
     box-shadow: none; }
 
-/* .content .bg {
-  background-size: cover;
-  background-position: center; } */
-
 .content a {
     color: #888;
     text-decoration: underline; }
@@ -116,7 +107,7 @@ h2 {
     height: 50px;
     border-radius: 50%;
     display: inline-block;
-    margin-right: 5px;
+    margin-right: 10px;
 }
 .social-login a span {
     position: absolute;
@@ -257,25 +248,8 @@ h2 {
 }
 
 p {
-    margin: 0px;
+    margin: 0 !important;
     font-size: 16px;
     color: #555;
     display: block;
-}
-
-.inline-text {
-  display: inline-block;
-  border-bottom: 1px solid #ccc;
-  line-height: 1;
-  padding-bottom: 5px;
-  margin: 0;
-}
-.error {
-  color: #fff;
-  background-color: #e74c3c;
-  padding: 10px 12px;
-  border-radius: 4px;
-  font-size: 14px;
-  display: inline-block;
-  width: 100%;
 }
