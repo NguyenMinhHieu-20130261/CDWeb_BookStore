@@ -1,46 +1,39 @@
 import React from "react";
 
-const Pagination = () => {
+const Pagination = ({currentPage, totalPages, onPageChange}) => {
+    const pageNumbers = [];
+    for (let i = 1; i <= totalPages; i++) {
+        pageNumbers.push(i)
+    }
     return (
         <nav className="woocommerce-pagination" aria-label="Shop Page navigation">
             <ul className="pagination pagination__custom justify-content-md-center flex-nowrap flex-md-wrap overflow-auto overflow-md-visble">
-                <li className="flex-shrink-0 flex-md-shrink-1 page-item">
-                    <a className="prev page-link" href="https://bookworm.madrasthemes.com/shop/style-v3/page/1/">
-                        Previous
-                    </a>
+                <li className="flex-shrink-0 flex-md-shrink-1 page-item" title="Previous">
+                    {currentPage > 0 ? (<button
+                        className="prev page-link"
+                        onClick={() => onPageChange(currentPage - 1)}
+                    >
+                        <i className="fa-solid fa-chevron-left"></i>
+                    </button>) : (<></>)}
                 </li>
-                <li className="flex-shrink-0 flex-md-shrink-1 page-item">
-                    <a className="page-link" href="https://bookworm.madrasthemes.com/shop/style-v3/page/1/">1</a>
-                </li>
-                <li className="flex-shrink-0 flex-md-shrink-1 page-item active">
-                    <span aria-current="page" className="page-link current">2</span>
-                </li>
-                <li className="flex-shrink-0 flex-md-shrink-1 page-item">
-                    <a className="page-link" href="https://bookworm.madrasthemes.com/shop/style-v3/page/3/">3</a>
-                </li>
-                <li className="flex-shrink-0 flex-md-shrink-1 page-item">
-                    <a className="page-link" href="https://bookworm.madrasthemes.com/shop/style-v3/page/4/">4</a>
-                </li>
-                <li className="flex-shrink-0 flex-md-shrink-1 page-item">
-                    <a className="page-link" href="https://bookworm.madrasthemes.com/shop/style-v3/page/5/">5</a>
-                </li>
-                <li className="flex-shrink-0 flex-md-shrink-1 page-item">
-                    <a className="page-link" href="https://bookworm.madrasthemes.com/shop/style-v3/page/6/">6</a>
-                </li>
-                <li className="flex-shrink-0 flex-md-shrink-1 page-item">
-                    <a className="page-link" href="https://bookworm.madrasthemes.com/shop/style-v3/page/7/">7</a>
-                </li>
-                <li className="flex-shrink-0 flex-md-shrink-1 page-item">
-                    <a className="page-link" href="https://bookworm.madrasthemes.com/shop/style-v3/page/8/">8</a>
-                </li>
-                <li className="flex-shrink-0 flex-md-shrink-1 page-item">
-                    <a className="next page-link" href="https://bookworm.madrasthemes.com/shop/style-v3/page/3/">
-                        Next
-                    </a>
+                {pageNumbers.map((number) => (
+                    <li key={number}
+                        className={`flex-shrink-0 flex-md-shrink-1 page-item ${currentPage === number - 1 ? 'active' : ''}`}>
+                        <button className="page-link" onClick={() => onPageChange(number - 1)}>
+                            {number}
+                        </button>
+                    </li>
+                ))}
+                <li className="flex-shrink-0 flex-md-shrink-1 page-item" title="Next">
+                    {currentPage < totalPages - 1 ? (<button
+                        className="next page-link"
+                        onClick={() => onPageChange(currentPage + 1)}
+                    >
+                        <i className="fa-solid fa-chevron-right"></i>
+                    </button>) : (<></>)}
                 </li>
             </ul>
         </nav>
     );
-};
-
+}
 export default Pagination;
