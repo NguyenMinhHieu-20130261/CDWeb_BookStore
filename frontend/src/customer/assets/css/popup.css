@@ -1,0 +1,363 @@
+.button-popup {
+    margin-top: 16px;
+    margin-bottom: 4px;
+    padding: 8px 12px;
+    border: 1px solid #75B9E1;
+    border-radius: 3px;
+    background: #4FA0D0;
+    cursor: pointer;
+    font-family: inherit;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.button-popup:focus {
+    outline: none;
+}
+
+.button--warning {
+    border: 1px solid #FFB039;
+    background: #ff9800;
+}
+
+.button--success {
+    border: 1px solid #71E6AB;
+    background: #4AD890;
+}
+
+.button--error {
+    border: 1px solid #F578A4;
+    background: #EF5289;
+}
+
+.popup {
+    visibility: hidden;
+    transition: visibility 0ms linear 0.3s;
+}
+
+.popup--visible {
+    visibility: visible;
+    transition: visibility 0ms;
+}
+
+.popup__background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10000;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.popup--visible .popup__background {
+    opacity: 1;
+}
+
+.popup__content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 10001;
+    min-width: 400px;
+    padding: 25px 50px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    text-align: center;
+    animation: hide-popup 0.3s forwards;
+}
+
+.popup--visible .popup__content {
+    animation: show-popup 0.3s forwards;
+}
+
+.popup--icon .popup__content {
+    padding-top: 130px;
+}
+
+.popup--icon .popup__content:before,
+.popup--icon .popup__content:after {
+    position: absolute;
+    top: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: block;
+    height: 90px;
+    width: 90px;
+}
+
+.popup--icon .popup__content:before {
+    content: '';
+    border: 3px solid currentColor;
+    border-radius: 50%;
+    transform: translateX(-50%) scale(1, 0);
+    opacity: 0;
+}
+
+.popup--icon .popup__content:after {
+    content: '\2713';
+    line-height: 90px;
+    font-size: 45px;
+    transform: translateX(-50%) scale(0);
+    opacity: 0;
+}
+
+.popup--visible.popup--icon .popup__content:before {
+    animation: show-icon-cirlce 0.3s forwards 0.15s;
+}
+
+.popup--visible.popup--icon .popup__content:after {
+    animation: show-icon 0.3s forwards 0.3s;
+}
+
+.-question.popup--icon .popup__content:before {
+    border-color: #ff9800;
+}
+
+.-question.popup--icon .popup__content:after {
+    content: '?';
+    color: #ff9800;
+}
+
+.-success.popup--icon .popup__content:before {
+    border-color: #4AD890;
+}
+
+.-success.popup--icon .popup__content:after {
+    content: '\2713';
+    color: #4AD890;
+}
+
+.-error.popup--icon .popup__content:before {
+    border-color: #EF5289;
+}
+
+.-error.popup--icon .popup__content:after {
+    content: '\2717';
+    color: #EF5289;
+}
+
+.popup__title {
+    margin-bottom: 10px;
+    font-size: 28px;
+    font-weight: 100;
+    color: #626262;
+}
+
+@keyframes show-popup {
+    0% {
+        transform: translate(-50%, -50%) scale(0.7);
+        opacity: 0;
+    }
+    45% {
+        transform: translate(-50%, -50%) scale(1.05);
+        opacity: 1;
+    }
+    80% {
+        transform: translate(-50%, -50%) scale(0.95);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes hide-popup {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(0.5);
+        opacity: 0;
+    }
+}
+
+@keyframes show-icon {
+    0% {
+        transform: translateX(-50%) scale(0);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(-50%) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes show-icon-cirlce {
+    0% {
+        transform: translateX(-50%) scale(1, 0);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(-50%) scale(1, 1);
+        opacity: 1;
+    }
+}
+
+.order-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    text-align: center;
+}
+
+.order-table th, .order-table td {
+    padding: 12px 15px;
+    text-align: center;
+}
+
+.order-table thead tr {
+    background-color: #ffc107;
+    color: #ffffff;
+    text-align: left;
+    font-weight: bold;
+}
+
+.order-table tbody tr {
+    border-bottom: 2px solid #ffc107;
+}
+
+.order-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.order-table tbody tr:last-of-type {
+    border-bottom: 2px solid #ffc107;
+}
+
+.order-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+.button-product.button-link {
+    background-color: #ffc107;
+    border: none;
+    color: white;
+    padding: 2px 18px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.button-product.button-link:hover {
+    background-color: #e0a800;
+}
+
+
+/*Shipping Progress Bar*/
+#progress-ship {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+#progress-bar {
+    position: absolute;
+    background: #4584ff;
+    height: 5px;
+    width: 0%;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+}
+
+#progress-text {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+#progress-text::before {
+    content: "";
+    background-color: lightgray;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    height: 5px;
+    width: 100%;
+    z-index: -1;
+    transform: translateY(-50%);
+}
+
+#progress-text .step {
+    border: 3px solid lightgray;
+    border-radius: 100%;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    background-color: #fff;
+    font-family: sans-serif;
+    font-size: 14px;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#progress-text .step.active {
+    border-color: #43d854;
+    background-color: #43d854;
+    color: #fff;
+}
+
+#progress-text .step.active::after {
+    content: "✓ ";
+    color: #fff;
+    z-index: 2;
+    position: absolute;
+    top: 2px;
+    left: 8px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+#progress-text .step.active .ship-text {
+    color: #4584ff;
+    padding-top: 30px;
+    width: 120px !important;
+    word-break: normal !important;
+}
+
+#progress-text .step.progress-step {
+    border-color: #43d854 !important;
+}
+
+#progress-text .step.progress-step::after {
+    content: "•";
+    transform: scale(3);
+    position: absolute;
+    left: 10px;
+    top: 1.5px;
+    color: #43d854;
+    padding: 1px 2px 2px 0;
+}
+
+#progress-text .step.progress-step .ship-text {
+    color: #43d854;
+    /*padding-top: 30px;*/
+    width: 120px !important;
+    word-break: normal !important;
+}
+
+#progress-text .step .ship-text {
+    margin-top: 45px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: inherit;
+    padding-top: 30px;
+    width: 120px !important;
+    word-break: normal !important;
+}
+
+
