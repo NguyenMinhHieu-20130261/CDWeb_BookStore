@@ -19,6 +19,7 @@ function App() {
             <Routes>
                 <Route path='/admin/*' element={<AdminRouter/>}></Route>
                 <Route path='/*' element={<CustomerRouter/>}></Route>
+                {console.log(process.env.REACT_APP_API_URL)}
             </Routes>
         </div>
     );

@@ -2,19 +2,18 @@ package vn.edu.hcmuaf.fit.bookshop.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import java.util.Map;
 import java.util.Date;
 import java.util.HashMap;
-
-import org.springframework.beans.factory.annotation.Autowired;
 
 import vn.edu.hcmuaf.fit.bookshop.entity.User;
 import vn.edu.hcmuaf.fit.bookshop.entity.EnumRole;
 import vn.edu.hcmuaf.fit.bookshop.entity.Role;
 import vn.edu.hcmuaf.fit.bookshop.repository.UserRepository;
 import vn.edu.hcmuaf.fit.bookshop.repository.RoleRepository;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 
 @RestController
 @RequestMapping("/api/auth")
