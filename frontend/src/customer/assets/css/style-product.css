@@ -1,14 +1,13 @@
-
 .current-price .price {
     line-height: 1.6rem;
     color: #C92127;
-    font-size: 1.125rem;;
+    font-size: 18px;
     font-weight: 600 !important;
 }
 
 .old-price .price {
     color: #999999;
-    font-size: 14px;
+    font-size: 15px;
     text-decoration: line-through;
 }
 
@@ -43,7 +42,12 @@
     background-color: #0d95e8;
 }
 
-.cart-fragment:hover i {
+.wishlist-fragment:hover {
+    border-radius: 100px;
+    background-color: #f75454;
+}
+
+.cart-fragment:hover i, .wishlist-fragment:hover i {
     color: white;
 }
 
@@ -94,18 +98,93 @@
     background-color: #f75454;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 512 512'%3E%3Cpath fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='50.0' d='M416 128L192 384l-96-96'/%3E%3C/svg%3E")
 }
-.content-container {
-    display: flex;
-    align-items: baseline;
-}
+
 .page-item.active .page-link:hover {
     background-color: #161619 !important;
 }
-.content-container > :first-child {
-    flex: 1;
+
+.cat-item a.active {
+    color: #f75454;
 }
 
-.content-container> :last-child {
-    margin-left: auto;
-    padding: 10px
+.cat-item a:hover {
+    color: #f75454;
+}
+.bookworm-product-grid .woocommerce-loop-product__header{
+    height: 190px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.bookworm-product-grid .woocommerce-loop-product__header img{
+    max-height: 190px;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+.sold-out-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: mediumpurple;
+    color: white;
+    padding: 5px 10px;
+    font-size: 14px;
+    font-weight: bold;
+    z-index: 10;
+}
+.sold-out-badge-discount {
+    position: absolute;
+    top: 0;
+    background-color: mediumpurple;
+    color: white;
+    padding: 5px 10px;
+    font-size: 14px;
+    font-weight: bold;
+    z-index: 10;
+}
+.see-detail{
+    border: none;
+    padding: 5px 10px;
+}
+
+.discount-star {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 35px;
+    height: 35px;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    font-size: 12px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.discount-star span {
+    margin-top: 2px;
+    position: absolute;
+    z-index: 3;
+}
+
+.discount-star::before,
+.discount-star::after {
+    content: '';
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    background-color: red;
+}
+
+.discount-star::before {
+    transform: rotate(23deg);
+}
+
+.discount-star::after {
+    transform: rotate(153deg);
 }
