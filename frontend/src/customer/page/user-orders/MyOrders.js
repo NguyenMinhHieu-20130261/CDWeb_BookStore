@@ -1,31 +1,37 @@
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import Breadcrumb from "../../components/general/Breadcrumb";
 import LeftSideBar from "../my-account/sub-components/LeftSideBar";
-import React, {useEffect, useState} from "react";
-import APIService from "../../../service/APIService";
+import React, { useState } from "react";
 import formatCurrency from "../../../utils/formatCurrency";
-import "../../assets/css/style-myaccount.css"
+import "../../assets/css/style-myaccount.css";
 
 export const MyOrders = () => {
-    const [orders, setOrders] = useState([]);
-    const user = JSON.parse(localStorage.getItem('currentUser'));
-    const token = user ? user.token : null;
-    const apiService = new APIService(token);
-    const [isLoading, setIsLoading] = useState(false);
 
-    const fetchData = async () => {
-        setIsLoading(true);
-        try {
-            const result = await apiService.fetchData(`${process.env.REACT_APP_ENDPOINT_API}/orders/user`);
-            setOrders(result);
-            setIsLoading(false);
-        } catch (error) {
-            console.error('Error fetching data:', error)
+    // 👉 Mock data
+    const [orders] = useState([
+        {
+            id: 1,
+            orderCode: "ORD001",
+            orderTotal: 500000,
+            orderDate: "2026-05-01",
+            status: { name: "Đang xử lý", slug: "pending" }
+        },
+        {
+            id: 2,
+            orderCode: "ORD002",
+            orderTotal: 750000,
+            orderDate: "2026-05-02",
+            status: { name: "Đã giao", slug: "delivered" }
+        },
+        {
+            id: 3,
+            orderCode: "ORD003",
+            orderTotal: 300000,
+            orderDate: "2026-05-03",
+            status: { name: "Đã hủy", slug: "cancelled" }
         }
-    }
-    useEffect(() => {
-        fetchData();
-    }, []);
+    ]);
+
     const getStatusColorClass = (status) => {
         switch (status) {
             case 'pending':
@@ -44,71 +50,68 @@ export const MyOrders = () => {
                 return '';
         }
     };
+
     return (
         <div>
-            <Breadcrumb/>
+            <Breadcrumb />
             <div className="container information mb-5 mt-5 px-0">
-                <LeftSideBar/>
+                <LeftSideBar />
+
                 <div className="col-md-9 orders">
                     <div className="my-orders checkout__order">
-                        <table className="table table-sm fs--1 mb-0">
+
+                        <table className="table table-sm">
                             <thead>
-                            <tr>
-                                <th className="sort align-middle pe-5" scope="col" data-sort="total-spent"
-                                >Mã Đơn
-                                </th>
-                                <th className="sort align-middle pe-5" scope="col" data-sort="email">
-                                    Tổng tiền
-                                </th>
-                                <th className="sort align-middle pe-5" scope="col" data-sort="email">
-                                    Ngày đặt
-                                </th>
-                                <th className="sort align-middle " scope="col" data-sort="total-orders">
-                                    Trạng thái
-                                </th>
-                                <th className="sort align-middle " scope="col" data-sort="total-orders">
-                                    Chi tiết
-                                </th>
-                            </tr>
+                                <tr>
+                                    <th>Mã Đơn</th>
+                                    <th>Tổng tiền</th>
+                                    <th>Ngày đặt</th>
+                                    <th>Trạng thái</th>
+                                    <th>Chi tiết</th>
+                                </tr>
                             </thead>
-                            <tbody className="list" id="table-latest-review-body">
-                            {isLoading ? (
-                                <tr>
-                                    <td colSpan={5} style={{paddingTop: '30px'}}>
-                                        <div className="loader"></div>
-                                    </td>
-                                </tr>
-                            ) : (orders.length > 0 ? (orders.map(order => (
-                                    <tr key={order.id}
-                                        className="hover-actions-trigger btn-reveal-trigger position-static">
-                                        <td className="fs--1 align-middle ps-0 py-3">
-                                            <p className="mb-0 text-1100 fw-bold">{order.orderCode}</p>
+
+                            <tbody>
+                                {orders.length > 0 ? (
+                                    orders.map(order => (
+                                        <tr key={order.id}>
+                                            <td>{order.orderCode}</td>
+
+                                            <td>
+                                                {formatCurrency(order.orderTotal)}
+                                            </td>
+
+                                            <td>{order.orderDate}</td>
+
+                                            <td>
+                                                <span className={getStatusColorClass(order.status.slug)}>
+                                                    {order.status.name}
+                                                </span>
+                                            </td>
+
+                                            <td>
+                                                <Link to={`/user/order/${order.id}`}>
+                                                    Xem
+                                                </Link>
+                                            </td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan={5} style={{ textAlign: "center" }}>
+                                            Bạn chưa có đơn hàng nào.
                                         </td>
-                                        <td className="customer align-middle white-space-nowrap pe-5">
-                                            <p className="mb-0 ms-3 text-1100 fw-bold">{formatCurrency(order.orderTotal)}</p>
-                                        </td>
-                                        <td className="email align-middle white-space-nowrap pe-5">{order.orderDate}</td>
-                                        <td className="email align-middle white-space-nowrap pe-5">
-                                            <p className={`mb-0 ${getStatusColorClass(order.status?.slug)}`}>{order.status?.name}</p>
-                                        </td>
-                                        <td className="email align-middle white-space-nowrap pe-5">
-                                            <Link className="fw-semi-bold text-1100"
-                                                  to={`/user/order/${order.id}`}>Xem</Link>
-                                        </td>
-                                    </tr>))
-                            ) : (
-                                <tr>
-                                    <td colSpan={5} style={{paddingTop: '30px', textAlign: "center"}}>Bạn chưa có đơn
-                                        đặt hàng nào.
-                                    </td>
-                                </tr>
-                            ))}
+                                    </tr>
+                                )}
                             </tbody>
+
                         </table>
+
                     </div>
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
+
 export default MyOrders;
