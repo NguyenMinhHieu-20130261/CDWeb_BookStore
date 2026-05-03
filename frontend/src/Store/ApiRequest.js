@@ -1,24 +1,24 @@
-import axios from 'axios';
 import {loginFailure, loginStart, loginSuccess,
     registerFailure, registerStart, registerSuccess} from "./AuthSlice";
+import api from "../service/ApiService";
 
-export const loginUser = async (user, dispatch, navigate) => {
+export const loginUser = async (user, dispatch) => {
     dispatch(loginStart());
     try {
-        const res = await axios.post("http://localhost:8080/api/auth/signin", user);
-        dispatch(loginSuccess(res.data));
-        navigate("/");
-        console.log("Login success")
-    } catch (err) {
+        const res = await api.sendData("/auth/signin", user);
+        localStorage.setItem("token", res.token);
+        dispatch(loginSuccess(res));
+        return res;
+    } catch (error) {
         dispatch(loginFailure());
-        console.log("Login failed")
-        throw err;
+        throw error;
     }
-}
+};
+        
 export const registerUser = async (user, dispatch, navigate) => {
     dispatch(registerStart());
     try {
-        const res = await axios.post("http://localhost:8080/api/auth/signup", user);
+        const res = await api.sendData("/auth/signup", user);
         dispatch(registerSuccess(res.data));
         navigate("/sign-in");
         console.log("Register success")
