@@ -1,8 +1,31 @@
 import {Link} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useSelector,useDispatch} from "react-redux";
+import React from "react";
+import {useNavigate} from "react-router-dom";
+import { loginSuccess, logoutSuccess } from "../../../Store/AuthSlice";
+
 
 export const Header = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    // lấy user từ redux store
     const user = useSelector(state => state.auth.login.currentUser);
+    // lấy user từ localStorage khi component được mount
+    React.useEffect(() => {
+        const user = localStorage.getItem("user");
+        if (user) {
+            dispatch(loginSuccess(JSON.parse(user)));
+        } else {
+            console.log("No user");
+        }
+    }, []);
+    // hàm logout
+    const handleLogout = () => {
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+        dispatch(logoutSuccess());
+        navigate("/");
+    };    
     return (
         <header id="site-header" className="site-header site-header__v12 mb-7 pb-1">
             <div className="masthead">
@@ -56,6 +79,7 @@ export const Header = () => {
                                     <Link to="/home" rel="home">GoldLeaf</Link>
                                 </h1>
                             </div>
+                            {/* User Area */}
                             <div className="d-flex align-items-center ml-auto header-icons-links">
                                 {user?(
                                         <>
@@ -70,6 +94,19 @@ export const Header = () => {
                                                     </div>
                                                 </div>
                                             </Link>
+                                            {/* Logout buttpn */}
+                                            <button
+                                                onClick={handleLogout}
+                                                style={{
+                                                    marginLeft: "10px",
+                                                    border: "none",
+                                                    background: "transparent",
+                                                    cursor: "pointer",
+                                                    color: "red"
+                                                }}
+                                            >
+                                                Đăng xuất
+                                            </button>
                                         </>
                                    ):(
                                         <>

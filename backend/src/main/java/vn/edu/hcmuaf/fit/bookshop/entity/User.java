@@ -37,4 +37,8 @@ public class User {
 
     @Column(name = "is_locked")
     private Boolean isLocked;
+
+    private String otp;
+
+    private Date otpExpired;
 }
