@@ -17,6 +17,8 @@ const Breadcrumb = () => {
         // '/user/wishlist': 'Sản phẩm yêu thích',
         '/check-out': 'Thanh toán',
         '/product-list': 'Tất cả sản phẩm',
+        '/product-detail': 'Chi tiết sản phẩm',
+
     };
 
     const pathNames = location.pathname.split('/').filter(Boolean);
