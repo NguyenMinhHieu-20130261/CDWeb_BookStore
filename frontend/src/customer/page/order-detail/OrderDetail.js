@@ -6,7 +6,6 @@ import LeftSideBar from "../my-account/sub-components/LeftSideBar";
 
 export const OrderDetail = () => {
 
-    // 👉 Mock data
     const mockOrder = {
         id: 1,
         orderCode: "ORD123456",
