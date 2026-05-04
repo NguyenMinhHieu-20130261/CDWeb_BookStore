@@ -12,7 +12,20 @@ const authSlice = createSlice({
             isFetching: false,
             error: false,
             success: false
+        },
+        logout: {
+            isFetching: false,
+            error: false
+        },
+        changePassword: {
+            isFetching: false,
+            error: false
+        },
+        sendEmail: {
+            isFetching: false,
+            error: false
         }
+
     },
     reducers: {
         // Login
@@ -44,21 +57,48 @@ const authSlice = createSlice({
         },
         // Logout
         logoutStart: (state) => {
-            state.login.isFetching = true;
+            state.logout.isFetching = true;
         },
         logoutSuccess: (state, action) => {
-            state.login.isFetching = false;
-            state.login.currentUser = null;
-            state.login.error = false;
+            state.logout.isFetching = false;
+            state.logout.currentUser = null;
+            state.logout.error = false;
         },
         logoutFailure: (state) => {
-            state.login.isFetching = false;
-            state.login.error = true;
+            state.logout.isFetching = false;
+            state.logout.error = true;
+        },
+        // Change Password
+            changePasswordStart: (state) => {
+            state.changePassword.isFetching = true;
         }, 
+        changePasswordSuccess: (state, action) => { 
+            state.changePassword.isFetching = false;
+            state.changePassword.error = false;
+        },
+        changePasswordFailure: (state) => {
+            state.changePassword.isFetching = false;
+            state.changePassword.error = true;
+        },
+        // Send Email
+            sendEmailStart: (state) => {
+            state.sendEmail.isFetching = true;
+        },
+        sendEmailSuccess: (state, action) => { 
+            state.sendEmail.isFetching = false;
+            state.sendEmail.error = false;
+        },
+        sendEmailFailure: (state) => {
+            state.sendEmail.isFetching = false;
+            state.sendEmail.error = true;
+    }
     }
 });
 export const {loginStart, loginSuccess, loginFailure,
      registerStart, registerSuccess, registerFailure,
-     logoutStart, logoutSuccess, logoutFailure} = authSlice.actions;
+     logoutStart, logoutSuccess, logoutFailure,
+     changePasswordStart, changePasswordSuccess, changePasswordFailure,
+     sendEmailStart, sendEmailSuccess, sendEmailFailure
+ } = authSlice.actions;
 
 export default authSlice.reducer;

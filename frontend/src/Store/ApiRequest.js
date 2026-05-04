@@ -1,6 +1,9 @@
 import {loginFailure, loginStart, loginSuccess,
     registerFailure, registerStart, registerSuccess
-    ,logoutStart,logoutFailure,logoutSuccess} from "./AuthSlice";
+    ,logoutStart,logoutFailure,logoutSuccess
+    ,changePasswordStart,changePasswordFailure,changePasswordSuccess
+    ,sendEmailStart, sendEmailSuccess, sendEmailFailure
+} from "./AuthSlice";
 import api from "../service/ApiService";
 import axios from "axios";
 
@@ -60,4 +63,24 @@ export const logoutUser = async (user, dispatch) => {
         dispatch(logoutFailure());
         throw err; // Ném lỗi để component có thể xử lý và hiển thị thông báo lỗi
     }
+};
+export const sendEmail = async (data, dispatch) => {
+    dispatch(sendEmailStart());
+    // Gọi API gửi email OTP
+    try {
+        const res = await axios.post(
+            `${baseURL}/auth/send-email`,
+            data
+        );
+        dispatch(sendEmailSuccess());
+        return res.data;
+    } catch (err) {
+        dispatch(sendEmailFailure());
+        console.log("Send email failed");
+        console.log("DATA:", err.response?.data);
+        throw err;
+    }
+};
+export const verifyOtp = async (data) => {
+    return await axios.post(`${baseURL}/auth/verify-otp`, data);
 };
