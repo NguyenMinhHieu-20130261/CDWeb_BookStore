@@ -13,19 +13,24 @@ const SignIn = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = React.useState("");
-    const newUser = {
-        username: username,
-        password: password
-    };
     const handleLogin = async (e) => {
         e.preventDefault();
         setLoading(true);
         setErrorMessage("");
+        // ngăn chặn spam nút login 
+        if (loading) return;
 
+        // if (!username || !password) {
+        //     setErrorMessage("Vui lòng nhập đầy đủ thông tin");
+        //     return;
+        // }
+
+        setLoading(true);
+        setErrorMessage("");
         try {
-            const res = await loginUser(newUser, dispatch);
+            // Gọi API đăng nhập người dùng
+            const res = await loginUser({ username, password }, dispatch);
             // Lưu thông tin người dùng vào localStorage
-            localStorage.setItem("user", JSON.stringify(res));
             console.log(res);
             navigate("/"); 
         } catch (error) {
@@ -83,8 +88,9 @@ const SignIn = () => {
                                             <button className="button_login" 
                                             type="submit" 
                                             style={{textAlign: "center", padding :"15px"}}
-                                            disabled={loading}
-                                            >Đăng nhập</button>
+                                            disabled={loading}>
+                                                {loading ? "Đang đăng nhập..." : "Đăng nhập"}
+                                            </button>
 
                                             <span className="d-block text-center my-4 text-muted"> Đăng nhập với:</span>
 

@@ -1,31 +1,63 @@
 import {loginFailure, loginStart, loginSuccess,
-    registerFailure, registerStart, registerSuccess} from "./AuthSlice";
+    registerFailure, registerStart, registerSuccess
+    ,logoutStart,logoutFailure,logoutSuccess} from "./AuthSlice";
 import api from "../service/ApiService";
+import axios from "axios";
+
+const baseURL = process.env.REACT_APP_API_URL;
 
 export const loginUser = async (user, dispatch) => {
     dispatch(loginStart());
-    try {
-        const res = await api.sendData("/auth/signin", user);
-        localStorage.setItem("token", res.token);
-        dispatch(loginSuccess(res));
-        return res;
-    } catch (error) {
+    try{
+        // Gọi API đăng nhập người dùng
+        const res = await axios.post(
+        `${baseURL}/auth/signin`,
+        user
+    );
+    // Lưu thông tin người dùng và token vào localStorage
+    localStorage.setItem("user", JSON.stringify(res.data));
+    localStorage.setItem("token", res.data.token);
+    // Cập nhật state trong Redux
+    dispatch(loginSuccess(res.data));
+
+    return res.data;
+    } catch (err) {
         dispatch(loginFailure());
-        throw error;
+        console.log("Login failed")
+        console.log("DATA:", err.response?.data);
+        throw err; // Ném lỗi để component có thể xử lý và hiển thị thông báo lỗi
     }
 };
         
 export const registerUser = async (user, dispatch, navigate) => {
     dispatch(registerStart());
     try {
-        const res = await api.sendData("/auth/signup", user);
+        // Gọi API đăng ký người dùng
+        const res = await api.sendData(`${baseURL}/auth/signup`, user);
+        // Cập nhật state trong Redux
         dispatch(registerSuccess(res.data));
         navigate("/sign-in");
         console.log("Register success")
     } catch (err) {
         dispatch(registerFailure());
         console.log("Register failed")
-        console.log("REGISTER ERROR:", err.response?.status);
         console.log("DATA:", err.response?.data);
+        throw err; // Ném lỗi để component có thể xử lý và hiển thị thông báo lỗi
     }
 }
+export const logoutUser = async (user, dispatch) => {
+    // dispatch action logoutStart để cập nhật state khi bắt đầu đăng xuất
+    dispatch(logoutStart());
+    try {
+    // Gọi API đăng xuất người dùng
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    // Cập nhật state trong Redux
+    dispatch(logoutSuccess());
+    } catch (err) {
+        console.log("Logout failed")
+        console.log("DATA:", err.response?.data);
+        dispatch(logoutFailure());
+        throw err; // Ném lỗi để component có thể xử lý và hiển thị thông báo lỗi
+    }
+};
