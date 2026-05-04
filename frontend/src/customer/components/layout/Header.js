@@ -1,8 +1,23 @@
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
+import React from "react";
+import {useNavigate} from "react-router-dom";
 
 export const Header = () => {
-    const user = useSelector(state => state.auth.login.currentUser);
+    const [user, setUser] = React.useState(null);
+    const navigate = useNavigate();
+    // load user từ localStorage
+    React.useEffect(() => {
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+        }
+    }, []);
+    // const handleLogout = () => {
+    //     localStorage.removeItem("user");
+    //     setUser(null);
+    //     navigate("/");
+    // };    
     return (
         <header id="site-header" className="site-header site-header__v12 mb-7 pb-1">
             <div className="masthead">
@@ -56,6 +71,7 @@ export const Header = () => {
                                     <Link to="/home" rel="home">GoldLeaf</Link>
                                 </h1>
                             </div>
+                            {/* User Area */}
                             <div className="d-flex align-items-center ml-auto header-icons-links">
                                 {user?(
                                         <>
@@ -70,6 +86,19 @@ export const Header = () => {
                                                     </div>
                                                 </div>
                                             </Link>
+                                            {/* Logout buttpn */}
+                                            {/* <button
+                                                onClick={handleLogout}
+                                                style={{
+                                                    marginLeft: "10px",
+                                                    border: "none",
+                                                    background: "transparent",
+                                                    cursor: "pointer",
+                                                    color: "red"
+                                                }}
+                                            >
+                                                Đăng xuất
+                                            </button> */}
                                         </>
                                    ):(
                                         <>

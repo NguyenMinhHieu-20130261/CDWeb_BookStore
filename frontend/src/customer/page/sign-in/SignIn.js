@@ -24,6 +24,8 @@ const SignIn = () => {
 
         try {
             const res = await loginUser(newUser, dispatch);
+            // Lưu thông tin người dùng vào localStorage
+            localStorage.setItem("user", JSON.stringify(res));
             console.log(res);
             navigate("/"); 
         } catch (error) {
