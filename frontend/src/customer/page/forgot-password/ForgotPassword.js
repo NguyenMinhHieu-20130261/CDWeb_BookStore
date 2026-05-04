@@ -33,13 +33,11 @@ const ForgotPassword = () => {
 
     try {
         await verifyOtp({ email, otp });
-
-        // await changePassword({
-        //     email,
-        //     otp,
-        //     newPassword
-        // });
-
+        await changePassword({
+            email,
+            otp,
+            newPassword
+        });
         setMessage("Đổi mật khẩu thành công");
         navigate("/sign-in"); 
     } catch (err) {
@@ -68,21 +66,6 @@ const ForgotPassword = () => {
                                             </div>
                                         )}
                                     </div>
-                                     {/* <form action="#" method="post">
-                                        <div className="form-group first">
-                                            <p className="inline-text">Tên đăng nhập hoặc Email</p>
-                                            <input type="text" className="form-control" id="username" 
-                                            placeholder="Điền tên đăng nhập hoặc email"
-                                            style ={{padding: "2px 10px"}} required
-                                            />
-
-                                        </div>
-                                        <Link to={"/forgot-password"} style={{textDecoration: "none"}}>
-                                            <div className="button_forgot">Đặt lại mật khẩu</div>
-                                        </Link>
-                                        <Link to={"/sign-in"} className="d-block text-center my-4 text-muted"
-                                              style={{textDecoration: "none"}}> Trở lại đăng nhập</Link>
-                                    </form> */}
                                      {step === 1 && (
                                         <form onSubmit={handleSendOTP}>
                                             <div className="form-group first">
@@ -109,9 +92,7 @@ const ForgotPassword = () => {
                                         </form>
                                     )}
                                     {step === 2 && (
-                                        <form 
-                                        onSubmit={handleResetPassword}
-                                        >
+                                        <form onSubmit={handleResetPassword}>
                                             <div className="form-group first">
                                                 <p className="inline-text">Nhập OTP</p>
                                                  <input

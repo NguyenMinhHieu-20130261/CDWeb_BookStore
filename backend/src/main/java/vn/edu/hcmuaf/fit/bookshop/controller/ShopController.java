@@ -147,4 +147,27 @@ public class ShopController {
 
         return ResponseEntity.ok("OTP hợp lệ");
     }
-}
+    @PostMapping("/forgot-password")
+        public ResponseEntity<?> resetPassword(@RequestBody Map<String, String> req) {
+            String email = req.get("email");
+            String otp = req.get("otp");
+            String newPassword = req.get("newPassword");
+
+            User user = userRepository.findByEmail(email).orElse(null);
+
+            if (user == null || !otp.equals(user.getOtp())) {
+                return ResponseEntity.badRequest().body("OTP không đúng");
+            }
+
+            if (user.getOtpExpired().before(new Date())) {
+                return ResponseEntity.badRequest().body("OTP đã hết hạn");
+            }
+            user.setPassword(encoder.encode(newPassword));
+            // xóa OTP sau khi đổi mật khẩu thành công
+            user.setOtp(null);
+            user.setOtpExpired(null);
+            userRepository.save(user);
+
+            return ResponseEntity.ok("Đổi mật khẩu thành công");
+        }
+    }

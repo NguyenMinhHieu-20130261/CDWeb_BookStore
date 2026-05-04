@@ -84,3 +84,20 @@ export const sendEmail = async (data, dispatch) => {
 export const verifyOtp = async (data) => {
     return await axios.post(`${baseURL}/auth/verify-otp`, data);
 };
+export const changePassword = async (data, dispatch) => {
+    // Gọi API đổi mật khẩu
+    dispatch(changePasswordStart());
+    try {
+        const res = await axios.post(
+            `${baseURL}/auth/forgot-password`,
+            data
+        );
+        dispatch(changePasswordSuccess());
+        return res.data;
+    } catch (err) {
+        dispatch(changePasswordFailure());
+        console.log("Change password failed");
+        console.log("DATA:", err.response?.data);
+        throw err;
+    }
+};
