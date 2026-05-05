@@ -8,16 +8,28 @@ import { loginSuccess, logoutSuccess } from "../../../Store/AuthSlice";
 export const Header = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [categories, setCategories] = React.useState([]);
     // lấy user từ redux store
     const user = useSelector(state => state.auth.login.currentUser);
-    // lấy user từ localStorage khi component được mount
+    // kiểm tra nếu có user trong localStorage thì cập nhật vào redux store
     React.useEffect(() => {
-        const user = localStorage.getItem("user");
-        if (user) {
-            dispatch(loginSuccess(JSON.parse(user)));
-        } else {
-            console.log("No user");
-        }
+        // Kiểm tra nếu có user trong localStorage thì cập nhật vào redux store
+        const storedUser = localStorage.getItem("user");
+            if (storedUser) {
+                dispatch(loginSuccess(JSON.parse(storedUser)));
+            }
+        // Load danh mục từ API
+        const showCategories = async () => {
+            try {
+                const res = await fetch("http://localhost:8080/api/category/all");
+                const data = await res.json();
+                setCategories(data);
+            } catch (error) {
+                console.error("Load category error:", error);
+            }
+        };
+
+        showCategories();
     }, []);
     // hàm logout
     const handleLogout = () => {
@@ -25,7 +37,16 @@ export const Header = () => {
         localStorage.removeItem("token");
         dispatch(logoutSuccess());
         navigate("/");
-    };    
+    };
+    const showCategories = async () => {
+        try {
+            const res = await fetch("http://localhost:8080/api/category/all");
+            const data = await res.json();
+            setCategories(data);
+        } catch (error) {
+            console.error("Load category error:", error);
+        }
+    }
     return (
         <header id="site-header" className="site-header site-header__v12 mb-7 pb-1">
             <div className="masthead">
@@ -134,7 +155,7 @@ export const Header = () => {
                                 <nav className="header__menu">
                                     <ul>
                                         <li><Link to={"/home"}>Trang Chủ</Link></li>
-                                        <li><Link to={"/product-list"}>Danh mục sách</Link>
+                                        {/* <li><Link to={"/product-list"}>Danh mục sách</Link>
                                             <ul className="header__menu__dropdown">
                                                 <li><Link to="">Hài kịch</Link>
                                                     <ul className="header__menu__dropdown__level2">
@@ -145,6 +166,18 @@ export const Header = () => {
                                                 </li>
                                                 <li><Link to={""}>Hành động</Link></li>
                                                 <li><Link to={""}>Tình cảm</Link></li>
+                                            </ul>
+                                        </li> */}
+                                        <li>
+                                        <Link to={"/product-list"}>Danh mục sách</Link>
+                                            <ul className="header__menu__dropdown">
+                                                {categories.map((cate) => (
+                                                    <li key={cate.id}>
+                                                        <Link to={`/category/${cate.id}`}>
+                                                            {cate.name}
+                                                        </Link>
+                                                    </li>
+                                                ))}
                                             </ul>
                                         </li>
                                         <li><Link to={"/blog-list"}>Tin Tức</Link></li>

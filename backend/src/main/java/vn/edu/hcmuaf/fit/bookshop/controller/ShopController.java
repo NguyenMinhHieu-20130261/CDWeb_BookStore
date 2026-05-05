@@ -12,9 +12,9 @@ import java.util.HashMap;
 import vn.edu.hcmuaf.fit.bookshop.entity.User;
 import vn.edu.hcmuaf.fit.bookshop.entity.EnumRole;
 import vn.edu.hcmuaf.fit.bookshop.entity.Role;
-import vn.edu.hcmuaf.fit.bookshop.repository.UserRepository;
+import vn.edu.hcmuaf.fit.bookshop.repository.UserRepo;
 import vn.edu.hcmuaf.fit.bookshop.service.EmailService;
-import vn.edu.hcmuaf.fit.bookshop.repository.RoleRepository;
+import vn.edu.hcmuaf.fit.bookshop.repository.RoleRepo;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -23,10 +23,10 @@ public class ShopController {
     private BCryptPasswordEncoder encoder;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserRepo userRepository;
 
     @Autowired
-    private RoleRepository roleRepository;
+    private RoleRepo roleRepository;
 
     @Autowired
     private EmailService emailService;
