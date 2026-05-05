@@ -26,6 +26,7 @@ public class CategoryController {
                 Map<String, Object> map = new HashMap<>();
                 map.put("id", c.getId());
                 map.put("name", c.getName());
+                map.put("parentId", c.getParentCategory() != null ? c.getParentCategory().getId() : null);
                 return map;
             })
             .toList();

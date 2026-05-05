@@ -8,45 +8,57 @@ import { loginSuccess, logoutSuccess } from "../../../Store/AuthSlice";
 export const Header = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [parentCategories, setParentCategories] = React.useState([]);
     const [categories, setCategories] = React.useState([]);
     // lấy user từ redux store
     const user = useSelector(state => state.auth.login.currentUser);
     // kiểm tra nếu có user trong localStorage thì cập nhật vào redux store
     React.useEffect(() => {
-        // Kiểm tra nếu có user trong localStorage thì cập nhật vào redux store
+         // Kiểm tra nếu có user trong localStorage thì cập nhật vào redux store
         const storedUser = localStorage.getItem("user");
-            if (storedUser) {
-                dispatch(loginSuccess(JSON.parse(storedUser)));
-            }
+
+        if (storedUser) {
+            dispatch(loginSuccess(JSON.parse(storedUser)));
+        }
         // Load danh mục từ API
-        const showCategories = async () => {
+        const loadData = async () => {
             try {
                 const res = await fetch("http://localhost:8080/api/category/all");
+
                 const data = await res.json();
+                // console.log("CATEGORY API RESPONSE:", data);
                 setCategories(data);
+                // Lọc ra danh mục cha
+                const parents = data.filter(c => c.parentId === null);
+                setParentCategories(parents);
+
             } catch (error) {
                 console.error("Load category error:", error);
             }
         };
 
-        showCategories();
+        loadData();
     }, []);
     // hàm logout
     const handleLogout = () => {
         localStorage.removeItem("user");
         localStorage.removeItem("token");
-        dispatch(logoutSuccess());
-        navigate("/");
+        dispatch(logoutSuccess());   
+        navigate("/home");
+        // Load lại trang để cập nhật giao diện sau khi logout
+        window.location.reload();
     };
-    const showCategories = async () => {
-        try {
-            const res = await fetch("http://localhost:8080/api/category/all");
-            const data = await res.json();
-            setCategories(data);
-        } catch (error) {
-            console.error("Load category error:", error);
-        }
-    }
+    // Lấy danh mục con
+    const getChildren = (parentId) => {
+        const children = categories.filter(c =>
+            Number(c.parentId) === Number(parentId)
+        );
+        // console.log("Parent:", parentId);
+        // console.log("All categories:", categories);
+        // console.log("Children:", children);
+        // console.log(categories[0])
+        return children;
+    };
     return (
         <header id="site-header" className="site-header site-header__v12 mb-7 pb-1">
             <div className="masthead">
@@ -169,15 +181,30 @@ export const Header = () => {
                                             </ul>
                                         </li> */}
                                         <li>
-                                        <Link to={"/product-list"}>Danh mục sách</Link>
+                                            <Link to={"/product-list"}>Danh mục sách</Link>
                                             <ul className="header__menu__dropdown">
-                                                {categories.map((cate) => (
-                                                    <li key={cate.id}>
-                                                        <Link to={`/category/${cate.id}`}>
-                                                            {cate.name}
-                                                        </Link>
-                                                    </li>
-                                                ))}
+                                                {parentCategories.map(parent => {
+                                                    const children = getChildren(parent.id);
+
+                                                    return (
+                                                        <li key={parent.id}>
+                                                            <Link to={`/category/${parent.id}`}>
+                                                                {parent.name}
+                                                            </Link>
+                                                            {children.length > 0 && (
+                                                                <ul className="header__menu__dropdown__level2">
+                                                                    {children.map(child => (
+                                                                        <li key={child.id}>
+                                                                            <Link to={`/category/${child.id}`}>
+                                                                                {child.name}
+                                                                            </Link>
+                                                                        </li>
+                                                                    ))}
+                                                                </ul>
+                                                            )}
+                                                        </li>
+                                                    );
+                                                })}
                                             </ul>
                                         </li>
                                         <li><Link to={"/blog-list"}>Tin Tức</Link></li>
