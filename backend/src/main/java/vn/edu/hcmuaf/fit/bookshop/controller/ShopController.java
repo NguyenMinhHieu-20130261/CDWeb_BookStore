@@ -49,7 +49,6 @@ public class ShopController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body("Sai username hoặc password");
         }
-        // TODO: tạo JWT token
         String jwtToken = "fake-jwt-token-for-" + user.getUsername();
         Map<String, Object> res = new HashMap<>();
             res.put("username", user.getUsername());    

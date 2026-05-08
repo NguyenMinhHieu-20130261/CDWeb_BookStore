@@ -5,7 +5,6 @@ import Cart from "../customer/page/shopping-cart/Cart";
 import BlogList from "../customer/page/blog-list/BlogList";
 import BlogDetail from "../customer/page/blog-detail/BlogDetail";
 import Checkout from "../customer/page/checkout/Checkout";
-
 import ProductList from "../customer/page/product-list/ProductList";
 import ProductDetail from "../customer/page/product-detail/ProductDetail";
 import SignIn from "../customer/page/sign-in/SignIn";
@@ -14,6 +13,7 @@ import NotFound from "../customer/page/not-found/NotFound";
 import ForgotPassword from "../customer/page/forgot-password/ForgotPassword";
 import {Header} from "../customer/components/layout/Header";
 import {Footer} from "../customer/components/layout/Footer";
+import UserAccount from "../customer/page/user-account/UserAccount";
 
 const CustomerRouter = () => {
     return (
@@ -31,6 +31,7 @@ const CustomerRouter = () => {
                 <Route path="/blog-detail" element={<BlogDetail/>}/>
                 <Route path="/contact" element={<Contact/>}/>
                 <Route path="/cart" element={<Cart/>}/>
+                <Route path="/user-account" element={<UserAccount/>}/>
                 <Route path="/check-out" element={<Checkout/>}/>
                 <Route path="/not-found" element={<NotFound/>}/>
             </Routes>

@@ -1,9 +1,9 @@
 import React, {useState} from "react";
-import "../../assets/css/style-myaccount.css"
+import "../../assets/css/user-account.css"
 import Breadcrumb from "../../components/general/Breadcrumb";
 import LeftSideBar from "./sub-components/LeftSideBar";
 
-const MyAccount = () => {
+const UserAccount = () => {
     const [fullName, setFullName] = useState("Nguyễn Văn A");
     const [phoneNumber, setPhoneNumber] = useState("0123456789");
     const [gender, setGender] = useState("male");
@@ -20,17 +20,6 @@ const MyAccount = () => {
         email: "demo@gmail.com",
         userInfo: {
             avatar: avatar
-        }
-    };
-
-    const handleImageChange = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                setAvatar(reader.result);
-            };
-            reader.readAsDataURL(file);
         }
     };
 
@@ -168,7 +157,8 @@ const MyAccount = () => {
 
                                     <input type="file"
                                            className="form-control mt-3"
-                                           onChange={handleImageChange}/>
+                                        //    onChange={handleImageChange}
+                                    />
                                 </div>
                             </div>
 
@@ -180,4 +170,4 @@ const MyAccount = () => {
     );
 };
 
-export default MyAccount;
+export default UserAccount;
