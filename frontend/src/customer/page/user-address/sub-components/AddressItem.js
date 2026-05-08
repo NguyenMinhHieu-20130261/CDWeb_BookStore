@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import ConfirmationModal from "../../../components/general/ConfirmationModal";
+import ConfirmationModal from "../../../components/general/ConfirmationPanel";
 
 const AddressItem = ({ address, updateAddresses }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);

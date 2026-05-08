@@ -116,7 +116,7 @@ export const Header = () => {
                             <div className="d-flex align-items-center ml-auto header-icons-links">
                                 {user?(
                                         <>
-                                            <Link id="sidebarNavToggler-my_account">
+                                            <Link id="sidebarNavToggler-my_account" to="/user/info">
                                                 <div
                                                     className="d-flex align-items-center text-white font-size-2 text-lh-sm position-relative">
                                                     <i className="fa-solid fa-user font-size-5 text-dark"></i>

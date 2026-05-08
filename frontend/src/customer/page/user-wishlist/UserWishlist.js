@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import Breadcrumb from "../../components/general/Breadcrumb";
 import React, { useState } from "react";
-import formatCurrency from "../../../utils/formatCurrency";
+import FormatCurrency from "../../../utils/FormatCurrency";
 
 export const ProductsInWishlist = () => {
     // 👉 Mock data (dữ liệu giả)
@@ -58,10 +58,10 @@ export const ProductsInWishlist = () => {
                                                     </Link>
                                                 </td>
                                                 <td className="shoping__cart__price">
-                                                    {formatCurrency(favorite.product.currentPrice)}
+                                                    {FormatCurrency(favorite.product.currentPrice)}
                                                 </td>
                                                 <td className="shoping__cart__price">
-                                                    {formatCurrency(favorite.product.oldPrice)}
+                                                    {FormatCurrency(favorite.product.oldPrice)}
                                                 </td>
                                                 <td className="shoping__cart__item__close">
                                                     <i className="fa-solid fa-xmark"></i>
@@ -81,7 +81,7 @@ export const ProductsInWishlist = () => {
     );
 };
 
-export const Wishlist = () => {
+export const UserWishlist = () => {
     return (
         <div>
             <Breadcrumb />
@@ -90,4 +90,4 @@ export const Wishlist = () => {
     );
 };
 
-export default Wishlist;
+export default UserWishlist;
