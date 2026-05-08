@@ -27,7 +27,7 @@ const LeftSideBar = () => {
 
             <ul style={{listStyle: "none", padding: 0, margin: 0}}>
                 <SideBarItem
-                    to="/user/account"
+                    to="/user/info"
                     iconClassName="fa-solid fa-user"
                     itemName="Thông tin tài khoản"
                 />

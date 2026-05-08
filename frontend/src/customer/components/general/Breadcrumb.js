@@ -8,7 +8,7 @@ const Breadcrumb = () => {
         '/sign-in': 'Đăng nhập',
         '/sign-up': 'Đăng ký',
         '/forgot-password': 'Quên mật khẩu',
-        '/user/account': 'Thông tin tài khoản',
+        '/user-account': 'Thông tin tài khoản',
         '/blog-list': 'Bài viết',
         '/blog-detail': 'Chi tiết bài viết',
         '/contact': 'Liên hệ',
