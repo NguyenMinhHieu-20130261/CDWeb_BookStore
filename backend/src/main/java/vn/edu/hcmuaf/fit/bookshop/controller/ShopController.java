@@ -34,31 +34,39 @@ public class ShopController {
     // LOGIN
     @PostMapping("/signin")
     public ResponseEntity<?> login(@RequestBody Map<String, String> req) {
-
         String username = req.get("username");
         String password = req.get("password");
         User user = userRepository.findByUsername(username)
                 .orElse(null);
-        //check locked
-        if (user.getIsLocked() != null && user.getIsLocked()) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                .body("Tài khoản đã bị khóa");
-        }
-        if (user == null || !encoder.matches(password, user.getPassword())) {
-        // if (user == null || !password.equals(user.getPassword())) {
+        // check user tồn tại ko? 
+        if (user == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body("Sai username hoặc password");
         }
+        // check tài khoản có bị locked?
+        if (user.getIsLocked() != null && user.getIsLocked()) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body("Tài khoản đã bị khóa");
+        }
+        // check password
+        if (!encoder.matches(password, user.getPassword())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("Sai username hoặc password");
+        }
+        // tạo token giả
         String jwtToken = "fake-jwt-token-for-" + user.getUsername();
+        // trả về thông tin user và token
         Map<String, Object> res = new HashMap<>();
-            res.put("username", user.getUsername());    
+        res.put("id", user.getId());
+        res.put("username", user.getUsername());
+        res.put("email", user.getEmail());
+        res.put("token", jwtToken);
+        
         if (user.getRole() != null) {
             res.put("role", user.getRole().getDescription().name());
-            res.put("token", jwtToken);
         }
         return ResponseEntity.ok(res);
     }
-
     // REGISTER
     @PostMapping("/signup")
     public ResponseEntity<?> register(@RequestBody Map<String, String> req) {

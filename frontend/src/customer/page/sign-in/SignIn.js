@@ -30,7 +30,7 @@ const SignIn = () => {
         try {
             // Gọi API đăng nhập người dùng
             const res = await loginUser({ username, password }, dispatch);
-            // Lưu thông tin người dùng vào localStorage
+            // Lưu thông tin người dùng vào localStorage\
             console.log(res);
             navigate("/"); 
         } catch (error) {

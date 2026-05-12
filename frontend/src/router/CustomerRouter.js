@@ -14,6 +14,10 @@ import ForgotPassword from "../customer/page/forgot-password/ForgotPassword";
 import {Header} from "../customer/components/layout/Header";
 import {Footer} from "../customer/components/layout/Footer";
 import UserAccount from "../customer/page/user-account/UserAccount";
+import UserAddress from "../customer/page/user-address/UserAddress";
+// import UserInfo from "../customer/page/user-account/UserInfo";
+import UserOrders from "../customer/page/user-orders/UserOrders";
+import UserWishlist from "../customer/page/user-wishlist/UserWishlist";
 
 const CustomerRouter = () => {
     return (
@@ -22,18 +26,29 @@ const CustomerRouter = () => {
             <Routes>
                 <Route path="/" element={<Home/>}/>
                 <Route path="/home" element={<Home/>}/>
+                {/* đăng nhập user */}
                 <Route path="/sign-in" element={<SignIn/>}/>
                 <Route path="/sign-up" element={<SignUp/>}/>
                 <Route path="/forgot-password" element={<ForgotPassword/>}/>
+                {/* product */}
                 <Route path="/product-list" element={<ProductList/>}/>
                 <Route path="/product-detail" element={<ProductDetail/>}/>
+                {/* blog */}
                 <Route path="/blog-list" element={<BlogList/>}/>
                 <Route path="/blog-detail" element={<BlogDetail/>}/>
+                {/* another */}
                 <Route path="/contact" element={<Contact/>}/>
-                <Route path="/cart" element={<Cart/>}/>
-                <Route path="/user-account" element={<UserAccount/>}/>
-                <Route path="/check-out" element={<Checkout/>}/>
                 <Route path="/not-found" element={<NotFound/>}/>
+                {/* checkout */}
+                <Route path="/cart" element={<Cart/>}/>
+                <Route path="/check-out" element={<Checkout/>}/>
+                {/* user */}
+                <Route path="/user/info" element={<UserAccount/>}/>
+                <Route path="/user/address" element={<UserAddress/>}/>
+                {/* <Route path="/user/address/new" element={<AddNewAddress/>}/>
+                <Route path="/user/address/update/:id" element={<UpdateAddress/>}/> */}
+                <Route path="/user/order" element={<UserOrders/>}/>
+                <Route path="/user/wishlist" element={<UserWishlist/>}/>
             </Routes>
             <Footer/>
         </div>

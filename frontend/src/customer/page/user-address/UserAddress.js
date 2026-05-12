@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "../../assets/css/style-addresslist.css";
 import Breadcrumb from "../../components/general/Breadcrumb";
-import LeftSideBar from "../my-account/sub-components/LeftSideBar";
+import LeftSideBar from "../user-account/sub-components/LeftSideBar";
 import AddressItem from "./sub-components/AddressItem";
+import "../../assets/css/user-address.css"; 
 
-const AddressList = () => {
+const UserAddress = () => {
 
-    // 👉 Mock data
     const [addresses] = useState([
         {
             id: 1,
@@ -83,4 +82,4 @@ const AddressList = () => {
     );
 };
 
-export default AddressList;
+export default UserAddress;

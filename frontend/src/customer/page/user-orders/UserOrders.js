@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import Breadcrumb from "../../components/general/Breadcrumb";
-import LeftSideBar from "../my-account/sub-components/LeftSideBar";
+import LeftSideBar from "../user-account/sub-components/LeftSideBar";
 import React, { useState } from "react";
-import formatCurrency from "../../../utils/formatCurrency";
-import "../../assets/css/style-myaccount.css";
+import FormatCurrency from "../../../utils/FormatCurrency";
+import "../../assets/css/user-account.css";
 
-export const MyOrders = () => {
+export const UserOrders = () => {
 
     // 👉 Mock data
     const [orders] = useState([
@@ -78,7 +78,7 @@ export const MyOrders = () => {
                                             <td>{order.orderCode}</td>
 
                                             <td>
-                                                {formatCurrency(order.orderTotal)}
+                                                {FormatCurrency(order.orderTotal)}
                                             </td>
 
                                             <td>{order.orderDate}</td>
@@ -114,4 +114,4 @@ export const MyOrders = () => {
     );
 };
 
-export default MyOrders;
+export default UserOrders;
