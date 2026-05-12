@@ -26,18 +26,23 @@ const CustomerRouter = () => {
             <Routes>
                 <Route path="/" element={<Home/>}/>
                 <Route path="/home" element={<Home/>}/>
+                {/* đăng nhập user */}
                 <Route path="/sign-in" element={<SignIn/>}/>
                 <Route path="/sign-up" element={<SignUp/>}/>
                 <Route path="/forgot-password" element={<ForgotPassword/>}/>
+                {/* product */}
                 <Route path="/product-list" element={<ProductList/>}/>
                 <Route path="/product-detail" element={<ProductDetail/>}/>
+                {/* blog */}
                 <Route path="/blog-list" element={<BlogList/>}/>
                 <Route path="/blog-detail" element={<BlogDetail/>}/>
+                {/* another */}
                 <Route path="/contact" element={<Contact/>}/>
+                <Route path="/not-found" element={<NotFound/>}/>
+                {/* checkout */}
                 <Route path="/cart" element={<Cart/>}/>
                 <Route path="/check-out" element={<Checkout/>}/>
-                <Route path="/not-found" element={<NotFound/>}/>
-                //user account
+                {/* user */}
                 <Route path="/user/info" element={<UserAccount/>}/>
                 <Route path="/user/address" element={<UserAddress/>}/>
                 {/* <Route path="/user/address/new" element={<AddNewAddress/>}/>

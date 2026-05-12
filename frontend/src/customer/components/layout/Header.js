@@ -36,7 +36,6 @@ export const Header = () => {
                 console.error("Load category error:", error);
             }
         };
-
         loadData();
     }, []);
     // hàm logout
@@ -53,10 +52,6 @@ export const Header = () => {
         const children = categories.filter(c =>
             Number(c.parentId) === Number(parentId)
         );
-        // console.log("Parent:", parentId);
-        // console.log("All categories:", categories);
-        // console.log("Children:", children);
-        // console.log(categories[0])
         return children;
     };
     return (

@@ -1,28 +1,91 @@
-import React, {useState} from "react";
+import React, {useState,useEffect} from "react";
 import "../../assets/css/user-account.css"
 import Breadcrumb from "../../components/general/Breadcrumb";
 import LeftSideBar from "./sub-components/LeftSideBar";
+import { useSelector,useDispatch  } from "react-redux";
+import { loginSuccess } from "../../../Store/AuthSlice";
 
 const UserAccount = () => {
-    const [fullName, setFullName] = useState("Nguyễn Văn A");
-    const [phoneNumber, setPhoneNumber] = useState("0123456789");
-    const [gender, setGender] = useState("male");
-    const [avatar, setAvatar] = useState("https://via.placeholder.com/150");
+    const user = useSelector(state => state.auth.login.currentUser);
+    const dispatch = useDispatch();
+    // Form data state
+    const [userData, setUserData] = useState({
+        fullName: "",
+        phoneNumber: "",
+        gender: "",
+        username: "",
+        email: "",
+        avatar: "https://via.placeholder.com/150",
+        day: "01",
+        month: "01",
+        year: "2000"
+    });
 
-    const [day, setDay] = useState("01");
-    const [month, setMonth] = useState("01");
-    const [year, setYear] = useState("2000");
 
     const [isChecked, setIsChecked] = useState(false);
 
-    const information = {
-        username: "demo_user",
-        email: "demo@gmail.com",
-        userInfo: {
-            avatar: avatar
+    useEffect(() => {
+        // console.log("CURRENT USER:", user);
+        if (!user || !user.id) {
+            console.log("User chưa có id");
+            return;
         }
-    };
+        const fetchUserInfo = async () => {
+            try {
+                const res = await fetch(
+                    `http://localhost:8080/api/userinfo/${user.id}`
+                );
+                if (!res.ok) {
+                    throw new Error("API ERROR: " + res.status);
+                }
 
+                const data = await res.json();
+                // console.log("USER INFO:", data);
+
+                 const birthday = data.birthday
+                    ? new Date(data.birthday)
+                    : null;
+
+                const updatedData = {
+                    fullName: data.fullName || "",
+                    phoneNumber: data.phoneNumber || "",
+                    gender: data.gender || "",
+                    username: user.username || "",
+                    email: user.email || "",
+                    avatar:
+                        data.avatar ||
+                        "https://via.placeholder.com/150",
+
+                    day: birthday
+                        ? String(birthday.getDate()).padStart(2, "0")
+                        : "01",
+
+                    month: birthday
+                        ? String(birthday.getMonth() + 1).padStart(2, "0")
+                        : "01",
+
+                    year: birthday
+                        ? String(birthday.getFullYear())
+                        : "2000"
+                };
+                setUserData(updatedData);
+                // Cập nhật thông tin người dùng trong Redux
+                const updatedUser = {
+                    ...user,
+                    userInformation: data
+                };
+                dispatch(loginSuccess(updatedUser));
+                // Cập nhật thông tin người dùng trong localStorage
+                localStorage.setItem(
+                    "user",
+                    JSON.stringify(updatedUser)
+                );
+            } catch (error) {
+                console.log("Load user info error:", error);
+            }
+        };
+        fetchUserInfo();
+    }, [user]);
     return (
         <>
             <Breadcrumb/>
@@ -42,14 +105,14 @@ const UserAccount = () => {
                                     <div className="row mt-3">
                                         <div className="col-md-6">
                                             <label>Tên đăng nhập</label>
-                                            <input value={information.username}
+                                            <input value={userData.username}
                                                    className="form-control" readOnly/>
                                         </div>
 
                                         <div className="col-md-6">
                                             <label>Họ và tên</label>
-                                            <input value={fullName}
-                                                   onChange={(e) => setFullName(e.target.value)}
+                                            <input value={userData.fullName}
+                                                   onChange={(e) => setUserData(prev => ({ ...prev, fullName: e.target.value }))}
                                                    className="form-control"/>
                                         </div>
                                     </div>
@@ -57,14 +120,14 @@ const UserAccount = () => {
                                     <div className="row mt-3">
                                         <div className="col-md-12">
                                             <label>Email</label>
-                                            <input value={information.email}
+                                            <input value={userData.email}
                                                    className="form-control" readOnly/>
                                         </div>
 
                                         <div className="col-md-12">
                                             <label className="mt-3">Số điện thoại</label>
-                                            <input value={phoneNumber}
-                                                   onChange={(e) => setPhoneNumber(e.target.value)}
+                                            <input value={userData.phoneNumber}
+                                                   onChange={(e) => setUserData(prev => ({ ...prev, phoneNumber: e.target.value }))}
                                                    className="form-control"/>
                                         </div>
                                     </div>
@@ -75,22 +138,22 @@ const UserAccount = () => {
 
                                         <label className="label-radio">
                                             <input type="radio" value="male"
-                                                   checked={gender === 'male'}
-                                                   onChange={(e) => setGender(e.target.value)}/>
+                                                   checked={userData.gender === 'male'}
+                                                   onChange={(e) => setUserData(prev => ({ ...prev, gender: e.target.value }))}/>
                                             <span className="label">Nam</span>
                                         </label>
 
                                         <label className="label-radio">
                                             <input type="radio" value="female"
-                                                   checked={gender === 'female'}
-                                                   onChange={(e) => setGender(e.target.value)}/>
+                                                   checked={userData.gender === 'female'}
+                                                   onChange={(e) => setUserData(prev => ({ ...prev, gender: e.target.value }))}/>
                                             <span className="label">Nữ</span>
                                         </label>
 
                                         <label className="label-radio">
                                             <input type="radio" value="other"
-                                                   checked={gender === 'other'}
-                                                   onChange={(e) => setGender(e.target.value)}/>
+                                                   checked={userData.gender === 'other'}
+                                                   onChange={(e) => setUserData(prev => ({ ...prev, gender: e.target.value }))}/>
                                             <span className="label">Khác</span>
                                         </label>
                                     </div>
@@ -99,19 +162,19 @@ const UserAccount = () => {
                                     <div className="d-flex align-items-center mt-4">
                                         <label className="mr-3">Ngày sinh</label>
                                         <div className="select-birthday">
-                                            <select value={day} onChange={(e) => setDay(e.target.value)}>
+                                            <select value={userData.day} onChange={(e) => setUserData(prev => ({ ...prev, day: e.target.value }))}>
                                                 {Array.from({length: 31}, (_, i) => (
                                                     <option key={i}>{String(i + 1).padStart(2, '0')}</option>
                                                 ))}
                                             </select>
 
-                                            <select value={month} onChange={(e) => setMonth(e.target.value)}>
+                                            <select value={userData.month} onChange={(e) => setUserData(prev => ({ ...prev, month: e.target.value }))}>
                                                 {Array.from({length: 12}, (_, i) => (
                                                     <option key={i}>{String(i + 1).padStart(2, '0')}</option>
                                                 ))}
                                             </select>
 
-                                            <select value={year} onChange={(e) => setYear(e.target.value)}>
+                                            <select value={userData.year} onChange={(e) => setUserData(prev => ({ ...prev, year: e.target.value }))}>
                                                 {Array.from({length: 50}, (_, i) => (
                                                     <option key={i}>{2025 - i}</option>
                                                 ))}
@@ -151,7 +214,7 @@ const UserAccount = () => {
                                 <h4>Ảnh đại diện</h4>
 
                                 <div className="text-center">
-                                    <img src={avatar}
+                                    <img src={ userData.avatar}
                                          alt="avatar"
                                          style={{width: "120px", borderRadius: "50%"}}/>
 
