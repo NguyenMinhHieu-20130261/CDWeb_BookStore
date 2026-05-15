@@ -32,12 +32,12 @@ const ForgotPassword = () => {
     setLoading(true);
 
     try {
-        await verifyOtp({ email, otp });
+        await verifyOtp({ email, otp }, dispatch);
         await changePassword({
             email,
             otp,
             newPassword
-        });
+        }, dispatch);
         setMessage("Đổi mật khẩu thành công");
         navigate("/sign-in"); 
     } catch (err) {

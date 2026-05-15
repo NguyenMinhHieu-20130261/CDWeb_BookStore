@@ -24,8 +24,11 @@ const authSlice = createSlice({
         sendEmail: {
             isFetching: false,
             error: false
+        },
+        verifyOtp: {
+            isFetching: false,
+            error: false
         }
-
     },
     reducers: {
         // Login
@@ -80,6 +83,18 @@ const authSlice = createSlice({
             state.changePassword.isFetching = false;
             state.changePassword.error = true;
         },
+        // Verify OTP
+        verifyOtpStart: (state) => {
+            state.verifyOtp.isFetching = true;
+        },
+        verifyOtpSuccess: (state, action) => {
+            state.verifyOtp.isFetching = false;
+            state.verifyOtp.error = false;
+        },
+        verifyOtpFailure: (state) => {
+            state.verifyOtp.isFetching = false;
+            state.verifyOtp.error = true;
+        },
         // Send Email
             sendEmailStart: (state) => {
             state.sendEmail.isFetching = true;
@@ -91,14 +106,15 @@ const authSlice = createSlice({
         sendEmailFailure: (state) => {
             state.sendEmail.isFetching = false;
             state.sendEmail.error = true;
-    }
+        }
     }
 });
 export const {loginStart, loginSuccess, loginFailure,
      registerStart, registerSuccess, registerFailure,
      logoutStart, logoutSuccess, logoutFailure,
      changePasswordStart, changePasswordSuccess, changePasswordFailure,
-     sendEmailStart, sendEmailSuccess, sendEmailFailure
+     sendEmailStart, sendEmailSuccess, sendEmailFailure,
+     verifyOtpStart, verifyOtpSuccess, verifyOtpFailure
  } = authSlice.actions;
 
 export default authSlice.reducer;

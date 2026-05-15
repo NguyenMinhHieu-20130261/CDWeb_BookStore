@@ -1,103 +1,137 @@
-import {loginFailure, loginStart, loginSuccess,
-    registerFailure, registerStart, registerSuccess
-    ,logoutStart,logoutFailure,logoutSuccess
-    ,changePasswordStart,changePasswordFailure,changePasswordSuccess
-    ,sendEmailStart, sendEmailSuccess, sendEmailFailure
+import {
+    loginFailure,loginStart,loginSuccess,
+    registerFailure,registerStart,registerSuccess,
+    logoutStart,logoutFailure,logoutSuccess,
+    changePasswordStart,changePasswordFailure,changePasswordSuccess,
+    sendEmailStart,sendEmailSuccess,sendEmailFailure,
+    verifyOtpStart,verifyOtpSuccess,verifyOtpFailure
 } from "./AuthSlice";
+
 import api from "../service/ApiService";
-import axios from "axios";
-
-const baseURL = process.env.REACT_APP_API_URL;
-
+// LOGIN
 export const loginUser = async (user, dispatch) => {
     dispatch(loginStart());
-    try{
-        // Gọi API đăng nhập người dùng
-        const res = await axios.post(
-        `${baseURL}/auth/signin`,
-        user
-    );
-    // Lưu thông tin người dùng và token vào localStorage
-    localStorage.setItem("user", JSON.stringify(res.data));
-    localStorage.setItem("token", res.data.token);
-    // Cập nhật state trong Redux
-    dispatch(loginSuccess(res.data));
-
-    return res.data;
+    try {
+        const res = await api.sendData(
+            "/auth/signin",
+            user
+        );
+        localStorage.setItem(
+            "user",
+            JSON.stringify(res)
+        );
+        localStorage.setItem(
+            "token",
+            res.token
+        );
+        dispatch(loginSuccess(res));
+        return res;
     } catch (err) {
         dispatch(loginFailure());
-        console.log("Login failed")
-        console.log("DATA:", err.response?.data);
-        throw err; // Ném lỗi để component có thể xử lý và hiển thị thông báo lỗi
-    }
-};
-        
-export const registerUser = async (user, dispatch, navigate) => {
-    dispatch(registerStart());
-    try {
-        // Gọi API đăng ký người dùng
-        const res = await api.sendData(`${baseURL}/auth/signup`, user);
-        // Cập nhật state trong Redux
-        dispatch(registerSuccess(res.data));
-        navigate("/sign-in");
-        console.log("Register success")
-    } catch (err) {
-        dispatch(registerFailure());
-        console.log("Register failed")
-        console.log("DATA:", err.response?.data);
-        throw err; // Ném lỗi để component có thể xử lý và hiển thị thông báo lỗi
-    }
-}
-export const logoutUser = async (user, dispatch) => {
-    // dispatch action logoutStart để cập nhật state khi bắt đầu đăng xuất
-    dispatch(logoutStart());
-    try {
-    // Gọi API đăng xuất người dùng
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
-    // Cập nhật state trong Redux
-    dispatch(logoutSuccess());
-    } catch (err) {
-        console.log("Logout failed")
-        console.log("DATA:", err.response?.data);
-        dispatch(logoutFailure());
-        throw err; // Ném lỗi để component có thể xử lý và hiển thị thông báo lỗi
-    }
-};
-export const sendEmail = async (data, dispatch) => {
-    dispatch(sendEmailStart());
-    // Gọi API gửi email OTP
-    try {
-        const res = await axios.post(
-            `${baseURL}/auth/send-email`,
-            data
-        );
-        dispatch(sendEmailSuccess());
-        return res.data;
-    } catch (err) {
-        dispatch(sendEmailFailure());
-        console.log("Send email failed");
-        console.log("DATA:", err.response?.data);
+        console.log("Login failed");
+        console.log(err.response?.data);
         throw err;
     }
 };
-export const verifyOtp = async (data) => {
-    return await axios.post(`${baseURL}/auth/verify-otp`, data);
-};
-export const changePassword = async (data, dispatch) => {
-    // Gọi API đổi mật khẩu
-    dispatch(changePasswordStart());
+
+
+// REGISTER
+export const registerUser = async (user, dispatch, navigate) => {
+
+    dispatch(registerStart());
+
     try {
-        const res = await axios.post(
-            `${baseURL}/auth/forgot-password`,
+
+        const res = await api.sendData(
+            "/auth/signup",
+            user
+        );
+
+        dispatch(registerSuccess(res));
+
+        navigate("/sign-in");
+
+    } catch (err) {
+
+        dispatch(registerFailure());
+
+        console.log(err.response?.data);
+
+        throw err;
+    }
+};
+
+
+// SEND EMAIL
+export const sendEmail = async (data,dispatch) => {
+    dispatch(sendEmailStart());
+    try {
+        const res = await api.sendData(
+            "/auth/send-email",
             data
         );
-        dispatch(changePasswordSuccess());
-        return res.data;
+        dispatch(sendEmailSuccess());
+        return res;
     } catch (err) {
+        dispatch(sendEmailFailure());
+        console.log(err);
+        console.log(err.response);
+        console.log(err.response?.data);
+        throw err;
+    }
+};
+
+
+// VERIFY OTP
+export const verifyOtp = async (data, dispatch) => {
+    dispatch(verifyOtpStart());
+      try {
+
+        const res = await api.sendData(
+            "/auth/verify-otp",
+            data
+        );
+
+        dispatch(verifyOtpSuccess());
+
+        return res;
+
+    } catch (err) {
+
+        dispatch(verifyOtpFailure());
+
+        console.log(err.response?.data);
+
+        throw err;
+    }
+};
+
+
+// CHANGE PASSWORD
+export const changePassword = async (
+    data,
+    dispatch
+) => {
+
+    dispatch(changePasswordStart());
+
+    try {
+
+        const res = await api.sendData(
+            "/auth/forgot-password",
+            data
+        );
+
+        dispatch(changePasswordSuccess());
+
+        return res;
+
+    } catch (err) {
+
         dispatch(changePasswordFailure());
-        console.log("Change password failed");
-        console.log("DATA:", err.response?.data);
+
+        console.log(err.response?.data);
+
         throw err;
     }
 };

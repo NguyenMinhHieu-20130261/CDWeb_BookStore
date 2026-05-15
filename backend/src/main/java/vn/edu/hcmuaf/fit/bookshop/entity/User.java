@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -33,10 +34,10 @@ public class User {
     @JoinColumn(name = "role_id")
     private Role role;
 
-    // @OneToMany(mappedBy = "user",
-    //         cascade = CascadeType.ALL,
-    //         orphanRemoval = true)
-    // private List<Address> addresses;
+    @OneToMany(mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<Address> addresses;
 
     @OneToOne(mappedBy = "user",
             cascade = CascadeType.ALL,
@@ -54,11 +55,14 @@ public class User {
     @Column(name = "is_locked")
     private Boolean isLocked = false;
 
-    private String otp;
-
-    @Column(name = "otp_expired")
-    private Date otpExpired;
-
+    @OneToMany(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @JsonIgnore
+    private List<OtpVerification> otpVerifications;
+    
     @PrePersist
     protected void onCreate() {
         createdAt = new Date();
