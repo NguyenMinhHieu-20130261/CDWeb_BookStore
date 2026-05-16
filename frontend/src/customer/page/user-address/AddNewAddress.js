@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Breadcrumb from "../../components/general/Breadcrumb";
 import LeftSideBar from "../my-account/sub-components/LeftSideBar";
+import { useSelector } from "react-redux";
+import api from "../../../service/ApiService";
 
 const AddNewAddress = () => {
     const navigate = useNavigate();
+    const { user } = useSelector((state) => state.auth);
 
-    // 👉 State cơ bản giữ lại để UI hoạt động
     const [fullName, setFullName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [hnumSname, setHnumSname] = useState('');

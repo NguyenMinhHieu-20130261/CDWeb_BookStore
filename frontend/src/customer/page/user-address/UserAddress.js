@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Breadcrumb from "../../components/general/Breadcrumb";
 import LeftSideBar from "../user-account/sub-components/LeftSideBar";
@@ -7,31 +8,37 @@ import "../../assets/css/user-address.css";
 
 const UserAddress = () => {
 
-    const [addresses] = useState([
-        {
-            id: 1,
-            fullName: "Nguyễn Văn A",
-            phoneNumber: "0912345678",
-            provinceCity: "TP. Hồ Chí Minh",
-            countyDistrict: "Quận 1",
-            wardCommune: "Phường Bến Nghé",
-            hnumSname: "123 Lê Lợi"
-        },
-        {
-            id: 2,
-            fullName: "Trần Thị B",
-            phoneNumber: "0987654321",
-            provinceCity: "Hà Nội",
-            countyDistrict: "Quận Ba Đình",
-            wardCommune: "Phường Kim Mã",
-            hnumSname: "45 Kim Mã"
-        }
-    ]);
+    const [addresses, setAddresses] = useState([]);
+    const user = useSelector((state) => state.auth.login.currentUser  );
+    const [loading, setLoading] = useState(true);
 
-    // 👉 fake function để tránh lỗi props
-    const fakeUpdateAddresses = () => {
-        console.log("Mock update address");
-    };
+    useEffect(() => {
+        const fetchAddresses = async () => {
+            if (!user?.id){
+            console.log("User ID không tồn tại");
+            return;
+            }
+            setLoading(true);
+            try {
+                const res = await fetch(
+                    `http://localhost:8080/api/address/${user.id}`
+                );
+                if (!res.ok) {
+                    throw new Error("lỗi tải địa chỉ");
+                }
+                const data = await res.json();
+                console.log("ADDRESS:", data);
+                setAddresses(data);
+
+            } catch (error) {
+                console.log("Lỗi",  error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchAddresses();
+
+    }, [user?.id]);
 
     return (
         <>
@@ -60,21 +67,24 @@ const UserAddress = () => {
                         <div style={{ padding: "12px 10px 0" }}>
                             <div className="list-title">Địa chỉ</div>
 
-                            {addresses.length > 0 ? (
-                                addresses.map((addressInfo) => (
-                                    <AddressItem
-                                        key={addressInfo.id}
-                                        address={addressInfo}
-                                        updateAddresses={fakeUpdateAddresses}
-                                    />
-                                ))
+                            {loading?(
+                                <div className="text-center py-3">Đang tải...</div>
+                            ):addresses.length > 0 ? (
+                                addresses.map((address) => {
+                                    console.log("Địa chỉ đang render:", address);
+                                    return (
+                                        <AddressItem
+                                            key={address.id}
+                                            address={address}
+                                        />
+                                    );
+                                })
                             ) : (
                                 <div className="text-center">
                                     Bạn chưa có địa chỉ nào. Hãy thêm địa chỉ mới.
                                 </div>
                             )}
                         </div>
-
                     </div>
                 </div>
             </div>

@@ -31,17 +31,17 @@ public class Address {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @Column(name = "hnum_sname")
+    @Column(name = "detail_adrs")
     private String hnumSname;
 
-    @Column(name = "ward_commune")
-    private String wardCommune;
-
-    @Column(name = "province_city")
+    @Column(name = "province")
     private String provinceCity;
 
-    @Column(name = "county_district")
+    @Column(name = "district")
     private String countyDistrict;
+
+    @Column(name = "ward")
+    private String wardCommune;
 
     @Column(name = "ward_code")
     private String wardCode;
