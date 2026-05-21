@@ -28,17 +28,17 @@ public class SecurityConfig {
             )
             .formLogin(AbstractHttpConfigurer::disable)
             .httpBasic(AbstractHttpConfigurer::disable)
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/category/**").permitAll()
-                .requestMatchers("/api/userinfo/**").permitAll()
-                .requestMatchers("/api/address/**").permitAll()
-                .anyRequest().authenticated()
-            );
             // .authorizeHttpRequests(auth -> auth
-            //     .anyRequest().permitAll()
+            //     .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+            //     .requestMatchers("/api/auth/**").permitAll()
+            //     .requestMatchers("/api/category/**").permitAll()
+            //     .requestMatchers("/api/userinfo/**").permitAll()
+            //     .requestMatchers("/api/address/**").permitAll()
+            //     .anyRequest().authenticated()
             // );
+            .authorizeHttpRequests(auth -> auth
+                .anyRequest().permitAll()
+            );
 
         return http.build();
     }

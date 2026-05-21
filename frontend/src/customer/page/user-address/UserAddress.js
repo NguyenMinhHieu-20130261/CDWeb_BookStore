@@ -5,28 +5,28 @@ import Breadcrumb from "../../components/general/Breadcrumb";
 import LeftSideBar from "../user-account/sub-components/LeftSideBar";
 import AddressItem from "./sub-components/AddressItem";
 import "../../assets/css/user-address.css"; 
+import api from "../../../service/ApiService";
 
 const UserAddress = () => {
-
     const [addresses, setAddresses] = useState([]);
-    const user = useSelector((state) => state.auth.login.currentUser  );
     const [loading, setLoading] = useState(true);
+    // Lấy thông tin user từ Redux store hoặc localStorage
+    const reduxUser = useSelector((state) => state.auth.login.currentUser);
+    // Nếu không tìm thấy user trong Redux, thử lấy từ localStorage
+    const user = reduxUser || JSON.parse(localStorage.getItem("user"));
+     
 
     useEffect(() => {
         const fetchAddresses = async () => {
             if (!user?.id){
             console.log("User ID không tồn tại");
             return;
-            }
+            } 
             setLoading(true);
             try {
-                const res = await fetch(
-                    `http://localhost:8080/api/address/${user.id}`
+                const data = await api.fetchData(
+                    `/address/${user.id}`
                 );
-                if (!res.ok) {
-                    throw new Error("lỗi tải địa chỉ");
-                }
-                const data = await res.json();
                 console.log("ADDRESS:", data);
                 setAddresses(data);
 
@@ -53,7 +53,7 @@ const UserAddress = () => {
                         <div className="d-flex align-items-center justify-content-between address-title-div">
                             <h4>Địa chỉ của tôi</h4>
 
-                            <Link to={"/user/address/new"}>
+                            <Link to={"/user/address/add"}>
                                 <button className="button-solid button-solid--primary">
                                     <div className="d-flex align-items-center">
                                         <i className="fa-regular fa-plus" style={{ marginRight: "10px" }}></i>
