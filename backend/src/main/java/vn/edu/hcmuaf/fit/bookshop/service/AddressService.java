@@ -6,4 +6,5 @@ import vn.edu.hcmuaf.fit.bookshop.entity.Address;
 
 public interface AddressService {
     List<Address> getUserAddresses(Integer userId);
+    Address saveAddress(Address address);
 } 

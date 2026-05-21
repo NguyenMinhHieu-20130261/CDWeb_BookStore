@@ -21,7 +21,6 @@ const UserAccount = () => {
         year: "2000"
     });
 
-
     const [isChecked, setIsChecked] = useState(false);
 
     useEffect(() => {

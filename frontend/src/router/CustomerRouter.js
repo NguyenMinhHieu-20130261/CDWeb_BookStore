@@ -13,9 +13,10 @@ import NotFound from "../customer/page/not-found/NotFound";
 import ForgotPassword from "../customer/page/forgot-password/ForgotPassword";
 import {Header} from "../customer/components/layout/Header";
 import {Footer} from "../customer/components/layout/Footer";
+
 import UserAccount from "../customer/page/user-account/UserAccount";
 import UserAddress from "../customer/page/user-address/UserAddress";
-// import UserInfo from "../customer/page/user-account/UserInfo";
+import AddNewAddress from "../customer/page/user-address/AddNewAddress";
 import UserOrders from "../customer/page/user-orders/UserOrders";
 import UserWishlist from "../customer/page/user-wishlist/UserWishlist";
 
@@ -45,8 +46,8 @@ const CustomerRouter = () => {
                 {/* user */}
                 <Route path="/user/info" element={<UserAccount/>}/>
                 <Route path="/user/address" element={<UserAddress/>}/>
-                {/* <Route path="/user/address/new" element={<AddNewAddress/>}/>
-                <Route path="/user/address/update/:id" element={<UpdateAddress/>}/> */}
+                <Route path="/user/address/add" element={<AddNewAddress/>}/>
+                {/*<Route path="/user/address/update/:id" element={<UpdateAddress/>}/> */}
                 <Route path="/user/order" element={<UserOrders/>}/>
                 <Route path="/user/wishlist" element={<UserWishlist/>}/>
             </Routes>

@@ -3,15 +3,8 @@ import SideBarItem from "./SideBarItem";
 import { useSelector } from "react-redux";
 
 const LeftSideBar = () => {
-    // const information = {
-    //     userInfo: {
-    //         fullName: "Nguyễn Văn A",
-    //         avatar: "https://via.placeholder.com/100"
-    //     }
-    // };
-    const user = useSelector(
-        state => state.auth.login.currentUser
-    );
+
+    const user = useSelector((state) => state.auth.user);
 
     const fullName =
         user?.userInformation?.fullName ||

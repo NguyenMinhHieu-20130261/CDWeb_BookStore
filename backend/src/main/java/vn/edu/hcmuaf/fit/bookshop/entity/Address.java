@@ -1,7 +1,10 @@
 package vn.edu.hcmuaf.fit.bookshop.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,9 +23,10 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    // @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    @JsonIgnore
     private User user;
 
     @Column(name = "full_name")
@@ -31,17 +35,17 @@ public class Address {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @Column(name = "hnum_sname")
-    private String hnumSname;
+    @Column(name = "detail_adrs")
+    private String detailAdrs;
 
-    @Column(name = "ward_commune")
-    private String wardCommune;
-
-    @Column(name = "province_city")
+    @Column(name = "province")
     private String provinceCity;
 
-    @Column(name = "county_district")
+    @Column(name = "district")
     private String countyDistrict;
+
+    @Column(name = "ward")
+    private String wardCommune;
 
     @Column(name = "ward_code")
     private String wardCode;

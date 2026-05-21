@@ -33,6 +33,7 @@ public class SecurityConfig {
             //     .requestMatchers("/api/auth/**").permitAll()
             //     .requestMatchers("/api/category/**").permitAll()
             //     .requestMatchers("/api/userinfo/**").permitAll()
+            //     .requestMatchers("/api/address/**").permitAll()
             //     .anyRequest().authenticated()
             // );
             .authorizeHttpRequests(auth -> auth
