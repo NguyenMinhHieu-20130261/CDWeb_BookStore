@@ -1,83 +1,86 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Breadcrumb from "../../components/general/Breadcrumb";
 import LeftSideBar from "../user-account/sub-components/LeftSideBar";
+import { useSelector } from "react-redux";
+import api from "../../../service/ApiService";
+import ProvinceService from "../../../service/ProvinceService";
+import PhoneValidService from "../../../service/PhoneValidService";
 
 const UpdateAddress = () => {
     const navigate = useNavigate();
+    const user = useSelector((state) => state.auth.login.currentUser);
 
-    // 👉 Mock data (giả lập dữ liệu từ API)
-    const mockAddress = {
-        fullName: "Nguyễn Văn A",
-        phoneNumber: "0912345678",
-        provinceCity: "TP. Hồ Chí Minh",
-        countyDistrict: "Quận 1",
-        wardCommune: "Phường Bến Nghé",
-        hnumSname: "123 Lê Lợi"
-    };
-
-    // 👉 State (bind UI)
-    const [fullName, setFullName] = useState(mockAddress.fullName);
-    const [phoneNumber, setPhoneNumber] = useState(mockAddress.phoneNumber);
-    const [hnumSname, setHnumSname] = useState(mockAddress.hnumSname);
-
+    const [fullName, setFullName] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [detailAdrs, setDetailAdrs] = useState('');
+    const [provinces, setProvinces] = useState([]);
+    const [districts, setDistricts] = useState([]);
+    const [wards, setWards] = useState([]);
     const [selectedProvince, setSelectedProvince] = useState('');
     const [selectedDistrict, setSelectedDistrict] = useState('');
     const [selectedWard, setSelectedWard] = useState('');
 
     const [error, setError] = useState('');
 
-    // 👉 Mock data select
-    const provinces = [
-        { ProvinceID: 1, ProvinceName: "TP. Hồ Chí Minh" },
-        { ProvinceID: 2, ProvinceName: "Hà Nội" }
-    ];
+    const { isPhoneNumberValid, handleBlur, handlePhoneNumberChange } = PhoneValidService();
 
-    const districts = [
-        { DistrictID: 1, DistrictName: "Quận 1" },
-        { DistrictID: 2, DistrictName: "Quận Bình Thạnh" }
-    ];
-
-    const wards = [
-        { WardCode: "001", WardName: "Phường Bến Nghé" },
-        { WardCode: "002", WardName: "Phường 2" }
-    ];
-
-    // 👉 validate
-    function isPhoneNumberValid(number) {
-        return /^0(3|5|7|8|9)+([0-9]{8})\b/.test(number);
-    }
-
-    const handleBlur = () => {
-        if (phoneNumber !== '' && !isPhoneNumberValid(phoneNumber)) {
-            setError('Số điện thoại không hợp lệ');
-        } else {
-            setError('');
+    const handleButtonUpdate = async (e) => {
+        e.preventDefault();
+        if (!user?.id) {
+            alert("Không tìm thấy user");
+            return;
+        }
+        if (!fullName || !phoneNumber || !detailAdrs ||
+            !selectedProvince ||!selectedDistrict || !selectedWard) {
+            alert("Vui lòng nhập đầy đủ thông tin");
+            return;
+        }
+        if (!isPhoneNumberValid(phoneNumber)) {
+            alert("Số điện thoại không hợp lệ");
+            return;
+        }
+        try {
+            const provinceObj = provinces.find(
+                p => p.code === Number(selectedProvince)
+            );
+            const districtObj = districts.find(
+                d => d.code === Number(selectedDistrict)
+            );
+            const wardObj = wards.find(
+                w => w.code === selectedWard
+            );
+            const payload = {
+                fullName,
+                phoneNumber,
+                detailAdrs: detailAdrs,
+                provinceCity: provinceObj?.name,
+                countyDistrict: districtObj?.name,
+                wardCommune: wardObj?.name,
+                districtId: Number(selectedDistrict),
+                wardCode: selectedWard,
+                isDefault: false,
+                user: {
+                    id: user.id
+                }
+            };
+            const res = await api.sendData(
+                "/address/add",
+                payload
+            );
+            alert("Địa chỉ mới đã được thêm thành công + ");            
+            navigate("/user/address");
+        } catch (error) {
+            console.log("Lỗi khi thêm địa chỉ mới");
         }
     };
-
-    const handlePhoneNumberChange = (e) => {
-        const value = e.target.value;
-        setPhoneNumber(value);
-        if (isPhoneNumberValid(value)) setError('');
-    };
-
-    // 👉 submit fake
-    const handleButtonUpdate = (e) => {
-        e.preventDefault();
-
-        console.log("Mock update:", {
-            fullName,
-            phoneNumber,
-            selectedProvince,
-            selectedDistrict,
-            selectedWard,
-            hnumSname
-        });
-
-        navigate('/user/address');
-    };
-
+    useEffect(() => {
+        const loadProvinces = async () => {
+            const provinces = await ProvinceService.getProvinces();
+            setProvinces(provinces);
+        };
+        loadProvinces();
+    }, []);
     return (
         <>
             <Breadcrumb />
@@ -160,8 +163,8 @@ const UpdateAddress = () => {
                                     </select>
 
                                     <input
-                                        value={hnumSname}
-                                        onChange={(e) => setHnumSname(e.target.value)}
+                                        value={detailAdrs}
+                                        onChange={(e) => setDetailAdrs(e.target.value)}
                                         className="form-control mt-2"
                                         placeholder="Số nhà, tên đường"
                                     />
