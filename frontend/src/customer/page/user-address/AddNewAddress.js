@@ -4,14 +4,9 @@ import Breadcrumb from "../../components/general/Breadcrumb";
 import LeftSideBar from "../user-account/sub-components/LeftSideBar";
 import { useSelector } from "react-redux";
 import api from "../../../service/ApiService";
-
 const AddNewAddress = () => {
     const navigate = useNavigate();
-    // Lấy thông tin user từ Redux store hoặc localStorage
-    const reduxUser = useSelector((state) => state.auth.login.currentUser);
-    // Nếu không tìm thấy user trong Redux, thử lấy từ localStorage
-    const user = reduxUser || JSON.parse(localStorage.getItem("user"));
-
+    const user = useSelector((state) => state.auth.login.currentUser);
     const [fullName, setFullName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
 

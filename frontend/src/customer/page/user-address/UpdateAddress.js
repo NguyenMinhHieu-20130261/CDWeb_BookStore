@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Breadcrumb from "../../components/general/Breadcrumb";
-import LeftSideBar from "../my-account/sub-components/LeftSideBar";
+import LeftSideBar from "../user-account/sub-components/LeftSideBar";
 
 const UpdateAddress = () => {
     const navigate = useNavigate();

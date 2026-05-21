@@ -6,30 +6,25 @@ import LeftSideBar from "../user-account/sub-components/LeftSideBar";
 import AddressItem from "./sub-components/AddressItem";
 import "../../assets/css/user-address.css"; 
 import api from "../../../service/ApiService";
+import LoadingPage from "../../components/general/LoadingPage";
 
 const UserAddress = () => {
     const [addresses, setAddresses] = useState([]);
     const [loading, setLoading] = useState(true);
-    // Lấy thông tin user từ Redux store hoặc localStorage
-    const reduxUser = useSelector((state) => state.auth.login.currentUser);
-    // Nếu không tìm thấy user trong Redux, thử lấy từ localStorage
-    const user = reduxUser || JSON.parse(localStorage.getItem("user"));
-     
-
+    const user = useSelector((state) => state.auth.login.currentUser);
     useEffect(() => {
         const fetchAddresses = async () => {
             if (!user?.id){
-            console.log("User ID không tồn tại");
+                console.log("User ID không tồn tại");
             return;
-            } 
-            setLoading(true);
+            }
             try {
                 const data = await api.fetchData(
                     `/address/${user.id}`
                 );
-                console.log("ADDRESS:", data);
+                // console.log("ADDRESS:", data);
                 setAddresses(data);
-
+                // console.log("USER I123123D:", user?.id);
             } catch (error) {
                 console.log("Lỗi",  error);
             } finally {
@@ -40,6 +35,9 @@ const UserAddress = () => {
 
     }, [user?.id]);
 
+    if (loading) {
+        return <LoadingPage />;
+    }
     return (
         <>
             <Breadcrumb />
@@ -71,7 +69,7 @@ const UserAddress = () => {
                                 <div className="text-center py-3">Đang tải...</div>
                             ):addresses.length > 0 ? (
                                 addresses.map((address) => {
-                                    console.log("Địa chỉ đang render:", address);
+                                    // console.log("Địa chỉ đang render:", address);
                                     return (
                                         <AddressItem
                                             key={address.id}
