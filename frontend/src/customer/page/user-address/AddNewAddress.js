@@ -144,7 +144,7 @@ const AddNewAddress = () => {
                                             setDistricts(data);
                                         }}
                                     >
-                                        <option value="">Chọn tỉnh</option>
+                                        <option value="">Chọn tỉnh/Thành phố</option>
                                         {provinces?.map(p => (
                                             <option key={p.code} value={p.code}>
                                                 {p.name}

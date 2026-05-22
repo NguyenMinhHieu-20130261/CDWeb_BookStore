@@ -32,4 +32,34 @@ public class AddressServiceImpl implements AddressService {
         address.setUser(user);
         return addressRepo.save(address);
     }
+    @Override
+    public Address getAddressById(Integer addressId) {
+        return addressRepo.findById(addressId)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy địa chỉ"));
+    }
+    @Override
+    public Address updateAddress(Integer addressId, Address address) {
+
+        Address existingAddress = getAddressById(addressId);
+
+        existingAddress.setFullName(address.getFullName());
+        existingAddress.setPhoneNumber(address.getPhoneNumber());
+        existingAddress.setDetailAdrs(address.getDetailAdrs());
+
+        existingAddress.setProvinceCity(address.getProvinceCity());
+        existingAddress.setCountyDistrict(address.getCountyDistrict());
+        existingAddress.setWardCommune(address.getWardCommune());
+
+        existingAddress.setDistrictId(address.getDistrictId());
+        existingAddress.setWardCode(address.getWardCode());
+
+        existingAddress.setIsDefault(address.getIsDefault());
+
+        return addressRepo.save(existingAddress);
+    }
+    @Override
+    public void deleteAddress(Integer addressId) {
+        Address address = getAddressById(addressId);
+        addressRepo.delete(address);
+    }
 }

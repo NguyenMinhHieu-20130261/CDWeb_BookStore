@@ -63,8 +63,6 @@ const UserAddress = () => {
 
                         {/* LIST */}
                         <div style={{ padding: "12px 10px 0" }}>
-                            <div className="list-title">Địa chỉ</div>
-
                             {loading?(
                                 <div className="text-center py-3">Đang tải...</div>
                             ):addresses.length > 0 ? (

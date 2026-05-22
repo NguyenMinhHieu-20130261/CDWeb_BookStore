@@ -47,10 +47,10 @@
 }
 
 .address-item-container {
-    display: flex;
+    display: relative;
     background: #fff;
     border-bottom: 1px solid rgba(0, 0, 0, .09);
-    padding: 18px 0 20px;
+    padding: 8px 0 12px;
 }
 
 .address-item-container:last-child {
@@ -186,4 +186,56 @@
 .modal-buttons button:first-child {
     color: #FFFFFF;
     background-color: #ee4d2d;
+}
+/* Edit button */
+.address-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    right: 20px;
+    bottom: 20px;
+}
+
+/* EDIT */
+.btn-edit {
+    border: 1px solid #1677ff;
+    background-color: white;
+    color: #1677ff;
+
+    padding: 8px 18px;
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.btn-edit:hover {
+    background-color: #1677ff;
+    color: white;
+    transform: translateY(-1px);
+}
+
+/* DELETE */
+.btn-delete {
+    border: 1px solid #ff4d4f;
+    background-color: white;
+    color: #ff4d4f;
+
+    padding: 8px 18px;
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.btn-delete:hover {
+    background-color: #ff4d4f;
+    color: white;
+    transform: translateY(-1px);
 }

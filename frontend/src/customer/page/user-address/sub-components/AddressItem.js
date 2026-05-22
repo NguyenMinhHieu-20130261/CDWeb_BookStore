@@ -1,7 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const AddressItem = ({ address }) => {
-
     return (
         <div className="address-item-container">
             <div className="address-item">
@@ -11,7 +11,6 @@ const AddressItem = ({ address }) => {
                     className="d-flex justify-content-between"
                     style={{ marginBottom: "4px" }}
                 >
-
                     <div className="address-card_header">
 
                         <span className="name-span">
@@ -35,13 +34,10 @@ const AddressItem = ({ address }) => {
                     className="address-card_content"
                     style={{ marginBottom: "4px" }}
                 >
-
                     <div className="address-content">
-
                         <div>
-                            {address.hnumSname}
+                            {address.detailAdrs},
                         </div>
-
                         <div>
                             {address.wardCommune},
                             {" "}
@@ -62,7 +58,17 @@ const AddressItem = ({ address }) => {
                         </span>
                     </div>
                 )}
+                 <div className="address-actions">
+                    <Link className="btn-edit"
+                        to={`/user/address/update/${address.id}`}
+                    >
+                        ✏️ Sửa
+                    </Link>
 
+                    <button className="btn-delete">
+                        🗑 Xóa
+                    </button>
+                </div>
             </div>
         </div>
     );
