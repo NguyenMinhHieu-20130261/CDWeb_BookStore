@@ -4,14 +4,12 @@ import Breadcrumb from "../../components/general/Breadcrumb";
 import LeftSideBar from "../user-account/sub-components/LeftSideBar";
 import { useSelector } from "react-redux";
 import api from "../../../service/ApiService";
+import ProvinceService from "../../../service/ProvinceService";
+import PhoneValidService from "../../../service/PhoneValidService";
 
 const AddNewAddress = () => {
     const navigate = useNavigate();
-    // Lấy thông tin user từ Redux store hoặc localStorage
-    const reduxUser = useSelector((state) => state.auth.login.currentUser);
-    // Nếu không tìm thấy user trong Redux, thử lấy từ localStorage
-    const user = reduxUser || JSON.parse(localStorage.getItem("user"));
-
+    const user = useSelector((state) => state.auth.login.currentUser);
     const [fullName, setFullName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
 
@@ -26,23 +24,7 @@ const AddNewAddress = () => {
 
     const [error, setError] = useState('');
 
-    function isPhoneNumberValid(number) {
-        return /^0(3|5|7|8|9)+([0-9]{8})\b/.test(number);
-    }
-    const handleBlur = () => {
-        if (phoneNumber !== '' && !isPhoneNumberValid(phoneNumber)) {
-            setError('Số điện thoại không hợp lệ');
-        } else {
-            setError('');
-        }
-    };
-    const handlePhoneNumberChange = (e) => {
-        const value = e.target.value;
-        setPhoneNumber(value);
-        if (isPhoneNumberValid(value)) {
-            setError('');
-        }
-    };
+    const { isPhoneNumberValid, handleBlur, handlePhoneNumberChange } = PhoneValidService();
 
     const handleButtonSave = async (e) => {
         e.preventDefault();
@@ -89,68 +71,18 @@ const AddNewAddress = () => {
                 "/address/add",
                 payload
             );
-            // console.log("DATA SAVE:", res);
             alert("Địa chỉ mới đã được thêm thành công + ");            
             navigate("/user/address");
         } catch (error) {
-            // console.log("ERROR:", error);
-            // console.log("USER ID:", user?.id);
             console.log("Lỗi khi thêm địa chỉ mới");
         }
     };
-    const fetchProvinces = async () => {
-        try {
-
-            const res = await fetch(
-                "https://provinces.open-api.vn/api/p/"
-            );
-
-            const data = await res.json();
-
-            setProvinces(data);
-
-        } catch (error) {
-
-            console.log(error);
-
-        }
-    };
-    const fetchWards = async (districtCode) => {
-        try {
-
-            const res = await fetch(
-                `https://provinces.open-api.vn/api/d/${districtCode}?depth=2`
-            );
-
-            const data = await res.json();
-
-            setWards(data.wards || []);
-
-        } catch (error) {
-
-            console.log(error);
-
-        }
-    };
-    const fetchDistricts = async (provinceCode) => {
-        try {
-
-            const res = await fetch(
-                `https://provinces.open-api.vn/api/p/${provinceCode}?depth=2`
-            );
-
-            const data = await res.json();
-
-            setDistricts(data.districts || []);
-
-        } catch (error) {
-
-            console.log(error);
-
-        }
-    };
     useEffect(() => {
-        fetchProvinces();
+        const loadProvinces = async () => {
+            const provinces = await ProvinceService.getProvinces();
+            setProvinces(provinces);
+        };
+        loadProvinces();
     }, []);
     return (
         <>
@@ -205,12 +137,14 @@ const AddNewAddress = () => {
                                     <label>Tỉnh/Thành phố:</label>
                                    <select
                                         className="pdw"
-                                        onChange={(e) => {
-                                            setSelectedProvince(e.target.value);
-                                            fetchDistricts(e.target.value);
+                                        onChange={async (e) => {
+                                            const value = e.target.value;
+                                            setSelectedProvince(value);
+                                            const data = await ProvinceService.getDistricts(value);
+                                            setDistricts(data);
                                         }}
                                     >
-                                        <option value="">Chọn tỉnh</option>
+                                        <option value="">Chọn tỉnh/Thành phố</option>
                                         {provinces?.map(p => (
                                             <option key={p.code} value={p.code}>
                                                 {p.name}
@@ -221,11 +155,11 @@ const AddNewAddress = () => {
                                     <label>Quận/Huyện:</label>
                                     <select
                                         className="pdw"
-                                        onChange={(e) => {
-
-                                            setSelectedDistrict(e.target.value);
-
-                                            fetchWards(e.target.value);
+                                        onChange={async (e) => {
+                                            const value = e.target.value;
+                                            setSelectedDistrict(value);
+                                            const data = await ProvinceService.getWards(value);
+                                            setWards(data);
                                         }}
                                     >
                                         <option value="">Chọn huyện</option>
@@ -239,7 +173,10 @@ const AddNewAddress = () => {
                                     <label>Phường/Xã:</label>
                                     <select
                                         className="pdw"
-                                        onChange={(e) => setSelectedWard(e.target.value)}
+                                        onChange={async (e) => {
+                                            const value = e.target.value;
+                                            setSelectedWard(value);
+                                        }}
                                     >
                                         <option value="">Chọn xã</option>
                                         {wards?.map(w => (

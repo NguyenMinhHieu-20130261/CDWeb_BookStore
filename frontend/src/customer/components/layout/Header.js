@@ -26,12 +26,12 @@ export const Header = () => {
                 const res = await fetch("http://localhost:8080/api/category/all");
 
                 const data = await res.json();
-                // console.log("CATEGORY API RESPONSE:", data);
                 setCategories(data);
+                // console.log("data", data);
                 // Lọc ra danh mục cha
                 const parents = data.filter(c => c.parentId === null);
+                // console.log("parents", parents);
                 setParentCategories(parents);
-
             } catch (error) {
                 console.error("Load category error:", error);
             }
@@ -44,8 +44,6 @@ export const Header = () => {
         localStorage.removeItem("token");
         dispatch(logoutSuccess());   
         navigate("/home");
-        // Load lại trang để cập nhật giao diện sau khi logout
-        window.location.reload();
     };
     // Lấy danh mục con
     const getChildren = (parentId) => {
@@ -162,19 +160,6 @@ export const Header = () => {
                                 <nav className="header__menu">
                                     <ul>
                                         <li><Link to={"/home"}>Trang Chủ</Link></li>
-                                        {/* <li><Link to={"/product-list"}>Danh mục sách</Link>
-                                            <ul className="header__menu__dropdown">
-                                                <li><Link to="">Hài kịch</Link>
-                                                    <ul className="header__menu__dropdown__level2">
-                                                        <li><Link to={""}>Hài Việt</Link></li>
-                                                        <li><Link to={""}>Hài Trung</Link></li>
-                                                        <li><Link to={""}>Hài Hàn</Link></li>
-                                                    </ul>
-                                                </li>
-                                                <li><Link to={""}>Hành động</Link></li>
-                                                <li><Link to={""}>Tình cảm</Link></li>
-                                            </ul>
-                                        </li> */}
                                         <li>
                                             <Link to={"/product-list"}>Danh mục sách</Link>
                                             <ul className="header__menu__dropdown">

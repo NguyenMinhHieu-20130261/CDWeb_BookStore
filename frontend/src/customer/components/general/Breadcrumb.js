@@ -14,6 +14,8 @@ const Breadcrumb = () => {
         '/contact': 'Liên hệ',
         '/cart': 'Giỏ hàng',
         '/user/address': 'Địa chỉ của tôi',
+        '/user/address/update': 'Cập nhật địa chỉ',
+        '/user/address/add': 'Thêm địa chỉ mới',
         '/user/info': 'Thông tin cá nhân',
         '/user/order': 'Đơn hàng của tôi',
         '/user/wishlist': 'Sản phẩm yêu thích',

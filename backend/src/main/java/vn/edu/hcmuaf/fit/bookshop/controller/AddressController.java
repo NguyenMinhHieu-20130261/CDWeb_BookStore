@@ -17,17 +17,31 @@ public class AddressController {
 
     @GetMapping("/{userId}")
     public ResponseEntity<?> getUserAddresses(
-            @PathVariable Integer userId) {
-
+        @PathVariable Integer userId) {
         return ResponseEntity.ok(
                 addressService.getUserAddresses(userId)
         );
     }
     @PostMapping("/add")
     public ResponseEntity<?> addAddress(@RequestBody Address address) {
-        System.out.println("USER: " + address.getUser());
-        System.out.println("USER ID: " + address.getUser().getId());
         Address saved = addressService.saveAddress(address);
         return ResponseEntity.ok(saved);
+    }
+    @GetMapping("/update/{id}")
+    public ResponseEntity<?> getAddressById(
+            @PathVariable Integer id
+    ) {
+        return ResponseEntity.ok(
+                addressService.getAddressById(id)
+        );
+    }
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateAddress(
+        @PathVariable Integer id,
+        @RequestBody Address address
+    ) {
+        return ResponseEntity.ok(
+                addressService.updateAddress(id, address)
+        );
     }
 }
