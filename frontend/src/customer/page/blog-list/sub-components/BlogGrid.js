@@ -44,6 +44,7 @@ const BlogGrid = () => {
                                 key={blog.id}
                                 id={blog.id}
                                 title={blog.title}
+                                slug={blog.slug}
                                 image={blog.thumbnail}
                                 content={blog.shortDescription}
                                 created_at={blog.createdAt}

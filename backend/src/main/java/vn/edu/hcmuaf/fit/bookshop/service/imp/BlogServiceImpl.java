@@ -23,4 +23,9 @@ public class BlogServiceImpl implements BlogService {
     public List<Blog> getActiveBlogsByCategory(Integer categoryId) {
         return blogRepo.findByCategoryIdAndStatusOrderByCreatedAtDesc(categoryId, 1);
     }
+    @Override
+    public Blog getBlogDetail(String slug) {
+        return blogRepo.findBySlugAndStatus(slug, 1)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy bài viết"));
+    }
 }
