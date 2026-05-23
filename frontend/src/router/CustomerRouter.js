@@ -36,8 +36,8 @@ const CustomerRouter = () => {
                 <Route path="/product-list" element={<ProductList/>}/>
                 <Route path="/product-detail" element={<ProductDetail/>}/>
                 {/* blog */}
-                <Route path="/blog-list" element={<BlogList/>}/>
-                <Route path="/blog-detail" element={<BlogDetail/>}/>
+                <Route path="/blog-list/:id" element={<BlogList/>}/>
+                <Route path="/blog-detail/:slug" element={<BlogDetail/>}/> 
                 {/* another */}
                 <Route path="/contact" element={<Contact/>}/>
                 <Route path="/not-found" element={<NotFound/>}/>

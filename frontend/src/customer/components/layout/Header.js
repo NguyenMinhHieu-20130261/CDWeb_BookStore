@@ -187,7 +187,7 @@ export const Header = () => {
                                                 })}
                                             </ul>
                                         </li>
-                                        <li><Link to={"/blog-list"}>Tin Tức</Link></li>
+                                        <li><Link to={"/blog-list/all"}>Tin Tức</Link></li>
                                         <li><Link to={"/contact"}>Liên Hệ</Link></li>
                                     </ul>
                                 </nav>
