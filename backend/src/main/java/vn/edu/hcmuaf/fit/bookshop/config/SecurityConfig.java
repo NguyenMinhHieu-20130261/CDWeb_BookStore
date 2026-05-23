@@ -34,6 +34,8 @@ public class SecurityConfig {
                 .requestMatchers("/api/category/**").permitAll()
                 .requestMatchers("/api/userinfo/**").permitAll()
                 .requestMatchers("/api/address/**").permitAll()
+                .requestMatchers("/api/blog-cate/**").permitAll()
+                .requestMatchers("/api/blogs/**").permitAll()
                 .anyRequest().authenticated()
             );
             // .authorizeHttpRequests(auth -> auth

@@ -161,21 +161,20 @@ export const Header = () => {
                                     <ul>
                                         <li><Link to={"/home"}>Trang Chủ</Link></li>
                                         <li>
-                                            <Link to={"/product-list"}>Danh mục sách</Link>
+                                            <Link to={`/product-list/all`}>Danh mục sách</Link>
                                             <ul className="header__menu__dropdown">
                                                 {parentCategories.map(parent => {
                                                     const children = getChildren(parent.id);
-
                                                     return (
                                                         <li key={parent.id}>
-                                                            <Link to={`/category/${parent.id}`}>
+                                                            <Link to={`/product-list/${parent.id}`}>
                                                                 {parent.name}
                                                             </Link>
                                                             {children.length > 0 && (
                                                                 <ul className="header__menu__dropdown__level2">
                                                                     {children.map(child => (
                                                                         <li key={child.id}>
-                                                                            <Link to={`/category/${child.id}`}>
+                                                                            <Link to={`/product-list/${child.id}`}>
                                                                                 {child.name}
                                                                             </Link>
                                                                         </li>
@@ -187,7 +186,7 @@ export const Header = () => {
                                                 })}
                                             </ul>
                                         </li>
-                                        <li><Link to={"/blog-list"}>Tin Tức</Link></li>
+                                        <li><Link to={"/blog-list/all"}>Tin Tức</Link></li>
                                         <li><Link to={"/contact"}>Liên Hệ</Link></li>
                                     </ul>
                                 </nav>
