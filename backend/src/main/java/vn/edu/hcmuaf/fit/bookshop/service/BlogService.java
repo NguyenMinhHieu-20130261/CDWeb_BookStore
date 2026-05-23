@@ -1,5 +1,11 @@
 package vn.edu.hcmuaf.fit.bookshop.service;
 
-public class BlogService {
-    
+import vn.edu.hcmuaf.fit.bookshop.entity.Blog;
+
+import java.util.List;
+
+public interface BlogService {
+
+    List<Blog> getActiveBlogs();
+
 }

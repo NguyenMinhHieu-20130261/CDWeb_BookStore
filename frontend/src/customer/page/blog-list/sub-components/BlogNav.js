@@ -10,7 +10,7 @@ const BlogNav = () => {
         const loadData = async () => {
             try {
                 const data = await api.fetchData("/blog-cate");
-                console.log("BlogCate:", data);
+                // console.log("BlogCate:", data);
                 setBlogCate(data);
             } catch (error) {
                 console.error("Load blogcate error:", error);

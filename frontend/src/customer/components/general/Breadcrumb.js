@@ -25,13 +25,21 @@ const Breadcrumb = () => {
 
     };
 
-    const pathNames = location.pathname.split('/').filter(Boolean);
+    const getPathName = (path) => pathNameMap[path] || '';
 
-    const buildLink = (index) =>
-        '/' + pathNames.slice(0, index + 1).join('/');
+    const pathNames = location.pathname.split('/').filter(path => path !== '');
 
-    const getPathName = (path) =>
-        pathNameMap[path] || path;
+    let currentLink = '';
+
+    // Lọc và tạo một mảng mới chỉ chứa các mục có tên trong pathNameMap
+    const filteredPathNames = pathNames.reduce((acc, path, index) => {
+        currentLink += `/${path}`;
+        const name = getPathName(currentLink);
+        if (name) {
+            acc.push({path, name, fullLink: currentLink});
+        }
+        return acc;
+    }, []);
 
     return (
         <div className="page-header border-bottom">
@@ -42,27 +50,22 @@ const Breadcrumb = () => {
                             Trang chủ
                         </Link>
 
-                        {pathNames.map((_, index) => {
-                            const currentLink = buildLink(index);
-
-                            return (
-                                <React.Fragment key={index}>
-                                    <span className="breadcrumb-separator mx-2">
-                                        <i className="fas fa-angle-right"></i>
+                        {filteredPathNames.map((item, index) => (
+                            <React.Fragment key={index}>
+                                <span className="breadcrumb-separator mx-2">
+                                    <i className="fas fa-angle-right"></i>
+                                </span>
+                                {index !== filteredPathNames.length - 1 ? (
+                                    <Link className="h-primary" to={item.fullLink}>
+                                        {item.name}
+                                    </Link>
+                                ) : (
+                                    <span>
+                                        {item.name}
                                     </span>
-
-                                    {index !== pathNames.length - 1 ? (
-                                        <Link className="h-primary" to={currentLink}>
-                                            {getPathName(currentLink)}
-                                        </Link>
-                                    ) : (
-                                        <span>
-                                            {getPathName(currentLink)}
-                                        </span>
-                                    )}
-                                </React.Fragment>
-                            );
-                        })}
+                                )}
+                            </React.Fragment>
+                        ))}
                     </nav>
                 </div>
             </div>

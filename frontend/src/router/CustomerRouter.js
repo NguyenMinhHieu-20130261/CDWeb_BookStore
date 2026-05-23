@@ -33,7 +33,7 @@ const CustomerRouter = () => {
                 <Route path="/sign-up" element={<SignUp/>}/>
                 <Route path="/forgot-password" element={<ForgotPassword/>}/>
                 {/* product */}
-                <Route path="/product-list" element={<ProductList/>}/>
+                <Route path="/product-list/:id" element={<ProductList/>}/>
                 <Route path="/product-detail" element={<ProductDetail/>}/>
                 {/* blog */}
                 <Route path="/blog-list/:id" element={<BlogList/>}/>
