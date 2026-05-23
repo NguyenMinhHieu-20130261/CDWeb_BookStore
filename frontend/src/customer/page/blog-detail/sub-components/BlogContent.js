@@ -20,24 +20,20 @@ const BlogContent = ({ blog }) => {
                                 Blog
                             </Link>
                         </div>
-
                         <h6 className="font-size-10 mb-3 crop-text-2 font-weight-medium text-lh-1dot4">
                             {blog.title}
                         </h6>
-
                         <div className="single-post-meta text-secondary-gray-700">
                             <span className="post-date text-secondary-gray-700">
                                 {formatDate(blog.createdAt)}
                             </span>
                         </div>
                     </div>
-
                     {blog.shortDescription && (
                         <p className="text-lh-1dot72">
                             <strong>{blog.shortDescription}</strong>
                         </p>
                     )}
-
                     <div
                         className="text-lh-1dot72 mb-4"
                         dangerouslySetInnerHTML={{ __html: blog.content }}
