@@ -7,4 +7,5 @@ import java.util.List;
 public interface BlogService {
     List<Blog> getActiveBlogs();
     List<Blog> getActiveBlogsByCategory(Integer categoryId);
+    Blog getBlogDetail(String slug);
 }
