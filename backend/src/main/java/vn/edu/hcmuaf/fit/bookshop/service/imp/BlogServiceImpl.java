@@ -18,4 +18,9 @@ public class BlogServiceImpl implements BlogService {
     public List<Blog> getActiveBlogs() {
         return blogRepo.findByStatusOrderByCreatedAtDesc(1);
     }
+
+    @Override
+    public List<Blog> getActiveBlogsByCategory(Integer categoryId) {
+        return blogRepo.findByCategoryIdAndStatusOrderByCreatedAtDesc(categoryId, 1);
+    }
 }

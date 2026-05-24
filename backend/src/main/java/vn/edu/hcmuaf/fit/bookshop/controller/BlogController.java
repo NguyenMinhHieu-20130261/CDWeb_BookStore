@@ -20,4 +20,8 @@ public class BlogController {
     public ResponseEntity<List<Blog>> getBlogs() {
         return ResponseEntity.ok(blogService.getActiveBlogs());
     }
+     @GetMapping("/{categoryId}")
+    public ResponseEntity<List<Blog>> getBlogsByCategory(@PathVariable Integer categoryId) {
+        return ResponseEntity.ok(blogService.getActiveBlogsByCategory(categoryId));
+    }
 }

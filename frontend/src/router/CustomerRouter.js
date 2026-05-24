@@ -33,10 +33,10 @@ const CustomerRouter = () => {
                 <Route path="/sign-up" element={<SignUp/>}/>
                 <Route path="/forgot-password" element={<ForgotPassword/>}/>
                 {/* product */}
-                <Route path="/product-list/:id" element={<ProductList/>}/>
-                <Route path="/product-detail" element={<ProductDetail/>}/>
+                <Route path="/product-list/:cateId" element={<ProductList/>}/>
+                <Route path="/product-detail/:id" element={<ProductDetail/>}/>
                 {/* blog */}
-                <Route path="/blog-list/:id" element={<BlogList/>}/>
+                <Route path="/blog-list/:cateId" element={<BlogList/>}/>
                 <Route path="/blog-detail/:slug" element={<BlogDetail/>}/> 
                 {/* another */}
                 <Route path="/contact" element={<Contact/>}/>

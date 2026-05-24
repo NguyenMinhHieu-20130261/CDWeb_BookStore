@@ -43,7 +43,8 @@ export const Header = () => {
         localStorage.removeItem("user");
         localStorage.removeItem("token");
         dispatch(logoutSuccess());   
-        navigate("/home");
+        navigate("/");
+        window.location.reload();
     };
     // Lấy danh mục con
     const getChildren = (parentId) => {

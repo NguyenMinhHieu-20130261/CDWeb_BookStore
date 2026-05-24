@@ -1,10 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import api from "../../../../service/ApiService";
 
 const BlogNav = () => {
-    const [blogCate, setBlogCate] = React.useState([]);
-    const [selectedCateId, setSelectedCateId] = useState(null);
+    const [blogCate, setBlogCate] = useState([]);
+    const {cateId} = useParams(); 
 
     useEffect(() => {
         const loadData = async () => {
@@ -18,9 +18,6 @@ const BlogNav = () => {
         };
         loadData();
     }, []);
-     const handleCategoryClick = (categoryId) => {
-        setSelectedCateId(categoryId);
-    };
     return (
         <ul
             className="nav justify-content-md-center nav-gray-700 mb-5 flex-nowrap flex-md-wrap overflow-auto overflow-md-visible"
@@ -32,12 +29,9 @@ const BlogNav = () => {
                 <Link
                     to={"/blog-list/all"}
                     id="tab-all"
-                    className={`nav-link px-0 ${selectedCateId === null ? "active" : ""}`}
+                    className={`nav-link px-0 ${!cateId || cateId === "all" ? "active" : ""}`}
                     data-toggle="tab"
                     aria-controls="all"
-                    onClick={(e) => {
-                        handleCategoryClick(null);
-                    }}
                 >
                     All
                 </Link>
@@ -49,12 +43,9 @@ const BlogNav = () => {
                     <Link
                         id={`tab-${category.id}`}
                         to={`/blog-list/${category.id}`}
-                        className={`nav-link px-0 ${selectedCateId === category.id ? "active" : ""}`}
+                        className={`nav-link px-0 ${String(cateId) === String(category.id) ? "active" : ""}`}
                         role="tab"
                         aria-controls={`cat-${category.id}`} aria-selected="false"
-                        onClick={(e) => {
-                            handleCategoryClick(category.id);
-                        }}
                     >
                         {category.name}
                     </Link>
