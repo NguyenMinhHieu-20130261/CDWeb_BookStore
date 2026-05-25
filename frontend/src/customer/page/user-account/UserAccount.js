@@ -5,10 +5,12 @@ import LeftSideBar from "./sub-components/LeftSideBar";
 import { useSelector,useDispatch  } from "react-redux";
 import { loginSuccess } from "../../../Store/AuthSlice";
 import api from "../../../service/ApiService";
+import { useNavigate } from "react-router-dom";
 
 const UserAccount = () => {
     const user = useSelector(state => state.auth.login.currentUser);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     // Form data state
     const [userData, setUserData] = useState({
         fullName: "",
@@ -65,6 +67,41 @@ const UserAccount = () => {
         };
         fetchUserInfo();
     }, [user?.id, dispatch]);
+    // Xử lý cập nhật thông tin người dùng
+    const handleUpdateUserInfo = async (e) => {
+        e.preventDefault();
+        if (!user || !user.id) {
+            alert("Bạn chưa đăng nhập");
+            return;
+        }
+        const birthday = `${userData.year}-${userData.month}-${userData.day}`;
+
+        const payload = {
+            fullName: userData.fullName,
+            phoneNumber: userData.phoneNumber,
+            gender: userData.gender,
+            birthday: birthday,
+            avatar: userData.avatar
+        };
+
+        try {
+            const res = await api.updateData(`/userinfo/update/${user.id}`, payload);
+
+            const updatedUser = {
+                ...user,
+                userInformation: res.data
+            };
+
+            dispatch(loginSuccess(updatedUser));
+            localStorage.setItem("user", JSON.stringify(updatedUser));
+
+            alert("Cập nhật thông tin thành công");
+            navigate("/user/info");
+        } catch (error) {
+            console.log("Update user info error:", error);
+            alert("Cập nhật thông tin thất bại");
+        }
+    };
 
     return (
         <>
@@ -73,7 +110,7 @@ const UserAccount = () => {
                 <LeftSideBar/>
                 <div className="col-md-9 user-info">
                     <form 
-                    // onSubmit={handleUpdateUserInfo}
+                    onSubmit={handleUpdateUserInfo}
                     >
                         <div className="row border py-3 m-0" style={{borderRadius: "10px"}}>
                             

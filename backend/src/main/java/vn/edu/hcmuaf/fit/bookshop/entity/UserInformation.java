@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -26,7 +27,7 @@ public class UserInformation {
     private String gender;
 
     @Temporal(TemporalType.DATE)
-    private Date birthday;
+    private LocalDate birthday;
 
     private String avatar;
 

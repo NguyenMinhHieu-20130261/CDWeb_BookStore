@@ -25,4 +25,17 @@ public class UserInfoServiceImpl implements UserInfoService {
         return userInfoRepo.findByUser_Username(userName)
                 .orElse(null);
     }
+    @Override
+    public UserInformation updateUserInfo(Integer userId, UserInformation userInfo) {
+    UserInformation existingInfo = getInfoByUserId(userId);
+        if (existingInfo == null) {
+            throw new RuntimeException("Không tìm thấy thông tin người dùng");
+        }
+        existingInfo.setFullName(userInfo.getFullName());
+        existingInfo.setPhoneNumber(userInfo.getPhoneNumber());
+        existingInfo.setGender(userInfo.getGender());
+        existingInfo.setBirthday(userInfo.getBirthday());
+        existingInfo.setAvatar(userInfo.getAvatar());
+        return userInfoRepo.save(existingInfo);
+    }
 }
