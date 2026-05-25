@@ -86,3 +86,28 @@ table td, table th {
     width: 40px;
     margin: 0px 4px;
 }
+.content-container {
+    display: flex;
+    align-items: baseline;
+}
+.page-item.active .page-link:hover {
+    background-color: #161619 !important;
+}
+.content-container > :first-child {
+    flex: 1;
+}
+
+.content-container> :last-child {
+    margin-left: auto;
+    padding: 10px
+}
+@media (min-width: 992px) {
+    .right-sidebar{
+        flex: 0 0 66%;
+        max-width: 66%;
+    }
+}
+.left-sidebar{
+        flex: 0 0 40%;
+        max-width: 40%;
+}

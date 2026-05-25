@@ -1,15 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Breadcrumb from "../../components/general/Breadcrumb";
-import LeftSideBar from "../my-account/sub-components/LeftSideBar";
+import LeftSideBar from "../user-account/sub-components/LeftSideBar";
+import { useSelector } from "react-redux";
+import api from "../../../service/ApiService";
+import ProvinceService from "../../../service/ProvinceService";
+import PhoneValidService from "../../../service/PhoneValidService";
 
 const AddNewAddress = () => {
     const navigate = useNavigate();
-
-    // 👉 State cơ bản giữ lại để UI hoạt động
+    const user = useSelector((state) => state.auth.login.currentUser);
     const [fullName, setFullName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
-    const [hnumSname, setHnumSname] = useState('');
+
+    const [detailAdrs, setDetailAdrs] = useState('');
+    const [provinces, setProvinces] = useState([]);
+    const [districts, setDistricts] = useState([]);
+    const [wards, setWards] = useState([]);
 
     const [selectedProvince, setSelectedProvince] = useState('');
     const [selectedDistrict, setSelectedDistrict] = useState('');
@@ -17,59 +24,66 @@ const AddNewAddress = () => {
 
     const [error, setError] = useState('');
 
-    // 👉 Mock data (fake tỉnh/huyện/xã)
-    const provinces = [
-        { ProvinceID: 1, ProvinceName: "TP. Hồ Chí Minh" },
-        { ProvinceID: 2, ProvinceName: "Hà Nội" }
-    ];
+    const { isPhoneNumberValid, handleBlur, handlePhoneNumberChange } = PhoneValidService();
 
-    const districts = [
-        { DistrictID: 1, DistrictName: "Quận 1" },
-        { DistrictID: 2, DistrictName: "Quận Bình Thạnh" }
-    ];
-
-    const wards = [
-        { WardCode: "001", WardName: "Phường 1" },
-        { WardCode: "002", WardName: "Phường 2" }
-    ];
-
-    // 👉 Validate số điện thoại (giữ lại UI)
-    function isPhoneNumberValid(number) {
-        return /^0(3|5|7|8|9)+([0-9]{8})\b/.test(number);
-    }
-
-    const handleBlur = () => {
-        if (phoneNumber !== '' && !isPhoneNumberValid(phoneNumber)) {
-            setError('Số điện thoại không hợp lệ');
-        } else {
-            setError('');
-        }
-    };
-
-    const handlePhoneNumberChange = (e) => {
-        const value = e.target.value;
-        setPhoneNumber(value);
-        if (isPhoneNumberValid(value)) {
-            setError('');
-        }
-    };
-
-    // 👉 Submit giả (không gọi API)
-    const handleButtonSave = (e) => {
+    const handleButtonSave = async (e) => {
         e.preventDefault();
-        console.log("Mock submit:", {
-            fullName,
-            phoneNumber,
-            selectedProvince,
-            selectedDistrict,
-            selectedWard,
-            hnumSname
-        });
-
-        // 👉 giả lập chuyển trang
-        navigate('/user/address');
+        if (!user?.id) {
+            alert("Không tìm thấy user");
+            // console.log("USER:", user);
+            // console.log("USER ID:", user?.id);
+            return;
+        }
+        if (!fullName || !phoneNumber || !detailAdrs ||
+            !selectedProvince ||!selectedDistrict || !selectedWard) {
+            alert("Vui lòng nhập đầy đủ thông tin");
+            return;
+        }
+        if (!isPhoneNumberValid(phoneNumber)) {
+            alert("Số điện thoại không hợp lệ");
+            return;
+        }
+        try {
+            const provinceObj = provinces.find(
+                p => p.code === Number(selectedProvince)
+            );
+            const districtObj = districts.find(
+                d => d.code === Number(selectedDistrict)
+            );
+            const wardObj = wards.find(
+                w => w.code === selectedWard
+            );
+            const payload = {
+                fullName,
+                phoneNumber,
+                detailAdrs: detailAdrs,
+                provinceCity: provinceObj?.name,
+                countyDistrict: districtObj?.name,
+                wardCommune: wardObj?.name,
+                districtId: Number(selectedDistrict),
+                wardCode: selectedWard,
+                isDefault: false,
+                user: {
+                    id: user.id
+                }
+            };
+            const res = await api.sendData(
+                "/address/add",
+                payload
+            );
+            alert("Địa chỉ mới đã được thêm thành công + ");            
+            navigate("/user/address");
+        } catch (error) {
+            console.log("Lỗi khi thêm địa chỉ mới");
+        }
     };
-
+    useEffect(() => {
+        const loadProvinces = async () => {
+            const provinces = await ProvinceService.getProvinces();
+            setProvinces(provinces);
+        };
+        loadProvinces();
+    }, []);
     return (
         <>
             <Breadcrumb />
@@ -96,7 +110,6 @@ const AddNewAddress = () => {
                                             placeholder="Nhập họ tên"
                                             onChange={(e) => setFullName(e.target.value)}
                                         />
-
                                         <label style={{ marginTop: "10px" }}>Số điện thoại</label>
                                         <input
                                             type="text"
@@ -122,14 +135,19 @@ const AddNewAddress = () => {
                                     <h5>Địa chỉ</h5>
 
                                     <label>Tỉnh/Thành phố:</label>
-                                    <select
+                                   <select
                                         className="pdw"
-                                        onChange={(e) => setSelectedProvince(e.target.value)}
+                                        onChange={async (e) => {
+                                            const value = e.target.value;
+                                            setSelectedProvince(value);
+                                            const data = await ProvinceService.getDistricts(value);
+                                            setDistricts(data);
+                                        }}
                                     >
-                                        <option value="">Chọn tỉnh</option>
-                                        {provinces.map(p => (
-                                            <option key={p.ProvinceID} value={p.ProvinceID}>
-                                                {p.ProvinceName}
+                                        <option value="">Chọn tỉnh/Thành phố</option>
+                                        {provinces?.map(p => (
+                                            <option key={p.code} value={p.code}>
+                                                {p.name}
                                             </option>
                                         ))}
                                     </select>
@@ -137,12 +155,17 @@ const AddNewAddress = () => {
                                     <label>Quận/Huyện:</label>
                                     <select
                                         className="pdw"
-                                        onChange={(e) => setSelectedDistrict(e.target.value)}
+                                        onChange={async (e) => {
+                                            const value = e.target.value;
+                                            setSelectedDistrict(value);
+                                            const data = await ProvinceService.getWards(value);
+                                            setWards(data);
+                                        }}
                                     >
                                         <option value="">Chọn huyện</option>
-                                        {districts.map(d => (
-                                            <option key={d.DistrictID} value={d.DistrictID}>
-                                                {d.DistrictName}
+                                        {districts?.map(d => (
+                                            <option key={d.code} value={d.code}>
+                                                {d.name}
                                             </option>
                                         ))}
                                     </select>
@@ -150,12 +173,15 @@ const AddNewAddress = () => {
                                     <label>Phường/Xã:</label>
                                     <select
                                         className="pdw"
-                                        onChange={(e) => setSelectedWard(e.target.value)}
+                                        onChange={async (e) => {
+                                            const value = e.target.value;
+                                            setSelectedWard(value);
+                                        }}
                                     >
                                         <option value="">Chọn xã</option>
-                                        {wards.map(w => (
-                                            <option key={w.WardCode} value={w.WardCode}>
-                                                {w.WardName}
+                                        {wards?.map(w => (
+                                            <option key={w.code} value={w.code}>
+                                                {w.name}
                                             </option>
                                         ))}
                                     </select>
@@ -164,7 +190,7 @@ const AddNewAddress = () => {
                                         type="text"
                                         className="form-control mt-2"
                                         placeholder="Số nhà, tên đường"
-                                        onChange={(e) => setHnumSname(e.target.value)}
+                                        onChange={(e) => setDetailAdrs(e.target.value)}
                                     />
 
                                     <div className="mt-3 text-center">

@@ -31,8 +31,17 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/api/category/**").permitAll()
+                .requestMatchers("/api/userinfo/**").permitAll()
+                .requestMatchers("/api/address/**").permitAll()
+                .requestMatchers("/api/blog-cate/**").permitAll()
+                .requestMatchers("/api/blogs/**").permitAll()
+                .requestMatchers("/api/blog-detail/**").permitAll()
                 .anyRequest().authenticated()
             );
+            // .authorizeHttpRequests(auth -> auth
+            //     .anyRequest().permitAll()
+            // );
 
         return http.build();
     }

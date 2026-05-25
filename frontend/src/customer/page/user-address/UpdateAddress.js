@@ -1,83 +1,103 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import Breadcrumb from "../../components/general/Breadcrumb";
-import LeftSideBar from "../my-account/sub-components/LeftSideBar";
+import LeftSideBar from "../user-account/sub-components/LeftSideBar";
+import { useSelector } from "react-redux";
+import api from "../../../service/ApiService";
+import ProvinceService from "../../../service/ProvinceService";
+import PhoneValidService from "../../../service/PhoneValidService";
 
 const UpdateAddress = () => {
     const navigate = useNavigate();
-
-    // 👉 Mock data (giả lập dữ liệu từ API)
-    const mockAddress = {
-        fullName: "Nguyễn Văn A",
-        phoneNumber: "0912345678",
-        provinceCity: "TP. Hồ Chí Minh",
-        countyDistrict: "Quận 1",
-        wardCommune: "Phường Bến Nghé",
-        hnumSname: "123 Lê Lợi"
-    };
-
-    // 👉 State (bind UI)
-    const [fullName, setFullName] = useState(mockAddress.fullName);
-    const [phoneNumber, setPhoneNumber] = useState(mockAddress.phoneNumber);
-    const [hnumSname, setHnumSname] = useState(mockAddress.hnumSname);
-
+    const user = useSelector((state) => state.auth.login.currentUser);
+    const { id } = useParams();
+    const [fullName, setFullName] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [detailAdrs, setDetailAdrs] = useState('');
+    const [provinces, setProvinces] = useState([]);
+    const [districts, setDistricts] = useState([]);
+    const [wards, setWards] = useState([]);
     const [selectedProvince, setSelectedProvince] = useState('');
     const [selectedDistrict, setSelectedDistrict] = useState('');
     const [selectedWard, setSelectedWard] = useState('');
 
     const [error, setError] = useState('');
 
-    // 👉 Mock data select
-    const provinces = [
-        { ProvinceID: 1, ProvinceName: "TP. Hồ Chí Minh" },
-        { ProvinceID: 2, ProvinceName: "Hà Nội" }
-    ];
+    const { isPhoneNumberValid, handleBlur, handlePhoneNumberChange } = PhoneValidService();
 
-    const districts = [
-        { DistrictID: 1, DistrictName: "Quận 1" },
-        { DistrictID: 2, DistrictName: "Quận Bình Thạnh" }
-    ];
-
-    const wards = [
-        { WardCode: "001", WardName: "Phường Bến Nghé" },
-        { WardCode: "002", WardName: "Phường 2" }
-    ];
-
-    // 👉 validate
-    function isPhoneNumberValid(number) {
-        return /^0(3|5|7|8|9)+([0-9]{8})\b/.test(number);
-    }
-
-    const handleBlur = () => {
-        if (phoneNumber !== '' && !isPhoneNumberValid(phoneNumber)) {
-            setError('Số điện thoại không hợp lệ');
-        } else {
-            setError('');
+    const handleButtonUpdate = async (e) => {
+        e.preventDefault();
+        if (!user?.id) {
+            alert("Không tìm thấy user");
+            return;
+        }
+        if (!fullName || !phoneNumber || !detailAdrs ||
+            !selectedProvince ||!selectedDistrict || !selectedWard) {
+            alert("Vui lòng nhập đầy đủ thông tin");
+            return;
+        }
+        if (!isPhoneNumberValid(phoneNumber)) {
+            alert("Số điện thoại không hợp lệ");
+            return;
+        }
+        try {
+            const provinceObj = provinces.find(
+                p => p.code === Number(selectedProvince)
+            );
+            const districtObj = districts.find(
+                d => d.code === Number(selectedDistrict)
+            );
+            const wardObj = wards.find(
+                w => w.code === selectedWard
+            );
+            const payload = {
+                fullName,
+                phoneNumber,
+                detailAdrs: detailAdrs,
+                provinceCity: provinceObj?.name,
+                countyDistrict: districtObj?.name,
+                wardCommune: wardObj?.name,
+                districtId: Number(selectedDistrict),
+                wardCode: selectedWard,
+                isDefault: false,
+                user: {
+                    id: user.id
+                }
+            };
+            const res = await api.updateData(
+                `/address/update/${id}`,
+                payload
+            );
+            alert("Địa chỉ đã được cập nhật thành công!");            
+            navigate("/user/address");
+        } catch (error) {
+            console.log("Lỗi khi cập nhật địa chỉ");
+            console.error("Error:", error);
         }
     };
-
-    const handlePhoneNumberChange = (e) => {
-        const value = e.target.value;
-        setPhoneNumber(value);
-        if (isPhoneNumberValid(value)) setError('');
-    };
-
-    // 👉 submit fake
-    const handleButtonUpdate = (e) => {
-        e.preventDefault();
-
-        console.log("Mock update:", {
-            fullName,
-            phoneNumber,
-            selectedProvince,
-            selectedDistrict,
-            selectedWard,
-            hnumSname
-        });
-
-        navigate('/user/address');
-    };
-
+    useEffect(() => {
+        const loadProvinces = async () => {
+            const provinces = await ProvinceService.getProvinces();
+            setProvinces(provinces);
+        };
+        loadProvinces();
+    }, []);
+    useEffect(() => {
+        const loadAddress = async () => {
+            try {
+                const data = await api.fetchData(`/address/update/${id}`);
+                console.log("ADDRESS:", data);
+                setFullName(data.fullName || '');
+                setPhoneNumber(data.phoneNumber || '');
+                setDetailAdrs(data.detailAdrs || '');
+            } catch (error) {
+                console.error("Load address error:", error);
+            }
+        };  
+        if (id) {
+            loadAddress();
+        }
+    }, [id]);
     return (
         <>
             <Breadcrumb />
@@ -97,6 +117,7 @@ const UpdateAddress = () => {
 
                                     <label>Họ và tên</label>
                                     <input
+                                        placeholder="Nhập họ tên"
                                         value={fullName}
                                         onChange={(e) => setFullName(e.target.value)}
                                         className="form-control"
@@ -104,13 +125,13 @@ const UpdateAddress = () => {
 
                                     <label style={{ marginTop: "10px" }}>Số điện thoại</label>
                                     <input
+                                        placeholder="Nhập số điện thoại"
                                         value={phoneNumber}
-                                        onChange={handlePhoneNumberChange}
+                                        onChange={(e) => setPhoneNumber(e.target.value)}
                                         onBlur={handleBlur}
                                         className="form-control"
                                         maxLength={10}
                                     />
-
                                     {error && <div style={{ color: "red" }}>{error}</div>}
                                 </div>
                             </div>
@@ -120,15 +141,23 @@ const UpdateAddress = () => {
                                 <div className="p-3">
                                     <h5>Địa chỉ</h5>
 
-                                    <label>Tỉnh:</label>
+                                    <label>Tỉnh/Thành phố:</label>
                                     <select
                                         className="pdw"
-                                        onChange={(e) => setSelectedProvince(e.target.value)}
+                                        value={selectedProvince}
+                                        onChange={async (e) => {
+                                            const value = e.target.value;
+                                            setSelectedProvince(value);
+                                            const data = await ProvinceService.getDistricts(value);
+                                            setDistricts(data);
+                                            setSelectedDistrict('');
+                                            setSelectedWard('');
+                                        }}
                                     >
-                                        <option value="">Chọn tỉnh</option>
+                                        <option value="">Chọn tỉnh/Thành phố</option>
                                         {provinces.map(p => (
-                                            <option key={p.ProvinceID} value={p.ProvinceID}>
-                                                {p.ProvinceName}
+                                            <option key={p.code} value={p.code}>
+                                                {p.name}
                                             </option>
                                         ))}
                                     </select>
@@ -136,12 +165,19 @@ const UpdateAddress = () => {
                                     <label>Huyện:</label>
                                     <select
                                         className="pdw"
-                                        onChange={(e) => setSelectedDistrict(e.target.value)}
+                                        value={selectedDistrict}
+                                        onChange={async (e) => {
+                                            const value = e.target.value;
+                                            setSelectedDistrict(value);
+                                            const data = await ProvinceService.getWards(value);
+                                            setWards(data);
+                                            setSelectedWard('');
+                                        }}
                                     >
                                         <option value="">Chọn huyện</option>
                                         {districts.map(d => (
-                                            <option key={d.DistrictID} value={d.DistrictID}>
-                                                {d.DistrictName}
+                                            <option key={d.code} value={d.code}>
+                                                {d.name}
                                             </option>
                                         ))}
                                     </select>
@@ -149,19 +185,20 @@ const UpdateAddress = () => {
                                     <label>Xã:</label>
                                     <select
                                         className="pdw"
+                                        value={selectedWard}
                                         onChange={(e) => setSelectedWard(e.target.value)}
                                     >
                                         <option value="">Chọn xã</option>
                                         {wards.map(w => (
-                                            <option key={w.WardCode} value={w.WardCode}>
-                                                {w.WardName}
+                                            <option key={w.code} value={w.code}>
+                                                {w.name}
                                             </option>
                                         ))}
                                     </select>
 
                                     <input
-                                        value={hnumSname}
-                                        onChange={(e) => setHnumSname(e.target.value)}
+                                        value={detailAdrs}
+                                        onChange={(e) => setDetailAdrs(e.target.value)}
                                         className="form-control mt-2"
                                         placeholder="Số nhà, tên đường"
                                     />

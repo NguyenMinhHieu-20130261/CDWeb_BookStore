@@ -1,8 +1,58 @@
 import {Link} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useSelector,useDispatch} from "react-redux";
+import React from "react";
+import {useNavigate} from "react-router-dom";
+import { loginSuccess, logoutSuccess } from "../../../Store/AuthSlice";
+
 
 export const Header = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const [parentCategories, setParentCategories] = React.useState([]);
+    const [categories, setCategories] = React.useState([]);
+    // lấy user từ redux store
     const user = useSelector(state => state.auth.login.currentUser);
+    // kiểm tra nếu có user trong localStorage thì cập nhật vào redux store
+    React.useEffect(() => {
+         // Kiểm tra nếu có user trong localStorage thì cập nhật vào redux store
+        const storedUser = localStorage.getItem("user");
+
+        if (storedUser) {
+            dispatch(loginSuccess(JSON.parse(storedUser)));
+        }
+        // Load danh mục từ API
+        const loadData = async () => {
+            try {
+                const res = await fetch("http://localhost:8080/api/category/all");
+
+                const data = await res.json();
+                setCategories(data);
+                // console.log("data", data);
+                // Lọc ra danh mục cha
+                const parents = data.filter(c => c.parentId === null);
+                // console.log("parents", parents);
+                setParentCategories(parents);
+            } catch (error) {
+                console.error("Load category error:", error);
+            }
+        };
+        loadData();
+    }, []);
+    // hàm logout
+    const handleLogout = () => {
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+        dispatch(logoutSuccess());   
+        navigate("/");
+        window.location.reload();
+    };
+    // Lấy danh mục con
+    const getChildren = (parentId) => {
+        const children = categories.filter(c =>
+            Number(c.parentId) === Number(parentId)
+        );
+        return children;
+    };
     return (
         <header id="site-header" className="site-header site-header__v12 mb-7 pb-1">
             <div className="masthead">
@@ -56,10 +106,11 @@ export const Header = () => {
                                     <Link to="/home" rel="home">GoldLeaf</Link>
                                 </h1>
                             </div>
+                            {/* User Area */}
                             <div className="d-flex align-items-center ml-auto header-icons-links">
                                 {user?(
                                         <>
-                                            <Link id="sidebarNavToggler-my_account">
+                                            <Link id="sidebarNavToggler-my_account" to="/user/info">
                                                 <div
                                                     className="d-flex align-items-center text-white font-size-2 text-lh-sm position-relative">
                                                     <i className="fa-solid fa-user font-size-5 text-dark"></i>
@@ -70,6 +121,19 @@ export const Header = () => {
                                                     </div>
                                                 </div>
                                             </Link>
+                                            {/* Logout buttpn */}
+                                            <button
+                                                onClick={handleLogout}
+                                                style={{
+                                                    marginLeft: "10px",
+                                                    border: "none",
+                                                    background: "transparent",
+                                                    cursor: "pointer",
+                                                    color: "red"
+                                                }}
+                                            >
+                                                Đăng xuất
+                                            </button>
                                         </>
                                    ):(
                                         <>
@@ -97,20 +161,33 @@ export const Header = () => {
                                 <nav className="header__menu">
                                     <ul>
                                         <li><Link to={"/home"}>Trang Chủ</Link></li>
-                                        <li><Link to={"/product-list"}>Danh mục sách</Link>
+                                        <li>
+                                            <Link to={`/product-list/all`}>Danh mục sách</Link>
                                             <ul className="header__menu__dropdown">
-                                                <li><Link to="">Hài kịch</Link>
-                                                    <ul className="header__menu__dropdown__level2">
-                                                        <li><Link to={""}>Hài Việt</Link></li>
-                                                        <li><Link to={""}>Hài Trung</Link></li>
-                                                        <li><Link to={""}>Hài Hàn</Link></li>
-                                                    </ul>
-                                                </li>
-                                                <li><Link to={""}>Hành động</Link></li>
-                                                <li><Link to={""}>Tình cảm</Link></li>
+                                                {parentCategories.map(parent => {
+                                                    const children = getChildren(parent.id);
+                                                    return (
+                                                        <li key={parent.id}>
+                                                            <Link to={`/product-list/${parent.id}`}>
+                                                                {parent.name}
+                                                            </Link>
+                                                            {children.length > 0 && (
+                                                                <ul className="header__menu__dropdown__level2">
+                                                                    {children.map(child => (
+                                                                        <li key={child.id}>
+                                                                            <Link to={`/product-list/${child.id}`}>
+                                                                                {child.name}
+                                                                            </Link>
+                                                                        </li>
+                                                                    ))}
+                                                                </ul>
+                                                            )}
+                                                        </li>
+                                                    );
+                                                })}
                                             </ul>
                                         </li>
-                                        <li><Link to={"/blog-list"}>Tin Tức</Link></li>
+                                        <li><Link to={"/blog-list/all"}>Tin Tức</Link></li>
                                         <li><Link to={"/contact"}>Liên Hệ</Link></li>
                                     </ul>
                                 </nav>

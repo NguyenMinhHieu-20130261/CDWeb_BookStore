@@ -1,22 +1,25 @@
 import React from "react";
 import SideBarItem from "./SideBarItem";
+import { useSelector } from "react-redux";
 
 const LeftSideBar = () => {
 
-    const information = {
-        userInfo: {
-            fullName: "Nguyễn Văn A",
-            avatar: "https://via.placeholder.com/100"
-        }
-    };
+    const user = useSelector((state) => state.auth.user);
 
-    const fullName = information?.userInfo?.fullName || "Guest";
+    const fullName =
+        user?.userInformation?.fullName ||
+        user?.username ||
+        "Người dùng";
+
+    const avatar =
+        user?.userInformation?.avatar ||
+        "https://i.pravatar.cc/100";
 
     return (
         <div className="col-md-3 d-block p-0 pr-6 left-side-bar">
             <div className="account-of">
                 <img
-                    src={information?.userInfo?.avatar}
+                    src={avatar}
                     alt="avatar"
                 />
                 <div className="info">
@@ -27,7 +30,7 @@ const LeftSideBar = () => {
 
             <ul style={{listStyle: "none", padding: 0, margin: 0}}>
                 <SideBarItem
-                    to="/user/account"
+                    to="/user/info"
                     iconClassName="fa-solid fa-user"
                     itemName="Thông tin tài khoản"
                 />

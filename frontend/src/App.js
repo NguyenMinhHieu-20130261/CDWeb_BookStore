@@ -6,16 +6,31 @@ import "./admin/assets/css/index.scss"
 import "./admin/assets/fonts/material.css"
 import "./admin/assets/fonts/feather.css"
 import "./admin/assets/fonts/fontawesome.css"
-
 import './App.css';
 import {Route, Routes} from "react-router-dom";
 import AdminRouter from "./router/AdminRouter";
 import CustomerRouter from "./router/CustomerRouter";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "./Store/AuthSlice";
 
+function InitAuth() {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const user = localStorage.getItem("user");
+        if (user) {
+            dispatch(loginSuccess(JSON.parse(user)));
+        }
+    }, [dispatch]);
+
+    return null;
+}
 
 function App() {
     return (
         <div>
+            <InitAuth />
             <Routes>
                 <Route path='/admin/*' element={<AdminRouter/>}></Route>
                 <Route path='/*' element={<CustomerRouter/>}></Route>
