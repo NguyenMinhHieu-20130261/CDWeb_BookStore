@@ -14,12 +14,6 @@ export const Header = () => {
     const user = useSelector(state => state.auth.login.currentUser);
     // kiểm tra nếu có user trong localStorage thì cập nhật vào redux store
     React.useEffect(() => {
-         // Kiểm tra nếu có user trong localStorage thì cập nhật vào redux store
-        const storedUser = localStorage.getItem("user");
-
-        if (storedUser) {
-            dispatch(loginSuccess(JSON.parse(storedUser)));
-        }
         // Load danh mục từ API
         const loadData = async () => {
             try {
@@ -40,7 +34,7 @@ export const Header = () => {
     }, []);
     // hàm logout
     const handleLogout = () => {
-        localStorage.removeItem("user");
+        localStorage.removeItem("currentUser");
         localStorage.removeItem("token");
         dispatch(logoutSuccess());   
         navigate("/");

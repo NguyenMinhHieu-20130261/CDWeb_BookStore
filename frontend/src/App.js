@@ -16,11 +16,17 @@ import { loginSuccess } from "./Store/AuthSlice";
 
 function InitAuth() {
     const dispatch = useDispatch();
-
     useEffect(() => {
-        const user = localStorage.getItem("user");
-        if (user) {
-            dispatch(loginSuccess(JSON.parse(user)));
+        const rawUser = localStorage.getItem("user");
+        if (!rawUser || rawUser === "undefined" || rawUser === "null") {
+            localStorage.removeItem("user");
+            return;
+        }
+        try {
+            const user = JSON.parse(rawUser);
+            dispatch(loginSuccess(user));
+        } catch (error) {
+            localStorage.removeItem("user");
         }
     }, [dispatch]);
 
