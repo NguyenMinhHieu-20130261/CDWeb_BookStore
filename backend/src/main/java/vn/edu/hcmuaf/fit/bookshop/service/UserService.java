@@ -7,8 +7,6 @@ import java.util.Optional;
 
 public interface UserService {
     Page<User> getAllUsers(int page, int perPage);
-
     User getUserById(int id);
-
     Optional<User> getUserByUsername(String username);
 }

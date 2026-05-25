@@ -4,6 +4,7 @@ import Breadcrumb from "../../components/general/Breadcrumb";
 import LeftSideBar from "./sub-components/LeftSideBar";
 import { useSelector,useDispatch  } from "react-redux";
 import { loginSuccess } from "../../../Store/AuthSlice";
+import api from "../../../service/ApiService";
 
 const UserAccount = () => {
     const user = useSelector(state => state.auth.login.currentUser);
@@ -20,78 +21,60 @@ const UserAccount = () => {
         month: "01",
         year: "2000"
     });
-
+    
     const [isChecked, setIsChecked] = useState(false);
-
+    // load info người dùng khi component mount
     useEffect(() => {
-        // console.log("CURRENT USER:", user);
         if (!user || !user.id) {
             console.log("User chưa có id");
             return;
         }
         const fetchUserInfo = async () => {
             try {
-                const res = await fetch(
-                    `http://localhost:8080/api/userinfo/${user.id}`
-                );
-                if (!res.ok) {
-                    throw new Error("API ERROR: " + res.status);
-                }
-
-                const data = await res.json();
-                // console.log("USER INFO:", data);
-
-                 const birthday = data.birthday
-                    ? new Date(data.birthday)
+                const data = await api.fetchData(`/userinfo/${user.id}`);
+                console.log("USER INFO DATA:", data);
+                // chia ngày sinh thành day, month, year
+                const birthdayParts = data.birthday
+                    ? data.birthday.split("-")
                     : null;
-
+                // Cập nhật userData state với dữ liệu từ API
                 const updatedData = {
                     fullName: data.fullName || "",
                     phoneNumber: data.phoneNumber || "",
                     gender: data.gender || "",
                     username: user.username || "",
                     email: user.email || "",
-                    avatar:
-                        data.avatar ||
-                        "https://via.placeholder.com/150",
+                    avatar: data.avatar || "https://via.placeholder.com/150",
 
-                    day: birthday
-                        ? String(birthday.getDate()).padStart(2, "0")
-                        : "01",
-
-                    month: birthday
-                        ? String(birthday.getMonth() + 1).padStart(2, "0")
-                        : "01",
-
-                    year: birthday
-                        ? String(birthday.getFullYear())
-                        : "2000"
+                    year: birthdayParts ? birthdayParts[0] : "2000",
+                    month: birthdayParts ? birthdayParts[1] : "01",
+                    day: birthdayParts ? birthdayParts[2] : "01"
                 };
                 setUserData(updatedData);
-                // Cập nhật thông tin người dùng trong Redux
+                // Cập nhật thông tin người dùng trong Redux store
                 const updatedUser = {
                     ...user,
                     userInformation: data
                 };
                 dispatch(loginSuccess(updatedUser));
-                // Cập nhật thông tin người dùng trong localStorage
-                localStorage.setItem(
-                    "user",
-                    JSON.stringify(updatedUser)
-                );
+                localStorage.setItem("user", JSON.stringify(updatedUser));
+
             } catch (error) {
                 console.log("Load user info error:", error);
             }
         };
         fetchUserInfo();
-    }, [user]);
+    }, [user?.id, dispatch]);
+
     return (
         <>
             <Breadcrumb/>
             <div className="container information mt-5 mb-5 px-0">
                 <LeftSideBar/>
                 <div className="col-md-9 user-info">
-                    <form>
+                    <form 
+                    // onSubmit={handleUpdateUserInfo}
+                    >
                         <div className="row border py-3 m-0" style={{borderRadius: "10px"}}>
                             
                             {/* LEFT */}
@@ -104,8 +87,10 @@ const UserAccount = () => {
                                     <div className="row mt-3">
                                         <div className="col-md-6">
                                             <label>Tên đăng nhập</label>
-                                            <input value={userData.username}
-                                                   className="form-control" readOnly/>
+                                            <input 
+                                            value={userData.username}
+                                            onChange={(e) => setUserData(prev => ({ ...prev, username: e.target.value }))}
+                                            className="form-control"/>
                                         </div>
 
                                         <div className="col-md-6">
@@ -132,51 +117,62 @@ const UserAccount = () => {
                                     </div>
 
                                     {/* Gender */}
-                                    <div className="d-flex align-items-center mt-4">
-                                        <label className="mr-3">Giới tính</label>
+                                    <div className="form-group mt-4">
+                                        <label className="form-label d-block mb-2">Giới tính</label>
+                                        <div className="gender-options">
+                                            <label className="gender-radio">
+                                                <input type="radio" value="male"
+                                                    checked={userData.gender === 'male'}
+                                                    onChange={(e) => setUserData(prev => ({ ...prev, gender: e.target.value }))}/>
+                                                <span className="radio-fake"/>
+                                                <span className="label">Nam</span>
+                                            </label>
 
-                                        <label className="label-radio">
-                                            <input type="radio" value="male"
-                                                   checked={userData.gender === 'male'}
-                                                   onChange={(e) => setUserData(prev => ({ ...prev, gender: e.target.value }))}/>
-                                            <span className="label">Nam</span>
-                                        </label>
+                                            <label className="gender-radio">
+                                                <input type="radio" value="female"
+                                                    checked={userData.gender === 'female'}
+                                                    onChange={(e) => setUserData(prev => ({ ...prev, gender: e.target.value }))}/>
+                                                <span className="radio-fake"/>
+                                                <span className="label">Nữ</span>
+                                            </label>
 
-                                        <label className="label-radio">
-                                            <input type="radio" value="female"
-                                                   checked={userData.gender === 'female'}
-                                                   onChange={(e) => setUserData(prev => ({ ...prev, gender: e.target.value }))}/>
-                                            <span className="label">Nữ</span>
-                                        </label>
-
-                                        <label className="label-radio">
-                                            <input type="radio" value="other"
-                                                   checked={userData.gender === 'other'}
-                                                   onChange={(e) => setUserData(prev => ({ ...prev, gender: e.target.value }))}/>
-                                            <span className="label">Khác</span>
-                                        </label>
+                                            <label className="gender-radio">
+                                                <input type="radio" value="other"
+                                                    checked={userData.gender === 'other'}
+                                                    onChange={(e) => setUserData(prev => ({ ...prev, gender: e.target.value }))}/>
+                                                <span className="radio-fake"/>
+                                                <span className="label">Khác</span>
+                                            </label>
+                                        </div>
                                     </div>
 
                                     {/* Birthday */}
                                     <div className="d-flex align-items-center mt-4">
                                         <label className="mr-3">Ngày sinh</label>
                                         <div className="select-birthday">
-                                            <select value={userData.day} onChange={(e) => setUserData(prev => ({ ...prev, day: e.target.value }))}>
-                                                {Array.from({length: 31}, (_, i) => (
-                                                    <option key={i}>{String(i + 1).padStart(2, '0')}</option>
-                                                ))}
+                                            <select value={userData.day} onChange={(e) => setUserData(prev => ({ ...prev, day: e.target.value }))} >
+                                                {Array.from({ length: 31 }, (_, i) => {
+                                                    const day = String(i + 1).padStart(2, "0");
+                                                    return (
+                                                        <option key={day} value={day}> {day} </option>
+                                                    );
+                                                })}
                                             </select>
-
-                                            <select value={userData.month} onChange={(e) => setUserData(prev => ({ ...prev, month: e.target.value }))}>
-                                                {Array.from({length: 12}, (_, i) => (
-                                                    <option key={i}>{String(i + 1).padStart(2, '0')}</option>
-                                                ))}
+                                            <select value={userData.month} onChange={(e) => setUserData(prev => ({ ...prev, month: e.target.value }))} >
+                                                {Array.from({ length: 12 }, (_, i) => {
+                                                    const month = String(i + 1).padStart(2, "0");
+                                                    return (
+                                                        <option key={month} value={month}> {month} </option>
+                                                    );
+                                                })}
                                             </select>
-
                                             <select value={userData.year} onChange={(e) => setUserData(prev => ({ ...prev, year: e.target.value }))}>
-                                                {Array.from({length: 50}, (_, i) => (
-                                                    <option key={i}>{2025 - i}</option>
-                                                ))}
+                                                {Array.from({ length: 100 }, (_, i) => {
+                                                    const year = new Date().getFullYear() - i;
+                                                    return (
+                                                        <option key={year} value={String(year)}> {year} </option>
+                                                    );
+                                                })}
                                             </select>
                                         </div>
                                     </div>
@@ -201,7 +197,9 @@ const UserAccount = () => {
                                     )}
 
                                     <div className="mt-5 text-center">
-                                        <button className="btn btn-primary">
+                                        <button className="btn btn-primary"
+                                            type="submit"
+                                        >
                                             Lưu thông tin
                                         </button>
                                     </div>
