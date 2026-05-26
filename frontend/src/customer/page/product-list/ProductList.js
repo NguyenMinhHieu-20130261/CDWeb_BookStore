@@ -1,10 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Pagination from "../../components/general/Pagination";
 import BreadCrumb from "../../components/general/Breadcrumb";
 import Sidebar from "./sub-components/Sidebar";
 import ProductGrid from "./sub-components/ProductGrid";
 import "../../assets/css/style-produc.css"
+import api from "../../../service/ApiService"
+
 const ProductList = () => {
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        const fetchProdList = async () => {
+            try {
+                const data = await api.fetchData(`/products`);
+                console.log("products", data);
+                setProducts(data);
+            } catch (error) {
+                console.log("Lỗi",  error);
+            } finally {
+                setLoading(false);
+            }
+        }
+        fetchProdList();
+    }, []);
     return (
         <>
             <BreadCrumb/>
@@ -38,7 +56,7 @@ const ProductList = () => {
                                         className="shop-control-bar d-lg-flex justify-content-between align-items-center mb-5 text-center text-md-left">
                                         <div className="shop-control-bar__left mb-3 m-lg-0">
                                             <p className="woocommerce-result-count m-0">
-                                                Showing 13&ndash;24 of 89 results </p>
+                                                Hiển thị {products.length} sản phẩm </p>
                                         </div>
                                         <div className="shop-control-bar__right d-md-flex align-items-center">
                                             <form className="woocommerce-ordering mb-4 m-md-0" method="get">
@@ -70,7 +88,11 @@ const ProductList = () => {
                                     </div>
                                 </div>
                                 <div className="grid-view">
-                                    <ProductGrid/>
+                                    {loading ? (
+                                        <p>Đang tải sản phẩm...</p>
+                                    ) : (
+                                        <ProductGrid products={products} />
+                                    )}
                                     <Pagination/>
                                 </div>
                             </main>
