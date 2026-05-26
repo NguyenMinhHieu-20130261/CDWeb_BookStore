@@ -29,12 +29,10 @@ const ProductList = () => {
             <div className="site-content space-bottom-3 mt-8">
                 <div className="container">
                     <div className="row content-container">
-                        <div id="primary" className="content-area order-2 mx-2"
-                        >
+                        <div id="primary" className="content-area order-2 mx-2">
                             <main id="main" className="site-main" role="main">
-                                <header className="woocommerce-products-header">
-                                </header>
-                                <div className="woocommerce-notices-wrapper"></div>
+                                <header className="woocommerce-products-header"/>
+                                <div className="woocommerce-notices-wrapper"/>
                                 <div className="position-relative mb-3">
                                     <div
                                         className="wp-block-bwgb-products-carousel bwgb-products-carousel bookworm-recommended-block bwgb-297e8e9 bwgb-products-carousel__style-v2"
@@ -97,7 +95,7 @@ const ProductList = () => {
                                 </div>
                             </main>
                         </div>
-                        <Sidebar/>
+                        <Sidebar products={products || []} />
                     </div>
                 </div>
             </div>
