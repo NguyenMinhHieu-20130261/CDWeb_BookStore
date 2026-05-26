@@ -1,60 +1,121 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import api from "../../../../service/ApiService";
+import "../../../assets/css/style-category.css";
 
 const Category = () => {
+    const [isShown, setIsShown] = useState(true);
+    const [parentCategories, setParentCategories] = React.useState([]);
+    const [openParents, setOpenParents] = useState({});
+    const [categories, setCategories] = React.useState([]);
+    React.useEffect(() => {
+        const loadData = async () => {
+            try {
+                const data = await api.fetchData("/category/all");
+
+                const categoryList = Array.isArray(data)
+                ? data
+                : data.data || data.content || [];
+                setCategories(categoryList);
+
+                const parents = categoryList.filter(c => c.parentId === null);
+                setParentCategories(parents);
+                
+                console.log("cates", data);
+            } catch (error) {
+                console.error("Lỗi load cate:", error);
+            }
+        };
+
+        loadData();
+    }, []);
+    const handleToggle = (e) => {
+        e.preventDefault();
+        setIsShown(!isShown);
+    };
+    const handleToggleChildren = (parentId, e) => {
+        e.preventDefault();
+        setOpenParents(prev => ({
+            ...prev,
+            [parentId]: !prev[parentId]
+        }));
+    };
     return (
         <div id="woocommerce_product_categories-2"
              className="widget border p-3d2 woocommerce widget_product_categories">
             <div className="widget-head" id="widgetHeading-woocommerce_product_categories-2">
-                <a className="d-flex align-items-center justify-content-between text-dark"
-                   href="#" data-toggle="collapse"
-                   data-target="#widget-collapse-woocommerce_product_categories-2"
-                   aria-expanded="true"
-                   aria-controls="widget-collapse-woocommerce_product_categories-2">
+                <Link className="d-flex align-items-center justify-content-between text-dark"
+                    to="" data-toggle="collapse"
+                    onClick={handleToggle}
+                    >
                     <h3 className="widget-title font-weight-medium font-size-3 mb-0">Danh mục</h3>
-                    <svg className="mins" width="15px" height="2px">
-                        <path fill="rgb(22, 22, 25)"
-                              d="M0.000,-0.000 L15.000,-0.000 L15.000,2.000 L0.000,2.000 L0.000,-0.000 Z">
-                        </path>
+                    <svg 
+                        className={`mins ${isShown ? "d-block" : "d-none"}`}
+                        width="15px" height="2px">
+                        <path fill="rgb(22, 22, 25)" d="M0.000,-0.000 L15.000,-0.000 L15.000,2.000 L0.000,2.000 L0.000,-0.000 Z"/>
                     </svg>
-                    <svg className="plus" width="15px" height="15px">
-                        <path fill="rgb(22, 22, 25)"
-                              d="M15.000,8.000 L9.000,8.000 L9.000,15.000 L7.000,15.000 L7.000,8.000 L0.000,8.000 L0.000,6.000 L7.000,6.000 L7.000,-0.000 L9.000,-0.000 L9.000,6.000 L15.000,6.000 L15.000,8.000 Z">
-                        </path>
+                    <svg 
+                        className={`plus ${isShown ? "d-none" : "d-block"}`}
+                        width="15px" height="15px">
+                        <path fill="rgb(22, 22, 25)" d="M15.000,8.000 L9.000,8.000 L9.000,15.000 L7.000,15.000 L7.000,8.000 L0.000,8.000 L0.000,6.000 L7.000,6.000 L7.000,-0.000 L9.000,-0.000 L9.000,6.000 L15.000,6.000 L15.000,8.000 Z"/>
                     </svg>
-                </a>
+                </Link>
             </div>
-            <div id="widget-collapse-woocommerce_product_categories-2"
-                 className="mt-4 widget-content collapse show"
-                 aria-labelledby="widgetHeading-woocommerce_product_categories-2">
-                <ul className="product-categories">
-                    <li className="cat-item cat-item-141"><a
-                        href="https://bookworm.madrasthemes.com/product-category/a/">Arts &amp;
-                        Photography</a></li>
-                    <li className="cat-item cat-item-151"><a
-                        href="https://bookworm.madrasthemes.com/product-category/i/">Baby</a>
-                    </li>
-                    <li className="cat-item cat-item-18 cat-parent"><a
-                        href="https://bookworm.madrasthemes.com/product-category/c/">Romance</a>
-                        <ul className="children">
-                            <li className="cat-item cat-item-157"><a
-                                href="https://bookworm.madrasthemes.com/product-category/c/cookery-dishes-courses/">Cookery
-                                Dishes &amp; Courses</a></li>
-                            <li className="cat-item cat-item-158"><a
-                                href="https://bookworm.madrasthemes.com/product-category/c/historical-romance/">Historical
-                                Romance</a></li>
-                            <li className="cat-item cat-item-159"><a
-                                href="https://bookworm.madrasthemes.com/product-category/c/home-nursing-caring/">Home
-                                Nursing &amp; Caring</a></li>
-                            <li className="cat-item cat-item-160"><a
-                                href="https://bookworm.madrasthemes.com/product-category/c/popular-medicine-health/">Popular
-                                Medicine &amp; Health</a></li>
-                            <li className="cat-item cat-item-161"><a
-                                href="https://bookworm.madrasthemes.com/product-category/c/safety-in-the-home/">Safety
-                                In The Home</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
+            {isShown && (
+                <div
+                    id="widget-collapse-woocommerce_product_categories-2"
+                    className="mt-4 widget-content collapse show"
+                    aria-labelledby="widgetHeading-woocommerce_product_categories-2">
+                    <ul className="product-categories">
+                        {parentCategories.map(parent => {
+                            const children = categories.filter(
+                                child => child.parentId === parent.id
+                            );
+                            const hasChildren = children.length > 0;
+                            const isOpen = openParents[parent.id];
+                            return (
+                                <li key={parent.id}
+                                    className={`cat-item parent-cat ${hasChildren ? "cat-parent" : ""}`} >
+                                    <div className="category-parent-row">
+                                        <Link to={`/product-list/${parent.id}`} className="category-parent-link">
+                                            {parent.name}
+                                        </Link>
+                                        {hasChildren && (
+                                            <button type="button" className="category-toggle-icon"
+                                                onClick={(e) => handleToggleChildren(parent.id, e)}>
+                                                <svg className={`mins ${isOpen ? "d-block" : "d-none"}`}
+                                                    width="15px"
+                                                    height="2px">
+                                                    <path fill="rgb(22, 22, 25)" d="M0.000,-0.000 L15.000,-0.000 L15.000,2.000 L0.000,2.000 L0.000,-0.000 Z"/>
+                                                </svg>
+                                                <svg
+                                                    className={`plus ${isOpen ? "d-none" : "d-block"}`}
+                                                    width="15px"
+                                                    height="15px">
+                                                    <path fill="rgb(22, 22, 25)" d="M15.000,8.000 L9.000,8.000 L9.000,15.000 L7.000,15.000 L7.000,8.000 L0.000,8.000 L0.000,6.000 L7.000,6.000 L7.000,-0.000 L9.000,-0.000 L9.000,6.000 L15.000,6.000 L15.000,8.000 Z"/>
+                                                </svg>
+                                            </button>
+                                        )}
+                                    </div>
+                                     {hasChildren && isOpen && (
+                                        <ul className="category-children">
+                                            {children.map(child => (
+                                                <li key={child.id} className="cat-item child-cat">
+                                                    <Link
+                                                        to={`/product-list/${child.id}`}
+                                                        className="category-child-link" >
+                                                        {child.name}
+                                                    </Link>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    )}
+                                </li>
+                            );
+                        })}
+                    </ul>
+                </div>
+            )}
         </div>
     );
 }
