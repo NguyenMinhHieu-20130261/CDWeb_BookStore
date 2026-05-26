@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 
-const FeturedProduct = ({product}) => {
+const FeturedItem = ({product}) => {
     if (!product) return null;
     return (
         <li className="mb-5">
@@ -27,13 +27,32 @@ const FeturedProduct = ({product}) => {
                         </h6>
                         <span className="woocommerce-Price-amount amount">
                             <span className="woocommerce-Price-currencySymbol">
-                                {Number(product.price).toLocaleString("vi-VN")}
-                                </span>đ</span>
+                                đ
+                            </span>
+                            {Number(product.price).toLocaleString("vi-VN")}
+                        </span>
                     </div>
                 </div>
             </div>
         </li>
     );
 };
+const FeturedProduct = ({products=[]})=>{
+    const featuredProducts = products.slice(0, 3);
+    return(
+         <div id="widget-collapse-woocommerce_products-3"
+                className="mt-4 widget-content collapse show"
+                aria-labelledby="widgetHeading-woocommerce_products-3">
+            <ul className="product_list_widget">
+                {featuredProducts.map((product) => (
+                    <FeturedItem
+                        key={product.id}
+                        product={product}
+                    />
+                ))}
+            </ul>
+        </div>
+    )
+}
 
 export default FeturedProduct;

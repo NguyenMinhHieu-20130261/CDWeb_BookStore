@@ -8,13 +8,19 @@ import api from "../../../service/ApiService"
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
+    const [allProducts, setAllProducts] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [selectedPriceRange, setSelectedPriceRange] = useState(null);
     useEffect(() => {
         const fetchProdList = async () => {
             try {
                 const data = await api.fetchData(`/products`);
                 console.log("products", data);
-                setProducts(data);
+
+                const productList = Array.isArray(data) ? data : data.data || [];
+                
+                setProducts(productList);
+                setAllProducts(productList);
             } catch (error) {
                 console.log("Lỗi",  error);
             } finally {
@@ -23,6 +29,28 @@ const ProductList = () => {
         }
         fetchProdList();
     }, []);
+    const handlePriceFilterChange = (priceRange, event) => {
+        event.preventDefault();
+
+        const isSelected = selectedPriceRange === priceRange;
+        const newPriceRange = isSelected ? null : priceRange;
+
+        setSelectedPriceRange(newPriceRange);
+        if (isSelected) {
+            setProducts(allProducts);
+            return;
+        }
+
+        const [min, max] = priceRange.split("-");
+        const minPrice = Number(min);
+        const maxPrice = max ? Number(max) : Infinity;
+
+        const filteredProds = allProducts.filter((product) => {
+            const price = Number(product.price || product.currentPrice || product.salePrice);
+            return price >= minPrice && price <= maxPrice;
+        });
+        setProducts(filteredProds);
+    };
     return (
         <>
             <BreadCrumb/>
@@ -95,8 +123,12 @@ const ProductList = () => {
                                 </div>
                             </main>
                         </div>
-                        <Sidebar products={products || []} />
-                    </div>
+                        <Sidebar
+                            products={allProducts}
+                            selectedPriceRange={selectedPriceRange}
+                            handlePriceFilterChange={handlePriceFilterChange}
+                        />                    
+                        </div>
                 </div>
             </div>
         </>

@@ -3,18 +3,20 @@ import PriceFilter from "./PriceFilter";
 import Category from "./Category";
 import FeturedProduct from "./FeturedProduct";
 
-const Sidebar = ({products}) => {
-    const featuredProducts = products.slice(0, 3);
+const Sidebar = ({products= [], selectedPriceRange, handlePriceFilterChange}) => {
     return (
         <div id="secondary" className="sidebar widget-area order-1" role="complementary">
             <div id="widgetAccordion">
                 {/* Categories Widget */}
                 <Category/>
                 {/* Popular Books Widget */}
-                <PriceFilter/>
+                <PriceFilter
+                selectedPriceRange={selectedPriceRange}
+                handlePriceFilterChange={handlePriceFilterChange}
+                />
                 <div id="woocommerce_products-3"
                         className="widget border p-3d2 woocommerce widget_products">
-                    <div className="widget-head" id="widgetHeading-woocommerce_products-3">
+                    {/* <div className="widget-head" id="widgetHeading-woocommerce_products-3">
                         <div className="d-flex align-items-center justify-content-between text-dark">
                             <h3 className="widget-title font-weight-medium font-size-3 mb-0">Sách Nổi Bật</h3>
                             <svg className="mins" width="15px" height="2px">
@@ -28,19 +30,8 @@ const Sidebar = ({products}) => {
                                 </path>
                             </svg>
                         </div>
-                    </div>
-                    <div id="widget-collapse-woocommerce_products-3"
-                            className="mt-4 widget-content collapse show"
-                            aria-labelledby="widgetHeading-woocommerce_products-3">
-                        <ul className="product_list_widget">
-                            {featuredProducts.map((product) => (
-                                <FeturedProduct
-                                    key={product.id}
-                                    product={product}
-                                />
-                            ))}
-                        </ul>
-                    </div>
+                    </div> */}
+                    <FeturedProduct products={products}/>
                 </div>
             </div>
         </div>
