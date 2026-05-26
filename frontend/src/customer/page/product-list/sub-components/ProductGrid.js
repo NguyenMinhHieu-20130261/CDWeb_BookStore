@@ -1,72 +1,10 @@
 import React from "react";
 import ProductCard from "./ProductCard";
 
-const ProductGrid = () => {
-    const products = [
-        {
-            id: 108,
-            title: "Buttermilk Graffiti: A Chef's Journey to Discover America's New Melting-Pot Cuisine",
-            author: "Edward Lee",
-            price: "10.29",
-            image: "https://bookworm.madrasthemes.com/wp-content/uploads/2020/08/50-150x200.jpg",
-            format: "Paperback"
-        },{
-            id: 108,
-            title: "Buttermilk Graffiti: A Chef's Journey to Discover America's New Melting-Pot Cuisine",
-            author: "Edward Lee",
-            price: "10.29",
-            image: "https://bookworm.madrasthemes.com/wp-content/uploads/2020/08/50-150x200.jpg",
-            format: "Paperback"
-        },
-        {
-            id: 108,
-            title: "Buttermilk Graffiti: A Chef's Journey to Discover America's New Melting-Pot Cuisine",
-            author: "Edward Lee",
-            price: "10.29",
-            image: "https://bookworm.madrasthemes.com/wp-content/uploads/2020/08/50-150x200.jpg",
-            format: "Paperback"
-        },
-        {
-            id: 108,
-            title: "Buttermilk Graffiti: A Chef's Journey to Discover America's New Melting-Pot Cuisine",
-            author: "Edward Lee",
-            price: "10.29",
-            image: "https://bookworm.madrasthemes.com/wp-content/uploads/2020/08/50-150x200.jpg",
-            format: "Paperback"
-        },
-          {
-            id: 108,
-            title: "Buttermilk Graffiti: A Chef's Journey to Discover America's New Melting-Pot Cuisine",
-            author: "Edward Lee",
-            price: "10.29",
-            image: "https://bookworm.madrasthemes.com/wp-content/uploads/2020/08/50-150x200.jpg",
-            format: "Paperback"
-        },{
-            id: 108,
-            title: "Buttermilk Graffiti: A Chef's Journey to Discover America's New Melting-Pot Cuisine",
-            author: "Edward Lee",
-            price: "10.29",
-            image: "https://bookworm.madrasthemes.com/wp-content/uploads/2020/08/50-150x200.jpg",
-            format: "Paperback"
-        },
-        {
-            id: 108,
-            title: "Buttermilk Graffiti: A Chef's Journey to Discover America's New Melting-Pot Cuisine",
-            author: "Edward Lee",
-            price: "10.29",
-            image: "https://bookworm.madrasthemes.com/wp-content/uploads/2020/08/50-150x200.jpg",
-            format: "Paperback"
-        },
-        {
-            id: 108,
-            title: "Buttermilk Graffiti: A Chef's Journey to Discover America's New Melting-Pot Cuisine",
-            author: "Edward Lee",
-            price: "10.29",
-            image: "https://bookworm.madrasthemes.com/wp-content/uploads/2020/08/50-150x200.jpg",
-            format: "Paperback"
-        },
-
-    ];
+const ProductGrid = ({products}) => {
+     if (!products || products.length === 0) {
+        return <p>Không có sản phẩm nào.</p>;
+    }
 
     return (
         <div className="grid-view">

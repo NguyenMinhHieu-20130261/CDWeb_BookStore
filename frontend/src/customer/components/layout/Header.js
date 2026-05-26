@@ -3,13 +3,16 @@ import {useSelector,useDispatch} from "react-redux";
 import React from "react";
 import {useNavigate} from "react-router-dom";
 import { loginSuccess, logoutSuccess } from "../../../Store/AuthSlice";
-
+import { SearchBar } from "../general/SearchComponents";
+import "../../assets/css/style-search.css"
+import "../../assets/css/style-cart.css"
 
 export const Header = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [parentCategories, setParentCategories] = React.useState([]);
     const [categories, setCategories] = React.useState([]);
+    const [isSearchOpen, setIsSearchOpen] = React.useState(false);
     // lấy user từ redux store
     const user = useSelector(state => state.auth.login.currentUser);
     // kiểm tra nếu có user trong localStorage thì cập nhật vào redux store
@@ -54,52 +57,43 @@ export const Header = () => {
                     <div className="container py-3 py-md-4">
                         <div className="d-flex align-items-center position-relative flex-wrap">
                             <div className="d-none d-xl-flex align-items-center mt-3 mt-md-0 mr-md-auto">
-                                <Link to="mailto:info@bookworm.com" className="mr-4 mb-4 mb-md-0">
-                                    <div className="d-flex align-items-center text-dark font-size-2 text-lh-sm">
-                                        <i className="fa-regular fa-circle-question font-size-5 mt-2 mr-1"></i>
-                                        <div className="ml-2">
-                                        <span className="text-secondary-gray-1090 font-size-1">
-                                            goldleaf@gmail.com </span>
-                                            <div className="h6 mb-0">
-                                                Gửi mail ngay!
+                                {!isSearchOpen && (
+                                    <>
+                                        <Link to="mailto:info@bookworm.com" className="mr-4 mb-4 mb-md-0">
+                                            <div className="d-flex align-items-center text-dark font-size-2 text-lh-sm">
+                                                <i className="fa-regular fa-circle-question font-size-5 mt-2 mr-1"></i>
+                                                <div className="ml-2">
+                                                <span className="text-secondary-gray-1090 font-size-1">
+                                                    goldleaf@gmail.com </span>
+                                                    <div className="h6 mb-0">
+                                                        Gửi mail ngay!
+                                                    </div>a
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </Link>
-                                <Link to="tel:+1246-345-0695">
-                                    <div className="d-flex align-items-center text-dark font-size-2 text-lh-sm">
-                                        <i className="fa-solid fa-phone font-size-5 mt-2 mr-1"></i>
-                                        <div className="ml-2">
-                                        <span className="text-secondary-gray-1090 font-size-1">
-                                            +84 909067623 </span>
-                                            <div className="h6 mb-0">
-                                                Gọi không tốn phí
+                                        </Link>
+                                        <Link to="/">
+                                            <div className="d-flex align-items-center text-dark font-size-2 text-lh-sm">
+                                                <i className="fa-solid fa-phone font-size-5 mt-2 mr-1"></i>
+                                                <div className="ml-2">
+                                                    <span className="text-secondary-gray-1090 font-size-1">
+                                                        +84 909067623
+                                                    </span>
+                                                    <div className="h6 mb-0">
+                                                        Gọi không tốn phí
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </Link>
-                            </div>
-                            <div className="offcanvas-toggler d-xl-none mr-4">
-                                <Link id="offcanvasNavToggler" to="javascript:;" role="button"
-                                   className="cat-menu text-dark" aria-controls="offcanvasNav" aria-haspopup="true"
-                                   aria-expanded="false" data-unfold-event="click" data-unfold-hide-on-scroll="false"
-                                   dadata-unfold-animation-in="fadeInLeft" data-unfold-animation-out="fadeOutLeft"
-                                   data-unfold-duration="100">
-                                    <svg width="20px" height="18px">
-                                        <path fill-rule="evenodd" fill="rgb(25, 17, 11)"
-                                              d="M-0.000,-0.000 L20.000,-0.000 L20.000,2.000 L-0.000,2.000 L-0.000,-0.000 Z"/>
-                                        <path fill-rule="evenodd" fill="rgb(25, 17, 11)"
-                                              d="M-0.000,8.000 L15.000,8.000 L15.000,10.000 L-0.000,10.000 L-0.000,8.000 Z"/>
-                                        <path fill-rule="evenodd" fill="rgb(25, 17, 11)"
-                                              d="M-0.000,16.000 L20.000,16.000 L20.000,18.000 L-0.000,18.000 L-0.000,16.000 Z"/>
-                                    </svg>
-                                </Link>
+                                        </Link>
+                                    </>
+                                )}
+                                <SearchBar onToggle={setIsSearchOpen} />
                             </div>
                             <div className="site-branding pr-md-7 mx-md-0">
                                 <h1 className="beta site-title site-title text-uppercase font-weight-bold font-size-5 m-0 ">
                                     <Link to="/home" rel="home">GoldLeaf</Link>
                                 </h1>
                             </div>
+
                             {/* User Area */}
                             <div className="d-flex align-items-center ml-auto header-icons-links">
                                 {user?(
@@ -145,6 +139,30 @@ export const Header = () => {
                                         </>
                                     )}
                             </div>
+                            {/* Cart Area */}
+                            <Link id="sidebarNavToggler-my_cart" to="/cart"
+                                  className="d-block nav-link text-dark ml-4">
+                                <div
+                                    className="d-flex align-items-center text-white font-size-2 text-lh-sm position-relative">
+                                    <span
+                                        className="position-absolute width-16 height-16 rounded-circle d-flex align-items-center justify-content-center font-size-n9 left-0 top-0 ml-n2 mt-n1 text-white bg-dark">
+                                        <span className="cart-contents-count">
+                                            0
+                                        </span> </span>
+                                    <Link to={"/cart"}>
+                                        <i className="fa-solid fa-cart-shopping font-size-5 text-dark"></i>
+                                    </Link>
+                                    <div className="ml-2 d-none d-lg-block text-dark">
+                                        <span className="text-secondary-gray-1090 font-size-1">
+                                            Giỏ hàng </span>
+                                        <div><span className="cart-contents-total">
+                                                <span className="woocommerce-Price-amount amount"><span
+                                                    className="woocommerce-Price-currencySymbol">&#036;</span>0.00</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </Link>
                         </div>
                     </div>
                 </div>

@@ -16,7 +16,7 @@ const UserAddress = () => {
         const fetchAddresses = async () => {
             if (!user?.id){
                 console.log("User ID không tồn tại");
-            return;
+                return; 
             }
             try {
                 const data = await api.fetchData(

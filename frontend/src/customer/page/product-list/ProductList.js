@@ -1,22 +1,66 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Pagination from "../../components/general/Pagination";
 import BreadCrumb from "../../components/general/Breadcrumb";
 import Sidebar from "./sub-components/Sidebar";
 import ProductGrid from "./sub-components/ProductGrid";
 import "../../assets/css/style-produc.css"
+import api from "../../../service/ApiService"
+
 const ProductList = () => {
+    const [products, setProducts] = useState([]);
+    const [allProducts, setAllProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [selectedPriceRange, setSelectedPriceRange] = useState(null);
+    useEffect(() => {
+        const fetchProdList = async () => {
+            try {
+                const data = await api.fetchData(`/products`);
+                console.log("products", data);
+
+                const productList = Array.isArray(data) ? data : data.data || [];
+                
+                setProducts(productList);
+                setAllProducts(productList);
+            } catch (error) {
+                console.log("Lỗi",  error);
+            } finally {
+                setLoading(false);
+            }
+        }
+        fetchProdList();
+    }, []);
+    const handlePriceFilterChange = (priceRange, event) => {
+        event.preventDefault();
+
+        const isSelected = selectedPriceRange === priceRange;
+        const newPriceRange = isSelected ? null : priceRange;
+
+        setSelectedPriceRange(newPriceRange);
+        if (isSelected) {
+            setProducts(allProducts);
+            return;
+        }
+
+        const [min, max] = priceRange.split("-");
+        const minPrice = Number(min);
+        const maxPrice = max ? Number(max) : Infinity;
+
+        const filteredProds = allProducts.filter((product) => {
+            const price = Number(product.price || product.currentPrice || product.salePrice);
+            return price >= minPrice && price <= maxPrice;
+        });
+        setProducts(filteredProds);
+    };
     return (
         <>
             <BreadCrumb/>
             <div className="site-content space-bottom-3 mt-8">
                 <div className="container">
                     <div className="row content-container">
-                        <div id="primary" className="content-area order-2 mx-2"
-                        >
+                        <div id="primary" className="content-area order-2 mx-2">
                             <main id="main" className="site-main" role="main">
-                                <header className="woocommerce-products-header">
-                                </header>
-                                <div className="woocommerce-notices-wrapper"></div>
+                                <header className="woocommerce-products-header"/>
+                                <div className="woocommerce-notices-wrapper"/>
                                 <div className="position-relative mb-3">
                                     <div
                                         className="wp-block-bwgb-products-carousel bwgb-products-carousel bookworm-recommended-block bwgb-297e8e9 bwgb-products-carousel__style-v2"
@@ -38,7 +82,7 @@ const ProductList = () => {
                                         className="shop-control-bar d-lg-flex justify-content-between align-items-center mb-5 text-center text-md-left">
                                         <div className="shop-control-bar__left mb-3 m-lg-0">
                                             <p className="woocommerce-result-count m-0">
-                                                Showing 13&ndash;24 of 89 results </p>
+                                                Hiển thị {products.length} sản phẩm </p>
                                         </div>
                                         <div className="shop-control-bar__right d-md-flex align-items-center">
                                             <form className="woocommerce-ordering mb-4 m-md-0" method="get">
@@ -70,13 +114,21 @@ const ProductList = () => {
                                     </div>
                                 </div>
                                 <div className="grid-view">
-                                    <ProductGrid/>
+                                    {loading ? (
+                                        <p>Đang tải sản phẩm...</p>
+                                    ) : (
+                                        <ProductGrid products={products} />
+                                    )}
                                     <Pagination/>
                                 </div>
                             </main>
                         </div>
-                        <Sidebar/>
-                    </div>
+                        <Sidebar
+                            products={allProducts}
+                            selectedPriceRange={selectedPriceRange}
+                            handlePriceFilterChange={handlePriceFilterChange}
+                        />                    
+                        </div>
                 </div>
             </div>
         </>
