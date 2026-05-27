@@ -6,6 +6,7 @@ import { loginSuccess, logoutSuccess } from "../../../Store/AuthSlice";
 import { SearchBar } from "../general/SearchComponents";
 import "../../assets/css/style-search.css"
 import "../../assets/css/style-cart.css"
+import api from "../../../service/ApiService"
 
 export const Header = () => {
     const dispatch = useDispatch();
@@ -20,9 +21,7 @@ export const Header = () => {
         // Load danh mục từ API
         const loadData = async () => {
             try {
-                const res = await fetch("http://localhost:8080/api/category/all");
-
-                const data = await res.json();
+                const data = await api.fetchData("/category/all");
                 setCategories(data);
                 // console.log("data", data);
                 // Lọc ra danh mục cha
