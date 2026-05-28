@@ -33,7 +33,22 @@ export const loginUser = async (user, dispatch) => {
         throw err;
     }
 };
-
+export const logoutUser = async (user, dispatch) => {
+    // dispatch action logoutStart để cập nhật state khi bắt đầu đăng xuất
+    dispatch(logoutStart());
+    try {
+    // Gọi API đăng xuất người dùng
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    // Cập nhật state trong Redux
+    dispatch(logoutSuccess());
+    } catch (err) {
+        console.log("Logout failed")
+        console.log("DATA:", err.response?.data);
+        dispatch(logoutFailure());
+        throw err; // Ném lỗi để component có thể xử lý và hiển thị thông báo lỗi
+    }
+};
 
 // REGISTER
 export const registerUser = async (user, dispatch, navigate) => {
