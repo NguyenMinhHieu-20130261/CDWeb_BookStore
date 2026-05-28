@@ -1,10 +1,13 @@
 package vn.edu.hcmuaf.fit.bookshop.service.imp;
 
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import vn.edu.hcmuaf.fit.bookshop.entity.Category;
 import vn.edu.hcmuaf.fit.bookshop.entity.Product;
+import vn.edu.hcmuaf.fit.bookshop.repository.ProductImageRepo;
 import vn.edu.hcmuaf.fit.bookshop.repository.ProductRepo;
 import vn.edu.hcmuaf.fit.bookshop.service.CategoryService;
 import vn.edu.hcmuaf.fit.bookshop.service.ProductService;
@@ -18,6 +21,11 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepo productRepo;
     private final CategoryService categoryService;
+    @Autowired
+    private ProductImageRepo productImageRepository;
+
+    @Autowired
+    private ProductDetailRepo productDetailRepository;
 
     @Override
     public List<Product> getActiveProducts() {
@@ -54,9 +62,5 @@ public class ProductServiceImpl implements ProductService {
             categoryIds.add(subCategory.getId());
         }
         return productRepo.findTop3ByCategoryIdInAndActiveTrueOrderByIdDesc(categoryIds);
-    }
-    @Override
-    public Product getProductById(Integer id) {
-        throw new UnsupportedOperationException("Unimplemented method 'getProductById'");
     }
 }
