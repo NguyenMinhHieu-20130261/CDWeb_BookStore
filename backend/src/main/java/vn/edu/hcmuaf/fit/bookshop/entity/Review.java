@@ -1,4 +1,7 @@
 package vn.edu.hcmuaf.fit.bookshop.entity;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
@@ -9,22 +12,32 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@ToString(exclude = {"product", "user"})
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "review")
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Integer id;
 
-    @JsonIgnoreProperties("comments")
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @ManyToOne
+    @JsonIgnoreProperties({
+            "password",
+            "role",
+            "userInformation",
+            "addresses",
+            "orders",
+            "createdBy",
+            "updatedBy",
+            "hibernateLazyInitializer",
+            "handler"
+    })
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -33,10 +46,13 @@ public class Review {
 
     @Column(name = "comment_detail")
     private String cmtDetail;
-
+    
     @Column(name = "created_at")
-    private Date created_at;
+    @JsonFormat(pattern = "HH:mm:ss dd/MM/yyyy", timezone = "Asia/Ho_Chi_Minh")
+    private Date createdAt;
 
     @Column(name = "updated_at")
-    private Date updated_at;
+    @JsonFormat(pattern = "HH:mm:ss dd/MM/yyyy", timezone = "Asia/Ho_Chi_Minh")
+    private Date updatedAt;
+
 }

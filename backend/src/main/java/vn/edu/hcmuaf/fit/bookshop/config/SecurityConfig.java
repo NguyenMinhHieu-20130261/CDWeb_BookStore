@@ -28,23 +28,23 @@ public class SecurityConfig {
             )
             .formLogin(AbstractHttpConfigurer::disable)
             .httpBasic(AbstractHttpConfigurer::disable)
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/category/**").permitAll()
-                .requestMatchers("/api/products/**").permitAll()
-                .requestMatchers("/api/userinfo/**").permitAll()
-                .requestMatchers("/api/address/**").permitAll()
-                .requestMatchers("/api/blog-cate/**").permitAll()
-                .requestMatchers("/api/blogs/**").permitAll()
-                .requestMatchers("/api/blog-detail/**").permitAll()
-                .requestMatchers("/api/search/**").permitAll()
-                .anyRequest().authenticated()
-            );
             // .authorizeHttpRequests(auth -> auth
-            //     .anyRequest().permitAll()
+            //     .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+            //     .requestMatchers("/api/auth/**").permitAll()
+            //     .requestMatchers("/api/category/**").permitAll()
+            //     .requestMatchers("/api/products/**").permitAll()
+            //     .requestMatchers("/api/userinfo/**").permitAll()
+            //     .requestMatchers("/api/address/**").permitAll()
+            //     .requestMatchers("/api/blog-cate/**").permitAll()
+            //     .requestMatchers("/api/blogs/**").permitAll()
+            //     .requestMatchers("/api/blog-detail/**").permitAll()
+            //     .requestMatchers("/api/search/**").permitAll()
+            //     .requestMatchers("/api/reviews/**").permitAll()
+            //     .anyRequest().authenticated()
             // );
-
+            .authorizeHttpRequests(auth -> auth
+                .anyRequest().permitAll()
+            );
         return http.build();
     }
 }
