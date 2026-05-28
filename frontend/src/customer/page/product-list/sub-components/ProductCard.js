@@ -8,7 +8,7 @@ const ProductCard = ({ product }) => {
                 <div className="woocommerce-LoopProduct-link woocommerce-loop-product__link d-block position-relative">
                     <div className="woocommerce-loop-product__thumbnail">
                         <Link
-                            to={`/product-detail/${product.id}`}
+                            to={`/product-detail/${product.slug}`}
                             className="d-block bwgb-products-carousel__product-image mx-auto attachment-shop_catalog size-shop_catalog wp-post-image img-fluid"
                         >
                             <img
@@ -27,13 +27,13 @@ const ProductCard = ({ product }) => {
                         </div>
 
                         <h2 className="bwgb-products-carousel__product-title woocommerce-loop-product__title product__title h6 text-lh-md mb-1 text-height-2 crop-text-2 h-dark">
-                            <Link to={`/product-detail/${product.id}`}>
+                            <Link to={`/product-detail/${product.slug}`}>
                                 {product.title}
                             </Link>
                         </h2>
                         <div className="woocommerce-loop-product__author font-size-2 text-truncate mb-1">
                             <Link to="/" className="text-gray-700">
-                                Tác giả
+                                {product.author || "Đang cập nhật"}
                             </Link>
                         </div>
                         <div className="bwgb-products-carousel__product-price d-flex align-items-center font-weight-medium font-size-3">

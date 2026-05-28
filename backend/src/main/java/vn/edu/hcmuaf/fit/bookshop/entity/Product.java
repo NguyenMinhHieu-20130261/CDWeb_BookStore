@@ -49,6 +49,9 @@ public class Product {
     @Column(name = "active")
     private boolean active;
 
+    @Column(name = "slug", unique = true, nullable = false)
+    private String slug;
+
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by")
@@ -66,4 +69,8 @@ public class Product {
     @Column(name = "updated_at")
     @JsonFormat(pattern = "HH:mm:ss dd/MM/yyyy", timezone = "Asia/Ho_Chi_Minh")
     private Date updatedAt;
+
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"product", "hibernateLazyInitializer", "handler"})
+    private ProductDetail detail;
 }

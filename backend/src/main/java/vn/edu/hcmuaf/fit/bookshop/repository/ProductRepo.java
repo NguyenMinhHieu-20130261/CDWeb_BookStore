@@ -4,9 +4,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import vn.edu.hcmuaf.fit.bookshop.entity.Product;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductRepo extends JpaRepository<Product, Integer> {
     List<Product> findByActiveTrue();
     List<Product> findByCategoryIdAndActiveTrue(Integer categoryId);
+    List<Product> findByCategoryIdInAndActiveTrue(List<Integer> categoryIds);
     List<Product> findByTitleContainingIgnoreCaseAndActiveTrue(String keyword);
+    List<Product> findTop3ByCategoryIdInAndActiveTrueOrderByIdDesc(List<Integer> categoryIds);
+    Optional<Product> findBySlugAndActiveTrue(String slug);
 }
