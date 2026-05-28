@@ -173,7 +173,7 @@ export const Header = () => {
                                     <ul>
                                         <li><Link to={"/home"}>Trang Chủ</Link></li>
                                         <li>
-                                            <Link to={`/product-list/all`}>Danh mục sách</Link>
+                                            <Link to={`/product-list`}>Danh mục sách</Link>
                                             <ul className="header__menu__dropdown">
                                                 {parentCategories.map(parent => {
                                                     const children = getChildren(parent.id);

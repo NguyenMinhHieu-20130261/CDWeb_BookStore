@@ -1,8 +1,17 @@
-import React from "react";
+import React, {useState} from "react";
 import { Link } from "react-router-dom";
 import FormatCurrency from "../../../../utils/FormatCurrency.js";
 
-const SingleProduct = () => {
+const SingleProduct = ({product}) => {
+    const [quantity, setQuantity] = useState(1);
+    const prodDetail = product.detail;
+
+    const decreaseQuantity = () => {
+        setQuantity(prev => Math.max(1, prev - 1));
+    };
+    const increaseQuantity = () => {
+        setQuantity(prev => prev + 1);
+    };
     return (
         <div className="single-product-container border my-4 py-4">
             <div className="row single-product-wrapper">
@@ -11,8 +20,9 @@ const SingleProduct = () => {
                 <div className="summary entry-summary col-lg-7 pl-lg-0">
                     <div className="summary entry-summary">
                         <div className="summary__inner px-lg-4">
-                            <h1 className="product_title entry-title">The Lost Colony (The Long Winter Trilogy Book
-                                3)</h1>
+                            <h1 className="product_title entry-title">
+                                {product.tile}
+                            </h1>
                             <div className="rating-author_info font-size-2 mb-4 d-flex flex-wrap align-items-center">
                                 <div className="rate d-flex align-items-center">
                                     <Link to="#">
@@ -28,29 +38,42 @@ const SingleProduct = () => {
                             <div className="price-label">
                                 <span className="price d-flex justify-content-start align-items-center">
                                     <p className="current-price mr-2">
-                                        <span className="price">{FormatCurrency(50000)}</span>
+                                        <span className="price">
+                                        {FormatCurrency(product.currentPrice)}
+                                        </span>
                                     </p>
-                                    <p className="old-price">
-                                        <span className="price">{FormatCurrency(75000)}</span>
-                                    </p>
+                                     {product.currentPrice && (
+                                        <p className="old-price">
+                                            <span className="price">
+                                                {FormatCurrency(product.oldPrice)}
+                                            </span>
+                                        </p>
+                                    )}
                                 </span>
                             </div>
                             <div className="woocommerce-product-details__short-description">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                    Excepteur sint occaecat.</p>
+                                <p>
+                                    {prodDetail?.description || "Chưa có mô tả sản phẩm."}
+                                </p>
                             </div>
                             <div style={{display: 'flex', flexDirection: 'column', gap: '8px'}}>
-                                <div className="lgdBsd"><p className="label">Số
-                                    Lượng</p>
+                                <div className="lgdBsd">
+                                    <p className="label">Số Lượng</p>
                                     <div className="group-input">
-                                        <button className=""><img
+                                        <button type="button" className=""  onClick={decreaseQuantity}>
+                                            <img
                                             src="https://frontend.tikicdn.com/_desktop-next/static/img/pdp_revamp_v2/icons-remove.svg"
-                                            alt="remove-icon" width="20" height="20"/></button>
-                                        <input type="text" value="2" className="input"/>
-                                        <button><img
+                                            alt="remove-icon" width="20" height="20"/>
+                                        </button>
+                                        <input 
+                                            type="text" 
+                                            value={quantity}
+                                            className="input"/>
+                                        <button type="button" onClick={increaseQuantity}>
+                                            <img
                                             src="https://frontend.tikicdn.com/_desktop-next/static/img/pdp_revamp_v2/icons-add.svg"
-                                            alt="add-icon" width="20" height="20"/></button>
+                                            alt="add-icon" width="20" height="20"/>
+                                        </button>
                                     </div>
                                 </div>
                             </div>

@@ -23,12 +23,16 @@ public class ProductController {
     public List<Product> getProductsByCategory(@PathVariable Integer categoryId) {
         return productService.getProductsByCategory(categoryId);
     }
-    @GetMapping("/{id}")
-    public Product getProductDetail(@PathVariable Integer id) {
-        return productService.getProductById(id);
+    @GetMapping("/detail/{slug}")
+    public Product getProductDetail(@PathVariable String slug) {
+        return productService.findBySlugAndActiveTrue(slug);
     }
     @GetMapping("/main-category/{categoryId}")
     public List<Product> getProductsByCategoryTree(@PathVariable Integer categoryId) {
         return productService.getProductsByCategoryTree(categoryId);
+    }
+    @GetMapping("/latest/{categoryId}")
+    public List<Product> getThreeLatestProductByCategoryTree(@PathVariable Integer categoryId) {
+        return productService.getThreeLatestProductByCategoryTree(categoryId);
     }
 }

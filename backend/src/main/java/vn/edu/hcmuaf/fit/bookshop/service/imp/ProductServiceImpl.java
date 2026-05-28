@@ -28,8 +28,8 @@ public class ProductServiceImpl implements ProductService {
         return productRepo.findByCategoryIdAndActiveTrue(categoryId);
     }
     @Override
-    public Product getProductById(Integer id) {
-        return productRepo.findById(id)
+    public Product findBySlugAndActiveTrue(String slug) {
+        return productRepo.findBySlugAndActiveTrue(slug)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm"));
     }
     @Override
@@ -42,5 +42,21 @@ public class ProductServiceImpl implements ProductService {
             categoryIds.add(subCategory.getId());
         }
         return productRepo.findByCategoryIdInAndActiveTrue(categoryIds);
+    }
+    @Override
+    public List<Product> getThreeLatestProductByCategoryTree(Integer categoryId) {
+        //
+        List<Integer> categoryIds = new ArrayList<>();
+        categoryIds.add(categoryId);
+        //
+        List<Category> subCategories = categoryService.getSubCategories(categoryId);
+        for (Category subCategory : subCategories) {
+            categoryIds.add(subCategory.getId());
+        }
+        return productRepo.findTop3ByCategoryIdInAndActiveTrueOrderByIdDesc(categoryIds);
+    }
+    @Override
+    public Product getProductById(Integer id) {
+        throw new UnsupportedOperationException("Unimplemented method 'getProductById'");
     }
 }

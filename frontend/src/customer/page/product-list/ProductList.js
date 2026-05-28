@@ -45,7 +45,6 @@ const ProductList = () => {
             setProducts(allProducts);
             return;
         }
-
         const [min, max] = priceRange.split("-");
         const minPrice = Number(min);
         const maxPrice = max ? Number(max) : Infinity;

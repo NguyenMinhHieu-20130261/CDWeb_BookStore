@@ -1,4 +1,7 @@
-const ProductInfo = () => {
+const ProductInfo = ({product}) => {
+    const prodDetail = product.detail;
+    const categoryName = product.category?.name || product.category?.categoryName;
+
     return (
         <div className="woocommerce-tabs wc-tabs-wrapper mx-lg-auto">
             <div className="classic-nav">
@@ -31,31 +34,9 @@ const ProductInfo = () => {
                     className="border p-3 my-4 woocommerce-Tabs-panel woocommerce-Tabs-panel--description panel entry-content wc-tab font-size-2"
                     id="tab-description" role="tabpanel" aria-labelledby="tab-title-description">
                     <h4 className="font-size-3">Mô tả sản phẩm</h4>
-                    <p className="mb-0">We aim to show you accurate product information. Manufacturers, suppliers
-                        and others provide what you see here, and we have not verified it. See our disclaimer</p>
-                    <p className="mb-0">#1 New York Times Bestseller</p>
-                    <p className="mb-0">A Reese Witherspoon x Hello Sunshine Book Club Pick</p>
-                    <p className="mb-4">&#8220;I can&#8217;t even express how much I love this book! I didn&#8217;t
-                        want this story to end!&#8221;&#8211;Reese Witherspoon</p>
-                    <p className="mb-4">&#8220;Painfully beautiful.&#8221;&#8211;The New York Times Book Review
+                    <p className="mb-0">
+                        {prodDetail?.description || "Chưa có mô tả sản phẩm."}
                     </p>
-                    <p>&#8220;Perfect for fans of Barbara Kingsolver.&#8221;&#8211;Bustle</p>
-                    <p className="mb-4">For years, rumors of the &#8220;Marsh Girl&#8221; have haunted Barkley Cove,
-                        a quiet town on the North Carolina coast. So in late 1969, when handsome Chase Andrews is
-                        found dead, the locals immediately suspect Kya
-                        Clark, the so-called Marsh Girl. But Kya is not what they say. Sensitive and intelligent,
-                        she has survived for years alone in the marsh that she calls home, finding friends in the
-                        gulls and lessons in the sand.
-                        Then the time comes when she yearns to be touched and loved. When two young men from town
-                        become intrigued by her wild beauty, Kya opens herself to a new life&#8211;until the
-                        unthinkable happens.</p>
-                    <p className="mb-4">Perfect for fans of Barbara Kingsolver and Karen Russell, Where the Crawdads
-                        Sing is at once an exquisite ode to the natural world, a heartbreaking coming-of-age story,
-                        and a surprising tale of possible murder.
-                        Owens reminds us that we are forever shaped by the children we once were, and that we are
-                        all subject to the beautiful and violent secrets that nature keeps
-                    </p>
-                    <p>WHERE THE CRAWDADS LP</p>
                 </div>
                 <div
                     className="border p-3 my-4 woocommerce-Tabs-panel woocommerce-Tabs-panel--additional_information panel entry-content wc-tab font-size-2"
@@ -70,8 +51,7 @@ const ProductInfo = () => {
                                     Mã sản phẩm
                                 </th>
                                 <td className="woocommerce-product-attributes-item__value">
-                                    <p><a href="https://bookworm.madrasthemes.com/book-author/a-g-riddle/"
-                                          rel="tag">A G Riddle</a></p>
+                                    <p>{prodDetail?.productSku || "Đang cập nhật"}</p>
                                 </td>
                             </tr>
                             <tr className="woocommerce-product-attributes-item woocommerce-product-attributes-item--attribute_pa_format">
@@ -79,7 +59,7 @@ const ProductInfo = () => {
                                     Tên nhà cung cấp
                                 </th>
                                 <td className="woocommerce-product-attributes-item__value">
-                                    <p>Hardcover, Kindle, Paperback</p>
+                                    <p>{prodDetail?.supplier || "Đang cập nhật"}</p>
                                 </td>
                             </tr>
                             <tr className="woocommerce-product-attributes-item woocommerce-product-attributes-item--attribute_pa_format">
@@ -87,7 +67,7 @@ const ProductInfo = () => {
                                     Tác giả
                                 </th>
                                 <td className="woocommerce-product-attributes-item__value">
-                                    <p>Hardcover, Kindle, Paperback</p>
+                                    <p>{prodDetail?.author || "Đang cập nhật"}</p>
                                 </td>
                             </tr>
                             <tr className="woocommerce-product-attributes-item woocommerce-product-attributes-item--attribute_pa_format">
@@ -95,7 +75,7 @@ const ProductInfo = () => {
                                     Nhà xuất bản
                                 </th>
                                 <td className="woocommerce-product-attributes-item__value">
-                                    <p>Hardcover, Kindle, Paperback</p>
+                                    <p>{prodDetail?.publisher || "Đang cập nhật"}</p>
                                 </td>
                             </tr>
                             <tr className="woocommerce-product-attributes-item woocommerce-product-attributes-item--attribute_pa_format">
@@ -103,7 +83,7 @@ const ProductInfo = () => {
                                     Năm xuất bản
                                 </th>
                                 <td className="woocommerce-product-attributes-item__value">
-                                    <p>Hardcover, Kindle, Paperback</p>
+                                    <p>{prodDetail?.publishYear || "Đang cập nhật"}</p>
                                 </td>
                             </tr>
                             <tr className="woocommerce-product-attributes-item woocommerce-product-attributes-item--attribute_pa_format">
@@ -111,7 +91,15 @@ const ProductInfo = () => {
                                     Trọng lượng
                                 </th>
                                 <td className="woocommerce-product-attributes-item__value">
-                                    <p>Hardcover, Kindle, Paperback</p>
+                                    <p>{prodDetail?.weight || "Đang cập nhật"}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th className="woocommerce-product-attributes-item__label px-4 px-xl-5">
+                                    Kích thước
+                                </th>
+                                <td className="woocommerce-product-attributes-item__value">
+                                    <p>{prodDetail?.size || "Đang cập nhật"}</p>
                                 </td>
                             </tr>
                             <tr className="woocommerce-product-attributes-item woocommerce-product-attributes-item--attribute_pa_format">
@@ -119,7 +107,7 @@ const ProductInfo = () => {
                                     Số trang
                                 </th>
                                 <td className="woocommerce-product-attributes-item__value">
-                                    <p>Hardcover, Kindle, Paperback</p>
+                                    <p>{prodDetail?.quantityOfPage || "Đang cập nhật"}</p>
                                 </td>
                             </tr>
                             <tr className="woocommerce-product-attributes-item woocommerce-product-attributes-item--attribute_pa_format">
@@ -127,7 +115,7 @@ const ProductInfo = () => {
                                     Danh mục
                                 </th>
                                 <td className="woocommerce-product-attributes-item__value">
-                                    <p>Hardcover, Kindle, Paperback</p>
+                                    <p>{categoryName || "Đang cập nhật"}</p>
                                 </td>
                             </tr>
                         </table>

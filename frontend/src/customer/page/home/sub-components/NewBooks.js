@@ -109,7 +109,7 @@ export const NewBooks = () => {
         const loadProductsByCategory = async () => {
             try {
                 setLoadingProducts(true);
-                const data = await api.fetchData(`/products/main-category/${selectedCategoryId}`);
+                const data = await api.fetchData(`/products/latest/${selectedCategoryId}`);
                 setProducts(data);
             } catch (error) {
                 console.error("Lỗi load product theo cate:", error);
