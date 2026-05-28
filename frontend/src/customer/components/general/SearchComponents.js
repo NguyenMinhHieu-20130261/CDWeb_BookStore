@@ -3,7 +3,6 @@ import { FaSearch, FaTimes } from "react-icons/fa";
 import React,{ useState,useEffect } from "react";
 import api from "../../../service/ApiService"
 
-
 export const SearchBar = ({ onToggle }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [keyword, setKeyword] = useState("");
@@ -30,7 +29,7 @@ export const SearchBar = ({ onToggle }) => {
                     setLoading(true);
                     const data = await api.fetchData(`/search?keyword=${encodeURIComponent(q)}`);
                     setResults(data);
-                    console.log(data)
+                    // console.log(data)
                 } catch (error) {
                     console.error("Error:", error);
                     setResults([]);

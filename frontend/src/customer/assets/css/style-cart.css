@@ -1259,10 +1259,13 @@ ol {
 /*---------------------
   Shop Grid
 -----------------------*/
-
 .product {
     padding-top: 80px;
     padding-bottom: 80px;
+}
+.product-pad {
+    padding-top: 30px !important;
+    padding-bottom: 30px !important;
 }
 
 .product__discount {
@@ -1425,6 +1428,9 @@ ol {
 
 .product__discount__slider.owl-carousel .owl-dots button:last-child {
     margin-right: 0;
+}
+.product__add-to-cart{
+    font-size: 13px;
 }
 
 .filter__item {
@@ -2278,4 +2284,7 @@ ol {
     letter-spacing: 2px;
     width: 100%;
     margin-top: 10px;
+}
+.atc-text{
+    font-size: 10px!important;
 }
