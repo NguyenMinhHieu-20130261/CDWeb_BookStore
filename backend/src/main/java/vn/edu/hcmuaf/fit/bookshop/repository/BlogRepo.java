@@ -10,4 +10,5 @@ public interface BlogRepo extends JpaRepository<Blog, Integer> {
     List<Blog> findByStatusOrderByCreatedAtDesc(Integer status);
     List<Blog> findByCategoryIdAndStatusOrderByCreatedAtDesc(Integer categoryId, Integer status);
     Optional<Blog> findBySlugAndStatus(String slug, Integer status);
+    List<Blog> findByTitleContainingIgnoreCaseAndStatusOrderByCreatedAtDesc(String keyword, Integer status);
 }
