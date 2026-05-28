@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -73,4 +74,11 @@ public class Product {
     @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
     @JsonIgnoreProperties({"product", "hibernateLazyInitializer", "handler"})
     private ProductDetail detail;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ProductImage> images;
+
+    @JsonIgnoreProperties("product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Review> comments;
 }
