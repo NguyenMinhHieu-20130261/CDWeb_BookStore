@@ -5,18 +5,23 @@ import Sidebar from "./sub-components/Sidebar";
 import ProductGrid from "./sub-components/ProductGrid";
 import "../../assets/css/style-produc.css"
 import api from "../../../service/ApiService"
+import { useParams } from "react-router-dom";
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
     const [allProducts, setAllProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedPriceRange, setSelectedPriceRange] = useState(null);
+    const {categoryId} = useParams();
     useEffect(() => {
         const fetchProdList = async () => {
             try {
-                const data = await api.fetchData(`/products`);
+                let url = "/products";
+                if (categoryId) {
+                    url = `/products/main-category/${categoryId}`;
+                }
+                const data = await api.fetchData(url);
                 console.log("products", data);
-
                 const productList = Array.isArray(data) ? data : data.data || [];
                 
                 setProducts(productList);
@@ -28,7 +33,7 @@ const ProductList = () => {
             }
         }
         fetchProdList();
-    }, []);
+    }, [categoryId]);
     const handlePriceFilterChange = (priceRange, event) => {
         event.preventDefault();
 
