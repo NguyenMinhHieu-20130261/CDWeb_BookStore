@@ -1,29 +1,70 @@
 import React, { useEffect, useState } from "react";
+import {Link} from "react-router-dom";
 import api from "../../../../service/ApiService.js";
 
 const ProductInfo = ({product}) => {
     const prodDetail = product.detail;
     const categoryName = product.category?.name || product.category?.categoryName;
+
     const [reviews, setReviews] = useState([]);
     const [selectedRating, setSelectedRating] = useState("");
     const [sortReview, setSortReview] = useState("newest");
- useEffect(() => {
-        const fetchReviews = async () => {
-            try {
-                let url = `/reviews/product/${product.id}?sort=${sortReview}`;
 
-                if (selectedRating) {
-                    url += `&rating=${selectedRating}`;
-                }
+    const [rating, setRating] = useState(5);
+    const [comment, setComment] = useState("");
+    const [submitting, setSubmitting] = useState(false);
+    const [reviewError, setReviewError] = useState("");
 
-                const data = await api.fetchData(url);
-                setReviews(Array.isArray(data) ? data : []);
-            } catch (error) {
-                console.error("Lỗi lấy review:", error);
-                setReviews([]);
+    const user = JSON.parse(localStorage.getItem("user"));
+    const isLoggedIn = !!user;
+    
+    const fetchReviews = async () => {
+        try {
+            let url = `/reviews/product/${product.id}?sort=${sortReview}`;
+            if (selectedRating) {
+                url += `&rating=${selectedRating}`;
             }
-        };
-
+            const data = await api.fetchData(url);
+            setReviews(Array.isArray(data) ? data : []);
+        } catch (error) {
+            console.error("Lỗi lấy review:", error);
+            setReviews([]);
+        }
+    };
+    const handleSubmitReview = async (e) => {
+        e.preventDefault();
+        if (!isLoggedIn) {
+            setReviewError("Bạn cần đăng nhập để viết đánh giá.");
+            return;
+        }
+        if (!comment.trim()) {
+            setReviewError("Vui lòng nhập nội dung đánh giá.");
+            return;
+        }
+        try {
+            setSubmitting(true);
+            setReviewError("");
+            await api.sendData("/reviews/add", {
+                productId: product.id,
+                userId: user.id,
+                rating: Number(rating),
+                cmtDetail: comment.trim(),
+            });
+            setComment("");
+            setRating(5);
+            await fetchReviews();
+        } catch (error) {
+            console.error("Lỗi gửi review:", error);
+            if (error.response?.status === 401 || error.response?.status === 403) {
+                setReviewError("Bạn cần đăng nhập để viết đánh giá.");
+            } else {
+                setReviewError("Không thể gửi đánh giá. Vui lòng thử lại.");
+            }
+        } finally {
+            setSubmitting(false);
+        }
+    };
+    useEffect(() => {
         if (product?.id) {
             fetchReviews();
         }
@@ -263,10 +304,7 @@ const ProductInfo = ({product}) => {
                                             <div className="comment-text">
                                                 <div className="d-md-flex align-items-center mb-3">
                                                     <h6 className="mb-0 mr-3">
-                                                        {review.user?.fullName ||
-                                                            review.user?.name ||
-                                                            review.user?.username ||
-                                                            "Người dùng"}
+                                                        {review.fullName || review.username || "Người dùng"}
                                                     </h6>
 
                                                     <div className="text-yellow-darker">
@@ -305,10 +343,53 @@ const ProductInfo = ({product}) => {
                                     <h4 id="reply-title" className="comment-reply-title font-size-3 mb-4">
                                         Viết đánh giá
                                     </h4>
-
-                                    <p className="must-log-in">
-                                        Bạn phải đăng nhập để viết đánh giá.
-                                    </p>
+                                    {!isLoggedIn ? (
+                                        <p className="must-log-in">
+                                            Bạn phải đăng nhập để viết đánh giá.
+                                            <Link to="/sign-in" className="ml-2">
+                                                Đăng nhập ngay
+                                            </Link>
+                                        </p>
+                                    ) : (
+                                        <form onSubmit={handleSubmitReview}>
+                                            {reviewError && (
+                                                <div className="alert alert-danger">
+                                                    {reviewError}
+                                                </div>
+                                            )}
+                                            <div className="form-group mb-3">
+                                                <label>Số sao</label>
+                                                <select
+                                                    className="form-control"
+                                                    value={rating}
+                                                    onChange={(e) => setRating(e.target.value)}
+                                                >
+                                                    <option value="5">5 sao</option>
+                                                    <option value="4">4 sao</option>
+                                                    <option value="3">3 sao</option>
+                                                    <option value="2">2 sao</option>
+                                                    <option value="1">1 sao</option>
+                                                </select>
+                                            </div>
+                                            <div className="form-group mb-3">
+                                                <label>Nội dung đánh giá</label>
+                                                <textarea
+                                                    className="form-control"
+                                                    rows="4"
+                                                    value={comment}
+                                                    onChange={(e) => setComment(e.target.value)}
+                                                    placeholder="Nhập đánh giá của bạn..."
+                                                />
+                                            </div>
+                                            <button
+                                                type="submit"
+                                                className="btn btn-primary"
+                                                disabled={submitting}
+                                            >
+                                                {submitting ? "Đang gửi..." : "Gửi đánh giá"}
+                                            </button>
+                                        </form>
+                                    )}
                                 </div>
                             </div>
                         </div>

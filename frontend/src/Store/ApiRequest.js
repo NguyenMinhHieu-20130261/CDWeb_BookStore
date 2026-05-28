@@ -16,6 +16,8 @@ export const loginUser = async (user, dispatch) => {
             "/auth/signin",
             user
         );
+        console.log("LOGIN RESPONSE:", res);
+        console.log("TOKEN:", res.token);
         localStorage.setItem(
             "user",
             JSON.stringify(res)
