@@ -1,6 +1,8 @@
 import {Link} from "react-router-dom";
-
-const ProductCard = () =>{
+import React, { useState } from "react";
+import api from "../../../../service/ApiService";
+const ProductCard = ({product}) =>{
+    
     return(
         <div className="product-card product add-to-wishlist-after_add_to_cart type-product">
             <div className="product__inner overflow-hidden p-3 p-md-4d875 w-100">
@@ -12,9 +14,8 @@ const ProductCard = () =>{
                                 width="120"
                                 height="183"
                                 className="attachment-bookworm-120x183-crop size-bookworm-120x183-crop"
-                                // src={product.image}
-                                // alt={product.title}
-                                alt="12312312312312312312"
+                                src={product.image}
+                                alt={product.title}
                                 />
                         </Link>
                     </div>
@@ -30,14 +31,13 @@ const ProductCard = () =>{
                         <h2 className="bwgb-products-carousel__product-title woocommerce-loop-product__title product__title h6 text-lh-md mb-1 text-height-2 crop-text-2 h-dark">
                             <Link to="/">
                             Tựa đề
-                            {/* {product.title} */}
+                            {product.title}
                             </Link>
                         </h2>
 
                         <div className="woocommerce-loop-product__author font-size-2 text-truncate mb-1">
                             <Link to="/" className="text-gray-700">
-                                {/* {product.author} */}
-                                tác giả
+                                {product.author || "Đang cập nhật"}
                             </Link>
                         </div>
 
@@ -45,9 +45,7 @@ const ProductCard = () =>{
                             <span className="price">
                                 <span className="woocommerce-Price-amount amount">
                                     <bdi>
-                                        <span className="woocommerce-Price-currencySymbol">đ    </span>
-                                        {/* {product.price} */}
-                                    1312312312312313
+                                        {product.currentPrice.toLocaleString("vi-VN")}đ
                                     </bdi>
                                 </span>
                             </span>
@@ -80,6 +78,49 @@ const ProductCard = () =>{
     )
 }
 export const NewBooks = () => {
+    const [categories, setCategories] = React.useState([]);
+    const [parentCategories, setParentCategories] = React.useState([]);
+    const [selectedCategoryId, setSelectedCategoryId] = React.useState(null);
+    const [products, setProducts] = React.useState([]);
+    const [loadingProducts, setLoadingProducts] = React.useState(false);
+    
+    React.useEffect(() => {
+        const loadCate = async () => {
+            try {
+                const data = await api.fetchData("/category/all");
+                setCategories(data);
+                // console.log("data", data);
+                // Lọc ra danh mục cha
+                const parents = data.filter(c => c.parentId === null);
+                // console.log("parents", parents);
+                setParentCategories(parents);
+                if (parents.length > 0) {
+                    setSelectedCategoryId(parents[0].id);
+                }
+            } catch (error) {
+                console.error("Lỗi load cate:", error);
+            }
+        };
+        loadCate();
+    }, []);
+     React.useEffect(() => {
+        if (!selectedCategoryId) return;
+
+        const loadProductsByCategory = async () => {
+            try {
+                setLoadingProducts(true);
+                const data = await api.fetchData(`/products/main-category/${selectedCategoryId}`);
+                setProducts(data);
+            } catch (error) {
+                console.error("Lỗi load product theo cate:", error);
+                setProducts([]);
+            } finally {
+                setLoadingProducts(false);
+            }
+        };
+        loadProductsByCategory();
+    }, [selectedCategoryId]);
+
     return (
         <div className="wp-block-bwgb-tabs__inner container">
             <header className="mb-5  d-md-flex justify-content-between align-items-center">
@@ -87,18 +128,21 @@ export const NewBooks = () => {
                 <ul className="nav nav-gray-700 flex-nowrap flex-md-wrap overflow-auto overflow-md-visible"
                     role="tablist">
                     {/* Category */}
-                    <li className="nav-item flex-shrink-0 flex-md-shrink-1 mx-4">
-                        <a data-tabcount="1" className="nav-link px-0 active" data-toggle="tab" href="#tab-717dbc63-1"
-                           role="tab" aria-controls="tab-717dbc63-1" aria-selected="false">
-                            <h6 className="bwgb-tabs__title">Lịch sử</h6>
-                        </a>
-                    </li>
-                    <li className="nav-item flex-shrink-0 flex-md-shrink-1 mx-4">
-                        <a data-tabcount="2" className="nav-link px-0" data-toggle="tab" href="#tab-717dbc63-2"
-                           role="tab" aria-controls="tab-717dbc63-2" aria-selected="false">
-                            <h6 className="bwgb-tabs__title">Công nghệ &amp; toán học</h6>
-                        </a>
-                    </li>
+                    {parentCategories.map(mainCate => (
+                        <li key={mainCate.id}
+                        className="nav-item flex-shrink-0 flex-md-shrink-1 mx-4"
+                        >
+                           <button
+                                type="button"
+                                className={`nav-link px-0 border-0 bg-transparent ${
+                                    selectedCategoryId === mainCate.id ? "active" : ""
+                                }`}
+                                onClick={() => setSelectedCategoryId(mainCate.id)}
+                            >
+                                <h6 className="bwgb-tabs__title">{mainCate.name}</h6>
+                            </button>
+                        </li>
+                    ))}
                 </ul>
             </header>
             <div className="tab-content u-slick__tab">
@@ -121,7 +165,18 @@ export const NewBooks = () => {
                                             <div className="slick-list draggable">
                                                 <div className="slick-track"
                                                     style={{ opacity: 1, width: '1638px', transform: 'translate3d(0px, 0px, 0px)' }}>
-                                                        <ProductCard/>
+                                                {loadingProducts ? (
+                                                    <p className="p-4">Đang tải sản phẩm...</p>
+                                                ) : products.length > 0 ? (
+                                                    products.map(product => (
+                                                        <ProductCard
+                                                            key={product.id}
+                                                            product={product}
+                                                        />
+                                                    ))
+                                                ) : (
+                                                    <p className="p-4">Không có sản phẩm</p>
+                                                )}
                                                 </div>
                                             </div>
                                             <div

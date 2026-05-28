@@ -33,7 +33,7 @@ const ProductCard = ({ product }) => {
                         </h2>
                         <div className="woocommerce-loop-product__author font-size-2 text-truncate mb-1">
                             <Link to="/" className="text-gray-700">
-                                Tác giả
+                                {product.author || "Đang cập nhật"}
                             </Link>
                         </div>
                         <div className="bwgb-products-carousel__product-price d-flex align-items-center font-weight-medium font-size-3">

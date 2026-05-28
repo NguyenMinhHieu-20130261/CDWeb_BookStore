@@ -7,5 +7,6 @@ import java.util.List;
 public interface ProductService {
     List<Product> getActiveProducts();
     List<Product> getProductsByCategory(Integer categoryId);
+    List<Product> getProductsByCategoryTree(Integer categoryId);
     Product getProductById(Integer id);
 }
