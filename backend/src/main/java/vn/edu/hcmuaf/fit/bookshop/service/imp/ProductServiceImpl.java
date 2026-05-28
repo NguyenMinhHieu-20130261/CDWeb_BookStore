@@ -22,10 +22,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepo productRepo;
     private final CategoryService categoryService;
     @Autowired
-    private ProductImageRepo productImageRepository;
-
-    @Autowired
-    private ProductDetailRepo productDetailRepository;
+    private ProductImageRepo productImageRepo;
 
     @Override
     public List<Product> getActiveProducts() {

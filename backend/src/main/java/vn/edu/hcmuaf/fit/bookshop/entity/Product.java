@@ -75,10 +75,11 @@ public class Product {
     @JsonIgnoreProperties({"product", "hibernateLazyInitializer", "handler"})
     private ProductDetail detail;
 
+    @JsonIgnoreProperties({"product", "hibernateLazyInitializer", "handler"})
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProductImage> images;
 
-    @JsonIgnoreProperties("product")
+    @JsonIgnore
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Review> comments;
+    private List<Review> review;
 }
