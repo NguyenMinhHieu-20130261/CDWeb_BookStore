@@ -19,12 +19,6 @@ const SignIn = () => {
         setErrorMessage("");
         // ngăn chặn spam nút login 
         if (loading) return;
-
-        // if (!username || !password) {
-        //     setErrorMessage("Vui lòng nhập đầy đủ thông tin");
-        //     return;
-        // }
-
         setLoading(true);
         setErrorMessage("");
         try {

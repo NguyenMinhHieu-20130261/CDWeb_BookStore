@@ -7,6 +7,7 @@ import { SearchBar } from "../general/SearchComponents";
 import "../../assets/css/style-search.css"
 import "../../assets/css/style-cart.css"
 import api from "../../../service/ApiService"
+import {logoutUser} from "../../../Store/ApiRequest";
 
 export const Header = () => {
     const dispatch = useDispatch();
@@ -35,12 +36,15 @@ export const Header = () => {
         loadData();
     }, []);
     // hàm logout
-    const handleLogout = () => {
-        localStorage.removeItem("currentUser");
-        localStorage.removeItem("token");
-        dispatch(logoutSuccess());   
-        navigate("/");
-        window.location.reload();
+    const handleLogout = async(e) => {
+        try{
+            const res = await logoutUser(user, dispatch);
+            dispatch(logoutSuccess());   
+            navigate("/");
+            window.location.reload();
+        } catch (error){
+            console.log(error); 
+        }
     };
     // Lấy danh mục con
     const getChildren = (parentId) => {
