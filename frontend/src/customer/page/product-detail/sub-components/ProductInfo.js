@@ -53,7 +53,7 @@ const ProductInfo = ({product}) => {
             setComment("");
             setRating(5);
             await fetchReviews();
-            console.log("REVIEWS:", rating);
+            // console.log("REVIEWS:", rating);
         } catch (error) {
             console.error("Lỗi gửi review:", error);
             if (error.response?.status === 401 || error.response?.status === 403) {

@@ -1,20 +1,6 @@
 import "../../assets/css/style-cart.css"
+import Breadcrumb from "../../components/general/Breadcrumb"
 
-export const PageLink = () => {
-    return (
-        <div className="page-header border-bottom">
-            <div className="container">
-                <div className="d-md-flex justify-content-between align-items-center py-4">
-                    <nav className="woocommerce-breadcrumb font-size-2"><a className="h-primary"
-                                                                           href="https://bookworm.madrasthemes.com">Home</a><span
-                        className="breadcrumb-separator mx-2"><i
-                        className="fas fa-angle-right"></i></span>Cart
-                    </nav>
-                </div>
-            </div>
-        </div>
-    )
-}
 export const ProductsInCart = () => {
     return (
         <section className="shoping-cart spad" style={{ margin: "0 90px 0 90px" }}>
@@ -142,7 +128,7 @@ export const ProductsInCart = () => {
 export const Cart = () => {
     return (
         <div>
-        <PageLink/>
+        <Breadcrumb/>
         <ProductsInCart/>
         </div>
     )

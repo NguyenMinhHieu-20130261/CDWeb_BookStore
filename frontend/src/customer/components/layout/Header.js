@@ -24,7 +24,7 @@ export const Header = () => {
             try {
                 const data = await api.fetchData("/category/all");
                 setCategories(data);
-                console.log("categories123", data);
+                // console.log("categories123", data);
                 // Lọc ra danh mục cha
                 const parents = data.filter(c => c.parentId === null);
                 // console.log("parents", parents);
@@ -106,8 +106,8 @@ export const Header = () => {
                                                     className="d-flex align-items-center text-white font-size-2 text-lh-sm position-relative">
                                                     <i className="fa-solid fa-user font-size-5 text-dark"></i>
                                                     <div className="ml-2 d-none d-lg-block text-dark">
-                                            <span className="text-secondary-gray-1090 font-size-1">
-                                                Xin chào </span>
+                                                        <span className="text-secondary-gray-1090 font-size-1">
+                                                            Xin chào </span>
                                                         <div>{user.username}</div>
                                                     </div>
                                                 </div>
@@ -152,9 +152,9 @@ export const Header = () => {
                                         <span className="cart-contents-count">
                                             0
                                         </span> </span>
-                                    <Link to={"/cart"}>
+                                    <div >
                                         <i className="fa-solid fa-cart-shopping font-size-5 text-dark"></i>
-                                    </Link>
+                                    </div>
                                     <div className="ml-2 d-none d-lg-block text-dark">
                                         <span className="text-secondary-gray-1090 font-size-1">
                                             Giỏ hàng </span>
@@ -183,14 +183,28 @@ export const Header = () => {
                                                     const children = getChildren(parent.id);
                                                     return (
                                                         <li key={parent.id}>
-                                                            <Link to={`/product-list/${parent.id}`}>
+                                                            <Link 
+                                                                to={`/product-list/${parent.id}`}
+                                                                state={{
+                                                                    title: parent.name,
+                                                                    categoryName: parent.name,
+                                                                    categoryLink: `/product-list/${parent.id}`
+                                                                }}
+                                                            >
                                                                 {parent.name}
                                                             </Link>
                                                             {children.length > 0 && (
                                                                 <ul className="header__menu__dropdown__level2">
                                                                     {children.map(child => (
                                                                         <li key={child.id}>
-                                                                            <Link to={`/product-list/${child.id}`}>
+                                                                            <Link 
+                                                                                to={`/product-list/${child.id}`}
+                                                                                state={{
+                                                                                    title: child.name,
+                                                                                    categoryName: child.name,
+                                                                                    categoryLink: `/product-list/${child.id}`
+                                                                                }}
+                                                                            >
                                                                                 {child.name}
                                                                             </Link>
                                                                         </li>
@@ -206,7 +220,6 @@ export const Header = () => {
                                         <li><Link to={"/contact"}>Liên Hệ</Link></li>
                                     </ul>
                                 </nav>
-
                             </div>
                         </div>
                     </div>

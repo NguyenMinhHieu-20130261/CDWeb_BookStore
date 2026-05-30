@@ -15,7 +15,7 @@ export const BlogDetail = () => {
             setLoading(true);
             try {
                 const data = await api.fetchData(`/blogs/detail/${slug}`);
-                console.log("BLOG DETAIL:", data);
+                // console.log("BLOG DETAIL:", data);
                 setBlog(data);
             } catch (error) {
                 console.log("Lỗi khi lấy chi tiết bài viết:", error);

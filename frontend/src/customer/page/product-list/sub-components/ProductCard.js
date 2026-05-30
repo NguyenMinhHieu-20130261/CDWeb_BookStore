@@ -9,6 +9,11 @@ const ProductCard = ({ product }) => {
                     <div className="woocommerce-loop-product__thumbnail">
                         <Link
                             to={`/product-detail/${product.slug}`}
+                            state={{
+                                title: product.title,
+                                categoryName: product.category?.name || product.category?.categoryName,
+                                categoryLink: `/product-list/${product.category?.id}`
+                            }}
                             className="d-block bwgb-products-carousel__product-image mx-auto attachment-shop_catalog size-shop_catalog wp-post-image img-fluid"
                         >
                             <img
@@ -23,16 +28,39 @@ const ProductCard = ({ product }) => {
 
                     <div className="woocommerce-loop-product__body product__body pt-3 bg-white">
                         <div className="woocommerce-loop-product__format text-uppercase font-size-1 mb-1 text-truncate text-primary">
-                            <Link to="/">Sách</Link>
+                            <Link 
+                                to={`/product-detail/${product.slug}`}
+                                state={{
+                                    title: product.title,
+                                    categoryName: product.category?.name || product.category?.categoryName,
+                                    categoryLink: `/product-list/${product.category?.id}`
+                                }}
+                            >
+                                Sách
+                            </Link>
                         </div>
 
                         <h2 className="bwgb-products-carousel__product-title woocommerce-loop-product__title product__title h6 text-lh-md mb-1 text-height-2 crop-text-2 h-dark">
-                            <Link to={`/product-detail/${product.slug}`}>
+                            <Link 
+                                to={`/product-detail/${product.slug}`}
+                                state={{
+                                    title: product.title,
+                                    categoryName: product.category?.name || product.category?.categoryName,
+                                    categoryLink: `/product-list/${product.category?.id}`
+                                }}
+                            >
                                 {product.title}
                             </Link>
                         </h2>
                         <div className="woocommerce-loop-product__author font-size-2 text-truncate mb-1">
-                            <Link to="/" className="text-gray-700">
+                            <Link 
+                                to={`/product-detail/${product.slug}`}
+                                state={{
+                                    title: product.title,
+                                    categoryName: product.category?.name || product.category?.categoryName,
+                                    categoryLink: `/product-list/${product.category?.id}`
+                                }}
+                                className="text-gray-700">
                                 {product.author || "Đang cập nhật"}
                             </Link>
                         </div>
