@@ -184,7 +184,14 @@ export const OrderDetail = () => {
                                 {orderDetails.map(item => (
                                     <div key={item.id}>
                                         {item.product.title}
-                                        <Link to={`/product-detail/${item.product.detail.id}`}>
+                                        <Link 
+                                            to={`/product-detail/${product.slug}`}
+                                            state={{
+                                                title: product.title,
+                                                categoryName: product.category?.name || product.category?.categoryName,
+                                                categoryLink: `/product-list/${product.category?.id}`
+                                            }}
+                                        >
                                             <button>Đánh giá</button>
                                         </Link>
                                     </div>

@@ -21,7 +21,7 @@ const Category = () => {
                 const parents = categoryList.filter(c => c.parentId === null);
                 setParentCategories(parents);
                 
-                console.log("cates", data);
+                // console.log("cates", data);
             } catch (error) {
                 console.error("Lỗi load cate:", error);
             }
@@ -77,7 +77,13 @@ const Category = () => {
                                 <li key={parent.id}
                                     className={`cat-item parent-cat ${hasChildren ? "cat-parent" : ""}`} >
                                     <div className="category-parent-row">
-                                        <Link to={`/product-list/${parent.id}`} className="category-parent-link">
+                                        <Link to={`/product-list/${parent.id}`}
+                                            state={{
+                                                title: parent.name,
+                                                categoryName: parent.name,
+                                                categoryLink: `/product-list/${parent.id}`
+                                            }}
+                                        className="category-parent-link">
                                             {parent.name}
                                         </Link>
                                         {hasChildren && (
@@ -103,6 +109,11 @@ const Category = () => {
                                                 <li key={child.id} className="cat-item child-cat">
                                                     <Link
                                                         to={`/product-list/${child.id}`}
+                                                        state={{
+                                                            title: child.name,
+                                                            categoryName: child.name,
+                                                            categoryLink: `/product-list/${child.id}`
+                                                        }}
                                                         className="category-child-link" >
                                                         {child.name}
                                                     </Link>

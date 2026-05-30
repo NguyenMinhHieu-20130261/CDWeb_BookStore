@@ -80,7 +80,7 @@ const UpdateAddress = () => {
                 const address = await api.fetchData(`/address/update/${id}`);
                 // Lấy danh sách tỉnh thành để tìm provinceId
                 const provinces = await ProvinceService.getProvinces();
-                console.log("ADDRESS:", address);
+                // console.log("ADDRESS:", address);
                 const provinceObj = provinces.find(p => p.name === address.provinceCity);
                 // Nếu tìm được province, lấy danh sách quận huyện và xã tương ứng
                 const provinceId = provinceObj? String(provinceObj.code) : "";

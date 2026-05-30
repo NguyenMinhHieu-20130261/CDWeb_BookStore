@@ -22,7 +22,9 @@ export const Checkout = () => {
                 <Coupon/>
                 <div className="checkout__form">
                     <h4>Thông tin thanh toán</h4>
-                    <form action="#">
+                    <form 
+                    // action="#"
+                    >
                         <div className="row">
                             <PayForm/>
                             <Bill/>

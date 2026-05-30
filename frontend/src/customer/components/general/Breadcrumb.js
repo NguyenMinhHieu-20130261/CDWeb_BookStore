@@ -3,7 +3,26 @@ import { Link, useLocation } from "react-router-dom";
 
 const Breadcrumb = () => {
     const location = useLocation();
+    const {
+        title,
+        categoryName,
+        categoryLink
+    } = location.state || {};
 
+    const breadcrumbConfig = {
+        product: {
+            listPath: "/product-list",
+            listName: "Danh sách sản phẩm",
+            categoryFallback: "Danh mục sản phẩm",
+            detailFallback: "Chi tiết sản phẩm",
+        },
+        blog: {
+            listPath: "/blog-list",
+            listName: "Danh sách bài viết",
+            categoryFallback: "Danh mục bài viết",
+            detailFallback: "Chi tiết bài viết",
+        },
+    };
     const pathNameMap = {
         '/sign-in': 'Đăng nhập',
         '/sign-up': 'Đăng ký',
@@ -24,23 +43,82 @@ const Breadcrumb = () => {
         '/product-detail': 'Chi tiết sản phẩm',
 
     };
+    const getPageType = () => {
+        if (location.pathname.startsWith("/product")) return "product";
+        if (location.pathname.startsWith("/blog")) return "blog";
+        return null;
+    };
 
-    const getPathName = (path) => pathNameMap[path] || '';
+    const pageType = getPageType();
+    const config = breadcrumbConfig[pageType];
 
-    const pathNames = location.pathname.split('/').filter(path => path !== '');
+    const isDetailPage =
+        location.pathname.startsWith("/product-detail") ||
+        location.pathname.startsWith("/blog-detail");
 
-    let currentLink = '';
+    const isListPage =
+        location.pathname.startsWith("/product-list") ||
+        location.pathname.startsWith("/blog-list");
 
-    // Lọc và tạo một mảng mới chỉ chứa các mục có tên trong pathNameMap
-    const filteredPathNames = pathNames.reduce((acc, path, index) => {
-        currentLink += `/${path}`;
-        const name = getPathName(currentLink);
-        if (name) {
-            acc.push({path, name, fullLink: currentLink});
+    let breadcrumbItems = [];
+
+    if (config && isDetailPage) {
+        breadcrumbItems = [
+            {
+                name: config.listName,
+                link: `${config.listPath}/all`,
+                isLink: true,
+            },
+            {
+                name: categoryName || config.categoryFallback,
+                link: categoryLink || `${config.listPath}/all`,
+                isLink: !!categoryName,
+            },
+            {
+                name: title || config.detailFallback,
+                link: location.pathname,
+                isLink: false,
+            },
+        ];
+    } else if (config && isListPage) {
+        const isAllPage =
+            location.pathname === config.listPath ||
+            location.pathname === `${config.listPath}/all`;
+
+        breadcrumbItems = [
+            {
+                name: config.listName,
+                link: `${config.listPath}/all`,
+                isLink: !isAllPage,
+            },
+        ];
+
+        if (!isAllPage) {
+            breadcrumbItems.push({
+                name: categoryName || title || config.categoryFallback,
+                link: location.pathname,
+                isLink: false,
+            });
         }
-        return acc;
-    }, []);
+    } else {
+        const pathNames = location.pathname.split("/").filter(Boolean);
+        let currentLink = "";
 
+        breadcrumbItems = pathNames.reduce((acc, path) => {
+            currentLink += `/${path}`;
+            const name = pathNameMap[currentLink];
+
+            if (name) {
+                acc.push({
+                    name,
+                    link: currentLink,
+                    isLink: true,
+                });
+            }
+
+            return acc;
+        }, []);
+    }
     return (
         <div className="page-header border-bottom">
             <div className="container">
@@ -49,23 +127,24 @@ const Breadcrumb = () => {
                         <Link className="h-primary" to="/">
                             Trang chủ
                         </Link>
-
-                        {filteredPathNames.map((item, index) => (
-                            <React.Fragment key={index}>
-                                <span className="breadcrumb-separator mx-2">
-                                    <i className="fas fa-angle-right"></i>
-                                </span>
-                                {index !== filteredPathNames.length - 1 ? (
-                                    <Link className="h-primary" to={item.fullLink}>
-                                        {item.name}
-                                    </Link>
-                                ) : (
-                                    <span>
-                                        {item.name}
+                        {breadcrumbItems.map((item, index) => {
+                            const isLast = index === breadcrumbItems.length - 1;
+                            return (
+                                <React.Fragment key={index}>
+                                    <span className="breadcrumb-separator mx-2">
+                                        <i className="fas fa-angle-right"></i>
                                     </span>
-                                )}
-                            </React.Fragment>
-                        ))}
+
+                                    {!isLast && item.isLink ? (
+                                        <Link className="h-primary" to={item.link}>
+                                            {item.name}
+                                        </Link>
+                                    ) : (
+                                        <span>{item.name}</span>
+                                    )}
+                                </React.Fragment>
+                            );
+                        })}
                     </nav>
                 </div>
             </div>

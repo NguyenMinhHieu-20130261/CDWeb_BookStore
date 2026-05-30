@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const BlogItem = ({ id, title, image, content, created_at,slug }) => {
+const BlogItem = ({ id, title, image, content, created_at,slug,categoryName, categoryId}) => {
     const shortenContent = (content, maxLength) => {
         if (!content) return "";
 
@@ -28,10 +28,18 @@ const BlogItem = ({ id, title, image, content, created_at,slug }) => {
         });
     };
     const imgSrc = image || "https://bookworm.madrasthemes.com/wp-content/uploads/2020/08/img1-13-445x300.jpg";
+    const blogState = {
+        title: title,
+        categoryName: categoryName,
+        categoryLink: categoryId ? `/blog-list/${categoryId}` : "/blog-list/all"
+    };
     return (
         <article className="col blog-grid">
             <div className="mb-6">
-                <Link className="d-block mb-3" to={`/blog-detail/${slug}`}>
+                <Link className="d-block mb-3" 
+                    to={`/blog-detail/${slug}`}
+                    state={blogState}
+                >
                      <img
                         style={{width: "445px", height: "300px", objectFit: "cover"}}
                         src={imgSrc}
@@ -50,7 +58,12 @@ const BlogItem = ({ id, title, image, content, created_at,slug }) => {
                 </div> */}
                 {/* Hiển thị title */}
                 <h2 className="h5 mb-3">
-                    <Link to={`/blog-detail/${slug}`}>{title}</Link>
+                    <Link 
+                        to={`/blog-detail/${slug}`}
+                        state={blogState}
+                    >
+                        {title}
+                    </Link>
                 </h2>
                 {/* Hiển thị mô tả rút gọn */}
                 <p className="text-muted mb-4">{shortenContent(content, 100)}</p>

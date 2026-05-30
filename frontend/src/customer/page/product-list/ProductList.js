@@ -21,7 +21,7 @@ const ProductList = () => {
                     url = `/products/main-category/${categoryId}`;
                 }
                 const data = await api.fetchData(url);
-                console.log("products", data);
+                // console.log("products", data);
                 const productList = Array.isArray(data) ? data : data.data || [];
                 
                 setProducts(productList);
@@ -73,7 +73,8 @@ const ProductList = () => {
                                             <header
                                                 className=" justify-content-between align-items-center bwgb-products-carousel__block-header text-center ">
                                                 <h2 className="bwgb-products-carousel__block-title font-size-7 mb-md-0">
-                                                    Recommended Books</h2>
+                                                    Sách Đề Xuất
+                                                </h2>
                                             </header>
                                             <div className="wp-block-bwgb-products-carousel__content"
                                                  data-posts-per-page="8" data-columns="4">
@@ -94,7 +95,7 @@ const ProductList = () => {
                                                         className="orderby js-select selectpicker dropdown-select"
                                                         aria-label="Shop order"
                                                         data-style="border-bottom shadow-none outline-none py-2">
-                                                    <option value="menu_order" selected="selected">Default sorting
+                                                    <option value="menu_order">Default sorting
                                                     </option>
                                                     <option value="popularity">Sort by popularity</option>
                                                     <option value="rating">Sort by average rating</option>
@@ -104,16 +105,17 @@ const ProductList = () => {
                                                 </select>
                                                 <input type="hidden" name="paged" value="1"/>
                                             </form>
-                                            <form method="POST" action
+                                            <form method="POST"
                                                   className="number-of-items ml-md-4 mb-4 m-md-0 d-none d-xl-block">
-                                                <select name="ppp" onChange="this.form.submit()"
+                                                <select name="ppp" 
                                                         className="dropdown-select orderby"
                                                         data-style="border-bottom shadow-none outline-none py-2">
                                                     <option value="20">Show 20</option>
                                                     <option value="40">Show 40</option>
                                                     <option value="80">Show 80</option>
                                                     <option value="-1">Show All</option>
-                                                </select></form>
+                                                </select>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
