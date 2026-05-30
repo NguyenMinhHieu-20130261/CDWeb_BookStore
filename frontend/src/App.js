@@ -1,4 +1,5 @@
 import '@fortawesome/fontawesome-free/css/all.min.css';
+
 import "./customer/assets/css/bootstrap-select.min.css";
 import "./customer/assets/css/style.css";
 import "./customer/assets/css/animate.css";

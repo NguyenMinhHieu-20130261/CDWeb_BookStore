@@ -53,6 +53,7 @@ const ProductInfo = ({product}) => {
             setComment("");
             setRating(5);
             await fetchReviews();
+            console.log("REVIEWS:", rating);
         } catch (error) {
             console.error("Lỗi gửi review:", error);
             if (error.response?.status === 401 || error.response?.status === 403) {
@@ -81,6 +82,20 @@ const ProductInfo = ({product}) => {
     const percentByRating = (rating) => {
         if (totalReviews === 0) return 0;
         return (countByRating(rating) / totalReviews) * 100;
+    };
+    const renderStars = (ratingValue) => {
+        const value = Number(ratingValue || 0);
+        return [1, 2, 3, 4, 5].map((star) => (
+            <span
+                key={star}
+                style={{
+                    color: star <= value ? "#f6c343" : "#CDCFD0",
+                    marginRight: "2px"
+                }}
+            >
+                <i className="fa-solid fa-star"></i>
+            </span>
+        ));
     };
     return (
         <div className="woocommerce-tabs wc-tabs-wrapper mx-lg-auto">
@@ -214,21 +229,12 @@ const ProductInfo = ({product}) => {
                                 <span className="font-size-15 font-weight-bold">
                                     {averageRating.toFixed(1)}
                                 </span>
-
                                 <div className="ml-3 h6 mb-0">
                                     <span className="font-weight-normal">
                                         {totalReviews} đánh giá
                                     </span>
-
-                                    <div className="text-yellow-darker">
-                                        {[1, 2, 3, 4, 5].map((star) => (
-                                            <span
-                                                key={star}
-                                                className={star <= Math.round(averageRating) ? "checked" : ""}
-                                            >
-                                                <i className="fa-solid fa-star"></i>
-                                            </span>
-                                        ))}
+                                    <div>
+                                        {renderStars(Math.round(averageRating))}
                                     </div>
                                 </div>
                             </div>
@@ -306,16 +312,8 @@ const ProductInfo = ({product}) => {
                                                     <h6 className="mb-0 mr-3">
                                                         {review.fullName || review.username || "Người dùng"}
                                                     </h6>
-
-                                                    <div className="text-yellow-darker">
-                                                        {[1, 2, 3, 4, 5].map((star) => (
-                                                            <span
-                                                                key={star}
-                                                                className={star <= review.rating ? "checked" : ""}
-                                                            >
-                                                                <i className="fa-solid fa-star"></i>
-                                                            </span>
-                                                        ))}
+                                                    <div>
+                                                        {renderStars(review.rating)}
                                                     </div>
                                                 </div>
 

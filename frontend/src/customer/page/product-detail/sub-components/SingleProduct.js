@@ -21,7 +21,7 @@ const SingleProduct = ({product}) => {
                     <div className="summary entry-summary">
                         <div className="summary__inner px-lg-4">
                             <h1 className="product_title entry-title">
-                                {product.tile}
+                                {product.tilte}
                             </h1>
                             <div className="rating-author_info font-size-2 mb-4 d-flex flex-wrap align-items-center">
                                 <div className="rate d-flex align-items-center">

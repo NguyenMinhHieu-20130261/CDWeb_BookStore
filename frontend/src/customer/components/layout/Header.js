@@ -24,7 +24,7 @@ export const Header = () => {
             try {
                 const data = await api.fetchData("/category/all");
                 setCategories(data);
-                // console.log("data", data);
+                console.log("categories123", data);
                 // Lọc ra danh mục cha
                 const parents = data.filter(c => c.parentId === null);
                 // console.log("parents", parents);
