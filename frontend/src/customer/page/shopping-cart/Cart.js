@@ -1,7 +1,57 @@
 import "../../assets/css/style-cart.css"
 import Breadcrumb from "../../components/general/Breadcrumb"
+import { useEffect, useState } from "react";
+import api from "../../../service/ApiService";
 
 export const ProductsInCart = () => {
+    const [cartItems, setCartItems] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    const formatPrice = (price) => {
+        return Number(price || 0).toLocaleString("vi-VN") + "đ";
+    };
+    const getCartItems = async () => {
+        try {
+            if (!user || !user.id) {
+                setCartItems([]);
+                setLoading(false);
+                return;
+            }
+            const res = await api.fetchData(`/cart/items/${user.id}`);
+            setCartItems(res);
+        } catch (error) {
+            console.log("Lỗi lấy giỏ hàng:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+    const removeCartItem = async (cartItemId) => {
+        try {
+            await api.deleteData(`/cart/remove/${cartItemId}`);
+            getCartItems();
+        } catch (error) {
+            console.log("Lỗi xóa sản phẩm khỏi giỏ hàng:", error);
+        }
+    };
+    useEffect(() => {
+        getCartItems();
+    }, []);
+
+    const totalPrice = cartItems.reduce((total, item) => {
+        return total + item.product.currentPrice * item.quantity;
+    }, 0);
+
+    if (loading) {
+        return (
+            <section className="shoping-cart spad" style={{ margin: "0 90px 0 90px" }}>
+                <div className="container">
+                    <p>Đang tải giỏ hàng...</p>
+                </div>
+            </section>
+        );
+    }
     return (
         <section className="shoping-cart spad" style={{ margin: "0 90px 0 90px" }}>
             <div className="container">
@@ -19,72 +69,58 @@ export const ProductsInCart = () => {
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td className="shoping__cart__item">
-                                        <img src="img/cart/cart-1.jpg" alt=""/>
-                                            <h5>Alaska Giant xám trắng</h5>
-                                    </td>
-                                    <td className="shoping__cart__price">
-                                        25.000.000đ
-                                    </td>
-                                    <td className="shoping__cart__quantity">
-                                        <div className="">
-                                            <div className="pro-qty">
-                                                <input type="text" value="1"/>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className="shoping__cart__total">
-                                        25.000.000đ
-                                    </td>
-                                    <td className="shoping__cart__item__close">
-                                        <i className="fa-solid fa-xmark"></i>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="shoping__cart__item">
-                                        <img src="img/cart/cart-2.jpg" alt=""/>
-                                            <h5>Cún golden siêu phẩm</h5>
-                                    </td>
-                                    <td className="shoping__cart__price">
-                                        30.000.000đ
-                                    </td>
-                                    <td className="shoping__cart__quantity">
-                                        <div className="">
-                                            <div className="pro-qty">
-                                                <input type="text" value="1"/>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className="shoping__cart__total">
-                                        30.000.000đ
-                                    </td>
-                                    <td className="shoping__cart__item__close">
-                                        <i className="fa-solid fa-xmark"></i>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="shoping__cart__item">
-                                        <img src="img/cart/cart-3.jpg" alt=""/>
-                                            <h5>Mèo chân ngắn tai cụp</h5>
-                                    </td>
-                                    <td className="shoping__cart__price">
-                                        30.000.000đ
-                                    </td>
-                                    <td className="shoping__cart__quantity">
-                                        <div className="">
-                                            <div className="pro-qty">
-                                                <input type="text" value="1"/>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className="shoping__cart__total">
-                                        30.000.000đ
-                                    </td>
-                                    <td className="shoping__cart__item__close">
-                                        <i className="fa-solid fa-xmark"></i>
-                                    </td>
-                                </tr>
+                                {cartItems.length === 0 ? (
+                                    <tr>
+                                        <td colSpan="5" style={{ textAlign: "center", padding: "30px" }}>
+                                            Giỏ hàng đang trống
+                                        </td>
+                                    </tr>
+                                ) : (
+                                    cartItems.map((item) => (
+                                        <tr key={item.id}>
+                                            <td className="shoping__cart__item">
+                                                <img
+                                                    src={item.product.image}
+                                                    alt={item.product.title}
+                                                    style={{
+                                                        width: "100px",
+                                                        height: "120px",
+                                                        objectFit: "cover"
+                                                    }}
+                                                />
+                                                <h5>{item.product.title}</h5>
+                                            </td>
+
+                                            <td className="shoping__cart__price">
+                                                {formatPrice(item.product.currentPrice)}
+                                            </td>
+
+                                            <td className="shoping__cart__quantity">
+                                                <div>
+                                                    <div className="pro-qty">
+                                                        <input
+                                                            type="text"
+                                                            value={item.quantity}
+                                                            readOnly
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                            <td className="shoping__cart__total">
+                                                {formatPrice(item.product.currentPrice * item.quantity)}
+                                            </td>
+
+                                            <td
+                                                className="shoping__cart__item__close"
+                                                onClick={() => removeCartItem(item.id)}
+                                                style={{ cursor: "pointer" }}
+                                            >
+                                                <i className="fa-solid fa-xmark"></i>
+                                            </td>
+                                        </tr>
+                                    ))
+                                )}
                                 </tbody>
                             </table>
                         </div>
@@ -128,8 +164,8 @@ export const ProductsInCart = () => {
 export const Cart = () => {
     return (
         <div>
-        <Breadcrumb/>
-        <ProductsInCart/>
+            <Breadcrumb/>
+            <ProductsInCart/>
         </div>
     )
 }
