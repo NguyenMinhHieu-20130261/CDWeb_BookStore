@@ -40,6 +40,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/blog-detail/**").permitAll()
                 .requestMatchers("/api/search/**").permitAll()
                 .requestMatchers("/api/reviews/**").permitAll()
+                .requestMatchers("/api/cart/**").permitAll()
                 .anyRequest().authenticated()
             );
             // .authorizeHttpRequests(auth -> auth
