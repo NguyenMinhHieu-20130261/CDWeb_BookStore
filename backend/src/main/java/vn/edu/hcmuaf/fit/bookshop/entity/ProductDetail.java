@@ -54,7 +54,7 @@ public class ProductDetail {
 
     @Column(name = "quantity_of_page")
     private int quantityOfPage;
-
-    @Column(name = "description")
+    
+    @Column(name = "description", columnDefinition = "LONGTEXT")
     private String description;
 }

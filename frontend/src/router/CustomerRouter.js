@@ -34,6 +34,7 @@ const CustomerRouter = () => {
                 <Route path="/forgot-password" element={<ForgotPassword/>}/>
                 {/* product */}
                 <Route path="/product-list" element={<ProductList />} />
+                <Route path="/product-list/all" element={<ProductList />} />
                 <Route path="/product-list/:categoryId" element={<ProductList />} />
                 <Route path="/product-detail/:slug" element={<ProductDetail/>}/>
                 {/* blog */}

@@ -7,7 +7,9 @@ import vn.edu.hcmuaf.fit.bookshop.entity.Review;
 import vn.edu.hcmuaf.fit.bookshop.repository.ReviewRepo;
 import vn.edu.hcmuaf.fit.bookshop.service.ReviewService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -27,5 +29,20 @@ public class ReviewServiceImpl implements ReviewService {
             return reviewRepo.findByProductIdAndRating(productId, rating, reviewSort);
         }
         return reviewRepo.findByProductId(productId, reviewSort);
+    }
+    @Override
+    public Map<String, Object> getReviewSummary(Integer productId) {
+        List<Review> reviews = reviewRepo.findByProduct_Id(productId);
+        long totalReviews = reviews.size();
+
+        double averageRating = reviews.stream()
+                .mapToInt(Review::getRating)
+                .average()
+                .orElse(0.0);
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("averageRating", averageRating);
+        result.put("totalReviews", totalReviews);
+        return result;
     }
 }

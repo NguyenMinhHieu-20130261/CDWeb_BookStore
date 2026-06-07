@@ -129,9 +129,14 @@ const ProductInfo = ({product}) => {
                     className="border p-3 my-4 woocommerce-Tabs-panel woocommerce-Tabs-panel--description panel entry-content wc-tab font-size-2"
                     id="tab-description" role="tabpanel" aria-labelledby="tab-title-description">
                     <h4 className="font-size-3">Mô tả sản phẩm</h4>
-                    <p className="mb-0">
-                        {prodDetail?.description || "Chưa có mô tả sản phẩm."}
-                    </p>
+                    {prodDetail?.description ? (
+                        <div
+                            className="product-description-content mb-0"
+                            dangerouslySetInnerHTML={{ __html: prodDetail.description }}
+                        />
+                    ) : (
+                        <p className="mb-0">Chưa có mô tả sản phẩm.</p>
+                    )}
                 </div>
                 <div
                     className="border p-3 my-4 woocommerce-Tabs-panel woocommerce-Tabs-panel--additional_information panel entry-content wc-tab font-size-2"
