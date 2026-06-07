@@ -18,6 +18,9 @@ export const loginUser = async (user, dispatch) => {
         );
         console.log("LOGIN RESPONSE:", res);
         console.log("TOKEN:", res.token);
+        if (!res.token) {
+            throw new Error("Backend không trả về token");
+        }
         localStorage.setItem(
             "user",
             JSON.stringify(res)

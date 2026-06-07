@@ -44,20 +44,22 @@ export const BlogDetail = () => {
                             id={`post-${blog.id}`}
                             className="article article__single post type-post status-publish format-standard has-post-thumbnail hentry"
                         >
-                            <img
+                            <img  
                                 width="1400"
                                 height="650"
                                 src={blog.thumbnail || "https://bookworm.madrasthemes.com/wp-content/uploads/2020/08/img1-13.jpg"}
                                 className="img-fluid d-block mx-auto wp-post-image"
                                 alt={blog.title}
                                 style={{
-                                    width: "1400px",
-                                    height: "650px",
+                                    width: "100%",
+                                    height: "500px",
                                     objectFit: "cover"
                                 }}
                             />
-                            <BlogContent blog={blog} />
-                            <Author />
+                            <div style={{ marginTop: "-120px", position: "relative", zIndex: 2 }}>
+                                <BlogContent blog={blog} />
+                            </div>
+                            <Author/>
                         </article>
                     </div>
                 </div>
