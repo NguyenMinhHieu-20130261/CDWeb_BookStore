@@ -11,8 +11,11 @@ const SideBar = () => {
                                     <a href="https://bookworm.madrasthemes.com/product/blindside-michael-bennett-book-12/"
                                        className="d-block">
                                         <img width="150" height="200"
-                                             src="https://bookworm.madrasthemes.com/wp-content/uploads/2020/08/10-150x200.jpg"
-                                             className="img-fluid" alt style={{maxWidth: "60px"}} loading="lazy"/> </a>
+                                            src="https://bookworm.madrasthemes.com/wp-content/uploads/2020/08/10-150x200.jpg"
+                                            className="img-fluid" 
+                                            alt="Sản phẩm mới"
+                                            style={{maxWidth: "60px"}} 
+                                            loading="lazy"/> </a>
                                     <div className="media-body ml-3 pl-1">
                                         <h6 className="font-size-2 text-lh-md font-weight-normal crop-text-2"><a
                                             href="https://bookworm.madrasthemes.com/product/blindside-michael-bennett-book-12/">
@@ -36,7 +39,9 @@ const SideBar = () => {
                                        className="d-block">
                                         <img width="150" height="200"
                                              src="https://bookworm.madrasthemes.com/wp-content/uploads/2020/08/9-150x200.jpg"
-                                             className="img-fluid" alt style={{maxWidth: "60px"}} loading="lazy"/> </a>
+                                             className="img-fluid" 
+                                            alt="Sản phẩm mới"
+                                             style={{maxWidth: "60px"}} loading="lazy"/> </a>
                                     <div className="media-body ml-3 pl-1">
                                         <h6 className="font-size-2 text-lh-md font-weight-normal crop-text-2"><a
                                             href="https://bookworm.madrasthemes.com/product/until-the-end-of-time-mind-matter-and-our-search-for-meaning-in-an-evolving-universe/">
@@ -61,7 +66,10 @@ const SideBar = () => {
                                        className="d-block">
                                         <img width="150" height="200"
                                              src="https://bookworm.madrasthemes.com/wp-content/uploads/2020/08/8-150x200.jpg"
-                                             className="img-fluid" alt style={{maxWidth: "60px"}} loading="lazy"/> </a>
+                                             className="img-fluid"     
+                                             alt="Sản phẩm mới" 
+                                             style={{maxWidth: "60px"}} 
+                                             loading="lazy"/> </a>
                                     <div className="media-body ml-3 pl-1">
                                         <h6 className="font-size-2 text-lh-md font-weight-normal crop-text-2"><a>
                                             Open Book: A Memoir </a></h6>

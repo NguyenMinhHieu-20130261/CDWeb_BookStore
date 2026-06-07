@@ -29,7 +29,7 @@ export const SearchBar = ({ onToggle }) => {
                     setLoading(true);
                     const data = await api.fetchData(`/search?keyword=${encodeURIComponent(q)}`);
                     setResults(data);
-                    // console.log(data)
+                    console.log(data)
                 } catch (error) {
                     console.error("Error:", error);
                     setResults([]);
@@ -88,6 +88,36 @@ export const SearchResults = ({keyword, results, loading, onClose}) => {
     if (q.length < 2) {
         return null;
     }
+    const getResultLink = (item) => {
+        if (item.type === "product") {
+            return `/product-detail/${item.slug || item.id}`;
+        }
+        if (item.type === "blog") {
+            return `/blog-detail/${item.slug || item.id}`;
+        }
+        return item.url || "/";
+    };
+    const getResultState = (item) => {
+        if (item.type === "product") {
+            return {
+                title: item.title,
+                categoryName: item.categoryName,
+                categoryLink: item.categoryId
+                    ? `/product-list/${item.categoryId}`
+                    : "/product-list/all",
+            };
+        }
+        if (item.type === "blog") {
+            return {
+                title: item.title,
+                categoryName: item.categoryName,
+                categoryLink: item.categoryId
+                    ? `/blog-list/${item.categoryId}`
+                    : "/blog-list/all",
+            };
+        }
+        return {};
+    };
     return (
         <div className="search-results">
             {loading && (
@@ -104,7 +134,8 @@ export const SearchResults = ({keyword, results, loading, onClose}) => {
                 <Link
                     key={`${item.type}-${item.id}`}
                     className="result"
-                    to={item.url}
+                    to={getResultLink(item)}
+                    state={getResultState(item)}
                     onClick={onClose}>
                     <img className="imageSearch"
                         src={item.image || "https://via.placeholder.com/40"}
