@@ -63,9 +63,6 @@ const AddNewAddress = () => {
                 districtId: Number(selectedDistrict),
                 wardCode: selectedWard,
                 isDefault: false,
-                user: {
-                    id: user.id
-                }
             };
             const res = await api.sendData(
                 "/address/add",

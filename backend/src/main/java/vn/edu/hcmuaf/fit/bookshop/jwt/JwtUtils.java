@@ -71,4 +71,8 @@ public class JwtUtils {
         byte[] keyBytes = Decoders.BASE64.decode(jwtSecret);
         return Keys.hmacShaKeyFor(keyBytes);
     }
+    public String getRoleFromJwtToken(String token) {
+        Object role = getClaims(token).get("role");
+        return role != null ? role.toString() : null;
+    }
 }

@@ -10,14 +10,14 @@ class ApiService {
                 "Content-Type": "application/json"
             }
         });
-
         this.api.interceptors.request.use((config) => {
             const token = localStorage.getItem("token");
-
+            // console.log("TOKEN SEND:", token);
+            // console.log("API URL:", config.baseURL + config.url);
             if (token) {
+                config.headers = config.headers || {};
                 config.headers.Authorization = `Bearer ${token}`;
             }
-
             return config;
         });
     }
