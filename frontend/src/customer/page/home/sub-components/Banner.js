@@ -25,7 +25,7 @@ export const Banner = () => {
                                         </h2><a
                                         className="bwgb-banner-action bwgb-button2 banner_btn text-white bwgb-button btn btn-primary btn-wide rounded-0"
                                         href="https://bookworm.madrasthemes.com/product/the-last-sister-columbia-river-book-1-2/"
-                                        rel><span>Mua ngay</span></a>
+                                        ><span>Mua ngay</span></a>
                                     </div>
                                 </div>
                             </div>
@@ -39,25 +39,25 @@ export const Banner = () => {
                         <div className="row row-cols-md-2">
                             <div className="col-12">
                                 <div className="mb-5">
-                                    <img src={bannerImage1} alt="" style={{ width: '400px' }}/>
+                                    <img src={bannerImage1} alt="123" style={{ width: '400px' }}/>
                                 </div>
                             </div>
                             <div className="col-12">
                                 <div className="mb-5">
-                                    <img src={bannerImage2} alt="" style={{ width: '400px' }}/>
+                                    <img src={bannerImage2} alt="123" style={{ width: '400px' }}/>
                                 </div>
                             </div>
                             <div className="col-12">
                                 <div className="mb-5 mb-lg-0">
                                     <div className="mb-5">
-                                        <img src={bannerImage3} alt="" style={{ width: '400px' }}/>
+                                        <img src={bannerImage3} alt="123" style={{ width: '400px' }}/>
                                     </div>
                                 </div>
                             </div>
                             <div className="col-12">
                                 <div className="mb-5 mb-lg-0">
                                     <div className="mb-5">
-                                        <img src={bannerImage4} alt="" style={{ width: '400px' }}/>
+                                        <img src={bannerImage4} alt="123" style={{ width: '400px' }}/>
                                     </div>
                                 </div>
                             </div>

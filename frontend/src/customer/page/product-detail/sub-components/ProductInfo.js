@@ -146,78 +146,80 @@ const ProductInfo = ({product}) => {
                     <div className="table-responsive">
                         <table
                             className="woocommerce-product-attributes shop_attributes table table-hover table-borderless">
-                            <tr className="woocommerce-product-attributes-item woocommerce-product-attributes-item--attribute_pa_book-author">
-                                <th className="woocommerce-product-attributes-item__label px-4 px-xl-5">
-                                    Mã sản phẩm
-                                </th>
-                                <td className="woocommerce-product-attributes-item__value">
-                                    <p>{prodDetail?.productSku || "Đang cập nhật"}</p>
-                                </td>
-                            </tr>
-                            <tr className="woocommerce-product-attributes-item woocommerce-product-attributes-item--attribute_pa_format">
-                                <th className="woocommerce-product-attributes-item__label px-4 px-xl-5">
-                                    Tên nhà cung cấp
-                                </th>
-                                <td className="woocommerce-product-attributes-item__value">
-                                    <p>{prodDetail?.supplier || "Đang cập nhật"}</p>
-                                </td>
-                            </tr>
-                            <tr className="woocommerce-product-attributes-item woocommerce-product-attributes-item--attribute_pa_format">
-                                <th className="woocommerce-product-attributes-item__label px-4 px-xl-5">
-                                    Tác giả
-                                </th>
-                                <td className="woocommerce-product-attributes-item__value">
-                                    <p>{prodDetail?.author || "Đang cập nhật"}</p>
-                                </td>
-                            </tr>
-                            <tr className="woocommerce-product-attributes-item woocommerce-product-attributes-item--attribute_pa_format">
-                                <th className="woocommerce-product-attributes-item__label px-4 px-xl-5">
-                                    Nhà xuất bản
-                                </th>
-                                <td className="woocommerce-product-attributes-item__value">
-                                    <p>{prodDetail?.publisher || "Đang cập nhật"}</p>
-                                </td>
-                            </tr>
-                            <tr className="woocommerce-product-attributes-item woocommerce-product-attributes-item--attribute_pa_format">
-                                <th className="woocommerce-product-attributes-item__label px-4 px-xl-5">
-                                    Năm xuất bản
-                                </th>
-                                <td className="woocommerce-product-attributes-item__value">
-                                    <p>{prodDetail?.publishYear || "Đang cập nhật"}</p>
-                                </td>
-                            </tr>
-                            <tr className="woocommerce-product-attributes-item woocommerce-product-attributes-item--attribute_pa_format">
-                                <th className="woocommerce-product-attributes-item__label px-4 px-xl-5">
-                                    Trọng lượng
-                                </th>
-                                <td className="woocommerce-product-attributes-item__value">
-                                    <p>{prodDetail?.weight || "Đang cập nhật"}</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th className="woocommerce-product-attributes-item__label px-4 px-xl-5">
-                                    Kích thước
-                                </th>
-                                <td className="woocommerce-product-attributes-item__value">
-                                    <p>{prodDetail?.size || "Đang cập nhật"}</p>
-                                </td>
-                            </tr>
-                            <tr className="woocommerce-product-attributes-item woocommerce-product-attributes-item--attribute_pa_format">
-                                <th className="woocommerce-product-attributes-item__label px-4 px-xl-5">
-                                    Số trang
-                                </th>
-                                <td className="woocommerce-product-attributes-item__value">
-                                    <p>{prodDetail?.quantityOfPage || "Đang cập nhật"}</p>
-                                </td>
-                            </tr>
-                            <tr className="woocommerce-product-attributes-item woocommerce-product-attributes-item--attribute_pa_format">
-                                <th className="woocommerce-product-attributes-item__label px-4 px-xl-5">
-                                    Danh mục
-                                </th>
-                                <td className="woocommerce-product-attributes-item__value">
-                                    <p>{categoryName || "Đang cập nhật"}</p>
-                                </td>
-                            </tr>
+                            <tbody>
+                                <tr className="woocommerce-product-attributes-item woocommerce-product-attributes-item--attribute_pa_book-author">
+                                    <th className="woocommerce-product-attributes-item__label px-4 px-xl-5">
+                                        Mã sản phẩm
+                                    </th>
+                                    <td className="woocommerce-product-attributes-item__value">
+                                        <p>{prodDetail?.productSku || "Đang cập nhật"}</p>
+                                    </td>
+                                </tr>
+                                <tr className="woocommerce-product-attributes-item woocommerce-product-attributes-item--attribute_pa_format">
+                                    <th className="woocommerce-product-attributes-item__label px-4 px-xl-5">
+                                        Tên nhà cung cấp
+                                    </th>
+                                    <td className="woocommerce-product-attributes-item__value">
+                                        <p>{prodDetail?.supplier || "Đang cập nhật"}</p>
+                                    </td>
+                                </tr>
+                                <tr className="woocommerce-product-attributes-item woocommerce-product-attributes-item--attribute_pa_format">
+                                    <th className="woocommerce-product-attributes-item__label px-4 px-xl-5">
+                                        Tác giả
+                                    </th>
+                                    <td className="woocommerce-product-attributes-item__value">
+                                        <p>{prodDetail?.author || "Đang cập nhật"}</p>
+                                    </td>
+                                </tr>
+                                <tr className="woocommerce-product-attributes-item woocommerce-product-attributes-item--attribute_pa_format">
+                                    <th className="woocommerce-product-attributes-item__label px-4 px-xl-5">
+                                        Nhà xuất bản
+                                    </th>
+                                    <td className="woocommerce-product-attributes-item__value">
+                                        <p>{prodDetail?.publisher || "Đang cập nhật"}</p>
+                                    </td>
+                                </tr>
+                                <tr className="woocommerce-product-attributes-item woocommerce-product-attributes-item--attribute_pa_format">
+                                    <th className="woocommerce-product-attributes-item__label px-4 px-xl-5">
+                                        Năm xuất bản
+                                    </th>
+                                    <td className="woocommerce-product-attributes-item__value">
+                                        <p>{prodDetail?.publishYear || "Đang cập nhật"}</p>
+                                    </td>
+                                </tr>
+                                <tr className="woocommerce-product-attributes-item woocommerce-product-attributes-item--attribute_pa_format">
+                                    <th className="woocommerce-product-attributes-item__label px-4 px-xl-5">
+                                        Trọng lượng
+                                    </th>
+                                    <td className="woocommerce-product-attributes-item__value">
+                                        <p>{prodDetail?.weight || "Đang cập nhật"}</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th className="woocommerce-product-attributes-item__label px-4 px-xl-5">
+                                        Kích thước
+                                    </th>
+                                    <td className="woocommerce-product-attributes-item__value">
+                                        <p>{prodDetail?.size || "Đang cập nhật"}</p>
+                                    </td>
+                                </tr>
+                                <tr className="woocommerce-product-attributes-item woocommerce-product-attributes-item--attribute_pa_format">
+                                    <th className="woocommerce-product-attributes-item__label px-4 px-xl-5">
+                                        Số trang
+                                    </th>
+                                    <td className="woocommerce-product-attributes-item__value">
+                                        <p>{prodDetail?.quantityOfPage || "Đang cập nhật"}</p>
+                                    </td>
+                                </tr>
+                                <tr className="woocommerce-product-attributes-item woocommerce-product-attributes-item--attribute_pa_format">
+                                    <th className="woocommerce-product-attributes-item__label px-4 px-xl-5">
+                                        Danh mục
+                                    </th>
+                                    <td className="woocommerce-product-attributes-item__value">
+                                        <p>{categoryName || "Đang cập nhật"}</p>
+                                    </td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>

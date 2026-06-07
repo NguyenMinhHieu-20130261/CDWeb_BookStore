@@ -30,9 +30,10 @@ public class SearchController {
             Map<String, Object> item = new HashMap<>();
             item.put("type", "product");
             item.put("id", p.getId());
+            item.put("slug", p.getSlug());
             item.put("title", p.getTitle());
             item.put("image", p.getImage());
-            item.put("url", "/product-detail/" + p.getId());
+            item.put("url", "/product-detail/" + p.getSlug());
             results.add(item);
         }
         // Lấy blog
