@@ -104,7 +104,7 @@ table td, table th {
 @media (min-width: 992px) {
     .right-sidebar{
         flex: 0 0 66%;
-        max-width: 66%;
+        max-width: 60%;
     }
 }
 .left-sidebar{

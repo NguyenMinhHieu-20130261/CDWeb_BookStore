@@ -2,16 +2,13 @@ import "../../assets/css/style-cart.css"
 import Breadcrumb from "../../components/general/Breadcrumb"
 import { useEffect, useState } from "react";
 import api from "../../../service/ApiService";
+import FormatCurrency from "../../../utils/FormatCurrency";
 
 export const ProductsInCart = () => {
     const [cartItems, setCartItems] = useState([]);
     const [loading, setLoading] = useState(true);
-
     const user = JSON.parse(localStorage.getItem("user"));
 
-    const formatPrice = (price) => {
-        return Number(price || 0).toLocaleString("vi-VN") + "đ";
-    };
     const getCartItems = async () => {
         try {
             if (!user || !user.id) {
@@ -92,7 +89,7 @@ export const ProductsInCart = () => {
                                             </td>
 
                                             <td className="shoping__cart__price">
-                                                {formatPrice(item.product.currentPrice)}
+                                                {FormatCurrency(item.product.currentPrice)}
                                             </td>
 
                                             <td className="shoping__cart__quantity">
@@ -108,7 +105,7 @@ export const ProductsInCart = () => {
                                             </td>
 
                                             <td className="shoping__cart__total">
-                                                {formatPrice(item.product.currentPrice * item.quantity)}
+                                                {FormatCurrency(item.product.currentPrice * item.quantity)}
                                             </td>
 
                                             <td

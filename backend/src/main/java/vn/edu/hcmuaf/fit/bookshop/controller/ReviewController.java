@@ -62,4 +62,8 @@ public class ReviewController {
 
         return ResponseEntity.ok("Đánh giá thành công");
     }
+    @GetMapping("/product/{productId}/summary")
+    public ResponseEntity<?> getReviewSummary(@PathVariable Integer productId) {
+        return ResponseEntity.ok(reviewService.getReviewSummary(productId));
+    }
 }
