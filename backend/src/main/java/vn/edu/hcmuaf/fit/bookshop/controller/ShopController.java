@@ -14,11 +14,14 @@ import vn.edu.hcmuaf.fit.bookshop.entity.User;
 import vn.edu.hcmuaf.fit.bookshop.entity.EnumRole;
 import vn.edu.hcmuaf.fit.bookshop.entity.Role;
 import vn.edu.hcmuaf.fit.bookshop.entity.OtpVerification;
+import vn.edu.hcmuaf.fit.bookshop.entity.Token;
+import vn.edu.hcmuaf.fit.bookshop.entity.TokenType;
 
 import vn.edu.hcmuaf.fit.bookshop.jwt.JwtUtils;
 
 import vn.edu.hcmuaf.fit.bookshop.repository.UserRepo;
 import vn.edu.hcmuaf.fit.bookshop.repository.OtpVerificationRepo;
+import vn.edu.hcmuaf.fit.bookshop.repository.TokenRepo;
 
 import vn.edu.hcmuaf.fit.bookshop.service.EmailService;
 import vn.edu.hcmuaf.fit.bookshop.repository.RoleRepo;
@@ -44,6 +47,9 @@ private OtpVerificationRepo otpVerificationRepository;
 @Autowired
 private JwtUtils jwtUtils;
 
+@Autowired
+private TokenRepo tokenRepo;
+
 // LOGIN
 @PostMapping("/signin")
 public ResponseEntity<?> login(@RequestBody Map<String, String> req) {
@@ -66,7 +72,16 @@ public ResponseEntity<?> login(@RequestBody Map<String, String> req) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body("Sai username hoặc password");
     }
-        String jwtToken = jwtUtils.generateJwtToken(user);
+
+    String jwtToken = jwtUtils.generateJwtToken(user);
+    Token token = Token.builder()
+        .user(user)
+        .token(jwtToken)
+        .tokenType(TokenType.BEARER)
+        .expired(false)
+        .revoked(false)
+        .build();
+        tokenRepo.save(token);
         // trả về thông tin user và token
         Map<String, Object> res = new HashMap<>();
         res.put("id", user.getId());
@@ -100,7 +115,6 @@ public ResponseEntity<?> register(@RequestBody Map<String, String> req) {
         return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body("Email đã được sử dụng");
     }
-
     Role role = roleRepository.findByDescription(EnumRole.USER)
         .orElseThrow(() -> new RuntimeException("Role USER không tồn tại"));
     User user = new User();
@@ -112,7 +126,6 @@ public ResponseEntity<?> register(@RequestBody Map<String, String> req) {
     user.setCreatedAt(new Date());
     user.setIsLocked(false);
     userRepository.save(user);
-
     Map<String, Object> res = new HashMap<>();
         res.put("message", "Đăng ký thành công");
         res.put("username", username);
@@ -124,6 +137,23 @@ public ResponseEntity<?> register(@RequestBody Map<String, String> req) {
     return ResponseEntity.status(HttpStatus.CREATED)
             .body(res);
 }
+//LOGOUT
+@PostMapping("/logout")
+public ResponseEntity<?> logout(@RequestHeader("Authorization") String authHeader) {
+    if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+        return ResponseEntity.badRequest().body("Token không hợp lệ");
+    }
+
+    String jwt = authHeader.substring(7);
+
+    tokenRepo.findByToken(jwt).ifPresent(token -> {
+        token.setExpired(true);
+        token.setRevoked(true);
+        tokenRepo.save(token);
+    });
+    return ResponseEntity.ok("Đăng xuất thành công");
+}
+//Sentmail
 @PostMapping("/send-email")
 public ResponseEntity<?> sendEmail(@RequestBody Map<String, String> req) {
     String email = req.get("email");
@@ -138,18 +168,15 @@ public ResponseEntity<?> sendEmail(@RequestBody Map<String, String> req) {
     otpVerificationRepository.deleteByUserId(user.getId());
 
     // tạo OTP
-    String otp =
-            String.valueOf((int) (Math.random() * 900000) + 100000);
+    String otp = String.valueOf((int) (Math.random() * 900000) + 100000);
 
-    Date otpExpired =
-            new Date(System.currentTimeMillis() + 5 * 60 * 1000);
+    Date otpExpired = new Date(System.currentTimeMillis() + 5 * 60 * 1000);
 
     OtpVerification otpVerification = OtpVerification.builder()
             .otpCode(otp)
             .expiredAt(otpExpired)
             .user(user)
             .build();
-
     otpVerificationRepository.save(otpVerification);
 
     emailService.sendOTP(email, otp);

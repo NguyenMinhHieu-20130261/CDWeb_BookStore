@@ -38,15 +38,16 @@ export const loginUser = async (user, dispatch) => {
         throw err;
     }
 };
-export const logoutUser = async (user, dispatch) => {
+export const logoutUser = async (dispatch) => {
     // dispatch action logoutStart để cập nhật state khi bắt đầu đăng xuất
     dispatch(logoutStart());
     try {
-    // Gọi API đăng xuất người dùng
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
-    // Cập nhật state trong Redux
-    dispatch(logoutSuccess());
+        // Gọi API đăng xuất người dùng
+        await api.sendData("/auth/logout", {});
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+        // Cập nhật state trong Redux
+        dispatch(logoutSuccess());
     } catch (err) {
         console.log("Logout failed")
         console.log("DATA:", err.response?.data);

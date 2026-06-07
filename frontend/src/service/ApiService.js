@@ -21,10 +21,10 @@ class ApiService {
             return config;
         });
     }
-     getToken() {
+    getToken() {
         const token = localStorage.getItem("token");
         if (token) return token;
-        
+
         const userStr = localStorage.getItem("user");
         if (!userStr) return null;
         try {
