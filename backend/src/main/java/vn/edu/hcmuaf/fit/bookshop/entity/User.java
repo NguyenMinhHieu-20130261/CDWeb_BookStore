@@ -66,6 +66,10 @@ public class User {
     @JsonIgnore
     private List<OtpVerification> otpVerifications;
     
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<Token> token;
+    
     @PrePersist
     protected void onCreate() {
         createdAt = new Date();

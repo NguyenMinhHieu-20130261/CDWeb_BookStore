@@ -37,9 +37,9 @@ export const Header = () => {
     }, []);
     // hàm logout
     const handleLogout = async(e) => {
+        e.preventDefault();
         try{
-            const res = await logoutUser(user, dispatch);
-            dispatch(logoutSuccess());   
+            await logoutUser(dispatch);
             navigate("/");
             window.location.reload();
         } catch (error){

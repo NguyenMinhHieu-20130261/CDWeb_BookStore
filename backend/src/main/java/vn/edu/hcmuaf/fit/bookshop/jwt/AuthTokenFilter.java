@@ -15,6 +15,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 import vn.edu.hcmuaf.fit.bookshop.entity.User;
 import vn.edu.hcmuaf.fit.bookshop.repository.UserRepo;
+import vn.edu.hcmuaf.fit.bookshop.repository.TokenRepo;
 
 import java.io.IOException;
 import java.util.List;
@@ -26,9 +27,11 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
     private final JwtUtils jwtUtils;
     private final UserRepo userRepo;
-    public AuthTokenFilter(JwtUtils jwtUtils, UserRepo userRepo) {
+    private final TokenRepo tokenRepo;
+    public AuthTokenFilter(JwtUtils jwtUtils, UserRepo userRepo,TokenRepo tokenRepo) {
         this.jwtUtils = jwtUtils;
         this.userRepo = userRepo;
+        this.tokenRepo = tokenRepo;
     }
 
     @Override
@@ -36,6 +39,13 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         try {
             String jwt = parseJwt(request);
             if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
+                boolean isTokenValid = tokenRepo.findByToken(jwt)
+                                                .map(t -> !t.isExpired() && !t.isRevoked())
+                                                .orElse(false);
+                if (!isTokenValid) {
+                    filterChain.doFilter(request, response);
+                    return;
+                }
                 String username = jwtUtils.getUserNameFromJwtToken(jwt);
                 if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                     User user = userRepo.findByUsername(username).orElse(null);
