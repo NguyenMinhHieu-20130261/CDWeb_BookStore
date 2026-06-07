@@ -21,6 +21,19 @@ class ApiService {
             return config;
         });
     }
+     getToken() {
+        const token = localStorage.getItem("token");
+        if (token) return token;
+        
+        const userStr = localStorage.getItem("user");
+        if (!userStr) return null;
+        try {
+            const user = JSON.parse(userStr);
+            return user?.token || null;
+        } catch (e) {
+            return null;
+        }
+    }
     async fetchData(endpoint) {
         try {
             const response = await this.api.get(endpoint);

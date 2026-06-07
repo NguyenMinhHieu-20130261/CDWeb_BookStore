@@ -15,6 +15,8 @@ import vn.edu.hcmuaf.fit.bookshop.entity.EnumRole;
 import vn.edu.hcmuaf.fit.bookshop.entity.Role;
 import vn.edu.hcmuaf.fit.bookshop.entity.OtpVerification;
 
+import vn.edu.hcmuaf.fit.bookshop.jwt.JwtUtils;
+
 import vn.edu.hcmuaf.fit.bookshop.repository.UserRepo;
 import vn.edu.hcmuaf.fit.bookshop.repository.OtpVerificationRepo;
 
@@ -38,7 +40,10 @@ private EmailService emailService;
 
 @Autowired
 private OtpVerificationRepo otpVerificationRepository;
-    
+
+@Autowired
+private JwtUtils jwtUtils;
+
 // LOGIN
 @PostMapping("/signin")
 public ResponseEntity<?> login(@RequestBody Map<String, String> req) {
@@ -61,18 +66,16 @@ public ResponseEntity<?> login(@RequestBody Map<String, String> req) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body("Sai username hoặc password");
     }
-    // tạo token giả
-    String jwtToken = "fake-jwt-token-for-" + user.getUsername();
-    // trả về thông tin user và token
-    Map<String, Object> res = new HashMap<>();
-    res.put("id", user.getId());
-    res.put("username", user.getUsername());
-    res.put("email", user.getEmail());
-    res.put("token", jwtToken);
-    
-    if (user.getRole() != null) {
-        res.put("role", user.getRole().getDescription().name());
-    }
+        String jwtToken = jwtUtils.generateJwtToken(user);
+        // trả về thông tin user và token
+        Map<String, Object> res = new HashMap<>();
+        res.put("id", user.getId());
+        res.put("username", user.getUsername());
+        res.put("email", user.getEmail());
+        res.put("token", jwtToken);
+        if (user.getRole() != null) {
+                res.put("role", user.getRole().getDescription().name());
+        }
     return ResponseEntity.ok(res);
 }
 // REGISTER

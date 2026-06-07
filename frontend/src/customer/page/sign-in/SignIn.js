@@ -15,8 +15,6 @@ const SignIn = () => {
     const [errorMessage, setErrorMessage] = React.useState("");
     const handleLogin = async (e) => {
         e.preventDefault();
-        setLoading(true);
-        setErrorMessage("");
         // ngăn chặn spam nút login 
         if (loading) return;
         setLoading(true);
