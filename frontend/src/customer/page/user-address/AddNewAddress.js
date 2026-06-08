@@ -64,11 +64,11 @@ const AddNewAddress = () => {
                 wardCode: selectedWard,
                 isDefault: false,
             };
-            const res = await api.sendData(
+            await api.sendData(
                 "/address/add",
                 payload
             );
-            alert("Địa chỉ mới đã được thêm thành công + ");            
+            alert("Địa chỉ mới đã được thêm thành công");            
             navigate("/user/address");
         } catch (error) {
             console.log("Lỗi khi thêm địa chỉ mới");
@@ -113,7 +113,10 @@ const AddNewAddress = () => {
                                             className="form-control"
                                             placeholder="Nhập số điện thoại"
                                             maxLength={10}
-                                            onChange={handlePhoneNumberChange}
+                                            onChange={(e) => {
+                                                setPhoneNumber(e.target.value);
+                                                handlePhoneNumberChange(e);
+                                            }}                                            
                                             onBlur={handleBlur}
                                         />
 

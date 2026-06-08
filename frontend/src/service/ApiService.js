@@ -11,8 +11,8 @@ class ApiService {
             }
         });
         this.api.interceptors.request.use((config) => {
-            const token = localStorage.getItem("token");
-            // console.log("TOKEN SEND:", token);
+            const token = this.getToken();
+            console.log("TOKEN SEND:", token);
             // console.log("API URL:", config.baseURL + config.url);
             if (token) {
                 config.headers = config.headers || {};

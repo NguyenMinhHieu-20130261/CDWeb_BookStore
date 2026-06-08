@@ -35,13 +35,18 @@ public class AddressController {
         Address saved = addressService.saveAddress(address);
         return ResponseEntity.ok(saved);
     }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteAddress(@PathVariable Integer id, Authentication authentication) {
+        User currentUser = (User) authentication.getPrincipal();
+        addressService.deleteAddress(id,currentUser.getId());
+        return ResponseEntity.ok("xóa địa chỉ thành công");
+    }
     @GetMapping("/update/{id}")
     public ResponseEntity<?> getAddressById(@PathVariable Integer id){
         return ResponseEntity.ok(
                 addressService.getAddressById(id)
         );
     }
-
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateAddress(@PathVariable Integer id,@RequestBody Address address,Authentication authentication){
         User currentUser = (User) authentication.getPrincipal();

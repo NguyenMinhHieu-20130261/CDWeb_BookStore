@@ -47,6 +47,10 @@ public class JwtUtils {
     public String getUserNameFromJwtToken(String token) {
         return getClaims(token).getSubject();
     }
+    public String getRoleFromJwtToken(String token) {
+        Object role = getClaims(token).get("role");
+        return role != null ? role.toString() : null;
+    }
     public boolean validateJwtToken(String authToken) {
         try {
             getClaims(authToken);
@@ -70,9 +74,5 @@ public class JwtUtils {
     private SecretKey key() {
         byte[] keyBytes = Decoders.BASE64.decode(jwtSecret);
         return Keys.hmacShaKeyFor(keyBytes);
-    }
-    public String getRoleFromJwtToken(String token) {
-        Object role = getClaims(token).get("role");
-        return role != null ? role.toString() : null;
     }
 }

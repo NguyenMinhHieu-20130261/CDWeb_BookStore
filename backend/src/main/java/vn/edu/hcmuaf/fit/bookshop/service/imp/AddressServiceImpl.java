@@ -33,6 +33,15 @@ public class AddressServiceImpl implements AddressService {
         return addressRepo.save(address);
     }
     @Override
+    public void deleteAddress(Integer addressId, Integer userId) {
+        Address address = addressRepo.findById(addressId)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy địa chỉ"));
+        if (!address.getUser().getId().equals(userId)) {
+            throw new RuntimeException("Bạn không có quyền xóa địa chỉ này");
+        }
+        addressRepo.delete(address);
+    }
+    @Override
     public Address getAddressById(Integer addressId) {
         return addressRepo.findById(addressId)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy địa chỉ"));
@@ -56,10 +65,5 @@ public class AddressServiceImpl implements AddressService {
         existingAddress.setIsDefault(address.getIsDefault());
 
         return addressRepo.save(existingAddress);
-    }
-    @Override
-    public void deleteAddress(Integer addressId) {
-        Address address = getAddressById(addressId);
-        addressRepo.delete(address);
     }
 }
