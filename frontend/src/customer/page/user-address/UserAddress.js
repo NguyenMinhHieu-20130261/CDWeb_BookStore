@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate,Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import Breadcrumb from "../../components/general/Breadcrumb";
 import LeftSideBar from "../user-account/sub-components/LeftSideBar";
 import AddressItem from "./sub-components/AddressItem";
@@ -9,6 +9,7 @@ import api from "../../../service/ApiService";
 import LoadingPage from "../../components/general/LoadingPage";
 
 const UserAddress = () => {
+    const navigate = useNavigate();
     const [addresses, setAddresses] = useState([]);
     const [loading, setLoading] = useState(true);
     const user = useSelector((state) => state.auth.login.currentUser);
@@ -32,9 +33,26 @@ const UserAddress = () => {
             }
         };
         fetchAddresses();
-
     }, [user?.id]);
-
+    const handleDeleteAddress = async(addressId)=>{
+        try {        
+            console.log("PARENT DELETE ADDRESS ID:", addressId);
+            console.log("DELETE URL:", `/address/delete/${addressId}`);
+            await api.deleteData(
+                    `/address/delete/${addressId}`
+            );
+            setAddresses((prev) =>
+                prev.filter((address) => address.id !== addressId)
+            );
+            alert("Địa chỉ mới đã được xóa thành công ");            
+            navigate("/user/address");
+        } catch (error) {
+            console.log("Lỗi",  error);
+            console.log("STATUS:", error.response?.status);
+            console.log("BACKEND DATA:", error.response?.data);
+            alert("Xóa địa chỉ thất bại");
+        }
+    }
     if (loading) {
         return <LoadingPage />;
     }
@@ -72,6 +90,7 @@ const UserAddress = () => {
                                         <AddressItem
                                             key={address.id}
                                             address={address}
+                                            onDelete={handleDeleteAddress}
                                         />
                                     );
                                 })

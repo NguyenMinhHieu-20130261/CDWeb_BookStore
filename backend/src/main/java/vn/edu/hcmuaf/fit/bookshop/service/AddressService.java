@@ -9,5 +9,5 @@ public interface AddressService {
     Address saveAddress(Address address);
     Address getAddressById(Integer addressId);
     Address updateAddress(Integer addressId, Address address);
-    void deleteAddress(Integer addressId);
+    void deleteAddress(Integer addressId,Integer userId);
 } 

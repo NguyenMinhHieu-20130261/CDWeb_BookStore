@@ -1,7 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const AddressItem = ({ address }) => {
+const AddressItem = ({ address,onDelete }) => {
+    console.log("ADDRESS OBJECT:", address);
+    console.log("ADDRESS ID:", address?.id);
+    const handleDelete =()=>{
+        const confirmDelete = window.confirm("Bạn có chắc muốn xóa địa chỉ này không?");
+        if (!confirmDelete) return;
+        onDelete(address.id);
+    }
     return (
         <div className="address-item-container">
             <div className="address-item">
@@ -12,23 +19,18 @@ const AddressItem = ({ address }) => {
                     style={{ marginBottom: "4px" }}
                 >
                     <div className="address-card_header">
-
                         <span className="name-span">
                             <div className="user-name">
                                 {address.fullName}
                             </div>
                         </span>
-
                         <div className="separate"></div>
-
                         <div className="phone-number d-flex align-items-center">
                             {address.phoneNumber}
                         </div>
-
                     </div>
 
                 </div>
-
                 {/* CONTENT */}
                 <div
                     className="address-card_content"
@@ -45,11 +47,8 @@ const AddressItem = ({ address }) => {
                             {" "}
                             {address.provinceCity}
                         </div>
-
                     </div>
-
                 </div>
-
                 {/* DEFAULT BADGE */}
                 {address.isDefault && (
                     <div className="d-flex align-items-center">
@@ -64,8 +63,9 @@ const AddressItem = ({ address }) => {
                     >
                         ✏️ Sửa
                     </Link>
-
-                    <button className="btn-delete">
+                    <button className="btn-delete"
+                        onClick={handleDelete}
+                    >
                         🗑 Xóa
                     </button>
                 </div>

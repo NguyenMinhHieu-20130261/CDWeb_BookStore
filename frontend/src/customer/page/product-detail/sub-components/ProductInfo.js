@@ -46,7 +46,6 @@ const ProductInfo = ({product}) => {
             setReviewError("");
             await api.sendData("/reviews/add", {
                 productId: product.id,
-                userId: user.id,
                 rating: Number(rating),
                 cmtDetail: comment.trim(),
             });

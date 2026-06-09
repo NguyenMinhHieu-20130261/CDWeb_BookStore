@@ -38,6 +38,8 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,HttpServletResponse response,FilterChain filterChain) throws ServletException, IOException {
         try {
             String jwt = parseJwt(request);
+            System.out.println("REQUEST URI: " + request.getRequestURI());
+            System.out.println("JWT FROM REQUEST: " + jwt);
             if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
                 boolean isTokenValid = tokenRepo.findByToken(jwt)
                                                 .map(t -> !t.isExpired() && !t.isRevoked())
@@ -50,10 +52,13 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                     User user = userRepo.findByUsername(username).orElse(null);
                     if (user != null) {
+                        
+                        String role = jwtUtils.getRoleFromJwtToken(jwt);
                         List<SimpleGrantedAuthority> authorities = List.of();
-                        if (user.getRole() != null && user.getRole().getDescription() != null) {
+
+                        if (role != null && !role.isBlank()) {
                             authorities = List.of(
-                                new SimpleGrantedAuthority("ROLE_" + user.getRole().getDescription().name())
+                                    new SimpleGrantedAuthority("ROLE_" + role)
                             );
                         }
                         UsernamePasswordAuthenticationToken authentication =

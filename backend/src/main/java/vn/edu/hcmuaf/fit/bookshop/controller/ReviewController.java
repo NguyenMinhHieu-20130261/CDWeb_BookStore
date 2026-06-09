@@ -2,7 +2,6 @@ package vn.edu.hcmuaf.fit.bookshop.controller;
 
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +11,6 @@ import vn.edu.hcmuaf.fit.bookshop.entity.Review;
 import vn.edu.hcmuaf.fit.bookshop.entity.User;
 import vn.edu.hcmuaf.fit.bookshop.repository.ProductRepo;
 import vn.edu.hcmuaf.fit.bookshop.repository.ReviewRepo;
-import vn.edu.hcmuaf.fit.bookshop.repository.UserRepo;
 import vn.edu.hcmuaf.fit.bookshop.service.ReviewService;
 
 import java.util.Date;
@@ -27,7 +25,6 @@ public class ReviewController {
 
     private final ReviewService reviewService;
     private final ReviewRepo reviewRepo;
-    private final UserRepo userRepo;
     private final ProductRepo prodRepo;
 
     @GetMapping("/product/{productId}")
@@ -39,14 +36,12 @@ public class ReviewController {
         return reviewService.getReviewsByProduct(productId, rating, sort);
     }
     @PostMapping("/add")
-    public ResponseEntity<?> createReview(@RequestBody Map<String, Object> body) {
+    public ResponseEntity<?> createReview(@RequestBody Map<String, Object> body,Authentication authentication) {
         Integer productId = Integer.valueOf(body.get("productId").toString());
-        Integer userId = Integer.valueOf(body.get("userId").toString());
         Integer rating = Integer.valueOf(body.get("rating").toString());
         String cmtDetail = body.get("cmtDetail").toString();
-
-        User user = userRepo.findById(userId)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy user"));
+        
+        User user = (User) authentication.getPrincipal();
 
         Product product = prodRepo.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm"));
