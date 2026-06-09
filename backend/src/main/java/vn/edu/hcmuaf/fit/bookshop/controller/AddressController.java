@@ -55,4 +55,9 @@ public class AddressController {
                 addressService.updateAddress(id, address)
         );
     }
+    @PutMapping("/default/{addressId}")
+    public ResponseEntity<?> setDefaultAddress(@PathVariable Integer addressId) {
+        addressService.setDefaultAddress(addressId);
+        return ResponseEntity.ok("Set default address successfully");
+    }
 }

@@ -239,3 +239,23 @@
     color: white;
     transform: translateY(-1px);
 }
+.btn-set-default {
+    border: 1px solid #856404;
+    background-color: white;
+    color: #856404;
+
+    padding: 8px 18px;
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.btn-set-default:hover {
+    background-color: #ffe08a;
+    color: white;
+    transform: translateY(-1px);
+}

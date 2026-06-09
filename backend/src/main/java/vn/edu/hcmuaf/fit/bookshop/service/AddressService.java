@@ -10,4 +10,5 @@ public interface AddressService {
     Address getAddressById(Integer addressId);
     Address updateAddress(Integer addressId, Address address);
     void deleteAddress(Integer addressId,Integer userId);
-} 
+    void setDefaultAddress(Integer addressId);
+}
