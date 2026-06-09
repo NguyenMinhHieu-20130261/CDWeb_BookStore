@@ -1,14 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const AddressItem = ({ address,onDelete }) => {
-    console.log("ADDRESS OBJECT:", address);
-    console.log("ADDRESS ID:", address?.id);
+const AddressItem = ({ address, onDelete, onSetDefault}) => {
     const handleDelete =()=>{
         const confirmDelete = window.confirm("Bạn có chắc muốn xóa địa chỉ này không?");
         if (!confirmDelete) return;
         onDelete(address.id);
+        
     }
+    const handleSetDefault =()=> {
+        const confirmSetDefault = window.confirm("Bạn muốn đặt địa chỉ này làm mặc định?");
+        if (!confirmSetDefault) return;
+        onSetDefault(address.id);
+    };
     return (
         <div className="address-item-container">
             <div className="address-item">
@@ -58,15 +62,23 @@ const AddressItem = ({ address,onDelete }) => {
                     </div>
                 )}
                  <div className="address-actions">
+                    {!address.isDefault && (
+                        <button
+                            className="btn-set-default"
+                            onClick={handleSetDefault}
+                        >
+                            Đặt mặc định
+                        </button>
+                    )}
                     <Link className="btn-edit"
                         to={`/user/address/update/${address.id}`}
                     >
-                        ✏️ Sửa
+                        Sửa
                     </Link>
                     <button className="btn-delete"
                         onClick={handleDelete}
                     >
-                        🗑 Xóa
+                        Xóa
                     </button>
                 </div>
             </div>

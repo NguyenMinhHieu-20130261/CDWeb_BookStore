@@ -66,4 +66,18 @@ public class AddressServiceImpl implements AddressService {
 
         return addressRepo.save(existingAddress);
     }
+    @Override
+    public void setDefaultAddress(java.lang.Integer addressId) {
+        Address defaultAdrs = addressRepo.findById(addressId)
+                        .orElseThrow(() -> new RuntimeException("Không tìm thấy địa chỉ"));
+        Integer userId = defaultAdrs.getUser().getId();
+
+        List<Address> userAddresses = addressRepo.findByUserId(userId);
+        for (Address address : userAddresses) {
+            address.setIsDefault(false);
+        }
+        defaultAdrs.setIsDefault(true);
+        addressRepo.saveAll(userAddresses);
+        addressRepo.save(defaultAdrs);
+    }
 }

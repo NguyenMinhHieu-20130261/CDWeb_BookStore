@@ -53,6 +53,21 @@ const UserAddress = () => {
             alert("Xóa địa chỉ thất bại");
         }
     }
+    const handleSetDefault = async(addressId)=>{
+        try {        
+            await api.updateData(
+                    `/address/default/${addressId}`
+            );
+            alert("Đẫ đặt địa chỉ mặc định thành công ");            
+            navigate("/user/address");
+            window.location.reload();
+        } catch (error) {
+            console.log("Lỗi",  error);
+            console.log("STATUS:", error.response?.status);
+            console.log("BACKEND DATA:", error.response?.data);
+            alert("Xóa địa chỉ thất bại");
+        }
+    }
     if (loading) {
         return <LoadingPage />;
     }
@@ -84,13 +99,16 @@ const UserAddress = () => {
                             {loading?(
                                 <div className="text-center py-3">Đang tải...</div>
                             ):addresses.length > 0 ? (
-                                addresses.map((address) => {
+                                [...addresses]
+                                    .sort((a, b) => Number(b.isDefault) - Number(a.isDefault))
+                                    .map((address) => {
                                     // console.log("Địa chỉ đang render:", address);
                                     return (
                                         <AddressItem
                                             key={address.id}
                                             address={address}
                                             onDelete={handleDeleteAddress}
+                                            onSetDefault={handleSetDefault}
                                         />
                                     );
                                 })
