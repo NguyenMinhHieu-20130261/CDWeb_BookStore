@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import FormatCurrency from "../../../../utils/FormatCurrency";
 
 const ProductCard = ({ product }) => {
     return (
@@ -68,13 +69,13 @@ const ProductCard = ({ product }) => {
                             <span className="price">
                                 {product.oldPrice > 0 && (
                                     <span className="old-price mr-2">
-                                        {product.oldPrice.toLocaleString("vi-VN")}đ
+                                        {FormatCurrency(product?.oldPrice)}
                                     </span>
                                 )}
 
                                 <span className="woocommerce-Price-amount amount">
                                     <bdi>
-                                        {product.currentPrice.toLocaleString("vi-VN")}đ
+                                        {FormatCurrency(product?.currentPrice)}
                                     </bdi>
                                 </span>
                             </span>

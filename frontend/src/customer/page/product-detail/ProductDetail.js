@@ -12,6 +12,10 @@ export const ProductDetail = () => {
     const { slug } = useParams();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
+    //list
+    const [listProduct, setListProduct] = useState([]);
+    const [loadingList, setLoadingList] = useState(true);
+
     useEffect(() => {
         const fetchProductDetail = async () => {
             try {
@@ -29,7 +33,25 @@ export const ProductDetail = () => {
             fetchProductDetail();
         }
     }, [slug]);
+    useEffect(() => {
+        const fetchProdList = async () => {
+            try {
+                const data = await api.fetchData('/products');
+                // console.log("products", data);
+                const productList = Array.isArray(data) ? data : data.data || [];
+                setListProduct(productList);
+            } catch (error) {
+                console.log("Lỗi",  error);
+            } finally {
+                setLoadingList(false);
+            }
+        }
+        fetchProdList();
+    },[]);
     if (loading) {
+        return <div className="container py-5">Đang tải sản phẩm...</div>;
+    }
+    if (loadingList) {
         return <div className="container py-5">Đang tải sản phẩm...</div>;
     }
     if (!product) {
@@ -48,7 +70,9 @@ export const ProductDetail = () => {
                             </div>
                         </main>
                     </div>
-                    <SideBar />
+                    <SideBar 
+                        listProduct={listProduct} 
+                    />
                 </div>
                 <RelatedProducts />
             </div>

@@ -1,5 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import FormatCurrency from "../../../../utils/FormatCurrency";
 
 const FeturedItem = ({product}) => {
     if (!product) return null;
@@ -26,11 +27,16 @@ const FeturedItem = ({product}) => {
                             </Link>
                         </h6>
                         <span className="woocommerce-Price-amount amount">
-                            <span className="woocommerce-Price-currencySymbol">
+                            {/* <span className="woocommerce-Price-currencySymbol">
                                 đ
-                            </span>
-                            {Number(product.price).toLocaleString("vi-VN")}
+                            </span> */}
+                                {FormatCurrency(product?.currentPrice)}
                         </span>
+                        <p className="old-price pb-1">
+                            <span className="price" style={{fontSize: "11px"}}>
+                                {FormatCurrency(product?.oldPrice)}
+                            </span>
+                        </p>
                     </div>
                 </div>
             </div>
