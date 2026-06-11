@@ -40,29 +40,30 @@ public class SecurityConfig {
             )
             .formLogin(AbstractHttpConfigurer::disable)
             .httpBasic(AbstractHttpConfigurer::disable)
-            // .authorizeHttpRequests(auth -> auth
-            //     .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-            //     .requestMatchers("/api/auth/**").permitAll()
-            //     // AUTH
-            //     .requestMatchers("/api/userinfo/**").authenticated()
-            //     .requestMatchers("/api/address/**").authenticated()
-            //     .requestMatchers("/api/cart/**").authenticated()
-            //     .requestMatchers(HttpMethod.POST, "/api/reviews/**").authenticated()
-            //     .requestMatchers(HttpMethod.PUT, "/api/reviews/**").authenticated()
-            //     .requestMatchers(HttpMethod.DELETE, "/api/reviews/**").authenticated()
-            //     // PUB
-            //     .requestMatchers("/api/category/**").permitAll()
-            //     .requestMatchers("/api/products/**").permitAll()
-            //     .requestMatchers("/api/blog-cate/**").permitAll()
-            //     .requestMatchers("/api/blogs/**").permitAll()
-            //     .requestMatchers("/api/blog-detail/**").permitAll()
-            //     .requestMatchers("/api/search/**").permitAll()
-            //     .requestMatchers("/api/reviews/**").permitAll()
-            //     .anyRequest().authenticated()
-            // );
             .authorizeHttpRequests(auth -> auth
-                .anyRequest().permitAll()
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .requestMatchers("/api/auth/**").permitAll()
+                // AUTH
+                .requestMatchers("/api/userinfo/**").authenticated()
+                .requestMatchers("/api/address/**").authenticated()
+                .requestMatchers("/api/cart/**").authenticated()
+                .requestMatchers(HttpMethod.POST, "/api/reviews/**").authenticated()
+                .requestMatchers(HttpMethod.PUT, "/api/reviews/**").authenticated()
+                .requestMatchers(HttpMethod.DELETE, "/api/reviews/**").authenticated()
+                // PUB
+                .requestMatchers("/api/category/**").permitAll()
+                .requestMatchers("/api/products/**").permitAll()
+                .requestMatchers("/api/products-images/**").permitAll()
+                .requestMatchers("/api/blog-cate/**").permitAll()
+                .requestMatchers("/api/blogs/**").permitAll()
+                .requestMatchers("/api/blog-detail/**").permitAll()
+                .requestMatchers("/api/search/**").permitAll()
+                .requestMatchers("/api/reviews/**").permitAll()
+                .anyRequest().authenticated()
             );
+            // .authorizeHttpRequests(auth -> auth
+            //     .anyRequest().permitAll()
+            // );
         http.addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }

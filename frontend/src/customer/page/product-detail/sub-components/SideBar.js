@@ -3,27 +3,31 @@ import { Link } from "react-router-dom";
 import FormatCurrency from "../../../../utils/FormatCurrency.js";
 const SideBarItems = ({product}) =>{
     if (!product) return null;
+    const productImage = product.images?.length > 0
+        ? product.images[0].image
+        : "/assets/img/no-image.png";
     return(
         <li className="mb-5">
-            <div className="media">
+            <Link className="media"
+                to={`/products/${product.slug || product.id}`}
+            >
                 <div className="media d-md-flex">
-                    <Link 
-                        to={`/products/${product.slug || product.id}`}
+                    <div 
                         className="d-block">
                             <img
                             width="150" height="200"
-                            src={product.image}
+                            src={productImage}
                             className="img-fluid"
                             alt={product.title}
                             style={{ maxWidth: "60px" }}
                             loading="lazy"
                         />
-                    </Link>
+                    </div>
                     <div className="media-body ml-3 pl-1">
                         <h6 className="font-size-2 text-lh-md font-weight-normal crop-text-2">
-                            <Link to={`/products/${product.slug || product.id}`}>
+                            <div >
                                 {product.title}
-                            </Link>
+                            </div>
                         </h6>
                         <span className="price d-flex justify-content-start align-items-center">
                             <p className="current-price mr-2">
@@ -39,7 +43,7 @@ const SideBarItems = ({product}) =>{
                         </span>
                     </div>
                 </div>
-            </div>
+            </Link>
         </li>
     )
 }

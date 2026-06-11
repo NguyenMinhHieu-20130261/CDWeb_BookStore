@@ -4,27 +4,31 @@ import FormatCurrency from "../../../../utils/FormatCurrency";
 
 const FeturedItem = ({product}) => {
     if (!product) return null;
+    const productImage = product.images?.length > 0
+        ? product.images[0].image
+        : "/assets/img/no-image.png";
     return (
         <li className="mb-5">
-            <div className="media">
+            <Link className="media"
+                to={`/product-detail/${product.slug || product.id}`}
+            >
                 <div className="media d-md-flex">
-                    <Link 
-                    to={`/products/${product.slug || product.id}`}
+                    <div 
                     className="d-block">
                          <img
                             width="150" height="200"
-                            src={product.image}
+                            src={productImage}
                             className="img-fluid"
                             alt={product.title}
                             style={{ maxWidth: "60px" }}
                             loading="lazy"
                         />
-                    </Link>
+                    </div>
                     <div className="media-body ml-3 pl-1">
                         <h6 className="font-size-2 text-lh-md font-weight-normal crop-text-2">
-                           <Link to={`/products/${product.slug || product.id}`}>
+                           <div >
                                 {product.title}
-                            </Link>
+                            </div>
                         </h6>
                         <span className="woocommerce-Price-amount amount">
                             {/* <span className="woocommerce-Price-currencySymbol">
@@ -39,7 +43,7 @@ const FeturedItem = ({product}) => {
                         </p>
                     </div>
                 </div>
-            </div>
+            </Link>
         </li>
     );
 };
@@ -47,8 +51,9 @@ const FeturedProduct = ({products=[]})=>{
     const featuredProducts = products.slice(0, 3);
     return(
          <div id="widget-collapse-woocommerce_products-3"
-                className="mt-4 widget-content collapse show"
+                className=" widget-content collapse show"
                 aria-labelledby="widgetHeading-woocommerce_products-3">
+            <h4 className="font-size-3 mb-4">Sản phẩm mới</h4>
             <ul className="product_list_widget">
                 {featuredProducts.map((product) => (
                     <FeturedItem

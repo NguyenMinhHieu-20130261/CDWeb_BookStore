@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.hcmuaf.fit.bookshop.entity.Blog;
 import vn.edu.hcmuaf.fit.bookshop.entity.Product;
+import vn.edu.hcmuaf.fit.bookshop.entity.ProductImage;
 import vn.edu.hcmuaf.fit.bookshop.repository.BlogRepo;
 import vn.edu.hcmuaf.fit.bookshop.repository.ProductRepo;
 
@@ -28,11 +29,15 @@ public class SearchController {
         List<Product> products = productRepo.findByTitleContainingIgnoreCaseAndActiveTrue(q);
         for (Product p : products) {
             Map<String, Object> item = new HashMap<>();
+            String img = null;
+            if(p.getImages() != null && !p.getImages().isEmpty()){
+                img = p.getImages().get(0).getImage();
+            }
             item.put("type", "product");
             item.put("id", p.getId());
             item.put("slug", p.getSlug());
             item.put("title", p.getTitle());
-            item.put("image", p.getImage());
+            item.put("image", img);
             item.put("url", "/product-detail/" + p.getSlug());
             results.add(item);
         }
