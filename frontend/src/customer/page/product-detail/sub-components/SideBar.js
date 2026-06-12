@@ -1,90 +1,66 @@
-const SideBar = () => {
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import FormatCurrency from "../../../../utils/FormatCurrency.js";
+const SideBarItems = ({product}) =>{
+    if (!product) return null;
+    const productImage = product.images?.length > 0
+        ? product.images[0].image
+        : "/assets/img/no-image.png";
+    return(
+        <li className="mb-5">
+            <Link className="media"
+                to={`/products/${product.slug || product.id}`}
+            >
+                <div className="media d-md-flex">
+                    <div 
+                        className="d-block">
+                            <img
+                            width="150" height="200"
+                            src={productImage}
+                            className="img-fluid"
+                            alt={product.title}
+                            style={{ maxWidth: "60px" }}
+                            loading="lazy"
+                        />
+                    </div>
+                    <div className="media-body ml-3 pl-1">
+                        <h6 className="font-size-2 text-lh-md font-weight-normal crop-text-2">
+                            <div >
+                                {product.title}
+                            </div>
+                        </h6>
+                        <span className="price d-flex justify-content-start align-items-center">
+                            <p className="current-price mr-2">
+                                <span className="price" style={{fontSize: "14px"}}>
+                                    {FormatCurrency(product?.currentPrice)}
+                                </span>
+                            </p>
+                            <p className="old-price pb-1">
+                                <span className="price" style={{fontSize: "11px"}}>
+                                    {FormatCurrency(product?.oldPrice)}
+                                </span>
+                            </p>
+                        </span>
+                    </div>
+                </div>
+            </Link>
+        </li>
+    )
+}
+const SideBar = ({listProduct= []}) => {
+    const newProducts = listProduct.slice(0, 3);
     return (
         <div id="secondary" className="sidebar widget-area order-2 left-sidebar" role="complementary">
             <div id="widgetAccordion">
                 <div id="woocommerce_products-2" className="widget p-4d875 border my-4 woocommerce widget_products">
                     <h4 className="font-size-3 mb-4">Sản phẩm mới</h4>
                     <ul className="product_list_widget">
-                        <li className="mb-5">
-                            <div className="media">
-                                <div className="media d-md-flex">
-                                    <a href="https://bookworm.madrasthemes.com/product/blindside-michael-bennett-book-12/"
-                                       className="d-block">
-                                        <img width="150" height="200"
-                                            src="https://bookworm.madrasthemes.com/wp-content/uploads/2020/08/10-150x200.jpg"
-                                            className="img-fluid" 
-                                            alt="Sản phẩm mới"
-                                            style={{maxWidth: "60px"}} 
-                                            loading="lazy"/> </a>
-                                    <div className="media-body ml-3 pl-1">
-                                        <h6 className="font-size-2 text-lh-md font-weight-normal crop-text-2"><a
-                                            href="https://bookworm.madrasthemes.com/product/blindside-michael-bennett-book-12/">
-                                            Blindside (Michael Bennett Book 12) </a></h6>
-                                        <span className="price d-flex justify-content-start align-items-center">
-                                    <p className="current-price mr-2">
-                                        <span className="price" style={{fontSize: "14px"}}>130000</span>
-                                    </p>
-                                    <p className="old-price pb-1">
-                                        <span className="price" style={{fontSize: "11px"}}>150000</span>
-                                    </p>
-                                </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li className="mb-5">
-                            <div className="media">
-                                <div className="media d-md-flex">
-                                    <a href="https://bookworm.madrasthemes.com/product/until-the-end-of-time-mind-matter-and-our-search-for-meaning-in-an-evolving-universe/"
-                                       className="d-block">
-                                        <img width="150" height="200"
-                                             src="https://bookworm.madrasthemes.com/wp-content/uploads/2020/08/9-150x200.jpg"
-                                             className="img-fluid" 
-                                            alt="Sản phẩm mới"
-                                             style={{maxWidth: "60px"}} loading="lazy"/> </a>
-                                    <div className="media-body ml-3 pl-1">
-                                        <h6 className="font-size-2 text-lh-md font-weight-normal crop-text-2"><a
-                                            href="https://bookworm.madrasthemes.com/product/until-the-end-of-time-mind-matter-and-our-search-for-meaning-in-an-evolving-universe/">
-                                            Until the End of Time: Mind, Matter, and Our Search for Meaning in
-                                            an Evolving Universe </a></h6>
-                                        <span className="price d-flex justify-content-start align-items-center">
-                                    <p className="current-price mr-2">
-                                        <span className="price" style={{fontSize: "14px"}}>130000</span>
-                                    </p>
-                                    <p className="old-price pb-1">
-                                        <span className="price" style={{fontSize: "11px"}}>150000</span>
-                                    </p>
-                                </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li className="mb-5">
-                            <div className="media">
-                                <div className="media d-md-flex">
-                                    <a href="https://bookworm.madrasthemes.com/product/open-book-a-memoir/"
-                                       className="d-block">
-                                        <img width="150" height="200"
-                                             src="https://bookworm.madrasthemes.com/wp-content/uploads/2020/08/8-150x200.jpg"
-                                             className="img-fluid"     
-                                             alt="Sản phẩm mới" 
-                                             style={{maxWidth: "60px"}} 
-                                             loading="lazy"/> </a>
-                                    <div className="media-body ml-3 pl-1">
-                                        <h6 className="font-size-2 text-lh-md font-weight-normal crop-text-2"><a>
-                                            Open Book: A Memoir </a></h6>
-                                        <span className="price d-flex justify-content-start align-items-center">
-                                            <p className="current-price mr-2">
-                                                <span className="price" style={{fontSize: "14px"}}>130000</span>
-                                            </p>
-                                            <p className="old-price pb-1">
-                                                <span className="price" style={{fontSize: "11px"}}>150000</span>
-                                            </p>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
+                        {newProducts.map((product) => (
+                            <SideBarItems
+                                key={product.id}
+                                product={product}
+                            />
+                        ))}
                     </ul>
                 </div>
                 <div id="bookworm_features_block_widget-2"

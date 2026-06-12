@@ -2,7 +2,9 @@ import {Link} from "react-router-dom";
 import React, { useState } from "react";
 import api from "../../../../service/ApiService";
 const ProductCard = ({product}) =>{
-    
+    const productImage = product.images?.length > 0
+                        ? product.images[0].image
+                        : "/assets/img/no-image.png";
     return(
         <div className="product-card product add-to-wishlist-after_add_to_cart type-product">
             <div className="product__inner overflow-hidden p-3 p-md-4d875 w-100">
@@ -14,7 +16,7 @@ const ProductCard = ({product}) =>{
                                 width="120"
                                 height="183"
                                 className="attachment-bookworm-120x183-crop size-bookworm-120x183-crop"
-                                src={product.image}
+                                src={productImage}
                                 alt={product.title}
                                 />
                         </Link>

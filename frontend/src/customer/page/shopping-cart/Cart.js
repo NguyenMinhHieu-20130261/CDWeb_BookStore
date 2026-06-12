@@ -39,7 +39,9 @@ export const ProductsInCart = () => {
     const totalPrice = cartItems.reduce((total, item) => {
         return total + item.product.currentPrice * item.quantity;
     }, 0);
-
+    const productImage = cartItems.images?.length > 0
+        ? cartItems.images[0].image
+        : "/assets/img/no-image.png";
     if (loading) {
         return (
             <section className="shoping-cart spad" style={{ margin: "0 90px 0 90px" }}>
@@ -77,7 +79,7 @@ export const ProductsInCart = () => {
                                         <tr key={item.id}>
                                             <td className="shoping__cart__item">
                                                 <img
-                                                    src={item.product.image}
+                                                    src={productImage}
                                                     alt={item.product.title}
                                                     style={{
                                                         width: "100px",

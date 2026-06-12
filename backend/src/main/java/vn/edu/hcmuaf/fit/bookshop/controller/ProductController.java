@@ -14,7 +14,6 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
-
     @GetMapping
     public List<Product> getProducts() {
         return productService.getActiveProducts();

@@ -99,48 +99,55 @@ export const Header = () => {
 
                             {/* User Area */}
                             <div className="d-flex align-items-center ml-auto header-icons-links">
-                                {user?(
-                                        <>
-                                            <Link id="sidebarNavToggler-my_account" to="/user/info">
-                                                <div
-                                                    className="d-flex align-items-center text-white font-size-2 text-lh-sm position-relative">
-                                                    <i className="fa-solid fa-user font-size-5 text-dark"></i>
-                                                    <div className="ml-2 d-none d-lg-block text-dark">
-                                                        <span className="text-secondary-gray-1090 font-size-1">
-                                                            Xin chào </span>
-                                                        <div>{user.username}</div>
-                                                    </div>
-                                                </div>
+                                {user ? (
+                                    <div className="user-dropdown-wrapper">
+                                        <div className="user-dropdown-toggle">
+                                            <i className="fa-solid fa-user font-size-5 text-dark"></i>
+                                            <div className="ml-2 d-none d-lg-block text-dark">
+                                                <span className="text-secondary-gray-1090 font-size-1">
+                                                    Xin chào
+                                                </span>
+                                                <div>{user.username}</div>
+                                            </div>
+                                        </div>
+                                        <div className="user-dropdown-menu">
+                                            <Link to="/user/info" className="user-dropdown-item">
+                                                <i className="fa-solid fa-user-circle"></i>
+                                                <span>Thông tin người dùng</span>
                                             </Link>
-                                            {/* Logout buttpn */}
+                                            <Link to="/user/address" className="user-dropdown-item">
+                                                <i className="fa-solid fa-location-dot"></i>
+                                                <span>Địa chỉ người dùng</span>
+                                            </Link>
+                                            <Link to="/user/order" className="user-dropdown-item">
+                                                <i className="fa-solid fa-box"></i>
+                                                <span>Đơn hàng</span>
+                                            </Link>
+                                            
                                             <button
+                                                type="button"
+                                                className="user-dropdown-item logout-item"
                                                 onClick={handleLogout}
-                                                style={{
-                                                    marginLeft: "10px",
-                                                    border: "none",
-                                                    background: "transparent",
-                                                    cursor: "pointer",
-                                                    color: "red"
-                                                }}
                                             >
-                                                Đăng xuất
+                                                <i className="fa-solid fa-right-from-bracket"></i>
+                                                <span>Đăng xuất</span>
                                             </button>
-                                        </>
-                                   ):(
-                                        <>
-                                            <Link id="sidebarNavToggler-my_account" to="/sign-in">
-                                                <div
-                                                    className="d-flex align-items-center text-white font-size-2 text-lh-sm position-relative">
-                                                    <i className="fa-solid fa-user font-size-5 text-dark"></i>
-                                                    <div className="ml-2 d-none d-lg-block text-dark">
-                                            <span className="text-secondary-gray-1090 font-size-1">
-                                                Đăng nhập </span>
-                                                        <div>Tài khoản</div>
-                                                    </div>
-                                                </div>
-                                            </Link>
-                                        </>
-                                    )}
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <Link id="sidebarNavToggler-my_account" to="/sign-in">
+                                        <div className="d-flex align-items-center text-white font-size-2 text-lh-sm position-relative">
+                                            <i className="fa-solid fa-user font-size-5 text-dark"></i>
+
+                                            <div className="ml-2 d-none d-lg-block text-dark">
+                                                <span className="text-secondary-gray-1090 font-size-1">
+                                                    Đăng nhập
+                                                </span>
+                                                <div>Tài khoản</div>
+                                            </div>
+                                        </div>
+                                    </Link>
+                                )}
                             </div>
                             {/* Cart Area */}
                             <Link id="sidebarNavToggler-my_cart" to="/cart"

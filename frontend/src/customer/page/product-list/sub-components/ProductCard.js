@@ -1,7 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import FormatCurrency from "../../../../utils/FormatCurrency";
 
 const ProductCard = ({ product }) => {
+    const productImage = product.images?.length > 0
+        ? product.images[0].image
+        : "/assets/img/no-image.png";
     return (
         <li className="add-to-wishlist-after_add_to_cart product product-card product-pad">
             <div className="product__inner overflow-hidden p-3 p-md-4d875 w-100">
@@ -19,7 +23,7 @@ const ProductCard = ({ product }) => {
                             <img
                                 width="120"
                                 height="183"
-                                src={product.image}
+                                src={productImage}
                                 className="attachment-bookworm-120x183-crop size-bookworm-120x183-crop"
                                 alt={product.title}
                             />
@@ -68,13 +72,13 @@ const ProductCard = ({ product }) => {
                             <span className="price">
                                 {product.oldPrice > 0 && (
                                     <span className="old-price mr-2">
-                                        {product.oldPrice.toLocaleString("vi-VN")}đ
+                                        {FormatCurrency(product?.oldPrice)}
                                     </span>
                                 )}
 
                                 <span className="woocommerce-Price-amount amount">
                                     <bdi>
-                                        {product.currentPrice.toLocaleString("vi-VN")}đ
+                                        {FormatCurrency(product?.currentPrice)}
                                     </bdi>
                                 </span>
                             </span>
