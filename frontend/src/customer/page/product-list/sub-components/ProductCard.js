@@ -1,11 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import api from "../../../../service/ApiService";
 import FormatCurrency from "../../../../utils/FormatCurrency";
+import {useNavigate} from "react-router-dom";
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product,handleAddToCart}) => {
+    const navigate = useNavigate();
+
     const productImage = product.images?.length > 0
         ? product.images[0].image
         : "/assets/img/no-image.png";
+
     return (
         <li className="add-to-wishlist-after_add_to_cart product product-card product-pad">
             <div className="product__inner overflow-hidden p-3 p-md-4d875 w-100">
@@ -85,18 +90,22 @@ const ProductCard = ({ product }) => {
                         </div>
                     </div>
                     <div className="product__hover d-flex align-items-center bwgb-products-carousel__add-to-cart-icon-only">
-                        <Link to="/"
+                        <div 
                             className="button product_type_simple add_to_cart_button text-uppercase text-dark h-dark font-weight-medium atc-text"
+                            style = {{cursor:"pointer"}}
                             title="Add to cart"
+                            onClick={(e) => handleAddToCart(e, product)}
                         >
                             <span className="product__add-to-cart atc-text">Thêm vào giỏ hàng</span>
-                        </Link>
+                        </div>
                         <div className="yith-wcwl-add-to-wishlist">
                             <div className="yith-wcwl-add-button">
-                                <Link to="/">
+                                <div
+                                
+                                >
                                     <i className="flaticon-heart"/>
                                     <span className="text"> Thêm vào yêu thích</span>
-                                </Link>
+                                </div>
                             </div>
                         </div>
                     </div>

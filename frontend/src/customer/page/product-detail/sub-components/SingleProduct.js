@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import FormatCurrency from "../../../../utils/FormatCurrency.js";
 import api from "../../../../service/ApiService.js";
 
-const SingleProduct = ({product}) => {
+const SingleProduct = ({product,handleAddToCart}) => {
     const [quantity, setQuantity] = useState(1);
     const [reviewSummary, setReviewSummary] = useState({
         averageRating: 0,
@@ -68,12 +68,6 @@ const SingleProduct = ({product}) => {
                 <i className="fa-solid fa-star"></i>
             </span>
         ));
-    };
-    const handleAddToCart = () => {
-        console.log("Thêm vào giỏ:", {
-            productId: product.id,
-            quantity,
-        });
     };
     const handleBuyNow = () => {
         console.log("Mua ngay:", {
@@ -169,7 +163,7 @@ const SingleProduct = ({product}) => {
                                 style ={{marginBottom: "5px"}}
                                 className="add_cart_btn"
                                 disabled={remainingQuantity === 0}
-                                onClick={handleAddToCart}
+                                onClick={(e) => handleAddToCart(e, product)}
                             >
                                 <i className="fa-solid fa-cart-shopping" />
                                 {remainingQuantity === 0 ? "hết hàng" : "thêm vào giỏ hàng"}

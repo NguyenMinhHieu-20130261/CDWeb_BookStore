@@ -3,7 +3,7 @@ import PriceFilter from "./PriceFilter";
 import Category from "./Category";
 import FeturedProduct from "./FeturedProduct";
 
-const Sidebar = ({products= [], selectedPriceRange, handlePriceFilterChange}) => {
+const Sidebar = ({products= [], selectedPriceRange, handlePriceFilterChange,}) => {
     return (
         <div id="secondary" className="sidebar widget-area order-1" role="complementary">
             <div id="widgetAccordion">
