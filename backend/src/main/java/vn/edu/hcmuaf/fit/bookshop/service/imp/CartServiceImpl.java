@@ -9,12 +9,16 @@ import org.springframework.stereotype.Service;
 
 import vn.edu.hcmuaf.fit.bookshop.entity.Cart;
 import vn.edu.hcmuaf.fit.bookshop.repository.CartRepo;
+import vn.edu.hcmuaf.fit.bookshop.repository.ProductImageRepo;
 import vn.edu.hcmuaf.fit.bookshop.service.CartService;
 
 @Service
 public class CartServiceImpl implements CartService {
     @Autowired
     private CartRepo cartRepo;
+
+    @Autowired
+    private ProductImageRepo productImageRepo;
 
     @Override
     public ResponseEntity<?> addToCart(Cart cartItem) {
@@ -60,6 +64,29 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public List<Cart> getCartItemsByUserId(Integer userId) {
-        return cartRepo.findByUserId(userId);
+        List<Cart> carts = cartRepo.findByUserId(userId);
+        for (Cart cart : carts) {
+            Integer productId = cart.getProduct().getId();
+            cart.getProduct().setImages(
+                productImageRepo.findByProduct_Id(productId)
+            );
+            
+            var images = productImageRepo.findByProduct_Id(productId);
+            System.out.println(
+            "PRODUCT " + productId 
+            + " IMAGE SIZE: " 
+            + images.size()
+        );
+        }
+        return carts;    
+    }
+    @Override
+    public ResponseEntity<?> updateQuantity(int cartItemId, int quantity) {
+        Cart cart = cartRepo.findById(cartItemId)
+                .orElseThrow();
+        cart.setQuantity(quantity);
+        return ResponseEntity.ok(
+            cartRepo.save(cart)
+        );
     }
 }

@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import vn.edu.hcmuaf.fit.bookshop.entity.ProductImage;
 
 public interface ProductImageRepo extends JpaRepository<ProductImage, Integer> {
-    List<ProductImage> findByProductId(Integer productId);
+    List<ProductImage> findByProduct_Id(Integer productId);
 }

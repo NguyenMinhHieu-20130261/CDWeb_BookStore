@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 import {useSelector,useDispatch} from "react-redux";
-import React from "react";
+import React,{useState}from "react";
 import {useNavigate} from "react-router-dom";
 import { loginSuccess, logoutSuccess } from "../../../Store/AuthSlice";
 import { SearchBar } from "../general/SearchComponents";
@@ -15,6 +15,9 @@ export const Header = () => {
     const [parentCategories, setParentCategories] = React.useState([]);
     const [categories, setCategories] = React.useState([]);
     const [isSearchOpen, setIsSearchOpen] = React.useState(false);
+    //cart total
+    const [cart, setCart] = useState([]);
+    const [total, setTotal] = useState(0);
     // lấy user từ redux store
     const user = useSelector(state => state.auth.login.currentUser);
     // kiểm tra nếu có user trong localStorage thì cập nhật vào redux store
@@ -53,6 +56,26 @@ export const Header = () => {
         );
         return children;
     };
+    React.useEffect(() => {
+        const loadCart = async () => {
+            if (!user?.id) {
+                setTotal(0);
+                return;
+            }
+            try {
+                const data = await api.fetchData(`/cart/items/${user.id}`);
+                const count = data.reduce(
+                    (sum, item) => sum + item.quantity,
+                    0
+                );
+                setTotal(count);
+            } catch (error) {
+                console.error("Failed to fetch cart items", error.response?.data || error);
+                setTotal(0);
+            }
+        };
+        loadCart();
+    }, [user]);
     return (
         <header id="site-header" className="site-header site-header__v12 mb-7 pb-1">
             <div className="masthead">
@@ -157,8 +180,9 @@ export const Header = () => {
                                     <span
                                         className="position-absolute width-16 height-16 rounded-circle d-flex align-items-center justify-content-center font-size-n9 left-0 top-0 ml-n2 mt-n1 text-white bg-dark">
                                         <span className="cart-contents-count">
-                                            0
-                                        </span> </span>
+                                            {total}
+                                        </span> 
+                                    </span>
                                     <div >
                                         <i className="fa-solid fa-cart-shopping font-size-5 text-dark"></i>
                                     </div>
