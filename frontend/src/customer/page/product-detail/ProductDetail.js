@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 import "../../assets/css/product-detail.css";
 import Breadcrumbs from "../../components/general/Breadcrumb.js";
 import SingleProduct from "./sub-components/SingleProduct";
@@ -10,6 +10,8 @@ import api from "../../../service/ApiService.js";
 
 export const ProductDetail = () => {
     const { slug } = useParams();
+    const navigate = useNavigate();
+    
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     //list
@@ -57,6 +59,26 @@ export const ProductDetail = () => {
     if (!product) {
         return <div className="container py-5">Không tìm thấy sản phẩm</div>;
     }
+    const handleAddToCart = async (e,product) => {
+        e.preventDefault();
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (!user || !user.id) {
+            alert("Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng");
+            navigate("/sign-in");
+            return;
+        }
+        try {
+            await api.sendData("/cart/add", {
+                user: {id: user.id},
+                product: {id: product.id},
+                quantity: 1
+            });
+            alert("Đã thêm sản phẩm vào giỏ hàng");
+        } catch (error) {
+            console.log("Lỗi thêm vào giỏ hàng:", error);
+            alert("Không thể thêm sản phẩm vào giỏ hàng");
+        }
+    };
     return (
         <div>
             <Breadcrumbs/>
@@ -65,13 +87,16 @@ export const ProductDetail = () => {
                     <div id="primary" className="content-area order-1 right-sidebar col-lg-9">
                         <main id="main" className="site-main" role="main">
                             <div className="single-product__content single-product__v4">
-                                <SingleProduct product={product} />
+                                <SingleProduct 
+                                    product={product}
+                                    handleAddToCart={handleAddToCart}
+                                />
                                 <ProductInfo product={product} />
                             </div>
                         </main>
                     </div>
                     <SideBar 
-                        listProduct={listProduct} 
+                        listProduct={listProduct}
                     />
                 </div>
                 <RelatedProducts />

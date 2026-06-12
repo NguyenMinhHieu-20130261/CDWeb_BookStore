@@ -4,8 +4,8 @@ import FormatCurrency from "../../../../utils/FormatCurrency.js";
 const SideBarItems = ({product}) =>{
     if (!product) return null;
     const productImage = product.images?.length > 0
-        ? product.images[0].image
-        : "/assets/img/no-image.png";
+            ? product.images[0].image
+            : "/assets/img/no-image.png";
     return(
         <li className="mb-5">
             <Link className="media"

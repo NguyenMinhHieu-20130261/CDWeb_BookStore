@@ -5,9 +5,10 @@ import Sidebar from "./sub-components/Sidebar";
 import ProductGrid from "./sub-components/ProductGrid";
 import "../../assets/css/style-produc.css"
 import api from "../../../service/ApiService"
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 
 const ProductList = () => {
+    const navigate = useNavigate();
     const [products, setProducts] = useState([]);
     const [allProducts, setAllProducts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -54,6 +55,26 @@ const ProductList = () => {
             return price >= minPrice && price <= maxPrice;
         });
         setProducts(filteredProds);
+    };
+    const handleAddToCart = async (e,product) => {
+        e.preventDefault();
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (!user || !user.id) {
+            alert("Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng");
+            navigate("/sign-in");
+            return;
+        }
+        try {
+            await api.sendData("/cart/add", {
+                user: {id: user.id},
+                product: {id: product.id},
+                quantity: 1
+            });
+            alert("Đã thêm sản phẩm vào giỏ hàng");
+        } catch (error) {
+            console.log("Lỗi thêm vào giỏ hàng:", error);
+            alert("Không thể thêm sản phẩm vào giỏ hàng");
+        }
     };
     return (
         <>
@@ -123,7 +144,10 @@ const ProductList = () => {
                                     {loading ? (
                                         <p>Đang tải sản phẩm...</p>
                                     ) : (
-                                        <ProductGrid products={products} />
+                                        <ProductGrid 
+                                        products={products} 
+                                        handleAddToCart={handleAddToCart}
+                                        />
                                     )}
                                     <Pagination/>
                                 </div>
