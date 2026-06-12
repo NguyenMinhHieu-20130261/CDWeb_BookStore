@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom";
-import React, { useState } from "react";
+import React from "react";
 import api from "../../../../service/ApiService";
-const ProductCard = ({product}) =>{
+const ProductCard = ({product,handleAddToCart}) =>{
     const productImage = product.images?.length > 0
                         ? product.images[0].image
                         : "/assets/img/no-image.png";
@@ -55,16 +55,18 @@ const ProductCard = ({product}) =>{
                     </div>
 
                     <div className="product__hover d-flex align-items-center bwgb-products-carousel__add-to-cart-icon-only">
-                        <Link
-                            to="/"
+                        <div
                             className="button product_type_simple add_to_cart_button text-uppercase text-dark h-dark font-weight-medium mr-auto"
                             title="Add to cart"
+                            onClick={(e) => handleAddToCart(e, product)}
                         >
-                            <span className="product__add-to-cart">Thêm vào giỏ hàng</span>
+                            <span className="product__add-to-cart"
+                            >Thêm vào giỏ hàng
+                            </span>
                             <span className="product__add-to-cart-icon font-size-4">
                                 <i className="flaticon-icon-126515"></i>
                             </span>
-                        </Link>
+                        </div>
                         <div className="yith-wcwl-add-to-wishlist">
                             <div className="yith-wcwl-add-button">
                                 <Link to="/">
@@ -79,7 +81,7 @@ const ProductCard = ({product}) =>{
         </div>
     )
 }
-export const NewBooks = () => {
+export const NewBooks = ({handleAddToCart}) => {
     const [categories, setCategories] = React.useState([]);
     const [parentCategories, setParentCategories] = React.useState([]);
     const [selectedCategoryId, setSelectedCategoryId] = React.useState(null);
@@ -174,6 +176,7 @@ export const NewBooks = () => {
                                                         <ProductCard
                                                             key={product.id}
                                                             product={product}
+                                                            handleAddToCart={handleAddToCart}
                                                         />
                                                     ))
                                                 ) : (

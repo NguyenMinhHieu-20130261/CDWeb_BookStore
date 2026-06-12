@@ -1,4 +1,5 @@
 import "../../assets/css/style-cart.css"
+import {Link} from "react-router-dom";
 import Breadcrumb from "../../components/general/Breadcrumb"
 import { useEffect, useState } from "react";
 import api from "../../../service/ApiService";
@@ -67,8 +68,23 @@ export const ProductsInCart = () => {
                                     <th></th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                {cartItems.length === 0 ? (
+                                <tbody 
+                                    style={{width:"100%"}}
+                                >
+                                    {!user ? (
+                                        <tr>
+                                            <td className="no-user" colSpan="5" >
+                                                <div>
+                                                    <p className="no-user-text">
+                                                        Bạn cần đăng nhập để thêm hàng vào giỏ hàng...
+                                                    </p>
+                                                    <Link className="no-user-link" to="/sign-in">
+                                                        Đăng nhập
+                                                    </Link>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ) : cartItems.length === 0 ? (
                                     <tr>
                                         <td colSpan="5" style={{ textAlign: "center", padding: "30px" }}>
                                             Giỏ hàng đang trống

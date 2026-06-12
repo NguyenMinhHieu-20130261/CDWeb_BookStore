@@ -41,6 +41,16 @@ public class AuthTokenFilter extends OncePerRequestFilter {
             System.out.println("REQUEST URI: " + request.getRequestURI());
             System.out.println("JWT FROM REQUEST: " + jwt);
             if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
+
+                // var tokenDb = tokenRepo.findByToken(jwt);
+                // System.out.println("TOKEN EXISTS DB: " + tokenDb.isPresent());
+                // tokenDb.ifPresent(t -> {
+                //     System.out.println("TOKEN DB USER ID: " + t.getUser().getId());
+                //     System.out.println("TOKEN EXPIRED: " + t.isExpired());
+                //     System.out.println("TOKEN REVOKED: " + t.isRevoked());
+                // });
+                // boolean isTokenValid = true;
+
                 boolean isTokenValid = tokenRepo.findByToken(jwt)
                                                 .map(t -> !t.isExpired() && !t.isRevoked())
                                                 .orElse(false);

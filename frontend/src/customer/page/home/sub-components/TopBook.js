@@ -52,11 +52,11 @@ export const TopBook = () => {
                                                                 <div
                                                                     className="bwgb-products-deals-carousel__product-price price d-flex align-items-center font-weight-medium font-size-3">
 
-                                                                                    <span className="price"><span
-                                                                                        className="woocommerce-Price-amount amount"><bdi><span
-                                                                                        className="woocommerce-Price-currencySymbol">$</span>10.29</bdi>
-                                                                                    </span>
-                                                                                    </span>
+                                                                    <span className="price"><span
+                                                                        className="woocommerce-Price-amount amount"><bdi><span
+                                                                        className="woocommerce-Price-currencySymbol">$</span>10.29</bdi>
+                                                                    </span>
+                                                                    </span>
                                                                 </div>
                                                             </div>
                                                         </div>

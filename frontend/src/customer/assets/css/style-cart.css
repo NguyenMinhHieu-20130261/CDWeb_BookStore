@@ -2288,3 +2288,20 @@ ol {
 .atc-text{
     font-size: 10px!important;
 }
+/* No user */
+.no-user{
+    text-align: center;
+    padding: 80px 0 !important;
+    width: 100%;
+}
+.no-user-text{
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+.no-user-link{
+    display: inline-block;
+    padding: 10px 30px;
+    background-color: #f75454;
+    color: #fff;
+    border-radius: 5px;
+}
