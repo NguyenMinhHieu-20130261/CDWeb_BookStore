@@ -45,4 +45,12 @@ public class CartController {
             return ResponseEntity.status(500).body(e.getMessage());
         }
     }
+    @PutMapping("/update-quantity/{cartItemId}")
+    public ResponseEntity<?> updateQuantity(@PathVariable int cartItemId, @RequestBody Cart cartItem) {
+        try {
+            return cartService.updateQuantity(cartItemId, cartItem.getQuantity());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

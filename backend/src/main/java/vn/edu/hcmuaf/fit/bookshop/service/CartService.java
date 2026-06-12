@@ -10,4 +10,5 @@ public interface CartService {
     void removeFromCart(int cartItemId);
     List<Cart> getCartItems();
     List<Cart> getCartItemsByUserId(Integer userId);
+    ResponseEntity<?> updateQuantity(int cartItemId, int quantity);
 }

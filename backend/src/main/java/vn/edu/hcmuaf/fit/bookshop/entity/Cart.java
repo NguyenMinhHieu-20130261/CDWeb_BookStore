@@ -22,7 +22,6 @@ public class Cart {
             "createdBy",
             "updatedBy",
             "detail",
-            "images",
             "review",
             "hibernateLazyInitializer",
             "handler"

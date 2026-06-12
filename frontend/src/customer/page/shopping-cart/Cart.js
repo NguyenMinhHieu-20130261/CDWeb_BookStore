@@ -33,6 +33,18 @@ export const ProductsInCart = () => {
             console.log("Lỗi xóa sản phẩm khỏi giỏ hàng:", error);
         }
     };
+    const updateQuantity = async (cartItemId, newQuantity) => {
+        if (newQuantity < 1) return;
+
+        try {
+            await api.updateData(`/cart/update-quantity/${cartItemId}`, {
+                quantity: newQuantity
+            });
+            getCartItems();
+        } catch (error) {
+            console.log("Lỗi cập nhật số lượng:", error);
+        }
+    };
     useEffect(() => {
         getCartItems();
     }, []);
@@ -40,9 +52,6 @@ export const ProductsInCart = () => {
     const totalPrice = cartItems.reduce((total, item) => {
         return total + item.product.currentPrice * item.quantity;
     }, 0);
-    const productImage = cartItems.images?.length > 0
-        ? cartItems.images[0].image
-        : "/assets/img/no-image.png";
     if (loading) {
         return (
             <section className="shoping-cart spad" style={{ margin: "0 90px 0 90px" }}>
@@ -85,57 +94,68 @@ export const ProductsInCart = () => {
                                             </td>
                                         </tr>
                                     ) : cartItems.length === 0 ? (
-                                    <tr>
-                                        <td colSpan="5" style={{ textAlign: "center", padding: "30px" }}>
-                                            Giỏ hàng đang trống
-                                        </td>
-                                    </tr>
-                                ) : (
-                                    cartItems.map((item) => (
-                                        <tr key={item.id}>
-                                            <td className="shoping__cart__item">
-                                                <img
-                                                    src={productImage}
-                                                    alt={item.product.title}
-                                                    style={{
-                                                        width: "100px",
-                                                        height: "120px",
-                                                        objectFit: "cover"
-                                                    }}
-                                                />
-                                                <h5>{item.product.title}</h5>
-                                            </td>
-
-                                            <td className="shoping__cart__price">
-                                                {FormatCurrency(item.product.currentPrice)}
-                                            </td>
-
-                                            <td className="shoping__cart__quantity">
-                                                <div>
-                                                    <div className="pro-qty">
-                                                        <input
-                                                            type="text"
-                                                            value={item.quantity}
-                                                            readOnly
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </td>
-
-                                            <td className="shoping__cart__total">
-                                                {FormatCurrency(item.product.currentPrice * item.quantity)}
-                                            </td>
-
-                                            <td
-                                                className="shoping__cart__item__close"
-                                                onClick={() => removeCartItem(item.id)}
-                                                style={{ cursor: "pointer" }}
-                                            >
-                                                <i className="fa-solid fa-xmark"></i>
+                                        <tr>
+                                            <td colSpan="5" style={{ textAlign: "center", padding: "30px" }}>
+                                                Giỏ hàng đang trống
                                             </td>
                                         </tr>
-                                    ))
-                                )}
+                                    ) : (cartItems.map((item) => {
+                                            const productImage = item.product?.images?.length > 0
+                                                ? item.product.images[0].image
+                                                : "/assets/img/no-image.png";
+                                            console.log("IMAGES:", item.product?.images);
+                                            return(
+                                                <tr key={item.id}>
+                                                    <td className="shoping__cart__item">
+                                                        <img
+                                                            src={productImage}
+                                                            alt={item.product.title}
+                                                            style={{
+                                                                width: "100px",
+                                                                height: "120px",
+                                                                objectFit: "cover"
+                                                            }}
+                                                        />
+                                                        <h5>{item.product.title}</h5>
+                                                    </td>
+                                                    <td className="shoping__cart__price">
+                                                        {FormatCurrency(item.product.currentPrice)}
+                                                    </td>
+                                                    <td className="shoping__cart__quantity">
+                                                        <div className="cart-quantity-box">
+                                                            <button
+                                                                className="qty-btn"
+                                                                onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                                                            >
+                                                                -
+                                                            </button>
+                                                            <input
+                                                                type="text"
+                                                                value={item.quantity}
+                                                                readOnly
+                                                            />
+                                                            <button
+                                                                className="qty-btn"
+                                                                onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                                            >
+                                                                +
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                    <td className="shoping__cart__total">
+                                                        {FormatCurrency(item.product.currentPrice * item.quantity)}
+                                                    </td>
+                                                    <td
+                                                        className="shoping__cart__item__close"
+                                                        onClick={() => removeCartItem(item.id)}
+                                                        style={{ cursor: "pointer" }}
+                                                    >
+                                                        <i className="fa-solid fa-xmark"/>
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })
+                                    )}
                                 </tbody>
                             </table>
                         </div>

@@ -2305,3 +2305,29 @@ ol {
     color: #fff;
     border-radius: 5px;
 }
+/* CART quantity */
+.cart-quantity-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+.cart-quantity-box input {
+    width: 45px;
+    height: 35px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+.qty-btn {
+    width: 32px;
+    height: 35px;
+    border: none;
+    background-color: #7fad39;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.qty-btn:hover {
+    background-color: #6f9632;
+}
