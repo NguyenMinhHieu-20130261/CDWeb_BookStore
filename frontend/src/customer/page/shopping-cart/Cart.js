@@ -164,10 +164,11 @@ export const ProductsInCart = () => {
                 <div className="row">
                     <div className="col-lg-12">
                         <div className="shoping__cart__btns">
-                            <a href="#" className="primary-btn cart-btn">TIẾP TỤC MUA SẮM</a>
-                            <a href="#" className="primary-btn cart-btn cart-btn-right"><span
-                                className="icon_loading"></span>
-                                &nbsp; Cập nhật giỏ hàng</a>
+                            <Link to="/product-list" className="primary-btn cart-btn">TIẾP TỤC MUA SẮM</Link>
+                            <Link to="" className="primary-btn cart-btn cart-btn-right">
+                                <span className="icon_loading"/>
+                                &nbsp; Cập nhật giỏ hàng
+                            </Link>
                         </div>
                     </div>
                     <div className="col-lg-6">
@@ -188,7 +189,7 @@ export const ProductsInCart = () => {
                                 <li>Tạm tính <span>{FormatCurrency(totalPrice)}</span></li>
                                 <li>Tổng tiền <span>{FormatCurrency(totalPrice)}</span></li>
                             </ul>
-                            <a href="checkout.html" className="primary-btn">CHUYỂN ĐẾN PHẦN THANH TOÁN</a>
+                            <Link to="/check-out" className="primary-btn">CHUYỂN ĐẾN PHẦN THANH TOÁN</Link>
                         </div>
                     </div>
                 </div>
