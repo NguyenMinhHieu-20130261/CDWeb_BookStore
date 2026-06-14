@@ -91,7 +91,7 @@ export const UserOrders = () => {
                                             </td>
 
                                             <td>
-                                                <Link to={`/user/order-detail/${order.id}`}>
+                                                <Link to={`/user/order/${order.id}`}>
                                                     Xem
                                                 </Link>
                                             </td>

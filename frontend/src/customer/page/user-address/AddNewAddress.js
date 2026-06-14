@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import api from "../../../service/ApiService";
 import ProvinceService from "../../../service/ProvinceService";
 import PhoneValidService from "../../../service/PhoneValidService";
+import WindowPopup from "../../components/general/WindowPopup";
 
 const AddNewAddress = () => {
     const navigate = useNavigate();
@@ -23,24 +24,44 @@ const AddNewAddress = () => {
     const [selectedWard, setSelectedWard] = useState('');
 
     const [error, setError] = useState('');
-
+    const [popupInfo, setPopupInfo] = useState({
+        visible: false,
+        title: "",
+        message: "",
+        type: ""
+    });
     const { isPhoneNumberValid, handleBlur, handlePhoneNumberChange } = PhoneValidService();
 
     const handleButtonSave = async (e) => {
         e.preventDefault();
         if (!user?.id) {
-            alert("Không tìm thấy user");
+            setPopupInfo({
+                visible: true,
+                type: "error",
+                title: "Lỗi",
+                message: "Không tìm thấy người dùng"
+            });
             // console.log("USER:", user);
             // console.log("USER ID:", user?.id);
             return;
         }
         if (!fullName || !phoneNumber || !detailAdrs ||
             !selectedProvince ||!selectedDistrict || !selectedWard) {
-            alert("Vui lòng nhập đầy đủ thông tin");
+            setPopupInfo({
+                visible: true,
+                type: "warning",
+                title: "Thiếu thông tin",
+                message: "Vui lòng nhập đầy đủ thông tin"
+            });
             return;
         }
         if (!isPhoneNumberValid(phoneNumber)) {
-            alert("Số điện thoại không hợp lệ");
+            setPopupInfo({
+                visible: true,
+                type: "error",
+                title: "Không hợp lệ",
+                message: "Số điện thoại không hợp lệ"
+            });
             return;
         }
         try {
@@ -68,8 +89,15 @@ const AddNewAddress = () => {
                 "/address/add",
                 payload
             );
-            alert("Địa chỉ mới đã được thêm thành công");            
-            navigate("/user/address");
+            setPopupInfo({
+                visible: true,
+                type: "success",
+                title: "Thành công",
+                message: "Thêm địa chỉ mới thành công"
+            });
+            setTimeout(() => {
+                navigate("/user/address");
+            }, 1000);
         } catch (error) {
             console.log("Lỗi khi thêm địa chỉ mới");
         }
@@ -81,8 +109,21 @@ const AddNewAddress = () => {
         };
         loadProvinces();
     }, []);
+    const hidePopup = () => {
+        setPopupInfo(prev => ({
+            ...prev,
+            visible: false
+        }));
+    };
     return (
         <>
+            <WindowPopup
+                visible={popupInfo.visible}
+                type={popupInfo.type}
+                title={popupInfo.title}
+                message={popupInfo.message}
+                onClose={hidePopup}
+            />
             <Breadcrumb />
             <div className="container information mt-5 mb-5 px-0">
                 <LeftSideBar />

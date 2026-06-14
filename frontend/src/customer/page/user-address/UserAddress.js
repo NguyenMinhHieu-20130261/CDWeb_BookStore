@@ -7,11 +7,18 @@ import AddressItem from "./sub-components/AddressItem";
 import "../../assets/css/user-address.css"; 
 import api from "../../../service/ApiService";
 import LoadingPage from "../../components/general/LoadingPage";
+import WindowPopup from "../../components/general/WindowPopup";
 
 const UserAddress = () => {
     const navigate = useNavigate();
     const [addresses, setAddresses] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [popupInfo,setPopupInfo] = useState({
+        visible:false,
+        type:"",
+        title:"",
+        message:""
+    });
     const user = useSelector((state) => state.auth.login.currentUser);
     useEffect(() => {
         const fetchAddresses = async () => {
@@ -36,21 +43,30 @@ const UserAddress = () => {
     }, [user?.id]);
     const handleDeleteAddress = async(addressId)=>{
         try {        
-            console.log("PARENT DELETE ADDRESS ID:", addressId);
-            console.log("DELETE URL:", `/address/delete/${addressId}`);
+            // console.log("PARENT DELETE ADDRESS ID:", addressId);
+            // console.log("DELETE URL:", `/address/delete/${addressId}`);
             await api.deleteData(
                     `/address/delete/${addressId}`
             );
             setAddresses((prev) =>
                 prev.filter((address) => address.id !== addressId)
             );
-            alert("Địa chỉ mới đã được xóa thành công ");            
-            navigate("/user/address");
+            setPopupInfo({
+                visible: true,
+                type: "success",
+                title: "Thành công",
+                message: "Địa chỉ đã được xóa thành công"
+            });
         } catch (error) {
             console.log("Lỗi",  error);
-            console.log("STATUS:", error.response?.status);
-            console.log("BACKEND DATA:", error.response?.data);
-            alert("Xóa địa chỉ thất bại");
+            // console.log("STATUS:", error.response?.status);
+            // console.log("BACKEND DATA:", error.response?.data);
+            setPopupInfo({
+                visible: true,
+                type: "error",
+                title: "Thất bại",
+                message: "Xóa địa chỉ thất bại"
+            });
         }
     }
     const handleSetDefault = async(addressId)=>{
@@ -58,21 +74,42 @@ const UserAddress = () => {
             await api.updateData(
                     `/address/default/${addressId}`
             );
-            alert("Đẫ đặt địa chỉ mặc định thành công ");            
-            navigate("/user/address");
-            window.location.reload();
+            setPopupInfo({
+                visible:true,
+                type:"question",
+                title:"Xác nhận",
+                message:"Địa chỉ đặt mặc định thành công"
+            });
         } catch (error) {
             console.log("Lỗi",  error);
             console.log("STATUS:", error.response?.status);
             console.log("BACKEND DATA:", error.response?.data);
-            alert("Xóa địa chỉ thất bại");
+            setPopupInfo({
+                visible: true,
+                type: "error",
+                title: "Thất bại",
+                message: "Đặt mặc định thất bại"
+            });
         }
     }
     if (loading) {
         return <LoadingPage />;
     }
+    const hidePopup = () => {
+        setPopupInfo(prev=>({
+            ...prev,
+            visible:false
+        }));
+    };
     return (
         <>
+            <WindowPopup
+                visible={popupInfo.visible}
+                type={popupInfo.type}
+                title={popupInfo.title}
+                message={popupInfo.message}
+                onClose={hidePopup}
+            />
             <Breadcrumb />
             <div className="container information mt-5 mb-5 px-0">
                 <LeftSideBar />

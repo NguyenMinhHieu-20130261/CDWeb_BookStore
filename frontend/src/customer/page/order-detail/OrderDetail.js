@@ -6,6 +6,7 @@ import formatCurrency from "../../../utils/FormatCurrency";
 import LeftSideBar from "../user-account/sub-components/LeftSideBar";
 import "../../assets/css/style-order-detail.css";
 import IconProgress from "./sub-components/IconProcess";
+import WindowPopup from "../../components/general/WindowPopup";
 
 export const OrderDetail = () => {
     const { orderId } = useParams();
@@ -128,55 +129,43 @@ export const OrderDetail = () => {
                             Hủy đơn
                         </button>
                     )}
+                    {/* SUCCESS */}
+                    <WindowPopup
+                        visible={popupInfo.visible && popupInfo.type === "success"}
+                        type="success"
+                        title="Thành công"
+                        message={popupInfo.message}
+                        onClose={hidePopup}
+                    />
+                    {/* CONFIRM */}
+                    <WindowPopup
+                        visible={popupInfo.visible && popupInfo.type === "question"}
+                        type="question"
+                        title="Xác nhận"
+                        message={popupInfo.message}
+                        onClose={hidePopup}
+                        onConfirm={handleCancelOrder}
+                    />
+                    {/* REVIEW */}
+                    <WindowPopup
+                        visible={popupInfo.visible && popupInfo.type === "review"}
+                        type="review"
+                        title="Đánh giá"
+                        message={popupInfo.message}
+                        onClose={hidePopup}
+                    >
+                        {orderDetails.map(item => (
+                            <div key={item.id} className="review-popup-item">
+                                <span>{item.product?.title}</span>
 
-                    {/* POPUP SUCCESS */}
-                    {popupInfo.visible && popupInfo.type === 'success' && (
-                        <div className="popup popup--visible">
-                            <div className="popup__content">
-                                <h3>Thành công</h3>
-                                <p>{popupInfo.message}</p>
-                                <button onClick={hidePopup}>Đóng</button>
+                                <Link to={`/product-detail/${item.product?.slug}`}>
+                                    <button type="button" className="site-btn">
+                                        Đánh giá
+                                    </button>
+                                </Link>
                             </div>
-                        </div>
-                    )}
-
-                    {/* POPUP QUESTION */}
-                    {popupInfo.visible && popupInfo.type === 'question' && (
-                        <div className="popup popup--visible">
-                            <div className="popup__content">
-                                <h3>Xác nhận</h3>
-                                <p>{popupInfo.message}</p>
-                                <button onClick={hidePopup}>Hủy</button>
-                                <button onClick={handleCancelOrder}>Xác nhận</button>
-                            </div>
-                        </div>
-                    )}
-
-                    {/* POPUP REVIEW */}
-                    {popupInfo.visible && popupInfo.type === 'review' && (
-                        <div className="popup popup--visible">
-                            <div className="popup__content">
-                                <h3>Đánh giá</h3>
-                                {orderDetails.map(item => (
-                                    <div key={item.id}>
-                                        {item.product.title}
-                                        <Link 
-                                            // to={`/product-detail/${product.slug}`}
-                                            // state={{
-                                            //     title: product.title,
-                                            //     categoryName: product.category?.name || product.category?.categoryName,
-                                            //     categoryLink: `/product-list/${product.category?.id}`
-                                            // }}
-                                        >
-                                            <button>Đánh giá</button>
-                                        </Link>
-                                    </div>
-                                ))}
-                                <button onClick={hidePopup}>Đóng</button>
-                            </div>
-                        </div>
-                    )}
-
+                        ))}
+                    </WindowPopup>
                 </div>
             </div>
         </div>

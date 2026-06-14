@@ -1,18 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Breadcrumb from "../../components/general/Breadcrumb";
-import LeftSideBar from "../user-account/sub-components/LeftSideBar";
 import {useSelector} from "react-redux";
+
 import api from "../../../service/ApiService";
 import ProvinceService from "../../../service/ProvinceService";
 import PhoneValidService from "../../../service/PhoneValidService";
+
 import LoadingPage from "../../components/general/LoadingPage";
+import WindowPopup from "../../components/general/WindowPopup";
+import Breadcrumb from "../../components/general/Breadcrumb";
+import LeftSideBar from "../user-account/sub-components/LeftSideBar";
 
 const UpdateAddress = () => {
     const navigate = useNavigate();
     const user = useSelector((state) => state.auth.login.currentUser);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(true);
+    const [popupInfo, setPopupInfo] = useState({
+        visible: false,
+        title: "",
+        message: "",
+        type: ""
+    });
 
     const {id} = useParams();
     const [addressData, setAddressData] = useState({
@@ -32,16 +41,31 @@ const UpdateAddress = () => {
     const handleButtonUpdate = async (e) => {
         e.preventDefault();
         if (!user?.id) {
-            alert("Không tìm thấy user");
+            setPopupInfo({
+                visible: true,
+                type: "error",
+                title: "Lỗi",
+                message: "Không tìm thấy người dùng"
+            });
             return;
         }
         if (!addressData.fullName || !addressData.phoneNumber || !addressData.detailAdrs ||
             !addressData.provinceId || !addressData.districtId || !addressData.wardCode) {
-            alert("Vui lòng nhập đầy đủ thông tin");
+            setPopupInfo({
+                visible: true,
+                type: "warning",
+                title: "Thiếu thông tin",
+                message: "Vui lòng nhập đầy đủ thông tin"
+            });
             return;
         }
         if (!isPhoneNumberValid(addressData.phoneNumber)) {
-            alert("Số điện thoại không hợp lệ");
+            setPopupInfo({
+                visible: true,
+                type: "error",
+                title: "Không hợp lệ",
+                message: "Số điện thoại không hợp lệ"
+            });
             return;
         }
         try {
@@ -64,8 +88,15 @@ const UpdateAddress = () => {
             };
             await api.updateData(`/address/update/${id}`, payload);
 
-            alert("Địa chỉ đã được cập nhật thành công!");
-            navigate("/user/address");
+            setPopupInfo({
+                visible: true,
+                type: "success",
+                title: "Thành công",
+                message: "Địa chỉ đã được thay đổithành công"
+            });
+            setTimeout(() => {
+                navigate("/user/address");
+            }, 1000);
         } catch (error) {
             console.log("Lỗi khi cập nhật địa chỉ");
             console.error("Error:", error);
@@ -111,8 +142,21 @@ const UpdateAddress = () => {
     if (loading) {
         return <LoadingPage />;
     }
+    const hidePopup = () => {
+        setPopupInfo(prev => ({
+            ...prev,
+            visible: false
+        }));
+    };
     return (
         <>
+            <WindowPopup
+                visible={popupInfo.visible}
+                type={popupInfo.type}
+                title={popupInfo.title}
+                message={popupInfo.message}
+                onClose={hidePopup}
+            />
             <Breadcrumb />
             <div className="container information mt-5 mb-5 px-0">
                 <LeftSideBar />
