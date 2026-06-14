@@ -1,69 +1,39 @@
 import Breadcrumb from "../../components/general/Breadcrumb";
-import { Link } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import api from "../../../service/ApiService";
 import formatCurrency from "../../../utils/FormatCurrency";
 import LeftSideBar from "../user-account/sub-components/LeftSideBar";
+import "../../assets/css/style-order-detail.css";
+import IconProgress from "./sub-components/IconProcess";
 
 export const OrderDetail = () => {
+    const { orderId } = useParams();
+    const [order, setOrder] = useState(null);
+    const [orderDetails, setOrderDetails] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    const mockOrder = {
-        id: 1,
-        orderCode: "ORD123456",
-        shippingCost: 30000,
-        paymentMethod: "Thanh toán khi nhận hàng",
-        note: "Giao giờ hành chính",
-        orderTotal: 530000,
-        status: { id: 3, name: "Đang chuẩn bị hàng" },
-        shippingAddress: {
-            wardCommune: "Phường Bến Nghé",
-            countyDistrict: "Quận 1",
-            provinceCity: "TP.HCM"
-        }
-    };
-
-    const mockOrderDetails = [
-        {
-            id: 1,
-            quantity: 2,
-            totalMoney: 200000,
-            product: {
-                title: "Áo thun nam siêu đẹp chất lượng cao",
-                currentPrice: 100000,
-                detail: {
-                    id: 101,
-                    productSku: "SP001"
-                }
-            }
-        },
-        {
-            id: 2,
-            quantity: 1,
-            totalMoney: 300000,
-            product: {
-                title: "Quần jean nam form slim fit",
-                currentPrice: 300000,
-                detail: {
-                    id: 102,
-                    productSku: "SP002"
-                }
-            }
-        }
-    ];
-
-    const [order] = useState(mockOrder);
-    const [orderDetails] = useState(mockOrderDetails);
     const [popupInfo, setPopupInfo] = useState({ message: '', type: '', visible: false });
 
-    const tempTotal = orderDetails.reduce((sum, item) => sum + item.totalMoney, 0);
-
-    const progress = order.status?.id === 6 ? 0 : order.status?.id;
-
+    useEffect(() => {
+        const loadOrderDetail = async () => {
+            try {
+                const data = await api.fetchData(`/orders/detail/${orderId}`);
+                setOrder(data);
+                setOrderDetails(data.orderDetails || []);
+            } catch (error) {
+                console.log("Lỗi lấy chi tiết đơn hàng:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        loadOrderDetail();
+    }, [orderId]);
     const shortenContent = (text, maxLength) => {
         if (!text) return "";
         return text.length <= maxLength ? text : text.substring(0, maxLength) + "...";
     };
 
-    // 👉 popup mock
     const handleOpenAskingPopup = (e) => {
         e.preventDefault();
         setPopupInfo({ message: 'Bạn có chắc chắn muốn hủy đơn hàng này không?', type: 'question', visible: true });
@@ -80,24 +50,20 @@ export const OrderDetail = () => {
     const hidePopup = () => {
         setPopupInfo(prev => ({ ...prev, visible: false }));
     };
-
+    if (loading) {
+        return <p>Đang tải chi tiết đơn hàng...</p>;
+    }
+    if (!order) {
+        return <p>Không tìm thấy đơn hàng</p>;
+    }
+    const tempTotal = orderDetails.reduce(
+        (sum, item) => sum + item.totalMoney,
+        0
+    );
     return (
         <div>
             <Breadcrumb />
-
-            {/* PROGRESS */}
-            {progress !== 0 && (
-                <div id="progress-ship">
-                    <div id="progress-bar" style={{ width: `${(progress - 1) * 25}%` }}></div>
-                    <ul id="progress-text">
-                        {['Đang chờ xử lý', 'Đã xác nhận', 'Đang chuẩn bị', 'Đang giao', 'Đã giao'].map((step, i) => (
-                            <li key={i} className={`step ${i < progress - 1 ? 'active' : i === progress - 1 ? 'progress-step' : ''}`}>
-                                <p>{step}</p>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            )}
+            <IconProgress statusId={order.status?.id}/>
 
             <div className="container information mt-5 mb-5">
                 <LeftSideBar />
@@ -120,8 +86,8 @@ export const OrderDetail = () => {
                         <tbody>
                             {orderDetails.map(item => (
                                 <tr key={item.id}>
-                                    <td>{item.product.detail.productSku}</td>
-                                    <td>{shortenContent(item.product.title, 30)}</td>
+                                    <td>{item.product?.detail?.productSku}</td>
+                                    <td>{shortenContent(item.product?.title, 30)}</td>
                                     <td>{item.quantity}</td>
                                     <td>{formatCurrency(item.totalMoney)}</td>
                                 </tr>
@@ -130,19 +96,29 @@ export const OrderDetail = () => {
                     </table>
 
                     {/* SUMMARY */}
-                    <div>Tạm tính: <span style={{ float: "right" }}>{formatCurrency(tempTotal)}</span></div>
-                    <div>Phí ship: <span style={{ float: "right" }}>{formatCurrency(order.shippingCost)}</span></div>
-                    <div>Thanh toán: <span style={{ float: "right" }}>{order.paymentMethod}</span></div>
-                    <div>Địa chỉ: <span style={{ float: "right" }}>
-                        {order.shippingAddress.wardCommune}, {order.shippingAddress.countyDistrict}, {order.shippingAddress.provinceCity}
-                    </span></div>
-
+                    <div>Tạm tính: 
+                        <span 
+                        style={{ float: "right" }}>{formatCurrency(tempTotal)}
+                        </span>
+                    </div>
+                    <div>Phí ship: 
+                        <span style={{ float: "right" }}>{formatCurrency(order.shippingCost)}</span>
+                    </div>
+                    <div>Thanh toán: 
+                        <span style={{ float: "right" }}>{order.paymentMethod}</span>
+                    </div>
+                    <div className="order-summary-row">
+                        <span>Địa chỉ: </span>
+                        <span>
+                            {order.shippingAddress?.detailAdrs}, {order.shippingAddress?.ward}, {order.shippingAddress?.district}, {order.shippingAddress?.province}
+                        </span>
+                    </div>
                     <div className="checkout__order__total">
                         Tổng tiền: {formatCurrency(order.orderTotal)}
                     </div>
 
                     {/* ACTION */}
-                    {order.status.id === 5 ? (
+                    {order.status?.id === 5 ? (
                         <>
                             <button className="site-btn" disabled>Đã giao</button>
                             <button className="site-btn" onClick={showPopupReview}>Đánh giá</button>

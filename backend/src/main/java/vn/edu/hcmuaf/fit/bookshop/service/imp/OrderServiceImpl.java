@@ -28,4 +28,9 @@ public class OrderServiceImpl implements OrderService {
         }
         return orderRepo.findByUser_Id(userId, orderSort);
     }
+    @Override
+    public Order getOrderDetail(Integer orderId) {
+        return orderRepo.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn hàng"));
+    }
 }

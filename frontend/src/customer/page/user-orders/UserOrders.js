@@ -30,6 +30,7 @@ export const UserOrders = () => {
         };
         loadOrders();
     }, []);
+
     const getStatusColorClass = (status) => {
         switch (status) {
             case 'pending':
@@ -90,7 +91,7 @@ export const UserOrders = () => {
                                             </td>
 
                                             <td>
-                                                <Link to={`/user/order/${order.id}`}>
+                                                <Link to={`/user/order-detail/${order.id}`}>
                                                     Xem
                                                 </Link>
                                             </td>

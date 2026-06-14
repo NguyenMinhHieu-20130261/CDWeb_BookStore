@@ -54,7 +54,7 @@ const CustomerRouter = () => {
                 <Route path="/user/address/add" element={<AddNewAddress/>}/>
                 <Route path="/user/address/update/:id" element={<UpdateAddress/>}/>
                 <Route path="/user/order" element={<UserOrders/>}/>
-                <Route path="/user/order/:id" element={<OrderDetail/>}/>
+                <Route path="/user/order/:orderId" element={<OrderDetail/>}/>
                 <Route path="/user/wishlist" element={<UserWishlist/>}/>
             </Routes>
             <Footer/>
