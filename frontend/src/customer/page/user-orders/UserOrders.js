@@ -1,37 +1,35 @@
 import { Link } from "react-router-dom";
 import Breadcrumb from "../../components/general/Breadcrumb";
 import LeftSideBar from "../user-account/sub-components/LeftSideBar";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FormatCurrency from "../../../utils/FormatCurrency";
+import api from "../../../service/ApiService";
 import "../../assets/css/user-account.css";
 
 export const UserOrders = () => {
+    const [orders, setOrders] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    // 👉 Mock data
-    const [orders] = useState([
-        {
-            id: 1,
-            orderCode: "ORD001",
-            orderTotal: 500000,
-            orderDate: "2026-05-01",
-            status: { name: "Đang xử lý", slug: "pending" }
-        },
-        {
-            id: 2,
-            orderCode: "ORD002",
-            orderTotal: 750000,
-            orderDate: "2026-05-02",
-            status: { name: "Đã giao", slug: "delivered" }
-        },
-        {
-            id: 3,
-            orderCode: "ORD003",
-            orderTotal: 300000,
-            orderDate: "2026-05-03",
-            status: { name: "Đã hủy", slug: "cancelled" }
-        }
-    ]);
+    const user = JSON.parse(localStorage.getItem("user"));
 
+    useEffect(() => {
+        const loadOrders = async () => {
+            if (!user?.id) {
+                setOrders([]);
+                setLoading(false);
+                return;
+            }
+            try {
+                const data = await api.fetchData(`/orders/${user.id}`);
+                setOrders(data);
+            } catch (error) {
+                console.log("Lỗi lấy đơn hàng:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        loadOrders();
+    }, []);
     const getStatusColorClass = (status) => {
         switch (status) {
             case 'pending':
@@ -50,7 +48,9 @@ export const UserOrders = () => {
                 return '';
         }
     };
-
+    if (loading) {
+        return <p>Đang tải đơn hàng...</p>;
+    }
     return (
         <div>
             <Breadcrumb />

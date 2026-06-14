@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.hcmuaf.fit.bookshop.entity.Blog;
 import vn.edu.hcmuaf.fit.bookshop.entity.Product;
-import vn.edu.hcmuaf.fit.bookshop.entity.ProductImage;
 import vn.edu.hcmuaf.fit.bookshop.repository.BlogRepo;
 import vn.edu.hcmuaf.fit.bookshop.repository.ProductRepo;
 

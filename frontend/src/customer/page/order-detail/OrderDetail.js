@@ -1,8 +1,8 @@
 import Breadcrumb from "../../components/general/Breadcrumb";
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
-import formatCurrency from "../../../utils/formatCurrency";
-import LeftSideBar from "../my-account/sub-components/LeftSideBar";
+import formatCurrency from "../../../utils/FormatCurrency";
+import LeftSideBar from "../user-account/sub-components/LeftSideBar";
 
 export const OrderDetail = () => {
 
@@ -185,12 +185,12 @@ export const OrderDetail = () => {
                                     <div key={item.id}>
                                         {item.product.title}
                                         <Link 
-                                            to={`/product-detail/${product.slug}`}
-                                            state={{
-                                                title: product.title,
-                                                categoryName: product.category?.name || product.category?.categoryName,
-                                                categoryLink: `/product-list/${product.category?.id}`
-                                            }}
+                                            // to={`/product-detail/${product.slug}`}
+                                            // state={{
+                                            //     title: product.title,
+                                            //     categoryName: product.category?.name || product.category?.categoryName,
+                                            //     categoryLink: `/product-list/${product.category?.id}`
+                                            // }}
                                         >
                                             <button>Đánh giá</button>
                                         </Link>

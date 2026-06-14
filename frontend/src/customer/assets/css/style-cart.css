@@ -2331,3 +2331,7 @@ ol {
 .qty-btn:hover {
     background-color: #6f9632;
 }
+
+.cart-contents-total{
+    color: black !important;
+}

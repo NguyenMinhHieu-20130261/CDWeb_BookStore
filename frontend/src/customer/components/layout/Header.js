@@ -8,6 +8,7 @@ import "../../assets/css/style-search.css"
 import "../../assets/css/style-cart.css"
 import api from "../../../service/ApiService"
 import {logoutUser} from "../../../Store/ApiRequest";
+import FormatCurrency from "../../../utils/FormatCurrency";
 
 export const Header = () => {
     const dispatch = useDispatch();
@@ -17,7 +18,8 @@ export const Header = () => {
     const [isSearchOpen, setIsSearchOpen] = React.useState(false);
     //cart total
     const [cart, setCart] = useState([]);
-    const [total, setTotal] = useState(0);
+    const [totalItems, setTotalItems] = useState(0);
+    const [totalPrice, setTotalPrice] = useState(0);
     // lấy user từ redux store
     const user = useSelector(state => state.auth.login.currentUser);
     // kiểm tra nếu có user trong localStorage thì cập nhật vào redux store
@@ -59,7 +61,7 @@ export const Header = () => {
     React.useEffect(() => {
         const loadCart = async () => {
             if (!user?.id) {
-                setTotal(0);
+                setTotalItems(0);
                 return;
             }
             try {
@@ -68,10 +70,16 @@ export const Header = () => {
                     (sum, item) => sum + item.quantity,
                     0
                 );
-                setTotal(count);
+                const totalPrice = data.reduce(
+                    (sum, item) =>
+                        sum + item.product.currentPrice * item.quantity,
+                    0
+                );
+                setTotalPrice(totalPrice);
+                setTotalItems(count);
             } catch (error) {
                 console.error("Failed to fetch cart items", error.response?.data || error);
-                setTotal(0);
+                setTotalItems(0);
             }
         };
         loadCart();
@@ -180,7 +188,7 @@ export const Header = () => {
                                     <span
                                         className="position-absolute width-16 height-16 rounded-circle d-flex align-items-center justify-content-center font-size-n9 left-0 top-0 ml-n2 mt-n1 text-white bg-dark">
                                         <span className="cart-contents-count">
-                                            {total}
+                                            {totalItems}
                                         </span> 
                                     </span>
                                     <div >
@@ -189,9 +197,13 @@ export const Header = () => {
                                     <div className="ml-2 d-none d-lg-block text-dark">
                                         <span className="text-secondary-gray-1090 font-size-1">
                                             Giỏ hàng </span>
-                                        <div><span className="cart-contents-total">
-                                                <span className="woocommerce-Price-amount amount"><span
-                                                    className="woocommerce-Price-currencySymbol">&#036;</span>0.00</span>
+                                        <div>
+                                            <span 
+                                                className="cart-contents-total"
+                                            >
+                                                <span className="woocommerce-Price-amount amount">
+                                                    {FormatCurrency(totalPrice)}
+                                                </span>
                                             </span>
                                         </div>
                                     </div>

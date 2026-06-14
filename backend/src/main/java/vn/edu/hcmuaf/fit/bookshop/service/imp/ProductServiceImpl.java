@@ -2,12 +2,12 @@ package vn.edu.hcmuaf.fit.bookshop.service.imp;
 
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import vn.edu.hcmuaf.fit.bookshop.entity.Category;
 import vn.edu.hcmuaf.fit.bookshop.entity.Product;
-import vn.edu.hcmuaf.fit.bookshop.repository.ProductImageRepo;
+// import vn.edu.hcmuaf.fit.bookshop.repository.ProductImageRepo;
 import vn.edu.hcmuaf.fit.bookshop.repository.ProductRepo;
 import vn.edu.hcmuaf.fit.bookshop.service.CategoryService;
 import vn.edu.hcmuaf.fit.bookshop.service.ProductService;
@@ -21,8 +21,8 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepo productRepo;
     private final CategoryService categoryService;
-    @Autowired
-    private ProductImageRepo productImageRepo;
+    // @Autowired
+    // private ProductImageRepo productImageRepo;
 
     @Override
     public List<Product> getActiveProducts() {
