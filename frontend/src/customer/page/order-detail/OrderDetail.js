@@ -40,8 +40,21 @@ export const OrderDetail = () => {
         setPopupInfo({ message: 'Bạn có chắc chắn muốn hủy đơn hàng này không?', type: 'question', visible: true });
     };
 
-    const handleCancelOrder = () => {
-        setPopupInfo({ message: 'Mock: Hủy đơn hàng thành công!', type: 'success', visible: true });
+    const handleCancelOrder = async () => {
+        try {
+            await api.updateData(`/orders/cancel/${orderId}`);
+            const data = await api.fetchData(`/orders/detail/${orderId}`);
+            setOrder(data);
+            setOrderDetails(data.orderDetails || []);
+            setPopupInfo({ message: 'Hủy đơn hàng thành công!', type: 'success', visible: true });
+        } catch (error) {
+            console.error("Lỗi khi hủy đơn hàng:", error);
+            setPopupInfo({
+                message: error.response?.data || 'Đã xảy ra lỗi khi hủy đơn hàng',
+                type: 'error',
+                visible: true
+            });
+        }
     };
 
     const showPopupReview = () => {
@@ -72,7 +85,7 @@ export const OrderDetail = () => {
                 <div className="col-md-9 checkout__order">
 
                     <h4 style={{ textAlign: "center" }}>Chi tiết hóa đơn</h4>
-                    <h6 style={{ textAlign: 'right' }}>Mã đơn: {order.orderCode}</h6>
+                    <h6 style={{ textAlign: 'right' }}>Mã đơn: {order.orderCode} | Ngày đặt: {order.orderDate}</h6>
 
                     {/* TABLE */}
                     <table className="table">
@@ -109,13 +122,41 @@ export const OrderDetail = () => {
                         <span style={{ float: "right" }}>{order.paymentMethod}</span>
                     </div>
                     <div className="order-summary-row">
-                        <span>Địa chỉ: </span>
+                        <strong>Địa chỉ giao hàng: </strong>
                         <span>
-                            {order.shippingAddress?.detailAdrs}, {order.shippingAddress?.ward}, {order.shippingAddress?.district}, {order.shippingAddress?.province}
+                            {order.shippingAddress?.detailAdrs}, {order.shippingAddress?.wardCommune}, {order.shippingAddress?.countyDistrict}, {order.shippingAddress?.provinceCity}
                         </span>
                     </div>
                     <div className="checkout__order__total">
                         Tổng tiền: {formatCurrency(order.orderTotal)}
+                    </div>
+
+                    {/* STATUS DETAILS */}
+                    <div className="order-summary-row" style={{ marginTop: "15px", borderTop: "1px solid #ebebeb", paddingTop: "15px" }}>
+                        <strong>Trạng thái thanh toán: </strong>
+                        <span>
+                            {order.status?.id === 6 ? (
+                                <span className="text-danger" style={{ fontWeight: "bold" }}>Đã hủy</span>
+                            ) : (order.status?.id === 5 || order.paymentMethod?.toLowerCase().includes("thẻ") || order.paymentMethod?.toLowerCase().includes("paypal") ? (
+                                <span className="text-success" style={{ fontWeight: "bold" }}>Đã thanh toán</span>
+                            ) : (
+                                <span className="text-warning" style={{ fontWeight: "bold" }}>Chưa thanh toán (COD)</span>
+                            ))}
+                        </span>
+                    </div>
+                    <div className="order-summary-row" style={{ marginBottom: "15px" }}>
+                        <strong>Trạng thái giao hàng: </strong>
+                        <span>
+                            {order.status?.id === 5 ? (
+                                <span className="text-success" style={{ fontWeight: "bold" }}>Đã giao hàng</span>
+                            ) : order.status?.id === 6 ? (
+                                <span className="text-danger" style={{ fontWeight: "bold" }}>Đã hủy</span>
+                            ) : order.status?.id === 4 ? (
+                                <span className="text-info" style={{ fontWeight: "bold" }}>Đang giao hàng</span>
+                            ) : (
+                                <span className="text-secondary" style={{ fontWeight: "bold" }}>Chưa giao hàng (Đang chuẩn bị)</span>
+                            )}
+                        </span>
                     </div>
 
                     {/* ACTION */}
@@ -124,6 +165,10 @@ export const OrderDetail = () => {
                             <button className="site-btn" disabled>Đã giao</button>
                             <button className="site-btn" onClick={showPopupReview}>Đánh giá</button>
                         </>
+                    ) : order.status?.id === 6 ? (
+                        <button className="site-btn" disabled style={{ backgroundColor: "#ccc", cursor: "not-allowed", border: "none" }}>
+                            Đã hủy
+                        </button>
                     ) : (
                         <button className="site-btn" onClick={handleOpenAskingPopup}>
                             Hủy đơn
