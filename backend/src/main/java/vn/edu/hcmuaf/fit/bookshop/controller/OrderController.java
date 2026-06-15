@@ -3,6 +3,7 @@ package vn.edu.hcmuaf.fit.bookshop.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import vn.edu.hcmuaf.fit.bookshop.dto.OrderRequest;
 import vn.edu.hcmuaf.fit.bookshop.entity.*;
 import vn.edu.hcmuaf.fit.bookshop.service.*;
 
@@ -11,6 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/orders")
+@CrossOrigin("*")
 public class OrderController {
     @Autowired
     private UserService userService;
@@ -34,4 +36,22 @@ public class OrderController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-}
+    @PostMapping("/create")
+    public ResponseEntity<?> createOrder(@RequestBody OrderRequest orderRequest) {
+        try {
+            Order savedOrder = orderService.createOrder(orderRequest);
+            return ResponseEntity.ok(savedOrder);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @PutMapping("/cancel/{orderId}")
+    public ResponseEntity<?> cancelOrder(@PathVariable Integer orderId) {
+        try {
+            Order cancelledOrder = orderService.cancelOrder(orderId);
+            return ResponseEntity.ok(cancelledOrder);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+}
