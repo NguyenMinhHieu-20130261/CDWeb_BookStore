@@ -53,7 +53,7 @@ public class Order {
     @Column(name = "payment_method")
     private String paymentMethod;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "status")
     private OrderStatus status;
 

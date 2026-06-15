@@ -23,6 +23,25 @@ public class OrderServiceImpl implements OrderService {
     private final CartRepo cartRepo;
     private final AddressRepo addressRepo;
     private final OrderStatusRepo orderStatusRepo;
+    private final org.springframework.jdbc.core.JdbcTemplate jdbcTemplate;
+
+    @jakarta.annotation.PostConstruct
+    public void init() {
+        try {
+            // Drop unique constraint on order status
+            jdbcTemplate.execute("ALTER TABLE orders DROP FOREIGN KEY FK1179a4yhelei7ibvnyd8okhqu");
+            jdbcTemplate.execute("ALTER TABLE orders DROP INDEX UK_qro50btxtakk2eg9v13c1se48");
+            jdbcTemplate.execute("ALTER TABLE orders ADD CONSTRAINT FK1179a4yhelei7ibvnyd8okhqu FOREIGN KEY (status) REFERENCES order_status (id)");
+            System.out.println("Successfully modified orders status constraint from unique to non-unique.");
+        } catch (Exception e) {
+            // Already modified or index doesn't exist, ensure foreign key is present
+            try {
+                jdbcTemplate.execute("ALTER TABLE orders ADD CONSTRAINT FK1179a4yhelei7ibvnyd8okhqu FOREIGN KEY (status) REFERENCES order_status (id)");
+            } catch (Exception ex) {
+                // Foreign key already exists, all good
+            }
+        }
+    }
 
     public List<Order> getOrdersByUser_Id(Integer userId, String sort) {
         Sort orderSort;
