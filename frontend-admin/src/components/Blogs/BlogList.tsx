@@ -1,56 +1,56 @@
-import * as React from 'react';
-import {BlogSearch} from "./BlogSearch";
+import * as React from "react";
+import { BlogSearch } from "./BlogSearch";
 import {
+    BulkDeleteButton,
+    BooleanField,
     CreateButton,
+    DatagridConfigurable,
+    DateField,
     ExportButton,
-    TopToolbar,
-    SelectColumnsButton,DatagridConfigurable, BulkUpdateButton, BulkDeleteButton
-} from 'react-admin';
-import {
-    List,
     ImageField,
+    List,
+    NumberField,
+    SelectColumnsButton,
+    ShowButton,
+    EditButton,
     TextField,
-    DateField
+    TopToolbar,
 } from "react-admin";
 
-const VisitorListActions = () => (
+const BlogListActions = () => (
     <TopToolbar>
-        <CreateButton/>
-        <SelectColumnsButton/>
-        <ExportButton/>
+        <CreateButton />
+        <SelectColumnsButton />
+        <ExportButton />
     </TopToolbar>
 );
+
 export const BlogList = () => (
-    <List sort={{field: 'title', order: 'DESC'}} perPage={5}
-          actions={<VisitorListActions/>}
-        filters={<BlogSearch/>}
-          sx={{
-              '& .column-title': {
-                  maxWidth: '16em',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap',
-              },
-              '& .column-commentable': {
-                  maxWidth: '4em',
-              },
-          }}
+    <List
+        title="Danh sách bài viết"
+        sort={{ field: "createdAt", order: "DESC" }}
+        perPage={5}
+        actions={<BlogListActions />}
+        filters={<BlogSearch />}
     >
         <DatagridConfigurable
             rowClick="show"
-            bulkActionButtons={
-                <>
-                    <BulkUpdateButton data={{stock: 100}} label="Refill stock"/>
-                    <BulkDeleteButton/>
-                </>
-            }
+            bulkActionButtons={<BulkDeleteButton />}
         >
-            <TextField source="id" label="ID"/>
-            <TextField source="blogCate.name" label="Danh mục"/>
-            <ImageField source="image" label="Hình ảnh" sx={{ '& img': { maxWidth: 100, maxHeight: 50, objectFit: 'contain' } }}/>
-            <TextField source="creator.username" label="Người tạo"/>
-            <TextField source="title" label="Tiêu đề"/>
-            <DateField source="created_at" label="Ngày tạo"/>
+            <TextField source="id" label="ID" />
+            <ImageField
+                source="thumbnail"
+                label="Ảnh"
+                sx={{ "& img": { maxWidth: 100, maxHeight: 60, objectFit: "cover" } }}
+            />
+            <TextField source="title" label="Tiêu đề" />
+            <TextField source="slug" label="Slug" />
+            <TextField source="category.name" label="Danh mục" />
+            <NumberField source="viewCount" label="Lượt xem" />
+            <BooleanField source="status" label="Hiển thị" />
+            <DateField source="createdAt" label="Ngày tạo" />
+            <ShowButton />
+            <EditButton />
         </DatagridConfigurable>
     </List>
 );

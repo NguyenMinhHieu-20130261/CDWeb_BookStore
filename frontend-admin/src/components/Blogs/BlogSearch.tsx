@@ -1,7 +1,5 @@
-import {FilterLiveSearch} from 'react-admin';
+import { FilterLiveSearch } from "react-admin";
 
-export const BlogSearch = () => {
-    return (
-    <FilterLiveSearch label={'Tìm kiếm'} name={'search'}/>
-    )
-}
+export const BlogSearch = () => (
+    <FilterLiveSearch label="Tìm kiếm" source="q" />
+);
