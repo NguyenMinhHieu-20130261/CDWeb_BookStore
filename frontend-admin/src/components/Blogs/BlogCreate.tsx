@@ -1,6 +1,6 @@
 import {SimpleForm} from "react-admin";
 import {Create, TextInput} from "react-admin";
-export const CreateBlog = () => {
+export const BlogCreate = () => {
     return (
         <Create title={'Tạo tin tức'}>
             <SimpleForm>
