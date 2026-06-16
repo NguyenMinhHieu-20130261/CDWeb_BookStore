@@ -1,119 +1,127 @@
 import type { DataProvider } from "react-admin";
+import axios from "axios";
 
-type Category = {
-  id: number;
-  name: string;
-  status: boolean;
-};
+const API_URL = "http://localhost:8080/api";
 
-let categories: Category[] = [
-  { id: 1, name: "Sách văn học", status: true },
-  { id: 2, name: "Sách kinh tế", status: true },
-  { id: 3, name: "Sách thiếu nhi", status: false },
-];
-
-const dataProvider: DataProvider = {
-  getList: async (_resource, _params): Promise<any> => {
-    return {
-      data: categories,
-      total: categories.length,
+    const resourceMap: Record<string, string> = {
+        categories: "category",
+        blogs: "blogs",
+        "blog-categories": "blog-categories",
     };
-  },
-
-  getOne: async (_resource, params): Promise<any> => {
-    const foundCategory = categories.find(
-      (item) => item.id === Number(params.id)
-    );
-
-    if (!foundCategory) {
-      throw new Error("Không tìm thấy danh mục");
-    }
-
-    return {
-      data: foundCategory,
+    const getApiPath = (resource: string) => {
+        return resourceMap[resource] || resource;
     };
-  },
+    const dataProvider: DataProvider = {
+        getList: async (resource, params) => {
+            const apiPath = getApiPath(resource);
 
-  create: async (_resource, params): Promise<any> => {
-    const newCategory: Category = {
-      id: categories.length + 1,
-      ...(params.data as Omit<Category, "id">),
-    };
+            const query: any = {
+                page: (params.pagination?.page || 1) - 1,
+                perPage: params.pagination?.perPage || 10,
+                sort: params.sort?.field || "id",
+                order: params.sort?.order || "ASC",
+            };
 
-    categories = [...categories, newCategory];
+            if (params.filter && Object.keys(params.filter).length > 0) {
+                query.filter = JSON.stringify(params.filter);
+            }
+            const res = await axios.get(`${API_URL}/${apiPath}`, {
+                params: query,
+            });
+            const response = res.data;
+            return {
+                data: response.content ?? response,
+                total: response.totalElements ?? response.length ?? 0,
+            };
+        },
+        getOne: async (resource, params) => {
+            const apiPath = getApiPath(resource);
 
-    return {
-      data: newCategory,
-    };
-  },
+            const res = await axios.get(`${API_URL}/${apiPath}/${params.id}`);
+            return {
+                data: res.data,
+            };
+        },
+        create: async (resource, params) => {
+            const apiPath = getApiPath(resource);
 
-  update: async (_resource, params): Promise<any> => {
-    const updatedCategory: Category = {
-      id: Number(params.id),
-      ...(params.data as Omit<Category, "id">),
-    };
+            const res = await axios.post(`${API_URL}/${apiPath}`, params.data);
+            return {
+                data: res.data,
+            };
+        },
+        update: async (resource, params) => {
+            const apiPath = getApiPath(resource);
 
-    categories = categories.map((item) =>
-      item.id === Number(params.id)
-        ? { ...item, ...updatedCategory }
-        : item
-    );
+            const res = await axios.put(`${API_URL}/${apiPath}/${params.id}`, params.data);
 
-    return {
-      data: updatedCategory,
-    };
-  },
+            return {
+                data: res.data,
+            };
+        },
+        delete: async (resource, params) => {
+            const apiPath = getApiPath(resource);
+            const res = await axios.delete(`${API_URL}/${apiPath}/${params.id}`);
+            return {
+                data: res.data,
+            };
+        },
+        getMany: async (resource, params) => {
+            const apiPath = getApiPath(resource);
+            const requests = params.ids.map((id) =>
+                axios.get(`${API_URL}/${apiPath}/${id}`)
+            );
+            const responses = await Promise.all(requests);
+            return {
+                data: responses.map((res) => res.data),
+            };
+        },
+        getManyReference: async (resource, params) => {
+            const apiPath = getApiPath(resource);
 
-  delete: async (_resource, params): Promise<any> => {
-    const deletedCategory = categories.find(
-      (item) => item.id === Number(params.id)
-    );
+            const res = await axios.get(`${API_URL}/${apiPath}`, {
+                params: {
+                    [params.target]: params.id,
+                    page: params.pagination?.page,
+                    perPage: params.pagination?.perPage,
+                    sort: params.sort?.field,
+                    order: params.sort?.order,
+                    ...params.filter,
+                },
+            });
+            const data = Array.isArray(res.data) ? res.data : res.data.data;
+            return {
+                data,
+                total: Array.isArray(res.data)
+                    ? res.data.length
+                    : res.data.total ?? data.length,
+            };
+        },
+        updateMany: async (resource, params) => {
+            const apiPath = getApiPath(resource);
 
-    if (!deletedCategory) {
-      throw new Error("Không tìm thấy danh mục để xoá");
-    }
+            await Promise.all(
+                params.ids.map((id) =>
+                    axios.put(`${API_URL}/${apiPath}/${id}`, params.data)
+                )
+            );
+            return {
+                data: params.ids,
+            };
+        },
+        deleteMany: async (resource, params) => {
+            const apiPath = getApiPath(resource);
 
-    categories = categories.filter(
-      (item) => item.id !== Number(params.id)
-    );
+            await Promise.all(
+                params.ids.map((id) =>
+                    axios.delete(`${API_URL}/${apiPath}/${id}`)
+                )
+            );
 
-    return {
-      data: deletedCategory,
-    };
-  },
-
-  getMany: async (_resource, params): Promise<any> => {
-    const data = categories.filter((item) =>
-      params.ids.includes(item.id)
-    );
-
-    return {
-      data,
-    };
-  },
-
-  getManyReference: async (_resource, _params): Promise<any> => {
-    return {
-      data: categories,
-      total: categories.length,
-    };
-  },
-
-  updateMany: async (_resource, params): Promise<any> => {
-    return {
-      data: params.ids,
-    };
-  },
-
-  deleteMany: async (_resource, params): Promise<any> => {
-    categories = categories.filter(
-      (item) => !params.ids.includes(item.id)
-    );
-
-    return {
-      data: params.ids,
-    };
-  },
+            return {
+                data: params.ids,
+            };
+        },
 };
 
 export default dataProvider;

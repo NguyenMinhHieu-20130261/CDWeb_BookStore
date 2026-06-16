@@ -1,6 +1,7 @@
 package vn.edu.hcmuaf.fit.bookshop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +18,23 @@ public class BlogController {
     private  BlogService blogService;
 
     @GetMapping
-    public ResponseEntity<List<Blog>> getBlogs() {
-        return ResponseEntity.ok(blogService.getActiveBlogs());
+    public ResponseEntity<Page<Blog>> getBlogs(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(required = false) Integer perPage,
+            @RequestParam(required = false) Integer size,
+            @RequestParam(defaultValue = "createdAt") String sort,
+            @RequestParam(defaultValue = "") String filter,
+            @RequestParam(defaultValue = "DESC") String order
+    ) {
+        int pageSize = perPage != null ? perPage : (size != null ? size : 10);
+
+        if ("{}".equals(filter)) {
+            filter = "";
+        }
+
+        Page<Blog> blogs = blogService.getBlogs(page, pageSize, sort, filter, order);
+
+        return ResponseEntity.ok(blogs);
     }
      @GetMapping("/{categoryId}")
     public ResponseEntity<List<Blog>> getBlogsByCategory(@PathVariable Integer categoryId) {

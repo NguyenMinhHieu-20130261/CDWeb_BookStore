@@ -1,26 +1,26 @@
 import {
-  Create,
-  SimpleForm,
-  TextInput,
-  BooleanInput,
-  required,
+    Create,
+    SimpleForm,
+    TextInput,
+    BooleanInput,
+    required,
 } from "react-admin";
 
 export const CategoryCreate = () => (
-  <Create>
-    <SimpleForm>
-      <TextInput
-        source="name"
-        label="Tên danh mục"
-        validate={[required()]}
-        fullWidth
-      />
+    <Create>
+        <SimpleForm>
+            <TextInput
+                source="name"
+                label="Tên danh mục"
+                validate={[required("Không được để trống")]}
+                fullWidth
+            />
 
-      <BooleanInput
-        source="status"
-        label="Đang hoạt động"
-        defaultValue={true}
-      />
-    </SimpleForm>
-  </Create>
+            <BooleanInput
+                source="active"
+                label="Đang hoạt động"
+                defaultValue={true}
+            />
+        </SimpleForm>
+    </Create>
 );
