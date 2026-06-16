@@ -1,20 +1,13 @@
 import { Admin, Resource } from "react-admin";
 import dataProvider from "./provider/dataProvider";
 
-import {
-  CategoryList,
-  CategoryCreate,
-  CategoryEdit,
-} from "./components/category";
+import categories from "./components/category";
+import products from "./components/products";
 
 const App = () => (
   <Admin dataProvider={dataProvider}>
-    <Resource
-      name="categories"
-      list={CategoryList}
-      create={CategoryCreate}
-      edit={CategoryEdit}
-    />
+    <Resource name="products" {...products} />
+    <Resource name="categories" {...categories}/>
   </Admin>
 );
 
