@@ -10,4 +10,7 @@ public interface ProductService {
     List<Product> getProductsByCategoryTree(Integer categoryId);
     // Product getProductById(Integer id);
     Product findBySlugAndActiveTrue(String slug);
-    List<Product> getThreeLatestProductByCategoryTree(Integer categoryId);}
+    List<Product> getThreeLatestProductByCategoryTree(Integer categoryId);
+    Product getTopRatedProduct();
+    List<Product> getTop2MostReviewedProducts();
+}
