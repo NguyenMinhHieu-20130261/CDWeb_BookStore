@@ -60,4 +60,14 @@ public class ProductServiceImpl implements ProductService {
         }
         return productRepo.findTop3ByCategoryIdInAndActiveTrueOrderByIdDesc(categoryIds);
     }
+
+    @Override
+    public Product getTopRatedProduct() {
+        return productRepo.findTopRatedProduct().orElse(null);
+    }
+
+    @Override
+    public List<Product> getTop2MostReviewedProducts() {
+        return productRepo.findTop2MostReviewedProducts();
+    }
 }
