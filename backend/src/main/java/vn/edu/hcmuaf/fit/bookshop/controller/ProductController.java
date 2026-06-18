@@ -34,4 +34,12 @@ public class ProductController {
     public List<Product> getThreeLatestProductByCategoryTree(@PathVariable Integer categoryId) {
         return productService.getThreeLatestProductByCategoryTree(categoryId);
     }
+    @GetMapping("/top-rated")
+    public Product getTopRatedProduct() {
+        return productService.getTopRatedProduct();
+    }
+    @GetMapping("/most-reviewed")
+    public List<Product> getTop2MostReviewedProducts() {
+        return productService.getTop2MostReviewedProducts();
+    }
 }
