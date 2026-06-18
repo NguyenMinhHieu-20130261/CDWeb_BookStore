@@ -28,7 +28,7 @@ export type Category = {
     id: number;
     name: string;
     active?: boolean;
-    parentCategory?: number | null;
+    parentCategory?: Category | null;
 };
 // PRODUCT
 export type Product = {
