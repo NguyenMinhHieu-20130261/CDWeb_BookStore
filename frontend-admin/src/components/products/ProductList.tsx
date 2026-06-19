@@ -1,5 +1,5 @@
 import {
-    ArrayField,
+    // ArrayField,
     BooleanField,
     ChipField,
     CreateButton,
@@ -9,16 +9,17 @@ import {
     ImageField,
     List,
     NumberField,
-    SearchInput,
+    // SearchInput,
     SelectColumnsButton,
-    ShowButton,
+    // ShowButton,
     DeleteButton,
     TextField,
     TopToolbar, useTranslate
 } from "react-admin";
+import { ProductSearch } from "./ProductSearch";
 import * as React from "react";
 import Box from "@mui/material/Box";
-import {Chip} from "@mui/material";
+// import {Chip} from "@mui/material";
 
 const adminInfo = JSON.parse(localStorage.getItem('auth') || '{}');
 const isAdmin =
@@ -29,26 +30,15 @@ const isAdmin =
     <TopToolbar>
         <SelectColumnsButton/>
         <FilterButton/>
-        {/* {isAdmin && <CreateButton />} */}
-        <CreateButton/>
+        {isAdmin && <CreateButton />}
+        {/* <CreateButton/> */}
         <ExportButton/>
     </TopToolbar>
 );
-
-const QuickFilter = ({label, source, defaultValue}: { label: string, source?: string, defaultValue?: boolean }) => {
-    const translate = useTranslate();
-    return <Chip sx={{marginBottom: 1}} label={translate(label)}/>;
-};
-
-const postFilters = [
-    <SearchInput source="title" placeholder="Tìm kiếm" alwaysOn/>,
-    <QuickFilter source="active" label="Không hoạt động" defaultValue={false}/>,
-];
-
 export const ProductList = () => (
     <List sort={{field: 'id', order: 'ASC'}}
           perPage={10}
-          filters={postFilters}
+          filters={ProductSearch}
           actions={<ListActions/>}
           sx={{'& .column-title': {minWidth: '10rem'}}}
     >
@@ -73,9 +63,9 @@ export const ProductList = () => (
             <BooleanField source="active" label="Trạng thái"/>
             <Box display={{xs: 'block', sm: 'flex', width: '100%'}}>
                 <Box flex={1} mr={{xs: 0, sm: '0.5em'}}>
-                    {/* {adminInfo.roles[0] === 'ADMIN' && <EditButton />} */}
-                    <EditButton/>
-                    <DeleteButton/>
+                    {isAdmin && <EditButton />}
+                    {/* <EditButton/> */}
+                    {isAdmin && <DeleteButton/>}
                 </Box>
             </Box>
         </DatagridConfigurable>

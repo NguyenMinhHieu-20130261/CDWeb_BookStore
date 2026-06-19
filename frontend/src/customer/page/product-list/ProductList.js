@@ -17,7 +17,7 @@ const ProductList = () => {
     useEffect(() => {
         const fetchProdList = async () => {
             try {
-                let url = "/products";
+                let url = "/products/active";
                 if (categoryId) {
                     url = `/products/main-category/${categoryId}`;
                 }

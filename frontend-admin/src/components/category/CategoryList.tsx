@@ -6,9 +6,15 @@ import {
     EditButton,
     DeleteButton,
 } from "react-admin";
+import { CategorySearch } from "./CategorySearch";
 
 export const CategoryList = () => (
-    <List>
+    <List
+        title="Danh sách danh mục"
+        sort={{ field: "id", order: "DESC" }}
+        perPage={10}
+        filters={CategorySearch}
+    >
         <Datagrid rowClick="edit">
             <TextField source="id" label="ID" />
             <TextField source="name" label="Tên danh mục" />

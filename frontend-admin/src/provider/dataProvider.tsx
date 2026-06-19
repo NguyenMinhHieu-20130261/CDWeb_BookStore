@@ -85,6 +85,16 @@ const dataProvider: DataProvider = {
                 detail: data.detail,
             };
         }
+        if(resource === "category") {
+            data = {
+                name: data.name,
+                active: data.active ?? true,
+                parentCategory:
+                    data.parentCategory?.id
+                        ? {id: data.parentCategory.id}
+                        : null
+            };
+        }
         console.log("DATA SEND:", data);
         const res = await axios.post(
             `${API_URL}/${apiPath}`,
@@ -111,6 +121,15 @@ const dataProvider: DataProvider = {
             }
             delete data.imageNew;
             delete data.imagesNew;
+        }
+        if (resource === "category") {
+            data = {
+                name: data.name,
+                active: data.active,
+                parentCategory: data.parentCategory?.id
+                    ? { id: data.parentCategory.id }
+                    : null,
+            };
         }
         const res = await axios.put(
             `${API_URL}/${apiPath}/${params.id}`,

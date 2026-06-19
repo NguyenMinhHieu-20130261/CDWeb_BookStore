@@ -17,6 +17,7 @@ import java.util.List;
 @ToString
 @Entity
 @Table(name = "category")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Category {
 
     @Id
@@ -24,7 +25,14 @@ public class Category {
     @Column(name = "id")
     private Integer id;
 
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "products", "parentCategory", "createdBy", "updatedBy"})
+    @JsonIgnoreProperties({
+        "hibernateLazyInitializer", 
+        "handler", 
+        "products", 
+        "parentCategory", 
+        "createdBy", 
+        "updatedBy"
+    })
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     private Category parentCategory;

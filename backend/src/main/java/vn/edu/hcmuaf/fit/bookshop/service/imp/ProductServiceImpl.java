@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 // import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -154,5 +158,39 @@ public class ProductServiceImpl implements ProductService {
         product.setUpdatedAt(new Date());
 
         return productRepo.save(product);
+    }
+    @Override
+    public Page<Product> getProducts(int page, int size, String sort, String filter, String order) {
+        Sort.Direction direction = order.equalsIgnoreCase("DESC")
+                ? Sort.Direction.DESC
+                : Sort.Direction.ASC;
+        Pageable pageable = PageRequest.of(
+                page,
+                size,
+                Sort.by(direction, sort)
+        );
+        String q = "";
+        Boolean active = null;
+        if (filter != null && !filter.isBlank()) {
+            if (filter.contains("\"q\"")) {
+                q = filter.replaceAll(".*\"q\":\"", "")
+                        .replaceAll("\".*", "");
+            }
+            if (filter.contains("\"active\":true")) {
+                active = true;
+            } else if (filter.contains("\"active\":false")) {
+                active = false;
+            }
+        }
+        if (!q.isBlank() && active != null) {
+            return productRepo.findByTitleContainingIgnoreCaseAndActive(q, active, pageable);
+        }
+        if (!q.isBlank()) {
+            return productRepo.findByTitleContainingIgnoreCase(q, pageable);
+        }
+        if (active != null) {
+            return productRepo.findByActive(active, pageable);
+        }
+        return productRepo.findAll(pageable);
     }
 }

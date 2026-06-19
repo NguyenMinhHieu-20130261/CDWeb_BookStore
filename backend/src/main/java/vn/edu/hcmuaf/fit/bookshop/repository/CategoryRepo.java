@@ -1,5 +1,7 @@
 package vn.edu.hcmuaf.fit.bookshop.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
@@ -13,5 +15,6 @@ public interface CategoryRepo extends JpaRepository<Category, Integer>,JpaSpecif
     List<Category> findByParentCategory_Id(Integer parentId);
     // Phương thức để tìm các danh mục chính (không có danh mục cha)
     List<Category> findByParentCategoryIsNull();
-
+    //admin
+    Page<Category> findByNameContainingIgnoreCase(String name, Pageable pageable);
 }

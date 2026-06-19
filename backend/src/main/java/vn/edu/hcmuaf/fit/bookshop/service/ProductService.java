@@ -4,6 +4,7 @@ import vn.edu.hcmuaf.fit.bookshop.entity.Product;
 import vn.edu.hcmuaf.fit.bookshop.entity.User;
 
 import java.util.List;
+import org.springframework.data.domain.Page;
 
 public interface ProductService {
     List<Product> getActiveProducts();
@@ -18,4 +19,5 @@ public interface ProductService {
     Product updateProduct(Integer id, Product product);
     Product createProduct(Product product, User admin);
     Product deleteProduct(Integer id, User admin);
+    Page<Product> getProducts(int page, int pageSize, String sort, String filter, String order);
 }
