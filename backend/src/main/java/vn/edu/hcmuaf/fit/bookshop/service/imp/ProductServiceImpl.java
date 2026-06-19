@@ -1,6 +1,7 @@
 package vn.edu.hcmuaf.fit.bookshop.service.imp;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 // import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +10,10 @@ import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import vn.edu.hcmuaf.fit.bookshop.entity.Category;
 import vn.edu.hcmuaf.fit.bookshop.entity.Product;
+import vn.edu.hcmuaf.fit.bookshop.entity.User;
 // import vn.edu.hcmuaf.fit.bookshop.repository.ProductImageRepo;
 import vn.edu.hcmuaf.fit.bookshop.repository.ProductRepo;
+import vn.edu.hcmuaf.fit.bookshop.repository.UserRepo;
 import vn.edu.hcmuaf.fit.bookshop.service.CategoryService;
 import vn.edu.hcmuaf.fit.bookshop.service.ProductService;
 
@@ -20,6 +23,7 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepo productRepo;
     private final CategoryService categoryService;
+    private final UserRepo userRepo;
     // @Autowired
     // private ProductImageRepo productImageRepo;
 
@@ -117,18 +121,31 @@ public class ProductServiceImpl implements ProductService {
         return productRepo.save(newProduct );
     }
     @Override
-    public Product createProduct(Product product) {
-        // product.setSlug(toSlug(product.getTitle()));
-        product.setSlug(toSlug(product.getTitle()) + "-" + System.currentTimeMillis());
+    public Product createProduct(Product product, User admin) {
+        product.setSlug(
+            toSlug(product.getTitle()) 
+            + "-" 
+            + System.currentTimeMillis()
+        );
+
+        product.setCreatedBy(admin);
+        product.setUpdatedBy(admin);
+
+        product.setCreatedAt(new Date());
+        product.setUpdatedAt(new Date());
+
         if(product.getDetail() != null){
             product.getDetail().setProduct(product);
         }
+
         if(product.getImages() != null){
             product.getImages().forEach(img -> {
                 img.setProduct(product);
             });
         }
+
         product.setActive(true);
+
         return productRepo.save(product);
     }
 }
