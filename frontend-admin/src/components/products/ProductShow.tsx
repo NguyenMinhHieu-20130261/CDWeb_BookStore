@@ -1,4 +1,3 @@
-import {Grid, Stack} from "@mui/material";
 import {
     ChipField, DateField,
     EditButton,
@@ -13,7 +12,8 @@ import {
 import * as React from "react";
 import {Product} from "../../type";
 import {jsxs} from "react/jsx-runtime";
-
+import Grid from "@mui/material/Grid";
+import Stack from "@mui/material/Stack";
 // interface TruncatedRichTextFieldProps {
 //     source: string;
 //     limit?: number;
@@ -46,7 +46,11 @@ export const ProductShow = () => {
         <Show title={<ProductTitle/>}
               actions={<PostShowActions/>}>
             <Grid container spacing={2} sx={{margin: 1}}>
-                <Grid item xs={12} sm={3} display='flex' alignContent="center" justifyContent="center">
+                <Grid 
+                    size={{ xs: 12,sm:3 }}
+                    display='flex' 
+                    alignContent="center" 
+                    justifyContent="center">
                     <ImageField source="image"
                                 sx={{
                                     '& .RaImageField-image': {
@@ -54,14 +58,15 @@ export const ProductShow = () => {
                                     }
                                 }}/>
                 </Grid>
-                <Grid item xs={11} sm={8}>
+                <Grid 
+                    size={{ xs: 11, sm:8 }}>
                     <Stack spacing={2}>
                         <Labeled label="Mã sản phẩm">
                             <TextField source="detail.productSku" sx={{fontSize: 'larger'}}/>
                         </Labeled>
                         <TextField source="title" sx={{fontSize: '25px', fontWeight: 'bold'}}/>
                         <ChipField source="category.name" sx={{width: 'fit-content'}}/>
-                        <Grid item>
+                        <Grid size={{ xs: 12 }}>
                             <Labeled label="Giá đã giảm">
                                 <NumberField source="currentPrice"
                                              options={{
@@ -83,7 +88,7 @@ export const ProductShow = () => {
                         <RichTextField source="detail.description"/>
                     </Stack>
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid size={{ xs: 12 ,sm:6 }} >
                     <Labeled label="Ngày tạo">
                         <TextField source="createdAt"/>
                     </Labeled>

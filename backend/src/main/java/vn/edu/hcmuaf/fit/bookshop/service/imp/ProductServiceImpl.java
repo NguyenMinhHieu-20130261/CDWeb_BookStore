@@ -70,4 +70,9 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getTop2MostReviewedProducts() {
         return productRepo.findTop2MostReviewedProducts();
     }
+    @Override
+    public Product getProductById(Integer id) {
+        return productRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm"));
+    }
 }

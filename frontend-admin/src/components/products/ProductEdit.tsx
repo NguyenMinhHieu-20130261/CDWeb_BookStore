@@ -73,12 +73,12 @@ export const ProductEditForm = () => {
     const [selectedMainCategory, setSelectedMainCategory] = useState(
         record?.category?.parentCategory?.id ?? ""
     );
-    const {data: mainData}: any = useGetList<Category>('categories', {
-        filter: {parentCategory: 1, active: true},
+    const {data: mainData}: any = useGetList<Category>('category', {
+        filter: {parentCategory: null, active: true},
         sort: {field: 'name', order: 'ASC'},
         pagination: {page: 1, perPage: 100}
     });
-    const {data: subData} = useGetList('categories', {
+    const {data: subData} = useGetList('category', {
         filter: selectedMainCategory
             ? { parentCategory: selectedMainCategory, active: true }
             : { parentCategory: -1, active: true },
@@ -97,9 +97,12 @@ export const ProductEditForm = () => {
             setSubCategories(subData);
         }
     }, [subData, selectedMainCategory]);
+    const currentCategoryId = record?.category?.id ?? "";
     useEffect(() => {
         if (record?.category?.parentCategory?.id) {
             setSelectedMainCategory(record.category.parentCategory.id);
+        } else if (record?.category?.id) {
+            setSelectedMainCategory(record.category.id);
         }
     }, [record]);
     return (
@@ -117,12 +120,15 @@ export const ProductEditForm = () => {
                                 setSelectedMainCategory(e.target.value);
                             }}                        
                         />
-                        <SelectInput
-                            sx={{marginRight: '20px'}}
-                            source="category.id"
-                            label="Danh mục"
-                            choices={subCategories}
-                        />
+                        {selectedMainCategory && (
+                            <SelectInput
+                                sx={{ marginRight: '20px' }}
+                                source="category.id"
+                                label="Danh mục"
+                                choices={subCategories}
+                                emptyText="Chọn danh mục"
+                            />
+                        )}
                         <SelectInput
                             source="active"
                             label="Trạng thái"
