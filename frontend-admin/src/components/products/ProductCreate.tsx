@@ -87,11 +87,22 @@ export const ProductCreate = () => {
                                 disabled={!selectedMainCategory}
                             />
                         </Grid>
-
                         <Grid size={{ xs: 12 }}>
                             <TextInput source="title" label="Tên sản phẩm" validate={req} />
                         </Grid>
-
+                        <Grid size={{ xs: 12 }}>
+                            <NumberInput
+                                source="oldPrice"
+                                label="Giá gốc"
+                                validate={[...req, minValue(0)]}
+                                sx={{ marginRight: "1em" }}
+                            />
+                            <NumberInput
+                                source="currentPrice"
+                                label="Giá đã giảm"
+                                validate={[...req, minValue(0)]}
+                            />
+                        </Grid>
                         <Grid size={{ xs: 12 }}>
                             <ImageInput
                                 source="image"

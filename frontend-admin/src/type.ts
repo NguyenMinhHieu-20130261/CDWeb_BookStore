@@ -35,7 +35,6 @@ export interface Product extends RaRecord {
     id: number;
     title: string;
     image?: any;
-    images?: any[];
     oldPrice?: number;
     currentPrice?: number;
     active?: boolean;
@@ -44,6 +43,7 @@ export interface Product extends RaRecord {
     category?: Category;
     parentCategory?: Category;
     detail?: ProductDetail;
+    images: ProductImage[];
 }
 // PRODUCT DETAIL
 export interface ProductDetail extends RaRecord {
@@ -60,6 +60,14 @@ export interface ProductDetail extends RaRecord {
     size?: string;
     quantityOfPage?: number;
     description?: string;
+}
+export interface ProductImage extends RaRecord {
+    id: number;
+    product: Product;
+    image: string;
+    createdAt: string;
+    updatedAt: string;
+    deleted: boolean;
 }
 // BLOG
 export interface BlogCategory extends RaRecord {

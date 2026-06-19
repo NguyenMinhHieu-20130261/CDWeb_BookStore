@@ -13,5 +13,7 @@ public interface ProductService {
     List<Product> getThreeLatestProductByCategoryTree(Integer categoryId);
     Product getTopRatedProduct();
     List<Product> getTop2MostReviewedProducts();
+    //
     Product updateProduct(Integer id, Product product);
+    Product createProduct(Product product);
 }

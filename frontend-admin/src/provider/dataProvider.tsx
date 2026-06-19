@@ -1,5 +1,6 @@
 import type { DataProvider } from "react-admin";
 import axios from "axios";
+import { uploadImage,uploadImages } from "../service/ImageUploader";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080/api";
 
@@ -44,17 +45,58 @@ const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080/api";
         },
         create: async (resource, params) => {
             const apiPath = getApiPath(resource);
+            let data = params.data;
 
-            const res = await axios.post(`${API_URL}/${apiPath}`, params.data);
+            if (resource === "products") {
+                const mainImageUrl =
+                    data.image?.rawFile instanceof File
+                        ? await uploadImage(data.image.rawFile)
+                        : data.image;
+                const subImages =data.images ? await Promise.all(
+                    data.images.map(async (img: any) => ({
+                        image: img.rawFile instanceof File
+                                ? await uploadImage(img.rawFile)
+                                : img.image || img.src,
+                    }))
+                ): [];
+                data = {
+                    title: data.title,
+                    oldPrice: data.oldPrice,
+                    currentPrice: data.currentPrice,
+                    active: data.active ?? true,
+                    category: {
+                        id: data.category?.id,
+                    },
+                    image: mainImageUrl,
+                    images: subImages,
+
+                    detail: data.detail,
+                };
+            }
+            console.log("DATA SEND:", data);
+            const res = await axios.post(`${API_URL}/${apiPath}`, data);
             return {
                 data: res.data,
             };
         },
         update: async (resource, params) => {
             const apiPath = getApiPath(resource);
+            let data = params.data;
 
-            const res = await axios.put(`${API_URL}/${apiPath}/${params.id}`, params.data);
-
+            if(resource === "products"){
+                if(data.imageNew?.rawFile){
+                    data.image = await uploadImage(data.imageNew.rawFile);
+                }
+                if(data.imagesNew){
+                    data.images =
+                        await uploadImages(
+                            data.imagesNew
+                        );
+                }
+                delete data.imageNew;
+                delete data.imagesNew;
+            }
+            const res = await axios.put(`${API_URL}/${apiPath}/${params.id}`,data);
             return {
                 data: res.data,
             };
