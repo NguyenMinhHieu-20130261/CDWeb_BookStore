@@ -112,6 +112,15 @@ const dataProvider: DataProvider = {
             delete data.imageNew;
             delete data.imagesNew;
         }
+        if (resource === "category") {
+            data = {
+                name: data.name,
+                active: data.active,
+                parentCategory: data.parentCategory?.id
+                    ? { id: data.parentCategory.id }
+                    : null,
+            };
+        }
         const res = await axios.put(
             `${API_URL}/${apiPath}/${params.id}`,
             data,
