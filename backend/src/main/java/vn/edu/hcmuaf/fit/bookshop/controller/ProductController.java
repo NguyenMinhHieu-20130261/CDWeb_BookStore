@@ -2,6 +2,7 @@ package vn.edu.hcmuaf.fit.bookshop.controller;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +19,8 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
-    @GetMapping
-    public List<Product> getProducts() {
+    @GetMapping("/active")
+    public List<Product> getActiveProducts() {
         return productService.getActiveProducts();
     }
     @GetMapping("/{id}")
@@ -51,6 +52,22 @@ public class ProductController {
         return productService.getTop2MostReviewedProducts();
     }
     //
+    @GetMapping
+    public ResponseEntity<Page<Product>> getProducts(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(required = false) Integer perPage,
+            @RequestParam(required = false) Integer size,
+            @RequestParam(defaultValue = "id") String sort,
+            @RequestParam(defaultValue = "") String filter,
+            @RequestParam(defaultValue = "ASC") String order
+    ) {
+        int pageSize = perPage != null ? perPage : (size != null ? size : 10);
+        if ("{}".equals(filter)) {
+            filter = "";
+        }
+        Page<Product> products = productService.getProducts(page, pageSize, sort, filter, order);
+        return ResponseEntity.ok(products);
+    }
     @PutMapping("/{id}")
     public ResponseEntity<Product> updateProduct(
             @PathVariable Integer id,
