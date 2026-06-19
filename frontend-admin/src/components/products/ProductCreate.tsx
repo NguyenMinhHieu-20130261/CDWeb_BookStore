@@ -23,13 +23,13 @@ export const ProductCreate = () => {
     const [subCategories, setSubCategories] = useState<Category[]>([]);
     const [selectedMainCategory, setSelectedMainCategory] = useState<number | null>(null);
 
-    const { data: mainData } = useGetList<Category>("categories", {
+    const { data: mainData } = useGetList<Category>("category", {
         filter: { parentCategory: null, active: true },
         sort: { field: "name", order: "ASC" },
         pagination: { page: 1, perPage: 100 },
     });
 
-    const { data: subData } = useGetList<Category>("categories", {
+    const { data: subData } = useGetList<Category>("category", {
         filter: selectedMainCategory
             ? { parentCategory: selectedMainCategory, active: true }
             : { parentCategory: null, active: false },

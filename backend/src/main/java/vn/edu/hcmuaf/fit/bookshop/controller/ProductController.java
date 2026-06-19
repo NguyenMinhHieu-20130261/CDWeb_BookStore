@@ -1,6 +1,8 @@
 package vn.edu.hcmuaf.fit.bookshop.controller;
 
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.hcmuaf.fit.bookshop.entity.Product;
 import vn.edu.hcmuaf.fit.bookshop.service.ProductService;
@@ -17,7 +19,11 @@ public class ProductController {
     @GetMapping
     public List<Product> getProducts() {
         return productService.getActiveProducts();
-    } 
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<Product> getProductById(@PathVariable Integer id) {
+        return ResponseEntity.ok(productService.getProductById(id));
+    }
     @GetMapping("/category/{categoryId}")
     public List<Product> getProductsByCategory(@PathVariable Integer categoryId) {
         return productService.getProductsByCategory(categoryId);
@@ -41,5 +47,14 @@ public class ProductController {
     @GetMapping("/most-reviewed")
     public List<Product> getTop2MostReviewedProducts() {
         return productService.getTop2MostReviewedProducts();
+    }
+    //
+    @PutMapping("/{id}")
+    public ResponseEntity<Product> updateProduct(
+            @PathVariable Integer id,
+            @RequestBody Product product
+    ) {
+        Product updated = productService.updateProduct(id, product);
+        return ResponseEntity.ok(updated);
     }
 }

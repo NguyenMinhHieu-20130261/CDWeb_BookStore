@@ -15,7 +15,6 @@ export const CategoryCreate = () => (
                 validate={[required("Không được để trống")]}
                 fullWidth
             />
-
             <BooleanInput
                 source="active"
                 label="Đang hoạt động"
