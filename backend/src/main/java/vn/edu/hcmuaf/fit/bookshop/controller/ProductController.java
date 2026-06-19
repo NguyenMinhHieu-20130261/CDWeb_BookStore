@@ -48,4 +48,13 @@ public class ProductController {
     public List<Product> getTop2MostReviewedProducts() {
         return productService.getTop2MostReviewedProducts();
     }
+    //
+    @PutMapping("/{id}")
+    public ResponseEntity<Product> updateProduct(
+            @PathVariable Integer id,
+            @RequestBody Product product
+    ) {
+        Product updated = productService.updateProduct(id, product);
+        return ResponseEntity.ok(updated);
+    }
 }

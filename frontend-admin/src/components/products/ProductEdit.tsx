@@ -13,12 +13,12 @@ import {
     useGetList,
     useRecordContext
 } from "react-admin";
-import Grid from "@mui/material/Grid";
-import {RichTextInput} from "ra-input-rich-text";
 import * as React from "react";
 import {useEffect, useState} from "react";
-import {Category, Product} from "../../type";
 import {useWatch} from "react-hook-form";
+import Grid from "@mui/material/Grid";
+import {RichTextInput} from "ra-input-rich-text";
+import {Category, Product} from "../../type";
 
 const validateSubImages = (value: string | any[]) => {
     if (value && value.length > 5) {
@@ -39,7 +39,7 @@ const MainImage = () => {
             </ImageInput>
         </>)
         :
-        (<ImageInput name="image" source="image" label="Thêm ảnh chính mới cho sản phẩm" placeholder="Thả ảnh để tải lên hoặc nhấp để chọn ảnh.">
+        (<ImageInput source="image" label="Thêm ảnh chính mới cho sản phẩm" placeholder="Thả ảnh để tải lên hoặc nhấp để chọn ảnh.">
             <ImageField source="src" label="Ảnh chính"/>
         </ImageInput>);
 }
@@ -61,7 +61,7 @@ const SubImages = () => {
             </ImageInput>
         </>)
         :
-        (<ImageInput name="images" source="images" multiple placeholder="Thả một số hình ảnh để tải lên hoặc nhấp để chọn một hình ảnh.">
+        (<ImageInput source="images" multiple placeholder="Thả một số hình ảnh để tải lên hoặc nhấp để chọn một hình ảnh.">
             <ImageField source="src" label="Danh sách ảnh phụ"/>
         </ImageInput>);
 }
@@ -70,9 +70,8 @@ export const ProductEditForm = () => {
     const record = useRecordContext<Product>();
     const [mainCategories, setMainCategories] = useState<Category[]>([]);
     const [subCategories, setSubCategories] = useState<Category[]>([]);
-    const [selectedMainCategory, setSelectedMainCategory] = useState(
-        record?.category?.parentCategory?.id ?? ""
-    );
+    const [selectedMainCategory, setSelectedMainCategory] = 
+        useState<string | any>(record?.category?.parentCategory?.id);
     const {data: mainData}: any = useGetList<Category>('category', {
         filter: {parentCategory: null, active: true},
         sort: {field: 'name', order: 'ASC'},
@@ -91,13 +90,11 @@ export const ProductEditForm = () => {
             setMainCategories(mainData);
         }
     }, [mainData]);
-
     useEffect(() => {
         if (subData) {
             setSubCategories(subData);
         }
     }, [subData, selectedMainCategory]);
-    const currentCategoryId = record?.category?.id ?? "";
     useEffect(() => {
         if (record?.category?.parentCategory?.id) {
             setSelectedMainCategory(record.category.parentCategory.id);
@@ -105,31 +102,36 @@ export const ProductEditForm = () => {
             setSelectedMainCategory(record.category.id);
         }
     }, [record]);
+    const subCategoryChoices = selectedMainCategory? [
+        { id: selectedMainCategory, name: "Không có danh mục con" },
+        ...subCategories
+    ]: subCategories;
     return (
         <TabbedForm>
             <TabbedForm.Tab label="Thông tin cơ bản">
                 <Grid container>
                     <Grid size={{ xs: 12 }}>
                         <SelectInput
-                            sx={{marginRight: '20px'}}
-                            source="category.parentCategory.id"
+                            id="main-category-id"
+                            sx={{ marginRight: '20px' }}
+                            source="mainCategoryId"
                             label="Danh mục cha"
                             choices={mainCategories}
-                            validate={req}
+                            defaultValue={selectedMainCategory}
                             onChange={(e) => {
                                 setSelectedMainCategory(e.target.value);
-                            }}                        
+                            }}
                         />
-                        {selectedMainCategory && (
-                            <SelectInput
-                                sx={{ marginRight: '20px' }}
-                                source="category.id"
-                                label="Danh mục"
-                                choices={subCategories}
-                                emptyText="Chọn danh mục"
-                            />
-                        )}
                         <SelectInput
+                            id="category-id"
+                            sx={{marginRight: '20px'}}
+                            source="category.id"
+                            label="Danh mục"
+                            choices={subCategoryChoices}
+                            // value={record?.category?.id}
+                        />
+                        <SelectInput
+                            id="active-status"
                             source="active"
                             label="Trạng thái"
                             validate={req}

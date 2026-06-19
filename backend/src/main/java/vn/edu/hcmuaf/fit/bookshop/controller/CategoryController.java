@@ -51,7 +51,7 @@ public class CategoryController {
     public List<Category> getSubCategories(@PathVariable Integer id) {
         return categoryService.getSubCategories(id);
     }
-
+    //Admin
     @GetMapping("/{id}")
     public ResponseEntity<Category> getCategoryById(@PathVariable Integer id) {
         Optional<Category> categoryOptional = categoryService.getCategoryById(id);

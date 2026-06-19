@@ -70,9 +70,21 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getTop2MostReviewedProducts() {
         return productRepo.findTop2MostReviewedProducts();
     }
+    //Admin
     @Override
     public Product getProductById(Integer id) {
         return productRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm"));
+    }
+    @Override
+    public Product updateProduct(Integer id, Product product) {
+        Product existingInfo = productRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm"));
+        existingInfo.setTitle(product.getTitle());
+        existingInfo.setCategory(product.getCategory());
+        // existingInfo.setActive(product.isActive());
+        existingInfo.setDetail(product.getDetail());
+
+        return productRepo.save(existingInfo);
     }
 }
