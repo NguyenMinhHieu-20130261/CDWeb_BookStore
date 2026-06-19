@@ -69,4 +69,13 @@ public class ProductController {
                 productService.createProduct(product, admin)
         );
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Product> deleteProduct(
+            @PathVariable Integer id,
+            Authentication authentication
+    ) {
+        User admin = (User) authentication.getPrincipal();
+        Product deleted = productService.deleteProduct(id, admin);
+        return ResponseEntity.ok(deleted);
+    }
 }

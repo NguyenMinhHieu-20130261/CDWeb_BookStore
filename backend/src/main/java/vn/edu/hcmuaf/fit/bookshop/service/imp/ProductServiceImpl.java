@@ -127,7 +127,6 @@ public class ProductServiceImpl implements ProductService {
             + "-" 
             + System.currentTimeMillis()
         );
-
         product.setCreatedBy(admin);
         product.setUpdatedBy(admin);
 
@@ -137,14 +136,22 @@ public class ProductServiceImpl implements ProductService {
         if(product.getDetail() != null){
             product.getDetail().setProduct(product);
         }
-
         if(product.getImages() != null){
             product.getImages().forEach(img -> {
                 img.setProduct(product);
             });
         }
-
         product.setActive(true);
+
+        return productRepo.save(product);
+    }
+    @Override
+    public Product deleteProduct(Integer id, User admin) {
+        Product product = productRepo.findById(id)
+                .orElseThrow(() ->new RuntimeException("Không tìm thấy sản phẩm"));
+        product.setActive(false);
+        product.setUpdatedBy(admin);
+        product.setUpdatedAt(new Date());
 
         return productRepo.save(product);
     }
