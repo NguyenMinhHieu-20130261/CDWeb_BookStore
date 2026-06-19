@@ -1,8 +1,9 @@
 import {
-    ChipField, DateField,
+    ChipField,
     EditButton,
     ImageField,
-    Labeled, NumberField,
+    Labeled,
+    NumberField,
     RichTextField,
     Show,
     TextField,
@@ -10,25 +11,13 @@ import {
     useRecordContext,
 } from "react-admin";
 import * as React from "react";
-import {Product} from "../../type";
-import {jsxs} from "react/jsx-runtime";
+import { Product } from "../../type";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
-// interface TruncatedRichTextFieldProps {
-//     source: string;
-//     limit?: number;
-//
-//     [key: string]: any; // Để cho phép các prop khác như `sx`
-// }
-//
-// const TruncatedRichTextField: React.FC<TruncatedRichTextFieldProps> = ({source, limit = 100, ...rest}) => {
-//     const record = useRecordContext();
-//     if (!record) return null;
-//     const content = record[source] as string; // Ép kiểu để TypeScript hiểu đây là chuỗi
-//     const truncatedContent = content.length > limit ? content.substring(0, limit) + '...' : content;
-//
-//     return <div {...rest} dangerouslySetInnerHTML={{__html: truncatedContent}}/>;
-// };
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
 
 export const ProductShow = () => {
     const ProductTitle = () => {
@@ -36,64 +25,127 @@ export const ProductShow = () => {
         if (!record) return null;
         return <span>{record.title}</span>;
     };
-
-    const PostShowActions = () => (
+    const ProductShowActions = () => (
         <TopToolbar>
-            <EditButton/>
+            <EditButton />
         </TopToolbar>
     );
     return (
-        <Show title={<ProductTitle/>}
-              actions={<PostShowActions/>}>
-            <Grid container spacing={2} sx={{margin: 1}}>
-                <Grid 
-                    size={{ xs: 12,sm:3 }}
-                    display='flex' 
-                    alignContent="center" 
-                    justifyContent="center">
-                    <ImageField source="image"
+        <Show title={<ProductTitle />} actions={<ProductShowActions />}>
+            <Paper sx={{ p: 3, m: 2 }}>
+                <Grid container spacing={4}>
+                    <Grid size={{ xs: 12, md: 4 }}>
+                        <Box
+                            sx={{
+                                border: "1px solid #eee",
+                                borderRadius: 2,
+                                p: 2,
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                minHeight: 350,
+                            }}
+                        >
+                            <ImageField
+                                source="image"
                                 sx={{
-                                    '& .RaImageField-image': {
-                                        minHeight: '200px',
-                                    }
-                                }}/>
-                </Grid>
-                <Grid 
-                    size={{ xs: 11, sm:8 }}>
-                    <Stack spacing={2}>
-                        <Labeled label="Mã sản phẩm">
-                            <TextField source="detail.productSku" sx={{fontSize: 'larger'}}/>
-                        </Labeled>
-                        <TextField source="title" sx={{fontSize: '25px', fontWeight: 'bold'}}/>
-                        <ChipField source="category.name" sx={{width: 'fit-content'}}/>
-                        <Grid size={{ xs: 12 }}>
-                            <Labeled label="Giá đã giảm">
-                                <NumberField source="currentPrice"
-                                             options={{
-                                                 style: 'currency',
-                                                 currency: 'VND',
-                                             }}
-                                             sx={{fontSize: 'medium'}}
+                                    "& .RaImageField-image": {
+                                        maxWidth: "100%",
+                                        maxHeight: 320,
+                                        objectFit: "contain",
+                                    },
+                                }}
+                            />
+                        </Box>
+                    </Grid>
+                    <Grid size={{ xs: 12, md: 8 }}>
+                        <Stack spacing={2}>
+                            <Labeled label="Mã sản phẩm">
+                                <TextField source="detail.productSku" />
+                            </Labeled>
+                            <Typography variant="h5" fontWeight="bold">
+                                <TextField source="title" />
+                            </Typography>
+                            <ChipField
+                                source="category.name"
+                                sx={{ width: "fit-content" }}
+                            />
+                            <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
+                                <NumberField
+                                    source="currentPrice"
+                                    options={{
+                                        style: "currency",
+                                        currency: "VND",
+                                    }}
+                                    sx={{
+                                        fontSize: 22,
+                                        fontWeight: "bold",
+                                        color: "error.main",
+                                    }}
                                 />
-                            </Labeled>
-                            <Labeled label="Giá gốc" sx={{marginLeft: '10px'}}>
-                                <NumberField source="oldPrice"
-                                             options={{
-                                                 style: 'currency',
-                                                 currency: 'VND',
-                                             }}
-                                             sx={{textDecoration: 'line-through', fontSize: 'medium'}}/>
-                            </Labeled>
-                        </Grid>
-                        <RichTextField source="detail.description"/>
-                    </Stack>
+                                <NumberField
+                                    source="oldPrice"
+                                    options={{
+                                        style: "currency",
+                                        currency: "VND",
+                                    }}
+                                    sx={{
+                                        textDecoration: "line-through",
+                                        color: "text.secondary",
+                                    }}
+                                />
+                            </Box>
+                            <Divider />
+                            <Grid container spacing={2}>
+                                <Info label="Nhà cung cấp" source="detail.supplier" />
+                                <Info label="Nhà xuất bản" source="detail.publisher" />
+                                <Info label="Tác giả" source="detail.author" />
+                                <Info label="Năm xuất bản" source="detail.publishYear" />
+                                <Info label="Thương hiệu" source="detail.brand" />
+                                <Info label="Xuất xứ" source="detail.origin" />
+                                <Info label="Màu sắc" source="detail.color" />
+                                <Info label="Trọng lượng" source="detail.weight" />
+                                <Info label="Kích cỡ" source="detail.size" />
+                                <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+                                    <Labeled label="Số trang">
+                                        <NumberField source="detail.quantityOfPage" />
+                                    </Labeled>
+                                </Grid>
+                            </Grid>
+                        </Stack>
+                    </Grid>
+                    <Grid size={{ xs: 12 }}>
+                        <Divider sx={{ my: 2 }} />
+                        <Typography variant="h6" fontWeight="bold" gutterBottom>
+                            Mô tả sản phẩm
+                        </Typography>
+                        <Box
+                            sx={{
+                                lineHeight: 1.8,
+                                fontSize: 15,
+                                "& p": {
+                                    marginBottom: 2,
+                                },
+                            }}
+                        >
+                            <RichTextField source="detail.description" />
+                        </Box>
+                    </Grid>
+                    <Grid size={{ xs: 12 }}>
+                        <Divider sx={{ my: 2 }} />
+                        <Labeled label="Ngày tạo">
+                            <TextField source="createdAt" />
+                        </Labeled>
+                    </Grid>
                 </Grid>
-                <Grid size={{ xs: 12 ,sm:6 }} >
-                    <Labeled label="Ngày tạo">
-                        <TextField source="createdAt"/>
-                    </Labeled>
-                </Grid>
-            </Grid>
+            </Paper>
         </Show>
     );
 };
+const Info = ({ label, source }: { label: string; source: string }) => (
+    <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+        <Labeled label={label}>
+            <TextField source={source} />
+        </Labeled>
+    </Grid>
+);

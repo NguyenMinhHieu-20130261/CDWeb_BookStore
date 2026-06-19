@@ -12,17 +12,20 @@ import {
     SearchInput,
     SelectColumnsButton,
     ShowButton,
+    DeleteButton,
     TextField,
     TopToolbar, useTranslate
 } from "react-admin";
 import * as React from "react";
-// import DeleteButton from "../../layout/DeleteButton";
 import Box from "@mui/material/Box";
 import {Chip} from "@mui/material";
 
 const adminInfo = JSON.parse(localStorage.getItem('auth') || '{}');
-const isAdmin = adminInfo?.roles?.[0] === 'ADMIN';
-const ListActions = () => (
+const isAdmin =
+    adminInfo?.roles?.includes?.("ADMIN") ||
+    adminInfo?.role === "ADMIN" ||
+    adminInfo?.role?.description === "ADMIN";
+    const ListActions = () => (
     <TopToolbar>
         <SelectColumnsButton/>
         <FilterButton/>
@@ -72,6 +75,7 @@ export const ProductList = () => (
                 <Box flex={1} mr={{xs: 0, sm: '0.5em'}}>
                     {/* {adminInfo.roles[0] === 'ADMIN' && <EditButton />} */}
                     <EditButton/>
+                    <DeleteButton/>
                 </Box>
             </Box>
         </DatagridConfigurable>

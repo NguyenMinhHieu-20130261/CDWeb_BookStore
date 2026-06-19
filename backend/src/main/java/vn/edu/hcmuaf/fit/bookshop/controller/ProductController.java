@@ -3,8 +3,10 @@ package vn.edu.hcmuaf.fit.bookshop.controller;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.hcmuaf.fit.bookshop.entity.Product;
+import vn.edu.hcmuaf.fit.bookshop.entity.User;
 import vn.edu.hcmuaf.fit.bookshop.service.ProductService;
 
 import java.util.List;
@@ -56,5 +58,24 @@ public class ProductController {
     ) {
         Product updated = productService.updateProduct(id, product);
         return ResponseEntity.ok(updated);
+    }
+    @PostMapping
+    public ResponseEntity<Product> createProduct(
+            @RequestBody Product product,
+            Authentication authentication
+    ) {
+        User admin = (User) authentication.getPrincipal();
+        return ResponseEntity.ok(
+                productService.createProduct(product, admin)
+        );
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Product> deleteProduct(
+            @PathVariable Integer id,
+            Authentication authentication
+    ) {
+        User admin = (User) authentication.getPrincipal();
+        Product deleted = productService.deleteProduct(id, admin);
+        return ResponseEntity.ok(deleted);
     }
 }

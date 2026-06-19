@@ -31,27 +31,44 @@ export type Category = {
     parentCategory?: Category | null;
 };
 // PRODUCT
-export type Product = {
+export interface Product extends RaRecord {
     id: number;
     title: string;
     image?: any;
-    images?: any[];
+    oldPrice?: number;
+    currentPrice?: number;
+    active?: boolean;
+    createdAt?: string;
+    updatedAt?: string;
     category?: Category;
     parentCategory?: Category;
-    detail?: {
-        supplier?: string;
-        publisher?: string;
-        publishYear?: number;
-        author?: string;
-        brand?: string;
-        origin?: string;
-        color?: string;
-        weight?: string;
-        size?: string;
-        quantityOfPage?: number;
-        description?: string;
-    };
-};
+    detail?: ProductDetail;
+    images: ProductImage[];
+}
+// PRODUCT DETAIL
+export interface ProductDetail extends RaRecord {
+    id: number;
+    productSku?: string;
+    supplier?: string;
+    publisher?: string;
+    publishYear?: string;
+    author?: string;
+    brand?: string;
+    origin?: string;
+    color?: string;
+    weight?: string;
+    size?: string;
+    quantityOfPage?: number;
+    description?: string;
+}
+export interface ProductImage extends RaRecord {
+    id: number;
+    product: Product;
+    image: string;
+    createdAt: string;
+    updatedAt: string;
+    deleted: boolean;
+}
 // BLOG
 export interface BlogCategory extends RaRecord {
     name: string;
