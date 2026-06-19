@@ -57,6 +57,15 @@ public class CategoryServiceImpl implements CategoryService {
                             json.get("active").asBoolean()
                     ));
                 }
+                if (json.has("q") && !json.get("q").asText().isBlank()) {
+                    String q = json.get("q").asText().toLowerCase();
+                    predicates.add(
+                            cb.like(
+                                    cb.lower(root.get("name")),
+                                    "%" + q + "%"
+                            )
+                    );
+                }
                 return cb.and(predicates.toArray(new Predicate[0]));
             } catch (Exception e) {
                 return cb.conjunction();

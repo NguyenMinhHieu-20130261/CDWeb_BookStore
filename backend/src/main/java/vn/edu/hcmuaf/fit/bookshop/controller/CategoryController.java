@@ -31,7 +31,6 @@ public class CategoryController {
             })
             .toList();
     }
-
     @GetMapping
     public ResponseEntity<Page<Category>> getAllCategories(@RequestParam(defaultValue = "0") int page,
                                                            @RequestParam(defaultValue = "10") int perPage,
