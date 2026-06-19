@@ -85,6 +85,16 @@ const dataProvider: DataProvider = {
                 detail: data.detail,
             };
         }
+        if(resource === "category") {
+            data = {
+                name: data.name,
+                active: data.active ?? true,
+                parentCategory:
+                    data.parentCategory?.id
+                        ? {id: data.parentCategory.id}
+                        : null
+            };
+        }
         console.log("DATA SEND:", data);
         const res = await axios.post(
             `${API_URL}/${apiPath}`,

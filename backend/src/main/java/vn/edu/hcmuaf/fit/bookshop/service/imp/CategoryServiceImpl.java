@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import vn.edu.hcmuaf.fit.bookshop.entity.Category;
+// import vn.edu.hcmuaf.fit.bookshop.entity.Product;
 import vn.edu.hcmuaf.fit.bookshop.entity.User;
 import vn.edu.hcmuaf.fit.bookshop.repository.CategoryRepo;
 import vn.edu.hcmuaf.fit.bookshop.service.CategoryService;
@@ -108,14 +109,36 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category createCategory(Category category, User admin) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createCategory'");
+
+        category.setCreatedBy(admin);
+        category.setUpdatedBy(admin);
+        category.setCreatedAt(new Date());
+        category.setUpdatedAt(new Date());
+        category.setActive(true);
+
+        if(category.getParentCategory() != null
+                && category.getParentCategory().getId() != null){
+            Category parent = categoryRepo.findById(
+                    category.getParentCategory().getId()
+            ).orElseThrow(
+                    () -> new RuntimeException("Không tìm thấy danh mục cha")
+            );
+            category.setParentCategory(parent);
+        } else {
+            category.setParentCategory(null);
+        }
+        return categoryRepo.save(category);
     }
 
     @Override
     public Category deleteCategory(Integer id, User admin) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteCategory'");
+        Category category = categoryRepo.findById(id)
+                    .orElseThrow(() ->new RuntimeException("Không tìm thấy danh mục"));
+            category.setActive(false);
+            category.setUpdatedBy(admin);
+            category.setUpdatedAt(new Date());
+
+            return categoryRepo.save(category);
     }
     
 }
