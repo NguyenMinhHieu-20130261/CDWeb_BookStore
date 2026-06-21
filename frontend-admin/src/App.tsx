@@ -2,6 +2,7 @@ import { Admin, Resource } from "react-admin";
 import dataProvider from "./provider/dataProvider";
 import authProvider from "./provider/authProvider";
 
+import Dashboard from "./components/dashbroad/Dashbroad";
 import { LoginPage } from "./layout/Login";
 import { MyLayout } from "./layout/MainLayout";
 
@@ -17,6 +18,7 @@ const App = () => (
     authProvider={authProvider}
     loginPage={LoginPage}
     layout={MyLayout}
+    dashboard={Dashboard}
   >
     <Resource name="products" {...products} />
     <Resource name="category" {...category}/>

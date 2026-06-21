@@ -9,7 +9,6 @@ import {
 } from "react-admin";
 import { CategorySearch } from "./CategorySearch";
 export const CategoryList = () => (
-    
     <List
         title="Danh sách danh mục"
         sort={{ field: "id", order: "DESC" }}
