@@ -5,8 +5,10 @@ import InventoryIcon from "@mui/icons-material/Inventory";
 import CategoryIcon from "@mui/icons-material/Category";
 import ArticleIcon from "@mui/icons-material/Article";
 import PeopleIcon from "@mui/icons-material/People";
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import Welcome from "./Welcome";
+import MonthlyRevenue from "./MonthlyRevenue";
+import NewCustomers from "./NewCustomers";
 
 import CardWithIcon from "./CardWithIcon";
 
@@ -43,6 +45,7 @@ const Dashboard = () => {
 
     return (
         <Box p={2}>
+            <Welcome />
             <Typography variant="h5" mb={2}>
                 Dashboard quản trị BookShop
             </Typography>
@@ -87,13 +90,8 @@ const Dashboard = () => {
                         subtitle={totalUsers ?? 0}
                     />
                 </Grid>
-                <Grid size={{ xs: 12 ,md:4 }}>
-                    <CardWithIcon
-                        to="/products"
-                        icon={AttachMoneyIcon}
-                        title="Doanh thu tháng này"
-                        subtitle="12.500.000đ"
-                    />
+                <Grid size={{ xs: 12, md: 4 }}>
+                    <MonthlyRevenue />
                 </Grid>
                 <Grid size={{ xs: 12 ,md:4 }}>
                     <CardWithIcon
@@ -138,6 +136,9 @@ const Dashboard = () => {
                             <Typography>Doanh thu hôm nay: 1.200.000đ</Typography>
                         </CardContent>
                     </Card>
+                </Grid>
+                <Grid size={{ xs: 12, md: 4 }}>
+                    <NewCustomers />
                 </Grid>
             </Grid>
         </Box>

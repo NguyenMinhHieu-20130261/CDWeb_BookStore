@@ -1,11 +1,13 @@
-import { UserAdd } from "./UserAdd";
 import { UserList } from "./UserList";
-import { UserSearch } from "./UserSearch";
-import UserIcon from "@mui/icons-material/People";
+import { UserShow } from "./UserShow";
+import { UserCreate } from "./UserCreate";
+import { UserEdit } from "./UserEdit";
+import PeopleIcon from "@mui/icons-material/People";
 
 export default {
     list: UserList,
-    create: UserAdd,
-    search: UserSearch,
-    icon: UserIcon,
+    show: UserShow,
+    create: UserCreate,
+    edit: UserEdit,
+    icon: PeopleIcon,
 };

@@ -22,7 +22,7 @@ const VisitorListActions = () => (
     </TopToolbar>
 );
 export const UserList = () => (
-    <List sort={{field: 'id', order: 'ASC'}} perPage={5}
+    <List sort={{field: 'id', order: 'ASC'}} perPage={10}
           actions={<VisitorListActions/>}
           filters={<UserSearch/>}
           sx={{
@@ -53,15 +53,13 @@ export const UserList = () => (
                 style={{ width: parseInt("25", 10), height: parseInt("25", 10) }}
             />
             <TextField source="email" label="Email"/>
-            <TextField source="phoneNumber" label="Số điện thoại"/>
-            <BooleanField
-                source="locked"
-                sx={{ mt: -0.5, mb: -0.5 }}
-            />
-            <BooleanField
+            {/* <BooleanField
                 source="isSocial"
                 sx={{ mt: -0.5, mb: -0.5 }}
-            />
+            /> */}
+            <TextField source="userInformation.fullName" label="Người tạo" />
+            <TextField source="userInformation.phoneNumber" label="Số điện thoại" />
+            <BooleanField source="isLocked" label="Bị khóa" />
             <DateField source="createdAt" label="Ngày tạo" showTime/>
             <DateField source="updatedAt" label="Ngày cập nhật" showTime/>
         </DatagridConfigurable>

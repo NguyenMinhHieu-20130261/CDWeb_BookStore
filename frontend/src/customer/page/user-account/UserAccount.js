@@ -33,7 +33,7 @@ const UserAccount = () => {
         }
         const fetchUserInfo = async () => {
             try {
-                const data = await api.fetchData(`/userinfo/${user.id}`);
+                const data = await api.fetchData(`/userinfo/customer/${user.id}`);
                 console.log("USER INFO DATA:", data);
                 // chia ngày sinh thành day, month, year
                 const birthdayParts = data.birthday

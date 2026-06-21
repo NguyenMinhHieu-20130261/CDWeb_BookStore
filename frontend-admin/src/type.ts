@@ -21,7 +21,7 @@ export interface User extends RaRecord {
     locked?: boolean;
     isLocked?: boolean;
     role: Role;
-    userInfo?: UserInfo;
+    userInformation?: UserInfo;
 }
 // CATEGORY
 export type Category = {
