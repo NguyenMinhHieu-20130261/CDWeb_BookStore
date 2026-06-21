@@ -1,6 +1,9 @@
 package vn.edu.hcmuaf.fit.bookshop.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 // import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
@@ -35,8 +38,7 @@ public class Blog {
     @Column(name = "content", columnDefinition = "LONGTEXT")
     private String content;
 
-    // @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @JsonIgnore
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "createdBy", "updatedBy"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private BlogCategory category;
@@ -47,6 +49,7 @@ public class Blog {
     @JoinColumn(name = "created_by")
     private User createdBy;
 
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Ho_Chi_Minh")
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
@@ -56,7 +59,8 @@ public class Blog {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "updated_by")
     private User updatedBy;
-
+    
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Ho_Chi_Minh")
     @Column(name = "updated_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;

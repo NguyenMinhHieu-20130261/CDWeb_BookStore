@@ -1,3 +1,5 @@
+import * as React from "react";
+import { BlogCateSearch } from "./BlogCateSearch";
 import {
     List,
     Datagrid,
@@ -7,19 +9,17 @@ import {
     DeleteButton,
     DateField,
 } from "react-admin";
-import { CategorySearch } from "./CategorySearch";
-export const CategoryList = () => (
-    
+
+export const BlogCateList = () => (
     <List
-        title="Danh sách danh mục"
+        title="Danh sách danh mục bài viết"
         sort={{ field: "id", order: "DESC" }}
         perPage={10}
-        filters={CategorySearch}
+        filters={BlogCateSearch}
     >
         <Datagrid rowClick="edit">
             <TextField source="id" label="ID" />
             <TextField source="name" label="Tên danh mục" />
-            <TextField source="parentCategory.name" label="Danh mục cha" />
             <BooleanField source="active" label="Đang hoạt động" />
             <DateField source="createdAt" label="Ngày tạo" showTime/>
             <DateField source="updatedAt" label="Ngày cập nhật" showTime/>

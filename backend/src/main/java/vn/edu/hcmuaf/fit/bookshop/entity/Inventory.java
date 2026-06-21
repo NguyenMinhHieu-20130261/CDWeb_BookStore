@@ -1,7 +1,5 @@
 package vn.edu.hcmuaf.fit.bookshop.entity;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
@@ -14,36 +12,39 @@ import java.util.Date;
 @AllArgsConstructor
 @ToString
 @Entity
-@Table(name = "blog_category")
-public class BlogCategory {
-
+@Table(name = "inventories")
+public class Inventory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Column(name = "id")
+    private Integer id;
 
-    @Column(name = "name", nullable = false, length = 255)
-    private String name;
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "created_by")
-    private User createdBy;
+    @Column(name = "imported_quantity")
+    private int importedQuantity;
+
+    @Column(name = "remaining_quantity")
+    private int remainingQuantity;
+
+    @Column(name = "import_price")
+    private int importPrice;
+
+    @Column(name = "sale_price")
+    private int salePrice;
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Ho_Chi_Minh")
     @Column(name = "created_at")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "updated_by")
-    private User updatedBy;
-
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Ho_Chi_Minh")
-    @JsonIgnore
-    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "updated_at")
     private Date updatedAt;
 
     @Column(name = "active", columnDefinition = "boolean default true")
     private boolean active;
+
 }

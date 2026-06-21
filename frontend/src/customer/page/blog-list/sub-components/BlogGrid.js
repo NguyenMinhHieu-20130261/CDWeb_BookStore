@@ -19,7 +19,7 @@ const BlogGrid = () => {
                 if (!cateId || cateId === "all") {
                     data = await api.fetchData("/blogs");
                 } else {
-                    data = await api.fetchData(`/blogs/${cateId}`);
+                    data = await api.fetchData(`/blogs/category/${cateId}`);
                 }
                 // console.log("BLOGS:", data);
 

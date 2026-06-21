@@ -40,7 +40,7 @@ public class Order {
     @JoinColumn(name = "shipping_address")
     private Address shippingAddress;
 
-    @JsonFormat(pattern = "HH:mm:ss dd/MM/yyyy", timezone = "Asia/Ho_Chi_Minh")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Ho_Chi_Minh")
     @Column(name = "order_date")
     private Date orderDate;
 
