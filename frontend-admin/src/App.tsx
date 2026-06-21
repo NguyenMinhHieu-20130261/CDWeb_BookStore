@@ -11,6 +11,7 @@ import products from "./components/products";
 import blogs from "./components/blogs";
 import blogCate from "./components/blogCate";
 import users from "./components/users";
+import address from "./components/address";
 
 const App = () => (
   <Admin 
@@ -25,6 +26,7 @@ const App = () => (
     <Resource name="blogs" {...blogs}/>
     <Resource name="blog-cate" {...blogCate}/>
     <Resource name="users" {...users}/>
+    <Resource name="address" {...address} />
   </Admin>
 );
 

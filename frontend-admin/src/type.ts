@@ -23,6 +23,21 @@ export interface User extends RaRecord {
     role: Role;
     userInformation?: UserInfo;
 }
+export interface Address extends RaRecord {
+    id: number;
+    user?: User;
+    fullName: string;
+    phoneNumber: string;
+    detailAdrs: string;
+    provinceCity: string;
+    countyDistrict: string;
+    wardCommune: string;
+    wardCode?: string;
+    districtId?: number;
+    isDefault?: boolean;
+    createdAt?: string;
+    updatedAt?: string;
+}
 // CATEGORY
 export type Category = {
     id: number;

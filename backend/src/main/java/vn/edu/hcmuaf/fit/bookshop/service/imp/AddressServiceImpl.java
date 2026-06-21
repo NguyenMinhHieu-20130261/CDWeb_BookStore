@@ -3,6 +3,8 @@ package vn.edu.hcmuaf.fit.bookshop.service.imp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import vn.edu.hcmuaf.fit.bookshop.entity.Address;
@@ -79,5 +81,17 @@ public class AddressServiceImpl implements AddressService {
         defaultAdrs.setIsDefault(true);
         addressRepo.saveAll(userAddresses);
         addressRepo.save(defaultAdrs);
+    }
+    //admin
+    @Override
+    public Page<Address> getAllAddresses(int page, int perPage) {
+        return addressRepo.findAll(PageRequest.of(page, perPage));
+    }
+    @Override
+    public void adminDeleteAddress(Integer addressId) {
+        Address address = addressRepo.findById(addressId)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy địa chỉ"));
+
+        addressRepo.delete(address);
     }
 }
