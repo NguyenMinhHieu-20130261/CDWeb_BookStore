@@ -7,6 +7,10 @@ import java.util.Optional;
 
 public interface UserService {
     Page<User> getAllUsers(int page, int perPage);
-    User getUserById(int id);
     Optional<User> getUserByUsername(String username);
+    //admin
+    User getUserById(Integer id);
+    User createUser(User user);
+    User updateUser(Integer id, User user);
+    void deleteUser(Integer id);
 }

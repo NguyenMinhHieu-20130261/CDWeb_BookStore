@@ -9,6 +9,7 @@ import Box from "@mui/material/Box";
 import CategoryIcon from "@mui/icons-material/Category";
 import BookIcon from "@mui/icons-material/MenuBook";
 import PeopleIcon from "@mui/icons-material/People";
+import HouseIcon from "@mui/icons-material/House";
 import ArticleIcon from "@mui/icons-material/Article";
 
 import SubMenu from "./SubMenu";
@@ -69,6 +70,12 @@ const Menu = ({dense = false}: any) => {
                 to="/users"
                 primaryText="Người dùng"
                 leftIcon={<PeopleIcon/>}
+                dense={dense}
+            />
+            <MenuItemLink
+                to="/address"
+                primaryText="Địa chỉ"
+                leftIcon={<HouseIcon/>}
                 dense={dense}
             />
         </Box>

@@ -60,4 +60,27 @@ public class AddressController {
         addressService.setDefaultAddress(addressId);
         return ResponseEntity.ok("Set default address successfully");
     }
+    //admin
+    @GetMapping
+    public ResponseEntity<?> getAllAddresses(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int perPage
+    ) {
+        return ResponseEntity.ok(
+                addressService.getAllAddresses(page, perPage)
+        );
+    }
+
+    @GetMapping("/detail/{id}")
+    public ResponseEntity<?> getAddressDetail(@PathVariable Integer id) {
+        return ResponseEntity.ok(
+                addressService.getAddressById(id)
+        );
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> adminDeleteAddress(@PathVariable Integer id) {
+        addressService.adminDeleteAddress(id);
+        return ResponseEntity.ok("Xóa địa chỉ thành công");
+    }
 }

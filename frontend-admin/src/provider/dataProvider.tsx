@@ -20,6 +20,7 @@ const resourceMap: Record<string, string> = {
     category: "category",
     blogs: "blogs",
     "blog-cate": "blog-cate",
+    address: "address",
 };
 const getApiPath = (resource: string) => {
     return resourceMap[resource] || resource;
@@ -40,6 +41,7 @@ const dataProvider: DataProvider = {
         }
         const res = await axios.get(`${API_URL}/${apiPath}`, {
             params: query,
+            ...getAuthConfig(),
         });
         const response = res.data;
         return {
@@ -50,7 +52,13 @@ const dataProvider: DataProvider = {
     getOne: async (resource, params) => {
         const apiPath = getApiPath(resource);
 
-        const res = await axios.get(`${API_URL}/${apiPath}/${params.id}`);
+        const url =
+            resource === "address"
+                ? `${API_URL}/${apiPath}/detail/${params.id}`
+                : `${API_URL}/${apiPath}/${params.id}`;
+
+        const res = await axios.get(url, getAuthConfig());
+
         return {
             data: res.data,
         };
@@ -198,10 +206,12 @@ const dataProvider: DataProvider = {
 
         await Promise.all(
             params.ids.map((id) =>
-                axios.delete(`${API_URL}/${apiPath}/${id}`)
+                axios.delete(
+                    `${API_URL}/${apiPath}/${id}`,
+                    getAuthConfig()
+                )
             )
         );
-
         return {
             data: params.ids,
         };

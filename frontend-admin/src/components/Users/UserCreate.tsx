@@ -41,7 +41,7 @@ export const validateForm = (
     }
     return errors;
 };
-export const UserAdd = () => (
+export const UserCreate = () => (
     <Create>
         <SimpleForm
             sx={{ maxWidth: 500 }}
