@@ -28,11 +28,11 @@ public class ProductImage {
     private String image;
 
     @Column(name = "created_at")
-    @JsonFormat(pattern = "HH:mm:ss dd/MM/yyyy", timezone = "Asia/Ho_Chi_Minh")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Ho_Chi_Minh")
     private Date createdAt;
 
     @Column(name = "updated_at")
-    @JsonFormat(pattern = "HH:mm:ss dd/MM/yyyy", timezone = "Asia/Ho_Chi_Minh")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Ho_Chi_Minh")
     private Date updatedAt;
 
     @Column(name = "is_deleted", columnDefinition = "boolean default false")

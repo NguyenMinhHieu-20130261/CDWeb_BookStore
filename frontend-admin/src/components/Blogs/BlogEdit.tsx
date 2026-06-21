@@ -20,7 +20,7 @@ export const BlogEdit = () => {
     });
     const transform = (data: any) => ({
         ...data,
-        status: data.status === true || data.status === 1 ? 1 : 0,
+        status: data.status === true || data.status === 1 ? 1 : 0,  
         category: {
             id: data.category?.id,
         },

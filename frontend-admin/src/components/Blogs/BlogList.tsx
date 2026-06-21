@@ -49,6 +49,7 @@ export const BlogList = () => (
             <NumberField source="viewCount" label="Lượt xem" />
             <BooleanField source="status" label="Hiển thị" />
             <DateField source="createdAt" label="Ngày tạo" />
+            <DateField source="updatedAt" label="Ngày cập nhật" showTime/>
             <ShowButton />
             <EditButton />
         </DatagridConfigurable>

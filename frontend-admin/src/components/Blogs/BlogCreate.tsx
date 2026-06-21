@@ -13,7 +13,7 @@ import { RichTextInput } from "ra-input-rich-text";
 const req = [required("Không được để trống")];
 
 export const BlogCreate = () => {
-    const { data: categories } = useGetList("blog-categories", {
+    const { data: categories } = useGetList("blog-cate", {
         pagination: { page: 1, perPage: 100 },
         sort: { field: "name", order: "ASC" },
         filter: {},
