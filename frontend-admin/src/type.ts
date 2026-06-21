@@ -71,24 +71,26 @@ export interface ProductImage extends RaRecord {
 }
 // BLOG
 export interface BlogCategory extends RaRecord {
+    id: number;
     name: string;
-    createdBy: User;
-    updatedBy: User;
-    createdAt: string;
-    updatedAt: string;
+    createdBy?: User;
+    updatedBy?: User;
+    createdAt?: string;
+    updatedAt?: string;
 }
 
 export interface Blog extends RaRecord {
+    id: number;
     title: string;
-    thumbnail: string;
+    thumbnail?: string;
     slug: string;
-    shortDesc: string;
+    shortDescription: string;
     content: string;
-    status: boolean;
+    status: number;
     viewCount: number;
-    category: BlogCategory;
-    createdBy: User;
-    updatedBy: User;
-    createdAt: string;
-    updatedAt: string;
+    category?: BlogCategory;
+    createdBy?: User;
+    updatedBy?: User;
+    createdAt?: string;
+    updatedAt?: string;
 }

@@ -1,6 +1,8 @@
 package vn.edu.hcmuaf.fit.bookshop.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 // import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
@@ -35,8 +37,7 @@ public class Blog {
     @Column(name = "content", columnDefinition = "LONGTEXT")
     private String content;
 
-    // @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @JsonIgnore
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "createdBy", "updatedBy"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private BlogCategory category;

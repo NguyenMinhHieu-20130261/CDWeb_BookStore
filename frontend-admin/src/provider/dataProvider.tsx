@@ -19,7 +19,7 @@ const getAuthConfig = () => {
 const resourceMap: Record<string, string> = {
     category: "category",
     blogs: "blogs",
-    "blog-categories": "blog-categories",
+    "blog-cate": "blog-cate",
 };
 const getApiPath = (resource: string) => {
     return resourceMap[resource] || resource;
