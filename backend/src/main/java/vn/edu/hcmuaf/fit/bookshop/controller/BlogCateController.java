@@ -63,4 +63,28 @@ public class BlogCateController {
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
+    @PostMapping
+    public ResponseEntity<?> createBlogCate(
+            @RequestBody BlogCategory blogCategory
+    ) {
+        return ResponseEntity.ok(
+                blogCateService.createBlogCate(blogCategory)
+        );
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateBlogCate(
+            @PathVariable Integer id,
+            @RequestBody BlogCategory blogCategory
+    ) {
+        return ResponseEntity.ok(
+                blogCateService.updateBlogCate(id, blogCategory)
+        );
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteBlogCate(@PathVariable Integer id) {
+        blogCateService.deleteBlogCate(id);
+        return ResponseEntity.ok("Xóa danh mục blog thành công");
+    }
 }
