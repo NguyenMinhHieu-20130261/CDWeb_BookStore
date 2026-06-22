@@ -23,6 +23,21 @@ export interface User extends RaRecord {
     role: Role;
     userInfo?: UserInfo;
 }
+export interface Address extends RaRecord {
+    id: number;
+    user?: User;
+    fullName: string;
+    phoneNumber: string;
+    detailAdrs: string;
+    provinceCity: string;
+    countyDistrict: string;
+    wardCommune: string;
+    wardCode?: string;
+    districtId?: number;
+    isDefault?: boolean;
+    createdAt?: string;
+    updatedAt?: string;
+}
 // CATEGORY
 export type Category = {
     id: number;
@@ -30,50 +45,69 @@ export type Category = {
     active?: boolean;
     parentCategory?: number | null;
 };
-// PRODUCT
-export type Product = {
+//Product
+export interface Product extends RaRecord {
     id: number;
     title: string;
     image?: any;
-    images?: any[];
+    oldPrice?: number;
+    currentPrice?: number;
+    active?: boolean;
+    createdAt?: string;
+    updatedAt?: string;
     category?: Category;
     parentCategory?: Category;
-    detail?: {
-        supplier?: string;
-        publisher?: string;
-        publishYear?: number;
-        author?: string;
-        brand?: string;
-        origin?: string;
-        color?: string;
-        weight?: string;
-        size?: string;
-        quantityOfPage?: number;
-        description?: string;
-    };
-};
-// BLOG
-export interface BlogCategory extends RaRecord {
-    name: string;
-    createdBy: User;
-    updatedBy: User;
+    detail?: ProductDetail;
+    images: ProductImage[];
+}
+// PRODUCT DETAIL
+export interface ProductDetail extends RaRecord {
+    id: number;
+    productSku?: string;
+    supplier?: string;
+    publisher?: string;
+    publishYear?: string;
+    author?: string;
+    brand?: string;
+    origin?: string;
+    color?: string;
+    weight?: string;
+    size?: string;
+    quantityOfPage?: number;
+    description?: string;
+}
+export interface ProductImage extends RaRecord {
+    id: number;
+    product: Product;
+    image: string;
     createdAt: string;
     updatedAt: string;
+    deleted: boolean;
+}
+// BLOG
+export interface BlogCategory extends RaRecord {
+    id: number;
+    name: string;
+    createdBy?: User;
+    updatedBy?: User;
+    createdAt?: string;
+    updatedAt?: string;
 }
 
 export interface Blog extends RaRecord {
+    id: number;
     title: string;
-    thumbnail: string;
+    thumbnail?: string;
     slug: string;
-    shortDesc: string;
+    shortDescription: string;
     content: string;
-    status: boolean;
+    status: number;
     viewCount: number;
-    category: BlogCategory;
-    createdBy: User;
-    updatedBy: User;
-    createdAt: string;
-    updatedAt: string;
+    category?: BlogCategory;
+    createdBy?: User;
+    updatedBy?: User;
+    createdAt?: string;
+    updatedAt?: string;
 }
 
 // REVIEW

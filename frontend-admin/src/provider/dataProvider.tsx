@@ -161,7 +161,7 @@ const dataProvider: DataProvider = {
     getMany: async (resource, params) => {
         const apiPath = getApiPath(resource);
         const requests = params.ids.map((id) =>
-            axios.get(`${API_URL}/${apiPath}/${id}`)
+            axios.get(`${API_URL}/${apiPath}/${id}`, getAuthConfig())
         );
         const responses = await Promise.all(requests);
         return {
@@ -180,6 +180,7 @@ const dataProvider: DataProvider = {
                 order: params.sort?.order,
                 ...params.filter,
             },
+            ...getAuthConfig(),
         });
         const data = Array.isArray(res.data) ? res.data : res.data.data;
         return {
@@ -194,7 +195,11 @@ const dataProvider: DataProvider = {
 
         await Promise.all(
             params.ids.map((id) =>
-                axios.put(`${API_URL}/${apiPath}/${id}`, params.data)
+                axios.put(
+                    `${API_URL}/${apiPath}/${id}`,
+                    params.data,
+                    getAuthConfig()
+                )
             )
         );
         return {
