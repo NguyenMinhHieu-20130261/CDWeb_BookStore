@@ -330,6 +330,19 @@ const ProductInfo = ({product}) => {
                                                 <div className="text-gray-600">
                                                     {review.createdAt || "Không rõ thời gian"}
                                                 </div>
+
+                                                {review.reply && (
+                                                    <div className="admin-reply mt-3 p-3 bg-light rounded" style={{ marginLeft: '24px', borderLeft: '3px solid #1e88e5' }}>
+                                                        <div className="d-flex align-items-center mb-1">
+                                                            <h6 className="mb-0 text-primary mr-2" style={{ fontWeight: 'bold', fontSize: '0.9rem' }}>
+                                                                Phản hồi từ cửa hàng
+                                                            </h6>
+                                                        </div>
+                                                        <div className="reply-content text-lh-md text-dark font-size-2">
+                                                            <p className="mb-0">{review.reply}</p>
+                                                        </div>
+                                                    </div>
+                                                )}
                                             </div>
                                         </div>
                                     </li>
