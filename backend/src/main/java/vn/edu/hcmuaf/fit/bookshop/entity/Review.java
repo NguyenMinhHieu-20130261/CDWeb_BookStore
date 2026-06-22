@@ -21,7 +21,17 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @JsonIgnore
+    @JsonIgnoreProperties({
+            "review",
+            "category",
+            "parentCategory",
+            "createdBy",
+            "updatedBy",
+            "detail",
+            "images",
+            "hibernateLazyInitializer",
+            "handler"
+    })
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
@@ -46,13 +56,16 @@ public class Review {
 
     @Column(name = "comment_detail")
     private String cmtDetail;
+
+    @Column(name = "reply", length = 1000)
+    private String reply;
     
     @Column(name = "created_at")
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Ho_Chi_Minh")
+    @JsonFormat(pattern = "HH:mm:ss dd/MM/yyyy", timezone = "Asia/Ho_Chi_Minh")
     private Date createdAt;
 
     @Column(name = "updated_at")
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Ho_Chi_Minh")
+    @JsonFormat(pattern = "HH:mm:ss dd/MM/yyyy", timezone = "Asia/Ho_Chi_Minh")
     private Date updatedAt;
 
 }
