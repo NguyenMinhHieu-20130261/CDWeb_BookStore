@@ -2,6 +2,7 @@ package vn.edu.hcmuaf.fit.bookshop.controller;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,39 @@ public class ReviewController {
     private final ReviewService reviewService;
     private final ReviewRepo reviewRepo;
     private final ProductRepo prodRepo;
+
+    @GetMapping
+    public ResponseEntity<Page<Review>> getReviews(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(required = false) Integer perPage,
+            @RequestParam(required = false) Integer size,
+            @RequestParam(defaultValue = "createdAt") String sort,
+            @RequestParam(defaultValue = "") String filter,
+            @RequestParam(defaultValue = "DESC") String order
+    ) {
+        int pageSize = perPage != null ? perPage : (size != null ? size : 10);
+        if ("{}".equals(filter)) {
+            filter = "";
+        }
+        Page<Review> reviews = reviewService.getReviews(page, pageSize, sort, filter, order);
+        return ResponseEntity.ok(reviews);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Review> getReviewById(@PathVariable Integer id) {
+        return ResponseEntity.ok(reviewService.getReviewById(id));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Review> updateReview(@PathVariable Integer id, @RequestBody Review reviewDetails) {
+        return ResponseEntity.ok(reviewService.updateReview(id, reviewDetails));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteReview(@PathVariable Integer id) {
+        reviewService.deleteReview(id);
+        return ResponseEntity.ok().build();
+    }
 
     @GetMapping("/product/{productId}")
     public List<Review> getReviewsByProduct(
