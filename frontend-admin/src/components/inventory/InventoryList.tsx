@@ -10,6 +10,7 @@ import {
     TextField,
     TopToolbar,
     ShowButton,
+    EditButton,
 } from "react-admin";
 import * as React from "react";
 import { Inventory } from "../../type";
@@ -63,7 +64,9 @@ export const InventoryList = () => (
             <TextField source="createdAt" label="Ngày tạo"/>
             <TextField source="importedAt"  label="Ngày nhập" />
             <BooleanField source="active" label="Trạng thái"/>
+
             <ShowButton />
+            <EditButton/>
         </DatagridConfigurable>
     </List>
 );

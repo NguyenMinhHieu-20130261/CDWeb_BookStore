@@ -5,7 +5,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import vn.edu.hcmuaf.fit.bookshop.dto.OrderRequest;
+import vn.edu.hcmuaf.fit.bookshop.dto.request.OrderRequest;
 import vn.edu.hcmuaf.fit.bookshop.entity.*;
 import vn.edu.hcmuaf.fit.bookshop.repository.*;
 import vn.edu.hcmuaf.fit.bookshop.service.OrderService;

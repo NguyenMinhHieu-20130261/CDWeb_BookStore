@@ -3,7 +3,8 @@ package vn.edu.hcmuaf.fit.bookshop.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import vn.edu.hcmuaf.fit.bookshop.dto.OrderRequest;
+
+import vn.edu.hcmuaf.fit.bookshop.dto.request.OrderRequest;
 import vn.edu.hcmuaf.fit.bookshop.entity.*;
 import vn.edu.hcmuaf.fit.bookshop.service.*;
 
@@ -54,4 +55,4 @@ public class OrderController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-}
+}

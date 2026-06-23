@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import vn.edu.hcmuaf.fit.bookshop.entity.Inventory;
 
 public interface InventoryRepo extends JpaRepository<Inventory, Integer>, JpaSpecificationExecutor<Inventory> {
+
 }

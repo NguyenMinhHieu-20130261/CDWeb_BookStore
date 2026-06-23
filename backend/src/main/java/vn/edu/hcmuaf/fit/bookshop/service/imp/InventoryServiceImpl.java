@@ -6,8 +6,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import vn.edu.hcmuaf.fit.bookshop.dto.InventoryCreateRequest;
-import vn.edu.hcmuaf.fit.bookshop.dto.InventoryItemRequest;
+
+import vn.edu.hcmuaf.fit.bookshop.dto.request.InventoryCreateRequest;
+import vn.edu.hcmuaf.fit.bookshop.dto.request.InventoryItemRequest;
 import vn.edu.hcmuaf.fit.bookshop.entity.Inventory;
 import vn.edu.hcmuaf.fit.bookshop.entity.Product;
 import vn.edu.hcmuaf.fit.bookshop.repository.InventoryRepo;
@@ -99,5 +100,17 @@ public class InventoryServiceImpl implements InventoryService {
     public Inventory getById(Integer id) {
         return inventoryRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy lô hàng ID: " + id));
+    }
+
+    @Override
+    public Inventory updateInventory(Integer id, Inventory request) {
+        Inventory inventory = inventoryRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy lô hàng ID: " + id));
+
+        inventory.setActive(request.getActive());
+        inventory.setNote(request.getNote());
+        inventory.setUpdatedAt(new Date());
+
+        return inventoryRepo.save(inventory);
     }
 }
