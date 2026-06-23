@@ -84,6 +84,31 @@ export interface ProductImage extends RaRecord {
     updatedAt: string;
     deleted: boolean;
 }
+//inventory
+export interface Inventory extends RaRecord {
+    id: number;
+    batchCode: string;
+    product: Product;
+    importedQuantity: number;
+    remainingQuantity: number;
+    importPrice: number;
+    salePrice: number;
+    importedAt: string;
+    createdAt: string;
+    updatedAt: string;
+    active: boolean;
+    createdBy?: User;
+    updatedBy?: User;
+    note?: string;
+}
+
+export interface InventoryRequest {
+    productId: number;
+    quantity: number;
+    importPrice: number;
+    salePrice: number;
+    note?: string;
+}
 // BLOG
 export interface BlogCategory extends RaRecord {
     id: number;

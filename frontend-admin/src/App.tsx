@@ -13,6 +13,8 @@ import blogCate from "./components/blogCate";
 import users from "./components/users";
 import address from "./components/address";
 import reviews from "./components/reviews";
+import inventory from "./components/inventory";
+
 
 const App = () => (
   <Admin 
@@ -29,6 +31,7 @@ const App = () => (
     <Resource name="users" {...users}/>
     <Resource name="address" {...address} />
     <Resource name="reviews" options={{ label: "Đánh giá" }} {...reviews}/>
+    <Resource name="inventory" {...inventory} />
   </Admin>
 );
 

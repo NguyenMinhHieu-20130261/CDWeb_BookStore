@@ -12,6 +12,7 @@ import PeopleIcon from "@mui/icons-material/People";
 import HouseIcon from "@mui/icons-material/House";
 import ArticleIcon from "@mui/icons-material/Article";
 import RateReviewIcon from "@mui/icons-material/RateReview";
+import InventoryIcon from "@mui/icons-material/Inventory";
 
 import SubMenu from "./SubMenu";
 type MenuName =
@@ -66,7 +67,12 @@ const Menu = ({dense = false}: any) => {
                     leftIcon={<RateReviewIcon/>}
                     dense={dense}
                 />
-
+                <MenuItemLink
+                    to="/inventory"
+                    primaryText="Lô hàng"
+                    leftIcon={<InventoryIcon/>}
+                    dense={dense}
+                />
             </SubMenu>
             {/* Blog */}
             <SubMenu
@@ -91,19 +97,28 @@ const Menu = ({dense = false}: any) => {
                 />
             </SubMenu>
             {/* User */}
-            <MenuItemLink
-                to="/users"
-                primaryText="Người dùng"
-                leftIcon={<PeopleIcon/>}
+            <SubMenu
+                handleToggle={()=>handleToggle("menuUsers")}
+                isOpen={state.menuUsers}
+                name="Users"
+                icon={<PeopleIcon/>}
                 dense={dense}
-            />
-            {/* Address */}
-            <MenuItemLink
-                to="/address"
-                primaryText="Địa chỉ"
-                leftIcon={<HouseIcon/>}
-                dense={dense}
-            />
+
+            >
+                <MenuItemLink
+                    to="/users"
+                    primaryText="Người dùng"
+                    leftIcon={<PeopleIcon/>}
+                    dense={dense}
+                />
+                {/* Address */}
+                <MenuItemLink
+                    to="/address"
+                    primaryText="Địa chỉ"
+                    leftIcon={<HouseIcon/>}
+                    dense={dense}
+                />
+            </SubMenu>
         </Box>
     )
 }

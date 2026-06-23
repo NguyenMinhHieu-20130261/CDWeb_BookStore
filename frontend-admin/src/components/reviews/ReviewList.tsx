@@ -39,7 +39,7 @@ export const ReviewList = () => {
                 sort={{field: 'createdAt', order: 'DESC'}}
                 perPage={10}
                 actions={<VisitorListActions/>}
-                filters={<ReviewSearch/>}
+                filters={ReviewSearch}
                 sx={{
                     '& .column-title': {
                         maxWidth: '16em',

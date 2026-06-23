@@ -45,8 +45,12 @@ const dataProvider: DataProvider = {
         });
         const response = res.data;
         return {
-            data: response.content ?? response,
-            total: response.totalElements ?? response.length ?? 0,
+            data: Array.isArray(response)
+                ? response
+                : response.content ?? response.data ?? [],
+            total: Array.isArray(response)
+                ? response.length
+                : response.totalElements ?? response.total ?? 0,
         };
     },
     getOne: async (resource, params) => {
