@@ -30,23 +30,75 @@ public class InventoryServiceImpl implements InventoryService {
     private ProductRepo productRepo;
 
     @Override
-    public Page<Inventory> getAll(String q, Boolean active, Pageable pageable) {
+    public Page<Inventory> getAll(String q, Boolean active, Pageable pageable,String stockStatus) {
         Specification<Inventory> spec = (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
 
             if (q != null && !q.trim().isEmpty()) {
+                String keyword = "%" + q.trim().toLowerCase() + "%";
+                var productJoin = root.join("product");
                 predicates.add(
-                        cb.like(
-                                cb.lower(root.get("product").get("title")),
-                                "%" + q.toLowerCase().trim() + "%"
-                        )
+                    cb.or(
+                        cb.like(cb.lower(root.get("batchCode")), keyword),
+                        cb.like(cb.lower(productJoin.get("title")), keyword)
+                    )
                 );
             }
+            if(stockStatus != null){
+                switch(stockStatus){
+                    case "OUT_OF_STOCK":
+                        predicates.add(
+                            cb.equal( root.get("remainingQuantity"),0 )
+                        );
+                    break;
 
+                    case "LOW_STOCK":
+                        predicates.add(
+                            cb.and(
+                                cb.equal( root.get("active"), true ),
+                                cb.gt( root.get("remainingQuantity"), 0),
+                                cb.lessThanOrEqualTo(
+                                    root.get("remainingQuantity").as(Integer.class),
+                                    cb.quot(
+                                        root.get("importedQuantity")
+                                            .as(Integer.class),
+                                        5
+                                    )
+                                    .as(Integer.class)
+                                )
+                            )
+                        );
+                    break;
+
+                    case "DISABLED":
+                        predicates.add(
+                            cb.equal( root.get("active"),false )
+                        );
+                    break;
+        
+                    case "ACTIVE":
+                        predicates.add(
+                            cb.and(
+                                cb.equal( root.get("active"),true),
+                                cb.gt( root.get("remainingQuantity"),0),
+                                cb.greaterThan(
+                                    root.get("remainingQuantity")
+                                        .as(Integer.class),
+                                    cb.quot(
+                                        root.get("importedQuantity")
+                                            .as(Integer.class),
+                                        5
+                                    )
+                                    .as(Integer.class)
+                                )
+                            )
+                        );
+                    break;
+                }
+            }
             if (active != null) {
                 predicates.add(cb.equal(root.get("active"), active));
             }
-
             return cb.and(predicates.toArray(new Predicate[0]));
         };
 
