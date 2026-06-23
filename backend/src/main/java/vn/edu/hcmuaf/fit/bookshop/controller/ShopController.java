@@ -17,14 +17,20 @@ import vn.edu.hcmuaf.fit.bookshop.entity.OtpVerification;
 import vn.edu.hcmuaf.fit.bookshop.entity.Token;
 import vn.edu.hcmuaf.fit.bookshop.entity.TokenType;
 
+import vn.edu.hcmuaf.fit.bookshop.dto.auth.LoginRequest;
+import vn.edu.hcmuaf.fit.bookshop.dto.auth.RegisterRequest;
+import vn.edu.hcmuaf.fit.bookshop.dto.auth.SendEmailRequest;
+import vn.edu.hcmuaf.fit.bookshop.dto.auth.VerifyOtpRequest;
+import vn.edu.hcmuaf.fit.bookshop.dto.auth.ForgotPasswordRequest;
+
 import vn.edu.hcmuaf.fit.bookshop.jwt.JwtUtils;
 
 import vn.edu.hcmuaf.fit.bookshop.repository.UserRepo;
 import vn.edu.hcmuaf.fit.bookshop.repository.OtpVerificationRepo;
 import vn.edu.hcmuaf.fit.bookshop.repository.TokenRepo;
+import vn.edu.hcmuaf.fit.bookshop.repository.RoleRepo;
 
 import vn.edu.hcmuaf.fit.bookshop.service.EmailService;
-import vn.edu.hcmuaf.fit.bookshop.repository.RoleRepo;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -52,12 +58,17 @@ private TokenRepo tokenRepo;
 
 // LOGIN
 @PostMapping("/signin")
-public ResponseEntity<?> login(@RequestBody Map<String, String> req) {
-    String username = req.get("username");
-    String password = req.get("password");
+public ResponseEntity<?> login(@RequestBody LoginRequest req) {
+    String username = req.getUsername();
+    String password = req.getPassword();
     User user = userRepository.findByUsername(username)
             .orElse(null);
-    // check user tồn tại ko? 
+
+    if (username == null || password == null ||
+            username.trim().isEmpty() || password.trim().isEmpty()) {
+        return ResponseEntity.badRequest().body("Username và password không được để trống");
+    }
+
     if (user == null) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body("Sai username hoặc password");
@@ -95,11 +106,11 @@ public ResponseEntity<?> login(@RequestBody Map<String, String> req) {
 }
 // REGISTER
 @PostMapping("/signup")
-public ResponseEntity<?> register(@RequestBody Map<String, String> req) {
+public ResponseEntity<?> register(@RequestBody RegisterRequest req) {
 
-    String username = req.get("username");
-    String password = req.get("password");
-    String email = req.get("email");
+    String username = req.getUsername();
+    String password = req.getPassword();
+    String email = req.getEmail();
 
     if (username == null || password == null || email == null || username.isEmpty() || password.isEmpty() || email.isEmpty()) {
         return ResponseEntity.badRequest()
@@ -155,11 +166,15 @@ public ResponseEntity<?> logout(@RequestHeader("Authorization") String authHeade
 }
 //Sentmail
 @PostMapping("/send-email")
-public ResponseEntity<?> sendEmail(@RequestBody Map<String, String> req) {
-    String email = req.get("email");
+public ResponseEntity<?> sendEmail(@RequestBody SendEmailRequest req) {
+    String email = req.getEmail();
+
+    if (email == null || email.trim().isEmpty()) {
+        return ResponseEntity.badRequest().body("Email không được để trống");
+    }
+    email = email.trim();
 
     User user = userRepository.findByEmail(email).orElse(null);
-
     if (user == null) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body("Email không tồn tại");
@@ -191,11 +206,17 @@ public ResponseEntity<?> sendEmail(@RequestBody Map<String, String> req) {
     return ResponseEntity.ok("OTP đã gửi về email");
 }
 @PostMapping("/verify-otp")
-    public ResponseEntity<?> verifyOtp(
-        @RequestBody Map<String, String> req) {
+    public ResponseEntity<?> verifyOtp(@RequestBody VerifyOtpRequest req) {
 
-    String email = req.get("email").trim();
-    String otp = req.get("otp").trim();
+    String email = req.getEmail();
+    String otp = req.getOtp();
+
+    if (email == null || otp == null ||
+            email.trim().isEmpty() || otp.trim().isEmpty()) {
+        return ResponseEntity.badRequest().body("Email và OTP không được để trống");
+    }
+    email = email.trim();
+    otp = otp.trim();
 
     User user = userRepository.findByEmail(email)
             .orElse(null);
@@ -233,12 +254,18 @@ public ResponseEntity<?> sendEmail(@RequestBody Map<String, String> req) {
 }
 
 @PostMapping("/forgot-password")
-    public ResponseEntity<?> resetPassword(
-            @RequestBody Map<String, String> req) {
+    public ResponseEntity<?> resetPassword( @RequestBody ForgotPasswordRequest req) {
+    String email = req.getEmail();
+    String otp = req.getOtp();
+    String newPassword = req.getNewPassword();
 
-        String email = req.get("email").trim();
-        String otp = req.get("otp").trim();
-        String newPassword = req.get("newPassword").trim();
+    if (email == null || otp == null || newPassword == null ||
+            email.trim().isEmpty() || otp.trim().isEmpty() || newPassword.trim().isEmpty()) {
+        return ResponseEntity.badRequest().body("Email, OTP và mật khẩu mới không được để trống");
+    }
+    email = email.trim();
+    otp = otp.trim();
+    newPassword = newPassword.trim();
 
         User user = userRepository.findByEmail(email)
                 .orElse(null);

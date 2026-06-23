@@ -9,9 +9,9 @@ import java.util.Map;
 public interface ReviewService {
     List<Review> getReviewsByProduct(Integer productId, Integer rating, String sort);
     Map<String, Object> getReviewSummary(Integer productId);
-
+    //admin
     Page<Review> getReviews(int page, int perPage, String sort, String filter, String order);
     Review getReviewById(Integer id);
-    Review updateReview(Integer id, Review reviewDetails);
+    Review updateReviewReply(Integer id, String reply);
     void deleteReview(Integer id);
 }

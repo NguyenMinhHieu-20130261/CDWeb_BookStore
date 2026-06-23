@@ -45,8 +45,12 @@ const dataProvider: DataProvider = {
         });
         const response = res.data;
         return {
-            data: response.content ?? response,
-            total: response.totalElements ?? response.length ?? 0,
+            data: Array.isArray(response)
+                ? response
+                : response.content ?? response.data ?? [],
+            total: Array.isArray(response)
+                ? response.length
+                : response.totalElements ?? response.total ?? 0,
         };
     },
     getOne: async (resource, params) => {
@@ -161,7 +165,7 @@ const dataProvider: DataProvider = {
     getMany: async (resource, params) => {
         const apiPath = getApiPath(resource);
         const requests = params.ids.map((id) =>
-            axios.get(`${API_URL}/${apiPath}/${id}`)
+            axios.get(`${API_URL}/${apiPath}/${id}`, getAuthConfig())
         );
         const responses = await Promise.all(requests);
         return {
@@ -180,6 +184,7 @@ const dataProvider: DataProvider = {
                 order: params.sort?.order,
                 ...params.filter,
             },
+            ...getAuthConfig(),
         });
         const data = Array.isArray(res.data) ? res.data : res.data.data;
         return {
@@ -194,7 +199,11 @@ const dataProvider: DataProvider = {
 
         await Promise.all(
             params.ids.map((id) =>
-                axios.put(`${API_URL}/${apiPath}/${id}`, params.data)
+                axios.put(
+                    `${API_URL}/${apiPath}/${id}`,
+                    params.data,
+                    getAuthConfig()
+                )
             )
         );
         return {

@@ -70,14 +70,12 @@ public class AddressController {
                 addressService.getAllAddresses(page, perPage)
         );
     }
-
     @GetMapping("/detail/{id}")
     public ResponseEntity<?> getAddressDetail(@PathVariable Integer id) {
         return ResponseEntity.ok(
                 addressService.getAddressById(id)
         );
     }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<?> adminDeleteAddress(@PathVariable Integer id) {
         addressService.adminDeleteAddress(id);

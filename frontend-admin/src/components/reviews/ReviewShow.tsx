@@ -1,116 +1,144 @@
-import * as React from 'react';
 import {
+    useGetOne,
+    Loading,
+    SaveButton,
     TextInput,
     SimpleForm,
-    DateField,
-    EditProps,
-    Labeled,
-    TextField,
-    EditBase,
-    Toolbar,
-    SaveButton,
-    useRecordContext
-} from 'react-admin';
-import { Box, Grid, Stack, IconButton, Typography, Avatar } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
+    useUpdate,
+} from "react-admin";
 
-import { Review } from '../../type';
-import RatingField from './RatingField';
+import {
+    Avatar,
+    Box,
+    Card,
+    CardContent,
+    Divider,
+    Rating,
+    Stack,
+    Typography,
+    Button,
+} from "@mui/material";
 
-interface Props extends EditProps<Review> {
-    onCancel: () => void;
-}
-
-const ReviewEditToolbar = (props: any) => (
-    <Toolbar {...props} sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        <SaveButton label="Gửi phản hồi" alwaysEnable />
-    </Toolbar>
-);
-
-const CustomerAvatar = () => {
-    const record = useRecordContext<Review>();
-    if (!record) return null;
-    return (
-        <Avatar
-            src={record.user?.userInfo?.avatar || ''}
-            style={{ width: 25, height: 25 }}
-            alt={record.user?.userInfo?.fullName || record.user?.username}
-        />
-    );
-};
-
-const CustomerName = () => {
-    const record = useRecordContext<Review>();
-    if (!record) return null;
-    return (
-        <Typography variant="body2" component="span" sx={{ ml: 1 }}>
-            {record.user?.userInfo?.fullName || record.user?.username || 'Khách hàng'}
+const Row = ({ label, value }: any) => (
+    <Box py={1}>
+        <Typography
+            variant="caption"
+            color="text.secondary"
+        >
+            {label}
         </Typography>
-    );
-};
 
-const ReviewShow = ({ id, onCancel }: Props) => {
+        <Typography>
+            {value || "—"}
+        </Typography>
+    </Box>
+);
+const ReviewShow = ({ id, onCancel }: any) => {
+    const { data, isLoading } =
+        useGetOne("reviews", { id });
+    const [update] = useUpdate();
+    if (isLoading) return <Loading />;
+    const handleReply = (values:any) => {
+        update(
+            "reviews",
+            {
+                id,
+                data: {
+                    reply: values.reply,
+                },
+                previousData: data,
+            }
+        );
+
+    };
     return (
-        <EditBase id={id} mutationMode="pessimistic" redirect={false}>
-            <Box pt={5} width={{ xs: '100vw', sm: 400 }} mt={{ xs: 2, sm: 1 }}>
-                <Stack direction="row" p={2} alignItems="center">
-                    <Typography variant="h6" flex="1">
-                        {"Chi tiết đánh giá"}
+        <Box
+            width={430}
+            p={2}
+        >
+            <Stack
+                direction="row"
+                justifyContent="space-between"
+                alignItems="center"
+            >
+                <Typography variant="h6">
+                    Chi tiết đánh giá
+                </Typography>
+                <Button onClick={onCancel}>
+                    Đóng
+                </Button>
+            </Stack>
+            <Divider sx={{my:2}}/>
+            <Card>
+                <CardContent>
+                    <Stack
+                        direction="row"
+                        spacing={2}
+                        alignItems="center"
+                    >
+                        <Avatar>
+                            {data.user?.username?.charAt(0)}
+                        </Avatar>
+                        <Box>
+                            <Typography fontWeight={600}>
+                                {data.user?.username}
+                            </Typography>
+                            <Typography
+                                variant="body2"
+                                color="text.secondary"
+                            >
+                                {data.product?.title}
+                            </Typography>
+                        </Box>
+                    </Stack>
+                    <Divider sx={{my:2}}/>
+                    <Row
+                        label="Ngày đánh giá"
+                        value={data.createdAt}
+                    />
+
+
+                    <Typography
+                        variant="caption"
+                        color="text.secondary"
+                    >
+                        Đánh giá
                     </Typography>
-                    <IconButton onClick={onCancel} size="small">
-                        <CloseIcon />
-                    </IconButton>
-                </Stack>
-                <SimpleForm
-                    sx={{ pt: 0, pb: 0 }}
-                    toolbar={<ReviewEditToolbar />}
-                >
-                    <Grid container rowSpacing={1} mb={2}>
-                        <Grid item xs={6}>
-                            <Labeled label="Khách hàng">
-                                <Box display="flex" alignItems="center" mt={0.5}>
-                                    <CustomerAvatar />
-                                    <CustomerName />
-                                </Box>
-                            </Labeled>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <Labeled label="Sản phẩm">
-                                <TextField source="product.title" />
-                            </Labeled>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <Labeled label="Ngày đánh giá">
-                                <TextField source="createdAt" />
-                            </Labeled>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <Labeled label="Đánh giá">
-                                <RatingField source="rating" />
-                            </Labeled>
-                        </Grid>
-                    </Grid>
-                    <TextInput
-                        source="cmtDetail"
-                        maxRows={10}
-                        label={"Nội dung đánh giá"}
-                        multiline
-                        fullWidth
+                    <Rating
+                        value={data.rating}
                         readOnly
-                        disabled
-                        sx={{ mb: 2 }}
                     />
-                    <TextInput
-                        source="reply"
-                        maxRows={10}
-                        label={"Phản hồi của cửa hàng"}
-                        multiline
-                        fullWidth
+                    <Row
+                        label="Nội dung đánh giá"
+                        value={data.cmtDetail}
                     />
-                </SimpleForm>
-            </Box>
-        </EditBase>
-    );
-};
+                </CardContent>
+            </Card>
+            <Card sx={{mt:2}}>
+                <CardContent>
+                    <Typography variant="h6">
+                        Phản hồi cửa hàng
+                    </Typography>
+                    <SimpleForm
+                        toolbar={
+                            <SaveButton label="Gửi phản hồi"/>
+                        }
+                        onSubmit={handleReply}
+                        defaultValues={{
+                            reply:data.reply
+                        }}
+                    >
+                        <TextInput
+                            source="reply"
+                            label="Nội dung phản hồi"
+                            multiline
+                            fullWidth
+                        />
+                    </SimpleForm>
+                </CardContent>
+            </Card>
+        </Box>
+    )
+}
 
 export default ReviewShow;

@@ -50,7 +50,7 @@ public class ReviewServiceImpl implements ReviewService {
         result.put("totalReviews", totalReviews);
         return result;
     }
-
+//admin
     @Override
     public Page<Review> getReviews(int page, int perPage, String sort, String filter, String order) {
         Sort.Direction direction = order.equalsIgnoreCase("desc")
@@ -74,7 +74,6 @@ public class ReviewServiceImpl implements ReviewService {
                 pageable
         );
     }
-
     private String extractKeyword(String filter) {
         if (filter == null || filter.isBlank() || filter.equals("{}")) {
             return "";
@@ -103,9 +102,9 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public Review updateReview(Integer id, Review reviewDetails) {
+    public Review updateReviewReply(Integer id, String reply) {
         Review review = getReviewById(id);
-        review.setReply(reviewDetails.getReply());
+        review.setReply(reply);
         review.setUpdatedAt(new java.util.Date());
         return reviewRepo.save(review);
     }

@@ -5,13 +5,11 @@ import {
     TopToolbar,
     SelectColumnsButton,
     DatagridConfigurable,
-    BulkUpdateButton,
-    BulkDeleteButton, 
-    ArrayField, 
+    BulkDeleteButton,
     ShowButton,
     List,
     TextField,
-    DateField,
+    FunctionField,
 } from "react-admin";
 import RatingField from './RatingField';
 import { matchPath, useLocation, useNavigate } from 'react-router-dom';
@@ -41,7 +39,7 @@ export const ReviewList = () => {
                 sort={{field: 'createdAt', order: 'DESC'}}
                 perPage={10}
                 actions={<VisitorListActions/>}
-                filters={<ReviewSearch/>}
+                filters={ReviewSearch}
                 sx={{
                     '& .column-title': {
                         maxWidth: '16em',
@@ -74,17 +72,15 @@ export const ReviewList = () => {
                     <TextField source="cmtDetail" label="Nội dung"/>
                     <RatingField source="rating" label="Số sao"/>
                     <TextField source="createdAt" label="Ngày tạo" />
-
-                    <ArrayField label={"Hành động"} textAlign={"center"}>
-                        <Box display={{ xs: 'block', sm: 'flex', width: '100%' }}>
-                            <Box flex={1} mr={{ xs: 0, sm: '0.5em' }}>
-                                <ShowButton label="Chi tiết"/>
+                    <FunctionField
+                        label="Hành động"
+                        render={() => (
+                            <Box display="flex" gap={1}>
+                                <ShowButton label="Chi tiết" />
+                                <DeleteButton param="đánh giá" />
                             </Box>
-                            <Box flex={1} ml={{ xs: 0, sm: '0.5em' }}>
-                                <DeleteButton param={"đánh giá"}/>
-                            </Box>
-                        </Box>
-                    </ArrayField>
+                        )}
+                    />
                 </DatagridConfigurable>
             </List>
             <Drawer
