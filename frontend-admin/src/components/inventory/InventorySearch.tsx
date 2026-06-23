@@ -12,17 +12,25 @@ export const InventorySearch = [
         alwaysOn
     />,
     <SelectInput
-        key="active"
-        source="active"
+        key="stockStatus"
+        source="stockStatus"
         label="Trạng thái"
         choices={[
             {
-                id: true,
-                name: "Còn hàng",
+                id: "ACTIVE",
+                name: "Đang bán",
             },
             {
-                id: false,
+                id: "OUT_OF_STOCK",
                 name: "Hết hàng",
+            },
+            {
+                id: "LOW_STOCK",
+                name: "Sắp hết",
+            },
+            {
+                id: "DISABLED",
+                name: "Ngưng bán",
             },
         ]}
     />,

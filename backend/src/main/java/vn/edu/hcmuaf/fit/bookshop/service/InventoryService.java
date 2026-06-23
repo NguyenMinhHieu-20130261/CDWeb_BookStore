@@ -9,8 +9,8 @@ import vn.edu.hcmuaf.fit.bookshop.entity.Inventory;
 import java.util.List;
 
 public interface InventoryService {
-    Page<Inventory> getAll(String q, Boolean active, Pageable pageable);
     List<Inventory> createInventory(InventoryCreateRequest request);
     Inventory getById(Integer id);
     Inventory updateInventory(Integer id, Inventory request);
+    Page<Inventory> getAll(String q, Boolean active, Pageable pageable, String stockStatus);
 }
