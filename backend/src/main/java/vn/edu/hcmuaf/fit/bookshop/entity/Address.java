@@ -2,6 +2,7 @@ package vn.edu.hcmuaf.fit.bookshop.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -21,6 +22,7 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @JsonBackReference
     @JsonIgnoreProperties({
             "addresses",
             "userInformation",
