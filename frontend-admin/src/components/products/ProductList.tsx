@@ -11,8 +11,8 @@ import {
     SelectColumnsButton,
     TextField,
     TopToolbar,
-    DeleteButton,
 } from "react-admin";
+import DeleteButton from "../../layout/DeleteButton";
 import { ProductSearch } from "./ProductSearch";
 import * as React from "react";
 import Box from "@mui/material/Box";

@@ -1,6 +1,8 @@
 package vn.edu.hcmuaf.fit.bookshop.service.imp;
 
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import vn.edu.hcmuaf.fit.bookshop.dto.request.OrderRequest;
 import vn.edu.hcmuaf.fit.bookshop.entity.*;
 import vn.edu.hcmuaf.fit.bookshop.repository.*;
+import org.springframework.data.domain.*;
 import vn.edu.hcmuaf.fit.bookshop.service.OrderService;
 
 import java.util.ArrayList;
@@ -183,6 +186,29 @@ public class OrderServiceImpl implements OrderService {
 
         order.setStatus(cancelledStatus);
         return orderRepo.save(order);
+    }
+    //admin
+        @Override
+    public Page<Order> getAllOrders(int page, int perPage, String sort, String order) {
+        Sort.Direction direction = order.equalsIgnoreCase("desc")
+                ? Sort.Direction.DESC
+                : Sort.Direction.ASC;
+        Pageable pageable = PageRequest.of(page, perPage, Sort.by(direction, sort));
+        return orderRepo.findAll(pageable);
+    }
+
+    @Override
+    public Order getOrderById(Integer id) {
+        return orderRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn hàng"));
+    }
+    @Override
+    public Order updateOrderStatus(Integer id, Integer statusId) {
+        Order existing = getOrderById(id);
+        OrderStatus status = orderStatusRepo.findById(statusId)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy trạng thái"));
+        existing.setStatus(status);
+        return orderRepo.save(existing);
     }
 }
 

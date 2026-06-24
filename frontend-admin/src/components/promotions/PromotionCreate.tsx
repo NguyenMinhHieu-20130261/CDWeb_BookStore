@@ -1,3 +1,7 @@
+import { Create } from "react-admin";
+import { PromotionForm } from "./PromotionForm";
+import * as React from "react";
+
 const formatDateTime = (value: string) => {
     if (!value) return value;
     return value.length === 16 ? `${value}:00` : value;
@@ -14,3 +18,12 @@ const transform = (data: any) => ({
     status: data.status ?? true,
     product: null,
 });
+
+export const PromotionCreate = () => (
+    <Create 
+        title="Thêm mã giảm giá"
+        transform={transform}
+    >
+        <PromotionForm/>
+    </Create>
+);

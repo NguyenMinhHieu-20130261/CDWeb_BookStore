@@ -35,7 +35,6 @@ export const PromotionForm = () => (
                 />
             </Grid>
 
-
             <Grid size={{ xs: 12 }}>
                 <NumberInput
                     source="discountPercent"
@@ -48,7 +47,6 @@ export const PromotionForm = () => (
                 />
             </Grid>
 
-
             <Grid size={{ xs: 12 }}>
                 <NumberInput
                     source="discount"
@@ -60,7 +58,6 @@ export const PromotionForm = () => (
                 />
             </Grid>
 
-
             <Grid size={{ xs: 12 }}>
                 <DateTimeInput
                     source="startDate"
@@ -69,7 +66,6 @@ export const PromotionForm = () => (
                     fullWidth
                 />
             </Grid>
-
 
             <Grid size={{ xs: 12 }}>
                 <DateTimeInput
@@ -80,7 +76,6 @@ export const PromotionForm = () => (
                 />
             </Grid>
 
-
             <Grid size={{ xs: 12 }}>
                 <NumberInput
                     source="usageCount"
@@ -90,7 +85,6 @@ export const PromotionForm = () => (
                 />
             </Grid>
 
-
             <Grid size={{ xs: 12 }}>
                 <BooleanInput
                     source="isCode"
@@ -98,7 +92,6 @@ export const PromotionForm = () => (
                     defaultValue={true}
                 />
             </Grid>
-
 
             <Grid size={{ xs: 12 }}>
                 <BooleanInput
