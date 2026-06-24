@@ -9,10 +9,19 @@ import PhoneValidService from "../../../service/PhoneValidService";
 import WindowPopup from "../../components/general/WindowPopup";
 
 export const Coupon = () => {
+    const handleCouponLinkClick = (e) => {
+        e.preventDefault();
+        const inputEl = document.querySelector(".checkout__coupon__section input");
+        if (inputEl) {
+            inputEl.scrollIntoView({ behavior: "smooth", block: "center" });
+            inputEl.focus();
+        }
+    };
+
     return (
         <div className="row">
             <div className="col-lg-12">
-                <h6><span className="icon_tag_alt"></span> Bạn có mã giảm giá ? <a href="#">Nhấn vào đây</a> để nhận mã giảm giá
+                <h6><span className="icon_tag_alt"></span> Bạn có mã giảm giá ? <a href="#" onClick={handleCouponLinkClick}>Nhấn vào đây</a> để nhập mã giảm giá
                 </h6>
             </div>
         </div>
@@ -50,6 +59,12 @@ export const Checkout = () => {
         message: "",
         type: ""
     });
+
+    // Coupon states
+    const [couponCode, setCouponCode] = useState("");
+    const [appliedPromotion, setAppliedPromotion] = useState(null);
+    const [couponError, setCouponError] = useState("");
+    const [couponSuccess, setCouponSuccess] = useState("");
 
     const { isPhoneNumberValid } = PhoneValidService ? PhoneValidService() : {};
 
@@ -115,6 +130,43 @@ export const Checkout = () => {
             ...prev,
             visible: false
         }));
+    };
+
+    const handleApplyCoupon = async (e) => {
+        if (e) e.preventDefault();
+        if (!user || !user.id) {
+            setCouponError("Bạn cần đăng nhập để áp dụng mã giảm giá");
+            setCouponSuccess("");
+            return;
+        }
+        if (!couponCode.trim()) {
+            setCouponError("Vui lòng nhập mã giảm giá");
+            setCouponSuccess("");
+            return;
+        }
+        try {
+            setCouponError("");
+            setCouponSuccess("");
+            const res = await api.fetchData(`/promotions/validate?code=${couponCode.trim()}&userId=${user.id}`);
+            if (res) {
+                setAppliedPromotion(res);
+                setCouponSuccess(`Áp dụng mã giảm giá "${res.code}" thành công! Giảm ${res.discountPercent}%`);
+                setCouponError("");
+            }
+        } catch (err) {
+            console.error("Lỗi khi áp dụng mã giảm giá:", err);
+            setAppliedPromotion(null);
+            setCouponSuccess("");
+            const errMsg = err.response?.data?.message || err.response?.data || "Mã giảm giá không hợp lệ hoặc đã hết hạn";
+            setCouponError(errMsg);
+        }
+    };
+
+    const handleRemoveCoupon = () => {
+        setAppliedPromotion(null);
+        setCouponCode("");
+        setCouponError("");
+        setCouponSuccess("");
     };
 
     const handlePlaceOrder = async (e) => {
@@ -186,7 +238,8 @@ export const Checkout = () => {
                 wardCode: selectedWard,
                 districtId: Number(selectedDistrict),
                 note,
-                paymentMethod
+                paymentMethod,
+                promotionId: appliedPromotion ? appliedPromotion.id : null
             };
 
             await api.sendData("/orders/create", payload);
@@ -271,6 +324,13 @@ export const Checkout = () => {
                                     isConfirmed={isConfirmed}
                                     setIsConfirmed={setIsConfirmed}
                                     isSubmitting={isSubmitting}
+                                    couponCode={couponCode}
+                                    setCouponCode={setCouponCode}
+                                    appliedPromotion={appliedPromotion}
+                                    couponError={couponError}
+                                    couponSuccess={couponSuccess}
+                                    handleApplyCoupon={handleApplyCoupon}
+                                    handleRemoveCoupon={handleRemoveCoupon}
                                 />
                             </div>
                         </form>
