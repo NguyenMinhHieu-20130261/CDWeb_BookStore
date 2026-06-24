@@ -115,6 +115,13 @@ export const OrderDetail = () => {
                         style={{ float: "right" }}>{formatCurrency(tempTotal)}
                         </span>
                     </div>
+                    {order.promotion && (
+                        <div style={{ color: "#e10c0c" }}>Mã giảm giá ({order.promotion.code} - {order.promotion.discountPercent}%): 
+                            <span 
+                            style={{ float: "right" }}>-{formatCurrency(Math.round(tempTotal * (parseFloat(order.promotion.discountPercent) / 100.0)))}
+                            </span>
+                        </div>
+                    )}
                     <div>Phí ship: 
                         <span style={{ float: "right" }}>{formatCurrency(order.shippingCost)}</span>
                     </div>
