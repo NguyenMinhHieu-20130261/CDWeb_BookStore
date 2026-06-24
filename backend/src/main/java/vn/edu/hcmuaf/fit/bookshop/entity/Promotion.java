@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Getter
@@ -42,4 +43,15 @@ public class Promotion {
     @Column(name = "isCode")
     private Boolean isCode;
 
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "discount_percent", precision = 5, scale = 2)
+    private BigDecimal discountPercent;
+
+    @Column(name = "usage_count")
+    private Integer usageCount = 0;
+
+    @Column(name = "status")
+    private Boolean status = true;
 }
