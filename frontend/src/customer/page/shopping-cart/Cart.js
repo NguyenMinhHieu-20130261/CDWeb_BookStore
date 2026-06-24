@@ -171,18 +171,7 @@ export const ProductsInCart = () => {
                             </Link>
                         </div>
                     </div>
-                    <div className="col-lg-6">
-                        <div className="shoping__continue">
-                            <div className="shoping__discount">
-                                <h5>Mã giảm giá</h5>
-                                <form action="#">
-                                    <input type="text" placeholder="Nhập mã giảm giá"/>
-                                        <button type="submit" className="site-btn">APPLY</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-lg-6">
+                    <div className="col-lg-6 offset-lg-6">
                         <div className="shoping__checkout">
                             <h5>Tổng tiền giỏ hàng</h5>
                             <ul>
