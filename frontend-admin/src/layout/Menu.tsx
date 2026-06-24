@@ -13,6 +13,7 @@ import HouseIcon from "@mui/icons-material/House";
 import ArticleIcon from "@mui/icons-material/Article";
 import RateReviewIcon from "@mui/icons-material/RateReview";
 import InventoryIcon from "@mui/icons-material/Inventory";
+import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 
 import SubMenu from "./SubMenu";
 type MenuName =
@@ -71,6 +72,12 @@ const Menu = ({dense = false}: any) => {
                     to="/inventory"
                     primaryText="Lô hàng"
                     leftIcon={<InventoryIcon/>}
+                    dense={dense}
+                />
+                <MenuItemLink
+                    to="/promotions"
+                    primaryText="Mã giảm giá"
+                    leftIcon={<LocalOfferIcon/>}
                     dense={dense}
                 />
             </SubMenu>
