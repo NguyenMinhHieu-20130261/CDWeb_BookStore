@@ -1,8 +1,6 @@
-import {
-    SearchInput,
-    SelectInput,
-} from "react-admin";
+import { SearchInput, SelectInput } from "react-admin";
 import * as React from "react";
+
 export const PromotionSearch = [
     <SearchInput
         key="q"
@@ -10,6 +8,7 @@ export const PromotionSearch = [
         placeholder="Tìm kiếm mã giảm giá"
         alwaysOn
     />,
+
     <SelectInput
         key="status"
         source="status"

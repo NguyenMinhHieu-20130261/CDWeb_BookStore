@@ -43,7 +43,7 @@ export type Category = {
     id: number;
     name: string;
     active?: boolean;
-    parentCategory?: number | null;
+    parentCategory?: Category | null;
 };
 //Product
 export interface Product extends RaRecord {
