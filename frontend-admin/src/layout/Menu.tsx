@@ -77,12 +77,7 @@ const Menu = ({dense = false}: any) => {
                     leftIcon={<InventoryIcon/>}
                     dense={dense}
                 />
-                <MenuItemLink
-                    to="/promotions"
-                    primaryText="Mã giảm giá"
-                    leftIcon={<LocalOfferIcon/>}
-                    dense={dense}
-                />
+
             </SubMenu>
             {/* Blog */}
             <SubMenu
@@ -141,6 +136,12 @@ const Menu = ({dense = false}: any) => {
                     to="/orders"
                     primaryText="Đơn hàng"
                     leftIcon={<ReceiptLongIcon />}
+                    dense={dense}
+                />
+                <MenuItemLink
+                    to="/promotions"
+                    primaryText="Mã giảm giá"
+                    leftIcon={<LocalOfferIcon/>}
                     dense={dense}
                 />
             </SubMenu>
