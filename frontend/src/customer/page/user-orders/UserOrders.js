@@ -20,7 +20,7 @@ export const UserOrders = () => {
                 return;
             }
             try {
-                const data = await api.fetchData(`/orders/${user.id}`);
+                const data = await api.fetchData(`/orders/user/${user.id}`);
                 setOrders(data);
             } catch (error) {
                 console.log("Lỗi lấy đơn hàng:", error);

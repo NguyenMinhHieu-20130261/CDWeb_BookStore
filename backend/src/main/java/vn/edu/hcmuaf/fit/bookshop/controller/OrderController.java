@@ -24,7 +24,7 @@ public class OrderController {
     @Autowired
     private CartService cartService;
 
-    @GetMapping("/{userId}")
+    @GetMapping("/user/{userId}")
     public List<Order> getOrdersByUser_Id(
             @PathVariable Integer userId,
             @RequestParam(defaultValue = "newest") String sort
@@ -75,8 +75,9 @@ public class OrderController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getOrderById(@PathVariable Integer id) {
+        Order order = orderService.getOrderById(id);
         return ResponseEntity.ok(
-                Map.of("data", orderService.getOrderById(id))
+                Map.of("data", order)
         );
     }
 

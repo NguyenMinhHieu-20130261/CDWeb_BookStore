@@ -2,8 +2,6 @@ package vn.edu.hcmuaf.fit.bookshop.service.imp;
 
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -202,6 +200,7 @@ public class OrderServiceImpl implements OrderService {
         return orderRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn hàng"));
     }
+    
     @Override
     public Order updateOrderStatus(Integer id, Integer statusId) {
         Order existing = getOrderById(id);
@@ -211,4 +210,3 @@ public class OrderServiceImpl implements OrderService {
         return orderRepo.save(existing);
     }
 }
-
