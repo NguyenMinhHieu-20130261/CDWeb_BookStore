@@ -12,7 +12,7 @@ public interface OrderService {
     Order getOrderDetail(Integer orderId);
     Order createOrder(OrderRequest orderRequest);
     Order cancelOrder(Integer orderId);
-    //
+    //admin
     Page<Order> getAllOrders(int page, int perPage, String sort, String order);
     Order getOrderById(Integer id);
     Order updateOrderStatus(Integer id, Integer statusId);
