@@ -10,6 +10,7 @@ import {
     EditButton,
     useRecordContext,
 } from "react-admin";
+import LinkProduct from "../../layout/LinkProduct";
 import * as React from "react";
 import { Order } from "../../type";
 import Grid from "@mui/material/Grid";
@@ -188,8 +189,17 @@ export const OrderShow = () => (
                         <Divider sx={{ mb: 2 }} />
 
                         <ArrayField source="orderDetails">
-                            <Datagrid bulkActionButtons={false}>
-                                <TextField source="product.title" label="Sản phẩm" />
+                            <Datagrid 
+                                bulkActionButtons={false}
+                                rowClick={false}
+                            >
+                                {/* ProductShow */}
+                                <FunctionField
+                                    label="Sản phẩm"
+                                    render={(record:any) => (
+                                        <LinkProduct product={record.product}/>
+                                    )}
+                                />                                
                                 <NumberField source="quantity" label="Số lượng" />
                                 <NumberField
                                     source="totalMoney"

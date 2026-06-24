@@ -75,10 +75,15 @@ public class OrderController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getOrderById(@PathVariable Integer id) {
-        Order order = orderService.getOrderById(id);
-        return ResponseEntity.ok(
-                Map.of("data", order)
-        );
+        try {
+            Order order = orderService.getOrderById(id);
+            return ResponseEntity.ok(
+                    Map.of("data", order)
+            );
+        } catch (Exception e) {
+            return ResponseEntity.notFound()
+                    .build();
+        }
     }
 
     @PutMapping("/{id}")
