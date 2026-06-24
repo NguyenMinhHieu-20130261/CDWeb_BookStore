@@ -19,4 +19,5 @@ public class OrderRequest {
     private Integer districtId;
     private String note;
     private String paymentMethod;
+    private Integer promotionId;
 }
