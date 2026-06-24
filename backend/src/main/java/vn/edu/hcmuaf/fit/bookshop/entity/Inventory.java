@@ -65,6 +65,11 @@ public class Inventory {
     @JoinColumn(name = "updated_by")
     private User updatedBy;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "supplier_id")
+    private Supplier supplier;
+
     @Column(name = "note", columnDefinition = "TEXT")
     private String note;
 
