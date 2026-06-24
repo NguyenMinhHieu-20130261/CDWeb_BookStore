@@ -1,6 +1,8 @@
 package vn.edu.hcmuaf.fit.bookshop.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,6 +24,13 @@ public class OrderDetail {
     @JoinColumn(name = "order_id")
     private Order order;
 
+    @JsonIgnoreProperties({
+            "category",
+            "images",
+            "detail",
+            "createdBy",
+            "updatedBy"
+    })
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;

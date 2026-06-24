@@ -4,9 +4,9 @@ import {
     TextField,
     BooleanField,
     EditButton,
-    DeleteButton,
     DateField,
 } from "react-admin";
+import DeleteButton from "../../layout/DeleteButton";
 import { CategorySearch } from "./CategorySearch";
 export const CategoryList = () => (
     <List

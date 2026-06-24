@@ -14,7 +14,8 @@ import users from "./components/users";
 import address from "./components/address";
 import reviews from "./components/reviews";
 import inventory from "./components/inventory";
-
+import promotions from "./components/promotions";
+import orders from "./components/orders";
 
 const App = () => (
   <Admin 
@@ -32,6 +33,9 @@ const App = () => (
     <Resource name="address" {...address} />
     <Resource name="reviews" options={{ label: "Đánh giá" }} {...reviews}/>
     <Resource name="inventory" {...inventory} />
+    <Resource name="promotions" {...promotions} />
+    <Resource name="orders" {...orders} />
+    <Resource name="order-status" />
   </Admin>
 );
 

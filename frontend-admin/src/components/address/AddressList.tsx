@@ -5,11 +5,11 @@ import {
     BooleanField,
     DateField,
     ShowButton,
-    DeleteButton,
     TopToolbar,
     ExportButton,
     SelectColumnsButton,
 } from "react-admin";
+import DeleteButton from "../../layout/DeleteButton";
 
 const AddressActions = () => (
     <TopToolbar>

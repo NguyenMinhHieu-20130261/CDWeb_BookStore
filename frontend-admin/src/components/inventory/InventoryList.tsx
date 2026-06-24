@@ -11,6 +11,7 @@ import {
     ShowButton,
     EditButton,
 } from "react-admin";
+import DeleteButton from "../../layout/DeleteButton";
 import * as React from "react";
 import { InventorySearch } from "./InventorySearch";
 import {
@@ -29,6 +30,7 @@ const ListActions = () => (
         <SelectColumnsButton />
         <FilterButton />
         {isAdmin && <CreateButton />}
+        {isAdmin && <DeleteButton />}
         <ExportButton />
     </TopToolbar>
 );

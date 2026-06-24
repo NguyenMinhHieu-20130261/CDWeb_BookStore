@@ -43,7 +43,7 @@ export type Category = {
     id: number;
     name: string;
     active?: boolean;
-    parentCategory?: number | null;
+    parentCategory?: Category | null;
 };
 //Product
 export interface Product extends RaRecord {
@@ -145,4 +145,39 @@ export interface Review extends RaRecord {
     reply?: string;
     createdAt: string;
     updatedAt?: string;
+}
+//order
+export interface Promotion extends RaRecord {
+    id: number;
+    code: string;
+    name: string;
+    discountPercent: number;
+    status: boolean;
+}
+export interface Order extends RaRecord {
+    id: number;
+    orderCode: string;
+    user?: User;
+    shippingAddress?: Address;
+    orderDate: string;
+    orderTotal: number;
+    totalQuantity: number;
+    paymentMethod: string;
+    status: OrderStatus;
+    shippingCost: number;
+    note?: string;
+    orderDetails: OrderDetail[];
+    promotion?: Promotion;
+}
+export interface OrderStatus extends RaRecord {
+    id: number;
+    slug: string;
+    name: string;
+}
+
+export interface OrderDetail extends RaRecord {
+    id: number;
+    product: Product;
+    quantity: number;
+    totalMoney: number;
 }

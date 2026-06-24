@@ -6,9 +6,9 @@ import {
     TextField,
     BooleanField,
     EditButton,
-    DeleteButton,
     DateField,
 } from "react-admin";
+import DeleteButton from "../../layout/DeleteButton";
 
 export const BlogCateList = () => (
     <List

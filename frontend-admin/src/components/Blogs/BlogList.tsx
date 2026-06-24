@@ -16,6 +16,7 @@ import {
     TextField,
     TopToolbar,
 } from "react-admin";
+import DeleteButton from "../../layout/DeleteButton";
 
 const BlogListActions = () => (
     <TopToolbar>

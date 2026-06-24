@@ -48,7 +48,8 @@ public class SecurityConfig {
                 .requestMatchers("/api/userinfo/**").authenticated()
                 .requestMatchers("/api/address/**").authenticated()
                 .requestMatchers("/api/cart/**").authenticated()
-                // .requestMatchers("/api/orders/**").authenticated()
+                .requestMatchers("/api/orders/**").authenticated()
+                .requestMatchers("/api/order-status/**").authenticated()
                 .requestMatchers(HttpMethod.POST, "/api/reviews/**").authenticated()
                 .requestMatchers(HttpMethod.PUT, "/api/reviews/**").authenticated()
                 .requestMatchers(HttpMethod.DELETE, "/api/reviews/**").authenticated()
@@ -61,8 +62,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/blog-detail/**").permitAll()
                 .requestMatchers("/api/search/**").permitAll()
                 .requestMatchers("/api/reviews/**").permitAll()
-                .requestMatchers("/api/orders/**").permitAll()
-                .requestMatchers("/api/inventory/**").permitAll()
+                // .requestMatchers("/api/orders/**").permitAll()
                 //// ADMIN
                 
                 //Inventory
@@ -70,6 +70,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/api/inventory/**").authenticated()
                 .requestMatchers(HttpMethod.PUT, "/api/inventory/**").authenticated()
                 .requestMatchers(HttpMethod.DELETE, "/api/inventory/**").authenticated()
+                .requestMatchers("/api/promotions/**").authenticated()
                 .anyRequest().authenticated()
             );
             // .authorizeHttpRequests(auth -> auth

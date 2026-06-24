@@ -32,11 +32,11 @@ public class Promotion {
     @Column(name = "discount")
     private Integer discount;
 
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Ho_Chi_Minh")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm", timezone = "Asia/Ho_Chi_Minh")
     @Column(name = "start_date")
     private Date startDate;
     
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Ho_Chi_Minh")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm", timezone = "Asia/Ho_Chi_Minh")
     @Column(name = "end_date")
     private Date endDate;
 
