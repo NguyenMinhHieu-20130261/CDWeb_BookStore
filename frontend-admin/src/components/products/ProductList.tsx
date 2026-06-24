@@ -1,20 +1,17 @@
 import {
-    // ArrayField,
     BooleanField,
-    ChipField,
     CreateButton,
     DatagridConfigurable,
     EditButton,
-    ExportButton, FilterButton,
-    ImageField,
+    ExportButton,
+    FilterButton,
+    FunctionField,
     List,
     NumberField,
-    // SearchInput,
     SelectColumnsButton,
-    // ShowButton,
-    DeleteButton,
     TextField,
-    TopToolbar, useTranslate
+    TopToolbar,
+    DeleteButton,
 } from "react-admin";
 import { ProductSearch } from "./ProductSearch";
 import * as React from "react";
@@ -44,10 +41,25 @@ export const ProductList = () => (
     >
         <DatagridConfigurable rowClick="show">
             <TextField source="id" label="ID"/>
-            <ChipField source="category.name" label="Danh mục"/>
+            <FunctionField
+                label="Danh mục"
+                render={(record: any) => record?.category?.name || "Chưa có danh mục"}
+            />            
             <TextField source="title" label="Tên sản phẩm"/>
-            <ImageField source="image" label="Hình ảnh"
-                        sx={{'& img': {maxWidth: 70, maxHeight: 70, objectFit: 'contain'}}}/>
+            <FunctionField
+                label="Hình ảnh"
+                render={(record: any) =>
+                    record?.image ? (
+                        <img
+                            src={record.image}
+                            alt={record.title}
+                            style={{ maxWidth: 70, maxHeight: 70, objectFit: "contain" }}
+                        />
+                    ) : (
+                        "Chưa có ảnh"
+                    )
+                }
+            />
             <NumberField source="oldPrice" options={{
                 style: 'currency',
                 currency: 'VND',
