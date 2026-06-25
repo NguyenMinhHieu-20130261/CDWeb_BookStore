@@ -78,7 +78,10 @@ export const registerUser = async (user, dispatch, navigate) => {
 
         console.log(err.response?.data);
 
-        throw err;
+        return {
+            success: false,
+            message: err.response?.data || "Đăng ký thất bại"
+        };
     }
 };
 

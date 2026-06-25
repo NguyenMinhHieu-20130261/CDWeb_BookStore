@@ -30,8 +30,19 @@ public class AddressServiceImpl implements AddressService {
     public List<Address> getUserAddresses(Integer userId) {
         return addressRepo.findByUserId(userId);
     }
+    //Validate
+    private void validateAddress(Address address) {
+        validationService.validateFullName(address.getFullName());
+        validationService.validatePhone(address.getPhoneNumber());
+        validationService.validateAddress(address.getDetailAdrs());
+        validationService.validateAddress(address.getProvinceCity());
+        validationService.validateAddress(address.getCountyDistrict());
+        validationService.validateAddress(address.getWardCommune());
+    }
+    //userfunc
     @Override
     public Address saveAddress(Address address) {
+        validateAddress(address);
         Integer userId = address.getUser().getId();
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy user"));
@@ -54,6 +65,7 @@ public class AddressServiceImpl implements AddressService {
     }
     @Override
     public Address updateAddress(Integer addressId, Address address) {
+        validateAddress(address);
 
         Address existingAddress = getAddressById(addressId);
 

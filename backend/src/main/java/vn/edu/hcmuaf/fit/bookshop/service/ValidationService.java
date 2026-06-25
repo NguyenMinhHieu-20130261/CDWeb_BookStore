@@ -19,41 +19,57 @@ public class ValidationService {
 
     private static final Pattern SLUG =
             Pattern.compile("^[a-z0-9]+(?:-[a-z0-9]+)*$");
-
+    //từ xấu
     private static final List<String> BAD_WORDS = List.of(
-            "admin", "administrator", "root", "system",
-            "support", "moderator", "null", "undefined",
-            "test", ""
+            "null", 
+            "undefined",
+            "test", 
+            "dm"
     );
+    //tên
+    private static final List<String> RESERVED_NAMES = List.of(
+            "admin",
+            "administrator",
+            "root",
+            "system",
+            "support",
+            "moderator"
+    );
+    // validate username
+    public void validateUsername(String username){
 
-    public void validateUsername(String username) {
-        require(username, "Username không được để trống");
+        require(username,"Username không được trống");
 
-        username = username.trim();
+        username=username.trim();
 
-        if (!USERNAME.matcher(username).matches()) {
-            throw new RuntimeException("Username chỉ gồm chữ, số, dấu _ và từ 4-30 ký tự");
+        if(!USERNAME.matcher(username).matches()){
+            throw new RuntimeException(
+                "Username không hợp lệ"
+            );
         }
 
-        checkBadWords(username, "Username chứa từ không hợp lệ");
+        checkReserved(username);
     }
+    // validate full tên
+    public void validateFullName(String fullName){
 
-    public void validateFullName(String fullName) {
-        require(fullName, "Họ tên không được để trống");
+        require(fullName,"Họ tên không được trống");
 
-        fullName = fullName.trim();
+        fullName=fullName.trim();
 
-        if (fullName.length() < 2 || fullName.length() > 100) {
-            throw new RuntimeException("Họ tên phải từ 2-100 ký tự");
+        if(fullName.length()<2 || fullName.length()>100){
+            throw new RuntimeException(
+                "Họ tên phải từ 2-100 ký tự"
+            );
         }
 
-        if (containsHtml(fullName)) {
-            throw new RuntimeException("Họ tên không được chứa mã HTML/script");
+        if(containsHtml(fullName)){
+            throw new RuntimeException(
+                "Họ tên không hợp lệ"
+            );
         }
-
-        checkBadWords(fullName, "Họ tên chứa từ không hợp lệ");
     }
-
+    //validatephone
     public void validatePhone(String phone) {
         require(phone, "Số điện thoại không được để trống");
 
@@ -61,7 +77,7 @@ public class ValidationService {
             throw new RuntimeException("Số điện thoại không hợp lệ");
         }
     }
-
+    //validate email
     public void validateEmail(String email) {
         require(email, "Email không được để trống");
 
@@ -69,7 +85,7 @@ public class ValidationService {
             throw new RuntimeException("Email không hợp lệ");
         }
     }
-
+    //vaidate địa chỉ
     public void validateAddress(String address) {
         require(address, "Địa chỉ không được để trống");
 
@@ -84,13 +100,13 @@ public class ValidationService {
         }
     }
 
-    public void validateSlug(String slug) {
-        require(slug, "Slug không được để trống");
+    // public void validateSlug(String slug) {
+    //     require(slug, "Slug không được để trống");
 
-        if (!SLUG.matcher(slug.trim()).matches()) {
-            throw new RuntimeException("Slug chỉ gồm chữ thường, số và dấu gạch ngang");
-        }
-    }
+    //     if (!SLUG.matcher(slug.trim()).matches()) {
+    //         throw new RuntimeException("Slug chỉ gồm chữ thường, số và dấu gạch ngang");
+    //     }
+    // }
 
     public void validateImageUrl(String url) {
         if (url == null || url.isBlank()) return;
@@ -109,17 +125,33 @@ public class ValidationService {
             throw new RuntimeException(message);
         }
     }
-
+    //check từ xấu
     private void checkBadWords(String value, String message) {
+
         String lower = value.toLowerCase();
 
         for (String word : BAD_WORDS) {
-            if (lower.contains(word)) {
+
+            if (lower.equals(word)) {
                 throw new RuntimeException(message);
             }
         }
     }
+    //check tên 
+    private void checkReserved(String value){
 
+        String lower=value.toLowerCase();
+
+        for(String word: RESERVED_NAMES){
+
+            if(lower.equals(word)){
+                throw new RuntimeException(
+                    "Tên này không được sử dụng"
+                );
+            }
+        }
+    }
+    //coi text có bao gồm html ko
     private boolean containsHtml(String value) {
         return value.contains("<") || value.contains(">") || value.toLowerCase().contains("script");
     }

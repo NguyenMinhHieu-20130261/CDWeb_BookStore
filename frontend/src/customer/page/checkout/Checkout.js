@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Breadcrumb from "../../components/general/Breadcrumb";
 import PayForm from "./sub-components/PayForm";
 import Bill from "./sub-components/Bill";
 import api from "../../../service/ApiService";
 import ProvinceService from "../../../service/ProvinceService";
-import PhoneValidService from "../../../service/PhoneValidService";
+import ValidateService  from "../../../service/ValidateService";
 import WindowPopup from "../../components/general/WindowPopup";
 
 export const Coupon = () => {
@@ -21,7 +22,7 @@ export const Coupon = () => {
     return (
         <div className="row">
             <div className="col-lg-12">
-                <h6><span className="icon_tag_alt"></span> Bạn có mã giảm giá ? <a href="#" onClick={handleCouponLinkClick}>Nhấn vào đây</a> để nhập mã giảm giá
+                <h6><span className="icon_tag_alt"></span> Bạn có mã giảm giá ? <Link to="" onClick={handleCouponLinkClick}>Nhấn vào đây</Link> để nhập mã giảm giá
                 </h6>
             </div>
         </div>
@@ -52,13 +53,13 @@ export const Checkout = () => {
     const [cartItems, setCartItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [phoneError, setPhoneError] = useState("");
     const [popupInfo, setPopupInfo] = useState({
         visible: false,
         title: "",
         message: "",
         type: ""
     });
+    const phoneError = ValidateService.validatePhone(phoneNumber);
 
     // Coupon states
     const [couponCode, setCouponCode] = useState("");
@@ -66,10 +67,8 @@ export const Checkout = () => {
     const [couponError, setCouponError] = useState("");
     const [couponSuccess, setCouponSuccess] = useState("");
 
-    const { isPhoneNumberValid } = PhoneValidService ? PhoneValidService() : {};
-
     useEffect(() => {
-        if (!user || !user.id) {
+        if (!user.id) {
             setPopupInfo({
                 visible: true,
                 type: "warning",
@@ -99,7 +98,7 @@ export const Checkout = () => {
         };
 
         fetchCartAndProvinces();
-    }, [navigate]);
+    }, [navigate,user.id]);
 
     const handleProvinceChange = async (provinceCode) => {
         setSelectedProvince(provinceCode);
@@ -191,8 +190,7 @@ export const Checkout = () => {
             });
             return;
         }
-
-        if (isPhoneNumberValid && !isPhoneNumberValid(phoneNumber)) {
+        if (phoneError && !phoneError(phoneNumber)) {
             setPopupInfo({
                 visible: true,
                 type: "error",
@@ -200,7 +198,7 @@ export const Checkout = () => {
                 message: "Vui lòng kiểm tra lại số điện thoại"
             });
             return;
-        } else if (!isPhoneNumberValid && phoneNumber.length < 10) {
+        } else if (!phoneError && phoneNumber.length < 10) {
             setPopupInfo({
                 visible: true,
                 type: "error",

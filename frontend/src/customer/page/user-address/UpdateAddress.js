@@ -4,7 +4,7 @@ import {useSelector} from "react-redux";
 
 import api from "../../../service/ApiService";
 import ProvinceService from "../../../service/ProvinceService";
-import PhoneValidService from "../../../service/PhoneValidService";
+import ValidateService  from "../../../service/ValidateService";
 
 import LoadingPage from "../../components/general/LoadingPage";
 import WindowPopup from "../../components/general/WindowPopup";
@@ -32,8 +32,10 @@ const UpdateAddress = () => {
         districtId: "",
         wardCode: ""
     });
+
+    const isPhoneValid = ValidateService.validatePhone(addressData.phoneNumber);
+
     const [locations, setLocations] = useState({provinces: [],districts: [],wards: []});
-    const {isPhoneNumberValid, handleBlur} = PhoneValidService();
 
     const findLocation = (list, code) => {
         return list.find(item => item.code === Number(code) || item.code === code);
@@ -59,7 +61,7 @@ const UpdateAddress = () => {
             });
             return;
         }
-        if (!isPhoneNumberValid(addressData.phoneNumber)) {
+        if (!isPhoneValid(addressData.phoneNumber)) {
             setPopupInfo({
                 visible: true,
                 type: "error",
@@ -185,7 +187,6 @@ const UpdateAddress = () => {
                                         placeholder="Nhập số điện thoại"
                                         value={addressData.phoneNumber}
                                         onChange={(e) => setAddressData(prev => ({ ...prev, phoneNumber: e.target.value }))}
-                                        onBlur={handleBlur}
                                         className="form-control"
                                         maxLength={10}
                                     />

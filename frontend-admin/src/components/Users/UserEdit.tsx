@@ -67,12 +67,14 @@ export const UserEdit = () => {
                                 source="userInformation.fullName"
                                 label="Họ và tên"
                                 fullWidth
+                                disabled
                             />
 
                             <TextInput
                                 source="userInformation.phoneNumber"
                                 label="Số điện thoại"
                                 fullWidth
+                                disabled
                             />
                         </Box>
 
