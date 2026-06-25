@@ -1,70 +1,93 @@
-import bannerImage1 from '../../../assets/img/Banner/banner1.jpg';
-import bannerImage2 from '../../../assets/img/Banner/banner2.jpg';
-import bannerImage3 from '../../../assets/img/Banner/banner3.jpg';
-import bannerImage4 from '../../../assets/img/Banner/banner4.jpg';
+import { Link } from "react-router-dom";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
+
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import "../../../assets/css/style-slider.css";
+import bannerImage1 from "../../../assets/img/Banner/banner1.jpg";
+import bannerImage2 from "../../../assets/img/Banner/banner2.jpg";
+import bannerImage3 from "../../../assets/img/Banner/banner3.jpg";
+import bannerImage4 from "../../../assets/img/Banner/banner4.jpg";
 
 export const Banner = () => {
-    return (<div className="wp-block-bwgb-columns bwgb-columns bwgb-62e911d" id="bwgb-62e911d">
-        <div className="container">
-            <div className="wp-block-bwgb-columns__row row">
-                <div
-                    className="wp-block-bwgb-column bwgb-column spac-bottom-2 space-bottom-lg-3 bwgb-787371f col-sm-12 col-md-12 col-lg-12 col-xl-6"
-                    id="bwgb-787371f">
-                    <div className="style-10 wp-block-bwgb-banners bwgb-banners bwgb-4836ea9" id="bwgb-4836ea9">
-                        <div className="wp-block-bwgb-banner__inner">
-                            <div className="bg-img-hero img-fluid height-500"
-                                 style={{ backgroundImage: 'url("https://bookworm.madrasthemes.com/wp-content/uploads/2020/08/img1-20.jpg")' }}>
-                                <div className="px-6 space-top-3 space-bottom-4 mb-4 mb-lg-0">
-                                    <div className="pt-lg-4 pb-lg-3">
-                                        <p className="bwgb-banner-pretitle banner__pretitle text-uppercase text-gray-400 font-weight-bold">
-                                            GoldLeaf</p>
-                                        <h2 className="hero__title font-size-10 mb-4 pb-1"><span
-                                            className="bwgb-banner-title hero__title-line-1 font-weight-regular d-block mb-1">Vũ trụ sách mở ra</span><span
-                                            className="bwgb-banner-title2 hero__title-line-2 d-block font-weight-regular"><span
-                                            className="font-weight-bold">Muôn vàn ưu đãi hot!</span></span>
-                                        </h2><a
-                                        className="bwgb-banner-action bwgb-button2 banner_btn text-white bwgb-button btn btn-primary btn-wide rounded-0"
-                                        href="https://bookworm.madrasthemes.com/product/the-last-sister-columbia-river-book-1-2/"
-                                        ><span>Mua ngay</span></a>
-                                    </div>
+    const banners = [
+        {
+            image: bannerImage1,
+            pretitle: "BookStore",
+            title: "Vũ trụ sách mở ra",
+            subtitle: "Muôn vàn ưu đãi hot!",
+            link: "/product-list",
+        },
+        {
+            image: bannerImage2,
+            pretitle: "Khuyến mãi",
+            title: "Sách đặc sắc",
+            subtitle: "Ưu đãi trong tháng",
+            link: "/product-list",
+        },
+        {
+            image: bannerImage3,
+            pretitle: "Bán chạy",
+            title: "Những cuốn sách",
+            subtitle: "Được yêu thích nhất",
+            link: "/product-list",
+        },
+        {
+            image: bannerImage4,
+            pretitle: "Tri thức",
+            title: "Đọc sách mỗi ngày",
+            subtitle: "Khám phá thế giới mới",
+            link: "/product-list",
+        },
+    ];
+    useEffect(() => {
+        const fetchBanners = async () => {
+            const data = await api.fetchData("/banners/active");
+            setBanners(data);
+        };
+
+        fetchBanners();
+    }, []);
+    return (
+        <section className="home-banner-slider">
+            <div className="container">
+                <Swiper
+                    modules={[Autoplay, Pagination, Navigation]}
+                    slidesPerView={1}
+                    loop={true}
+                    autoplay={{
+                        delay: 3500,
+                        disableOnInteraction: false,
+                    }}
+                    pagination={{
+                        clickable: true,
+                    }}
+                    navigation={true}
+                >
+                    {banners.map((banner, index) => (
+                        <SwiperSlide key={index}>
+                            <div
+                                className="home-banner-slide"
+                                style={{
+                                    backgroundImage: `url(${banner.image})`,
+                                }}
+                            >
+                                <div className="home-banner-content">
+                                    <p>{banner.pretitle}</p>
+                                    <h2>{banner.title}</h2>
+                                    <h3>{banner.subtitle}</h3>
+
+                                    <Link to={banner.link} className="home-banner-btn">
+                                        Mua ngay
+                                    </Link>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div
-                    className="wp-block-bwgb-column bwgb-column bwgb-7387dd6 col-sm-12 col-md-12 col-lg-12 col-xl-6"
-                    id="bwgb-7387dd6">
-                    <div className="style-17 wp-block-bwgb-banners bwgb-banners bwgb-6313453" id="bwgb-6313453">
-                        <div className="row row-cols-md-2">
-                            <div className="col-12">
-                                <div className="mb-5">
-                                    <img src={bannerImage1} alt="123" style={{ width: '400px' }}/>
-                                </div>
-                            </div>
-                            <div className="col-12">
-                                <div className="mb-5">
-                                    <img src={bannerImage2} alt="123" style={{ width: '400px' }}/>
-                                </div>
-                            </div>
-                            <div className="col-12">
-                                <div className="mb-5 mb-lg-0">
-                                    <div className="mb-5">
-                                        <img src={bannerImage3} alt="123" style={{ width: '400px' }}/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-12">
-                                <div className="mb-5 mb-lg-0">
-                                    <div className="mb-5">
-                                        <img src={bannerImage4} alt="123" style={{ width: '400px' }}/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
             </div>
-        </div>
-    </div>)
-}
+        </section>
+    );
+};

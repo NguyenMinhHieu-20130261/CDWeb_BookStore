@@ -33,6 +33,17 @@ const ProductCard = ({ product,handleAddToCart}) => {
                                 alt={product.title}
                             />
                         </Link>
+                        <button
+                            className={`wishlist-btn ${
+                                product.favorite ? "active" : ""
+                            }`}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                // handleWishlist(product)
+                            }}
+                        >
+                            <i className="fa-solid fa-heart"></i>
+                        </button>
                     </div>
 
                     <div className="woocommerce-loop-product__body product__body pt-3 bg-white">
@@ -92,13 +103,13 @@ const ProductCard = ({ product,handleAddToCart}) => {
                     <div className="product__hover d-flex align-items-center bwgb-products-carousel__add-to-cart-icon-only">
                         <div 
                             className="button product_type_simple add_to_cart_button text-uppercase text-dark h-dark font-weight-medium atc-text"
-                            style = {{cursor:"pointer"}}
+                            style = {{cursor:"pointer", minWidth: "100%"}}
                             title="Add to cart"
                             onClick={(e) => handleAddToCart(e, product)}
                         >
                             <span className="product__add-to-cart atc-text">Thêm vào giỏ hàng</span>
                         </div>
-                        <div className="yith-wcwl-add-to-wishlist">
+                        {/* <div className="yith-wcwl-add-to-wishlist">
                             <div className="yith-wcwl-add-button">
                                 <div
                                 
@@ -107,7 +118,7 @@ const ProductCard = ({ product,handleAddToCart}) => {
                                     <span className="text"> Thêm vào yêu thích</span>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>
