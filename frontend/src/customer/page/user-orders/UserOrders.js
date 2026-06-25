@@ -29,7 +29,7 @@ export const UserOrders = () => {
             }
         };
         loadOrders();
-    }, []);
+    }, [user.id]);
 
     const getStatusColorClass = (status) => {
         switch (status) {
