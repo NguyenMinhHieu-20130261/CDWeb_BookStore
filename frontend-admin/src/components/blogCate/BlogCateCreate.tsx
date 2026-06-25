@@ -8,7 +8,10 @@ import {
 
 export const BlogCateCreate = () => {
     return(
-        <Create title="Thêm danh mục">
+        <Create 
+            title="Thêm danh mục"
+            redirect="list"    
+        >
             <SimpleForm>
                 <TextInput
                     source="name"

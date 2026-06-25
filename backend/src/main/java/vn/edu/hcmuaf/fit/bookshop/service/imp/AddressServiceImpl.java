@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import vn.edu.hcmuaf.fit.bookshop.entity.Address;
 import vn.edu.hcmuaf.fit.bookshop.repository.AddressRepo;
 import vn.edu.hcmuaf.fit.bookshop.service.AddressService;
+import vn.edu.hcmuaf.fit.bookshop.service.ValidationService;
 import vn.edu.hcmuaf.fit.bookshop.entity.User;
 import vn.edu.hcmuaf.fit.bookshop.repository.UserRepo;
 
@@ -22,12 +23,26 @@ public class AddressServiceImpl implements AddressService {
     @Autowired
     private UserRepo userRepo;
 
+    @Autowired
+    private ValidationService validationService;
+
     @Override
     public List<Address> getUserAddresses(Integer userId) {
         return addressRepo.findByUserId(userId);
     }
+    //Validate
+    private void validateAddress(Address address) {
+        validationService.validateFullName(address.getFullName());
+        validationService.validatePhone(address.getPhoneNumber());
+        validationService.validateAddress(address.getDetailAdrs());
+        validationService.validateAddress(address.getProvinceCity());
+        validationService.validateAddress(address.getCountyDistrict());
+        validationService.validateAddress(address.getWardCommune());
+    }
+    //userfunc
     @Override
     public Address saveAddress(Address address) {
+        validateAddress(address);
         Integer userId = address.getUser().getId();
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy user"));
@@ -50,6 +65,7 @@ public class AddressServiceImpl implements AddressService {
     }
     @Override
     public Address updateAddress(Integer addressId, Address address) {
+        validateAddress(address);
 
         Address existingAddress = getAddressById(addressId);
 

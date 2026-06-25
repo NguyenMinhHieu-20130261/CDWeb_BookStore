@@ -5,12 +5,15 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import vn.edu.hcmuaf.fit.bookshop.entity.Review;
 import vn.edu.hcmuaf.fit.bookshop.repository.ReviewRepo;
 import vn.edu.hcmuaf.fit.bookshop.service.ReviewService;
+import vn.edu.hcmuaf.fit.bookshop.service.ValidationService;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,8 +22,12 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 public class ReviewServiceImpl implements ReviewService {
-
+    
+    @Autowired
     private final ReviewRepo reviewRepo;
+
+    @Autowired
+    private ValidationService validationService;
 
     @Override
     public List<Review> getReviewsByProduct(Integer productId, Integer rating, String sort) {

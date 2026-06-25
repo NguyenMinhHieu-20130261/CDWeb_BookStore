@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import vn.edu.hcmuaf.fit.bookshop.dto.request.InventoryCreateRequest;
+import vn.edu.hcmuaf.fit.bookshop.dto.inventory.InventoryCreateRequest;
 import vn.edu.hcmuaf.fit.bookshop.entity.Inventory;
 import vn.edu.hcmuaf.fit.bookshop.service.InventoryService;
 

@@ -5,12 +5,16 @@ import org.springframework.stereotype.Service;
 import vn.edu.hcmuaf.fit.bookshop.entity.UserInformation;
 import vn.edu.hcmuaf.fit.bookshop.repository.UserInfoRepo;
 import vn.edu.hcmuaf.fit.bookshop.service.UserInfoService;
+import vn.edu.hcmuaf.fit.bookshop.service.ValidationService;
 
 @Service
 public class UserInfoServiceImpl implements UserInfoService {
 
     @Autowired
     private UserInfoRepo userInfoRepo;
+
+    @Autowired
+    private ValidationService validationService;
 
     @Override
     public UserInformation getInfoByUserId(Integer userId) {

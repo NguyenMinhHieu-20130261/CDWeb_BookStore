@@ -1,4 +1,4 @@
-package vn.edu.hcmuaf.fit.bookshop.dto.request;
+package vn.edu.hcmuaf.fit.bookshop.dto.inventory;
 
 import lombok.Data;
 import java.util.List;

@@ -5,7 +5,7 @@ import LeftSideBar from "../user-account/sub-components/LeftSideBar";
 import { useSelector } from "react-redux";
 import api from "../../../service/ApiService";
 import ProvinceService from "../../../service/ProvinceService";
-import PhoneValidService from "../../../service/PhoneValidService";
+import ValidateService  from "../../../service/ValidateService";
 import WindowPopup from "../../components/general/WindowPopup";
 
 const AddNewAddress = () => {
@@ -23,17 +23,38 @@ const AddNewAddress = () => {
     const [selectedDistrict, setSelectedDistrict] = useState('');
     const [selectedWard, setSelectedWard] = useState('');
 
-    const [error, setError] = useState('');
+    const [nameError, setNameError] = useState("");
+    const [phoneError, setPhoneError] = useState("");
+    const [addressError, setAddressError] = useState("");
+
     const [popupInfo, setPopupInfo] = useState({
         visible: false,
         title: "",
         message: "",
         type: ""
     });
-    const { isPhoneNumberValid, handleBlur, handlePhoneNumberChange } = PhoneValidService();
+
+    const handleNameChange = (e) => {
+        const value = e.target.value;
+        setFullName(value);
+        setNameError(ValidateService.validateFullName(value));
+    };
+    const handlePhoneChange = (e) => {
+        const value = e.target.value;
+        setPhoneNumber(value);
+        setPhoneError(ValidateService.validatePhone(value));
+    };
+    const handleAddressChange = (e) => {
+        const value = e.target.value;
+        setDetailAdrs(value);
+        setAddressError(ValidateService.validateAddress(value));
+    };
 
     const handleButtonSave = async (e) => {
         e.preventDefault();
+        const nameValidate = ValidateService.validateFullName(fullName);
+        const phoneValidate = ValidateService.validatePhone(phoneNumber);
+
         if (!user?.id) {
             setPopupInfo({
                 visible: true,
@@ -55,24 +76,47 @@ const AddNewAddress = () => {
             });
             return;
         }
-        if (!isPhoneNumberValid(phoneNumber)) {
+        if (nameValidate) {
             setPopupInfo({
                 visible: true,
-                type: "error",
-                title: "Không hợp lệ",
-                message: "Số điện thoại không hợp lệ"
+                type: "warning",
+                title: "Tên không hợp lệ",
+                message: nameValidate
+            });
+            return;
+        }
+
+        if (phoneValidate) {
+            setPopupInfo({
+                visible: true,
+                type: "warning",
+                title: "Số điện thoại không hợp lệ",
+                message: phoneValidate
+            });
+            return;
+        }
+
+        const addressValidate = ValidateService.validateAddress(detailAdrs);
+        if (addressValidate) {
+            setPopupInfo({
+                visible: true,
+                type: "warning",
+                title: "Địa chỉ không hợp lệ",
+                message: addressValidate
             });
             return;
         }
         try {
             const provinceObj = provinces.find(
-                p => p.code === Number(selectedProvince)
+                p => String(p.code) === String(selectedProvince)
             );
+
             const districtObj = districts.find(
-                d => d.code === Number(selectedDistrict)
+                d => String(d.code) === String(selectedDistrict)
             );
+
             const wardObj = wards.find(
-                w => w.code === selectedWard
+                w => String(w.code) === String(selectedWard)
             );
             const payload = {
                 fullName,
@@ -84,7 +128,21 @@ const AddNewAddress = () => {
                 districtId: Number(selectedDistrict),
                 wardCode: selectedWard,
                 isDefault: false,
+                user: {
+                    id: user.id
+                }
             };
+
+            if (!provinceObj || !districtObj || !wardObj) {
+                setPopupInfo({
+                    visible: true,
+                    type: "warning",
+                    title: "Địa chỉ không hợp lệ",
+                    message: "Vui lòng chọn đầy đủ tỉnh, huyện, xã"
+                });
+                return;
+            }
+            console.log("SEND ADDRESS:", payload);
             await api.sendData(
                 "/address/add",
                 payload
@@ -141,29 +199,33 @@ const AddNewAddress = () => {
                                     <h5>Thông tin liên hệ</h5>
 
                                     <div className="mt-3">
+
                                         <label>Họ và tên</label>
                                         <input
                                             type="text"
                                             className="form-control"
                                             placeholder="Nhập họ tên"
-                                            onChange={(e) => setFullName(e.target.value)}
+                                            value={fullName}
+                                            onChange={handleNameChange}
                                         />
+                                        {nameError && (
+                                            <div style={{ color: "red", marginTop: "5px" }}>
+                                                {nameError}
+                                            </div>
+                                        )}
+
                                         <label style={{ marginTop: "10px" }}>Số điện thoại</label>
                                         <input
                                             type="text"
                                             className="form-control"
                                             placeholder="Nhập số điện thoại"
                                             maxLength={10}
-                                            onChange={(e) => {
-                                                setPhoneNumber(e.target.value);
-                                                handlePhoneNumberChange(e);
-                                            }}                                            
-                                            onBlur={handleBlur}
+                                            value={phoneNumber}
+                                            onChange={handlePhoneChange}
                                         />
-
-                                        {error && (
-                                            <div style={{ color: 'red', marginTop: '5px' }}>
-                                                {error}
+                                        {phoneError && (
+                                            <div style={{ color: "red", marginTop: "5px" }}>
+                                                {phoneError}
                                             </div>
                                         )}
                                     </div>
@@ -231,8 +293,15 @@ const AddNewAddress = () => {
                                         type="text"
                                         className="form-control mt-2"
                                         placeholder="Số nhà, tên đường"
-                                        onChange={(e) => setDetailAdrs(e.target.value)}
+                                        value={detailAdrs}
+                                        onChange={handleAddressChange}
                                     />
+
+                                    {addressError && (
+                                        <div style={{ color: "red", marginTop: "5px" }}>
+                                            {addressError}
+                                        </div>
+                                    )}
 
                                     <div className="mt-3 text-center">
                                         <button

@@ -3,7 +3,7 @@ package vn.edu.hcmuaf.fit.bookshop.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import vn.edu.hcmuaf.fit.bookshop.dto.request.InventoryCreateRequest;
+import vn.edu.hcmuaf.fit.bookshop.dto.inventory.InventoryCreateRequest;
 import vn.edu.hcmuaf.fit.bookshop.entity.Inventory;
 
 import java.util.List;

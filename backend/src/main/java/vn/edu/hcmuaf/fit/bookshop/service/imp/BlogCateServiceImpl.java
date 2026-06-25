@@ -36,6 +36,10 @@ public class BlogCateServiceImpl implements BlogCateService {
     }
     @Override
     public BlogCategory createBlogCate(BlogCategory blogCategory) {
+        if (blogCategory.getActive() == false) {
+            blogCategory.setActive(true);
+        }
+
         return blogCateRepo.save(blogCategory);
     }
 
@@ -45,7 +49,7 @@ public class BlogCateServiceImpl implements BlogCateService {
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy danh mục blog"));
 
         old.setName(blogCategory.getName());
-        old.setActive(blogCategory.isActive());
+        old.setActive(blogCategory.getActive());
 
         return blogCateRepo.save(old);
     }

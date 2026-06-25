@@ -2,7 +2,7 @@ import React from "react";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import Breadcrumb from "../../components/general/Breadcrumb";
 import {registerUser} from "../../../Store/ApiRequest";
-
+import ValidateService from "../../../service/ValidateService";
 import {useDispatch} from "react-redux";
 
 const SignUp = () => {
@@ -15,8 +15,24 @@ const SignUp = () => {
     const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = React.useState("");
 
-    const handleRegister = (e) => {
+    const handleRegister = async (e) => {
         e.preventDefault();
+        const usernameError = ValidateService.validateUsername(username);
+        const emailError = ValidateService.validateEmail(email);
+        const passwordError = ValidateService.validatePassword(password);
+
+        if (usernameError) {
+            setErrorMessage(usernameError);
+            return;
+        }
+        if (emailError) {
+            setErrorMessage(emailError);
+            return;
+        }
+        if (passwordError) {
+            setErrorMessage(passwordError);
+            return;
+        }
         if (password !== repeatPassword) {
             setErrorMessage("Mật khẩu nhập lại không trùng khớp với mật khẩu ban đầu!");
             return;
@@ -28,9 +44,13 @@ const SignUp = () => {
             role: "USER"
         };
         try {
-            registerUser(newUser, dispatch, navigate);
+            const result = await registerUser(newUser, dispatch, navigate);
+            if (!result.success) {
+                setErrorMessage(result.message);
+                return;
+            }
         } catch (error) {
-            setErrorMessage("Đã xảy ra lỗi khi đăng ký tài khoản.");
+            setErrorMessage(error.message);
         }
     }
     return (
@@ -77,9 +97,12 @@ const SignUp = () => {
                                             )}
                                             <button className="button_login" type={"submit"}> Đăng ký</button>
                                             <span
-                                                className="d-block text-center my-4 text-muted">Bạn đã có tài khoản? <Link
-                                                to={"/sign-in"}
-                                                style={{width: "60px", color: "#6c757d"}}>Đăng nhập</Link> </span>
+                                                className="d-block text-center my-4 text-muted">Bạn đã có tài khoản?{" "}
+                                                <Link
+                                                    to={"/sign-in"}
+                                                    style={{width: "60px", color: "#6c757d"}}>Đăng nhập
+                                                </Link> 
+                                            </span>
                                         </form>
                                     </div>
                                 </div>

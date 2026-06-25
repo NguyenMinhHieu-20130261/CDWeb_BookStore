@@ -1,6 +1,8 @@
 import {
     BooleanInput,
     Create,
+    ImageField,
+    ImageInput,
     NumberInput,
     required,
     SelectInput,
@@ -19,13 +21,49 @@ export const BlogCreate = () => {
         filter: {},
     });
 
+    const transform = (data:any)=>({
+        ...data,
+
+        thumbnail:
+            typeof data.thumbnail === "string"
+                ? data.thumbnail
+                : data.thumbnail?.src,
+
+        status:data.status ? 1 : 0,
+
+        category:{
+            id:data.category.id
+        }
+    })
+
     return (
-        <Create title="Tạo bài viết">
+        <Create 
+            title="Tạo bài viết"
+            transform={transform}
+            redirect="list"
+        >
             <SimpleForm>
-                <TextInput source="title" label="Tiêu đề" validate={req} />
-                <TextInput source="slug" label="Slug" validate={req} />
-                <TextInput source="thumbnail" label="Link ảnh thumbnail" />
-                <TextInput source="shortDesc" label="Mô tả ngắn" multiline fullWidth />
+                <TextInput source="title" label="Tiêu đề" validate={req} fullWidth />
+                <TextInput source="slug" label="Slug" validate={req} fullWidth />
+
+                <ImageInput
+                    source="thumbnail"
+                    label="Ảnh thumbnail"
+                    accept={{ "image/*": [".png", ".jpg", ".jpeg", ".webp"] }}
+                    validate={req}
+                    placeholder="Thả ảnh để tải lên hoặc nhấp để chọn ảnh."
+                >
+                    <ImageField source="src" />
+                </ImageInput>
+
+                <TextInput
+                    source="shortDescription"
+                    label="Mô tả ngắn"
+                    multiline
+                    fullWidth
+                    validate={req}
+                />
+
                 <SelectInput
                     source="category.id"
                     label="Danh mục"
@@ -34,9 +72,26 @@ export const BlogCreate = () => {
                     optionValue="id"
                     validate={req}
                 />
-                <RichTextInput source="content" label="Nội dung" fullWidth validate={req} />
-                <BooleanInput source="status" label="Hiển thị" defaultValue={true} />
-                <NumberInput source="viewCount" label="Lượt xem" defaultValue={0} disabled />
+
+                <RichTextInput
+                    source="content"
+                    label="Nội dung"
+                    fullWidth
+                    validate={req}
+                />
+
+                <BooleanInput
+                    source="status"
+                    label="Hiển thị"
+                    defaultValue={true}
+                />
+
+                <NumberInput
+                    source="viewCount"
+                    label="Lượt xem"
+                    defaultValue={0}
+                    disabled
+                />
             </SimpleForm>
         </Create>
     );
