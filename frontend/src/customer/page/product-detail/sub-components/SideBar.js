@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import FormatCurrency from "../../../../utils/FormatCurrency.js";
 const SideBarItems = ({product}) =>{

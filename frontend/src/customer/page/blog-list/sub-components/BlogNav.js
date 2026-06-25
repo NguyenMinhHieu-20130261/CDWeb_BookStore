@@ -2,7 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import api from "../../../../service/ApiService";
 
-const BlogNav = () => {
+const BlogNav = ({ onChangeCategory }) => {
     const [blogCate, setBlogCate] = useState([]);
     const {cateId} = useParams(); 
 
@@ -36,6 +36,7 @@ const BlogNav = () => {
                     className={`nav-link px-0 ${!cateId || cateId === "all" ? "active" : ""}`}
                     data-toggle="tab"
                     aria-controls="all"
+                    onClick={onChangeCategory}
                 >
                     Tất cả
                 </Link>
@@ -56,6 +57,7 @@ const BlogNav = () => {
                         className={`nav-link px-0 ${String(cateId) === String(category.id) ? "active" : ""}`}
                         role="tab"
                         aria-controls={`cat-${category.id}`} aria-selected="false"
+                        onClick={onChangeCategory}
                     >
                         {category.name}
                     </Link>

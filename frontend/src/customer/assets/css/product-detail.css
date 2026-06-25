@@ -113,7 +113,6 @@ table td, table th {
 }
 /* NewProd */
 .product_list_widget > li:hover {
-    padding:5px 0px;
     margin:auto;
     background-color: #f3ffd3;
     color: #000000;

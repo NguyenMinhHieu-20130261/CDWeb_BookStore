@@ -19,10 +19,17 @@ public class BlogController {
     @Autowired
     private  BlogService blogService;
 
-     @GetMapping("/category/{categoryId}")
-    public ResponseEntity<List<Blog>> getBlogsByCategory(@PathVariable Integer categoryId) {
-        return ResponseEntity.ok(blogService.getActiveBlogsByCategory(categoryId));
+    @GetMapping("/active-page")
+    public ResponseEntity<Page<Blog>> getActiveBlogsPage(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "6") int size,
+            @RequestParam(required = false) Integer categoryId
+    ) {
+        return ResponseEntity.ok(
+                blogService.getActiveBlogsPage(page, size, categoryId)
+        );
     }
+
     @GetMapping("/detail/{slug}")
     public ResponseEntity<Blog> getBlogDetail(@PathVariable String slug) {
         return ResponseEntity.ok(blogService.getBlogDetail(slug));

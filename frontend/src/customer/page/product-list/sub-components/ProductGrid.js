@@ -1,7 +1,7 @@
 import React from "react";
 import ProductCard from "./ProductCard";
 
-const ProductGrid = ({products, handleAddToCart}) => {
+const ProductGrid = ({products, handleAddToCart,currentPage,setTotalPages}) => {
      if (!products || products.length === 0) {
         return <p>Không có sản phẩm nào.</p>;
     }

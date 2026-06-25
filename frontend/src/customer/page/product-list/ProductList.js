@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Pagination from "../../components/general/Pagination";
 import BreadCrumb from "../../components/general/Breadcrumb";
 import Sidebar from "./sub-components/Sidebar";
@@ -14,6 +14,27 @@ const ProductList = () => {
     const [loading, setLoading] = useState(true);
     const [selectedPriceRange, setSelectedPriceRange] = useState(null);
     const {categoryId} = useParams();
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setPageSize] = useState(20);
+    const totalPages = Math.ceil(products.length / pageSize) || 1;
+
+    const pagedProducts = useMemo(() => {
+        if (pageSize === -1) return products;
+
+        const startIndex = (currentPage - 1) * pageSize;
+        const endIndex = startIndex + pageSize;
+
+        return products.slice(startIndex, endIndex);
+    }, [products, currentPage, pageSize]);
+
+    const handlePageChange = (page) => {
+        if (page < 1 || page > totalPages) return;
+
+        setCurrentPage(page);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
     useEffect(() => {
         const fetchProdList = async () => {
             try {
@@ -27,6 +48,7 @@ const ProductList = () => {
                 
                 setProducts(productList);
                 setAllProducts(productList);
+                setCurrentPage(1);
             } catch (error) {
                 console.log("Lỗi",  error);
             } finally {
@@ -108,7 +130,8 @@ const ProductList = () => {
                                         className="shop-control-bar d-lg-flex justify-content-between align-items-center mb-5 text-center text-md-left">
                                         <div className="shop-control-bar__left mb-3 m-lg-0">
                                             <p className="woocommerce-result-count m-0">
-                                                Hiển thị {products.length} sản phẩm </p>
+                                                Hiển thị {pagedProducts.length} / {products.length} sản phẩm
+                                            </p>
                                         </div>
                                         <div className="shop-control-bar__right d-md-flex align-items-center">
                                             <form className="woocommerce-ordering mb-4 m-md-0" method="get">
@@ -127,14 +150,22 @@ const ProductList = () => {
                                                 <input type="hidden" name="paged" value="1"/>
                                             </form>
                                             <form method="POST"
-                                                  className="number-of-items ml-md-4 mb-4 m-md-0 d-none d-xl-block">
+                                                className="number-of-items ml-md-4 mb-4 m-md-0 d-none d-xl-block"
+                                                onSubmit={(e) => e.preventDefault()}
+                                            >
                                                 <select name="ppp" 
-                                                        className="dropdown-select orderby"
-                                                        data-style="border-bottom shadow-none outline-none py-2">
-                                                    <option value="20">Show 20</option>
-                                                    <option value="40">Show 40</option>
-                                                    <option value="80">Show 80</option>
-                                                    <option value="-1">Show All</option>
+                                                    className="dropdown-select orderby"
+                                                    data-style="border-bottom shadow-none outline-none py-2"
+                                                    value={pageSize}
+                                                    onChange={(e) => {
+                                                        setPageSize(Number(e.target.value));
+                                                        setCurrentPage(1);
+                                                    }}
+                                                >
+                                                    <option value={10}>Hiển thị 10 sản phẩm</option>
+                                                    <option value={20}>Hiển thị 20 sản phẩm</option>
+                                                    <option value={50}>Hiển thị 50 sản phẩm</option>
+                                                    <option value={-1}>HIển thị tất cả</option>
                                                 </select>
                                             </form>
                                         </div>
@@ -145,13 +176,14 @@ const ProductList = () => {
                                         <p>Đang tải sản phẩm...</p>
                                     ) : (
                                         <ProductGrid 
-                                        products={products} 
-                                        handleAddToCart={handleAddToCart}
+                                            products={products} 
+                                            handleAddToCart={handleAddToCart}
                                         />
                                     )}
-                                    <Pagination/>
+
                                 </div>
-                            </main>
+
+                            </main>                          
                         </div>
                         <Sidebar
                             products={allProducts}
@@ -159,6 +191,12 @@ const ProductList = () => {
                             handlePriceFilterChange={handlePriceFilterChange}
                         />                    
                         </div>
+                        <Pagination 
+                            style ={{minWidth:"100%"}}
+                            currentPage={currentPage}
+                            totalPages={totalPages}
+                            onPageChange={handlePageChange}
+                        /> 
                 </div>
             </div>
         </>

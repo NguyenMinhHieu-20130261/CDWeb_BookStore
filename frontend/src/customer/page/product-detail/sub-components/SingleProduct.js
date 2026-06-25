@@ -122,7 +122,13 @@ const SingleProduct = ({product,handleAddToCart}) => {
         <div className="single-product-container border my-4 py-4">
             <div className="row single-product-wrapper m-0">
                 <div className="bookworm-product-gallery col-lg-5">
-                    <img src={product.image} alt={product.title}/>
+                    <img
+                        src={product?.images?.[0]?.image}
+                        alt={product.title}
+                        onError={(e) => {
+                            e.currentTarget.src = "/images/no-image.png";
+                        }}
+                    />            
                 </div>
                 <div className="summary entry-summary col-lg-7 pl-lg-0">
                     <div className="summary entry-summary">
