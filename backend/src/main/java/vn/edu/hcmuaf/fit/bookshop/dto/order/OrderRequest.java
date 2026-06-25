@@ -1,4 +1,4 @@
-package vn.edu.hcmuaf.fit.bookshop.dto.request;
+package vn.edu.hcmuaf.fit.bookshop.dto.order;
 
 import lombok.*;
 

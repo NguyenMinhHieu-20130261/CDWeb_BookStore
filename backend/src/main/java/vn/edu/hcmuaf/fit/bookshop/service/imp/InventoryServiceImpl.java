@@ -7,8 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import vn.edu.hcmuaf.fit.bookshop.dto.request.InventoryCreateRequest;
-import vn.edu.hcmuaf.fit.bookshop.dto.request.InventoryItemRequest;
+import vn.edu.hcmuaf.fit.bookshop.dto.inventory.InventoryCreateRequest;
+import vn.edu.hcmuaf.fit.bookshop.dto.inventory.InventoryItemRequest;
 import vn.edu.hcmuaf.fit.bookshop.entity.Inventory;
 import vn.edu.hcmuaf.fit.bookshop.entity.Product;
 import vn.edu.hcmuaf.fit.bookshop.repository.InventoryRepo;

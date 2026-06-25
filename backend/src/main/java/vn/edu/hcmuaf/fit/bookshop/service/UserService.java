@@ -1,6 +1,8 @@
 package vn.edu.hcmuaf.fit.bookshop.service;
 
 import org.springframework.data.domain.Page;
+
+import vn.edu.hcmuaf.fit.bookshop.dto.user.AdminUpdateUserRequest;
 import vn.edu.hcmuaf.fit.bookshop.entity.User;
 
 import java.util.Optional;
@@ -11,6 +13,6 @@ public interface UserService {
     //admin
     User getUserById(Integer id);
     User createUser(User user);
-    User updateUser(Integer id, User user);
+    User updateUserAdmin(Integer id, AdminUpdateUserRequest request);
     void deleteUser(Integer id);
 }

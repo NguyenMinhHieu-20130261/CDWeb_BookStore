@@ -37,7 +37,11 @@ export const BlogEdit = () => {
     });
 
     return (
-        <Edit title="Chỉnh sửa bài viết" transform={transform}>
+        <Edit
+            title="Chỉnh sửa bài viết"
+            transform={transform}            
+            redirect="list"
+        >
             <SimpleForm>
                 <TextInput source="title" label="Tiêu đề" validate={req} fullWidth />
                 <TextInput source="slug" label="Slug" validate={req} fullWidth />

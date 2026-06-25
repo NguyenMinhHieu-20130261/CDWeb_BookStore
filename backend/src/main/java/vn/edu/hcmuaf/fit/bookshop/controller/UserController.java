@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import vn.edu.hcmuaf.fit.bookshop.dto.user.AdminUpdateUserRequest;
 import vn.edu.hcmuaf.fit.bookshop.entity.User;
 import vn.edu.hcmuaf.fit.bookshop.service.UserService;
 
@@ -16,15 +17,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping
-    public ResponseEntity<?> getAllUsers(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int perPage
-    ) {
-        Page<User> users = userService.getAllUsers(page, perPage);
-        return ResponseEntity.ok(users);
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserById(@PathVariable Integer id) {
         return ResponseEntity.ok(userService.getUserById(id));
@@ -35,17 +27,27 @@ public class UserController {
         return ResponseEntity.ok(userService.createUser(user));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateUser(
-            @PathVariable Integer id,
-            @RequestBody User user
+    //admmin
+    @GetMapping
+    public ResponseEntity<?> getAllUsers(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int perPage
     ) {
-        return ResponseEntity.ok(userService.updateUser(id, user));
+        Page<User> users = userService.getAllUsers(page, perPage);
+        return ResponseEntity.ok(users);
     }
-
+    
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Integer id) {
         userService.deleteUser(id);
         return ResponseEntity.ok("Xóa user thành công");
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateUser(
+            @PathVariable Integer id,
+            @RequestBody AdminUpdateUserRequest request    
+    ) {
+        return ResponseEntity.ok(userService.updateUserAdmin(id, request));
     }
 }

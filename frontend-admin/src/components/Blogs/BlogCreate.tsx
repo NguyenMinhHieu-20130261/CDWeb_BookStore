@@ -37,7 +37,11 @@ export const BlogCreate = () => {
     })
 
     return (
-        <Create title="Tạo bài viết" transform={transform}>
+        <Create 
+            title="Tạo bài viết"
+            transform={transform}
+            redirect="list"
+        >
             <SimpleForm>
                 <TextInput source="title" label="Tiêu đề" validate={req} fullWidth />
                 <TextInput source="slug" label="Slug" validate={req} fullWidth />

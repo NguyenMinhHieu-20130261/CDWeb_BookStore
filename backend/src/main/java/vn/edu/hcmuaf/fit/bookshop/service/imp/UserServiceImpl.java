@@ -9,7 +9,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import vn.edu.hcmuaf.fit.bookshop.dto.user.AdminUpdateUserRequest;
+import vn.edu.hcmuaf.fit.bookshop.entity.Role;
 import vn.edu.hcmuaf.fit.bookshop.entity.User;
+import vn.edu.hcmuaf.fit.bookshop.repository.RoleRepo;
 import vn.edu.hcmuaf.fit.bookshop.repository.UserRepo;
 import vn.edu.hcmuaf.fit.bookshop.service.UserService;
 
@@ -18,6 +21,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepo userRepo;
+
+    @Autowired
+    private RoleRepo roleRepo;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -47,19 +53,24 @@ public class UserServiceImpl implements UserService {
         }
         return userRepo.save(user);
     }
+
     @Override
-    public User updateUser(Integer id, User user) {
+    public User updateUserAdmin(Integer id, AdminUpdateUserRequest request) {
         User oldUser = getUserById(id);
 
-        oldUser.setUsername(user.getUsername());
-        oldUser.setEmail(user.getEmail());
-        oldUser.setIsLocked(user.getIsLocked());
-        oldUser.setRole(user.getRole());
+        if (request.getIsLocked() != null) {
+            oldUser.setIsLocked(request.getIsLocked());
+        }
+
+        if (request.getRoleId() != null) {
+            Role role = roleRepo.findById(request.getRoleId())
+                    .orElseThrow(() -> new RuntimeException("Không tìm thấy role"));
+
+            oldUser.setRole(role);
+        }
+
         oldUser.setUpdatedAt(new Date());
 
-        if (user.getPassword() != null && !user.getPassword().isBlank()) {
-            oldUser.setPassword(passwordEncoder.encode(user.getPassword()));
-        }
         return userRepo.save(oldUser);
     }
     @Override

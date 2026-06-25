@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import vn.edu.hcmuaf.fit.bookshop.entity.Address;
 import vn.edu.hcmuaf.fit.bookshop.repository.AddressRepo;
 import vn.edu.hcmuaf.fit.bookshop.service.AddressService;
+import vn.edu.hcmuaf.fit.bookshop.service.ValidationService;
 import vn.edu.hcmuaf.fit.bookshop.entity.User;
 import vn.edu.hcmuaf.fit.bookshop.repository.UserRepo;
 
@@ -21,6 +22,9 @@ public class AddressServiceImpl implements AddressService {
 
     @Autowired
     private UserRepo userRepo;
+
+    @Autowired
+    private ValidationService validationService;
 
     @Override
     public List<Address> getUserAddresses(Integer userId) {

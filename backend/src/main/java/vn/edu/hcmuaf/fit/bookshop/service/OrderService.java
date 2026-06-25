@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
-import vn.edu.hcmuaf.fit.bookshop.dto.request.OrderRequest;
+import vn.edu.hcmuaf.fit.bookshop.dto.order.OrderRequest;
 import vn.edu.hcmuaf.fit.bookshop.entity.Order;
 
 public interface OrderService {
