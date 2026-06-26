@@ -10,7 +10,7 @@ import DeleteButton from "../../layout/DeleteButton";
 import { CategorySearch } from "./CategorySearch";
 export const CategoryList = () => (
     <List
-        title="Danh sách danh mục"
+        title="Quản lý danh mục"
         sort={{ field: "id", order: "DESC" }}
         perPage={10}
         filters={CategorySearch}

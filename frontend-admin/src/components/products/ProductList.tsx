@@ -33,11 +33,13 @@ const isAdmin =
     </TopToolbar>
 );
 export const ProductList = () => (
-    <List sort={{field: 'id', order: 'ASC'}}
-          perPage={10}
-          filters={ProductSearch}
-          actions={<ListActions/>}
-          sx={{'& .column-title': {minWidth: '10rem'}}}
+    <List 
+        title="Quản lý sản phẩm"
+        sort={{field: 'id', order: 'ASC'}}
+        perPage={10}
+        filters={ProductSearch}
+        actions={<ListActions/>}
+        sx={{'& .column-title': {minWidth: '10rem'}}}
     >
         <DatagridConfigurable rowClick="show">
             <TextField source="id" label="ID"/>

@@ -12,7 +12,7 @@ import DeleteButton from "../../layout/DeleteButton";
 
 export const BlogCateList = () => (
     <List
-        title="Danh sách danh mục bài viết"
+        title="Quản lý danh mục bài viết"
         sort={{ field: "id", order: "DESC" }}
         perPage={10}
         filters={BlogCateSearch}

@@ -7,9 +7,10 @@ import {
     NumberField,
     TextField,
 } from "react-admin";
+import DeleteButton from "../../layout/DeleteButton";
 
 export const BannerList = () => (
-    <List>
+    <List title="Quản lý Banner">
         <Datagrid rowClick="edit">
             <NumberField source="id" />
             <ImageField source="image" label="Ảnh" />
@@ -19,6 +20,7 @@ export const BannerList = () => (
             <NumberField source="position" label="Vị trí" />
             <BooleanField source="active" label="Hiển thị" />
             <EditButton />
+            <DeleteButton/>
         </Datagrid>
     </List>
 );

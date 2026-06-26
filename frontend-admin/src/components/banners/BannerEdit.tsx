@@ -1,14 +1,16 @@
 import {
     BooleanInput,
     Edit,
+    ImageField,
+    ImageInput,
     NumberInput,
     required,
     SimpleForm,
     TextInput,
-    ImageField,
     useRecordContext,
 } from "react-admin";
 import { Box, Typography } from "@mui/material";
+import { uploadImage } from "../../service/ImageUploader";
 
 const req = [required("Không được để trống")];
 
@@ -39,49 +41,51 @@ const BannerPreview = () => {
     );
 };
 
-export const BannerEdit = () => {
-    return (
-        <Edit title="Chỉnh sửa banner">
-            <SimpleForm>
-                <BannerPreview />
+const transform = async (data: any) => {
+    let image = data.image;
 
-                <TextInput
-                    source="title"
-                    label="Tiêu đề"
-                    validate={req}
-                    fullWidth
-                />
+    if (data.uploadImage?.rawFile instanceof File) {
+        image = await uploadImage(data.uploadImage.rawFile);
+    }
 
-                <TextInput
-                    source="subtitle"
-                    label="Mô tả"
-                    fullWidth
-                />
-
-                <TextInput
-                    source="image"
-                    label="Link ảnh"
-                    validate={req}
-                    fullWidth
-                />
-
-                <TextInput
-                    source="link"
-                    label="Đường dẫn khi bấm"
-                    fullWidth
-                />
-
-                <NumberInput
-                    source="position"
-                    label="Vị trí hiển thị"
-                    defaultValue={0}
-                />
-
-                <BooleanInput
-                    source="active"
-                    label="Hiển thị"
-                />
-            </SimpleForm>
-        </Edit>
-    );
+    return {
+        ...data,
+        image,
+        uploadImage: undefined,
+    };
 };
+
+export const BannerEdit = () => (
+    <Edit title="Chỉnh sửa banner" transform={transform}>
+        <SimpleForm>
+            <BannerPreview />
+
+            <TextInput source="title" label="Tiêu đề" validate={req} fullWidth />
+
+            <TextInput source="subtitle" label="Mô tả" fullWidth />
+
+            <TextInput
+                source="image"
+                label="Option 1: Link ảnh"
+                fullWidth
+                helperText="Dán URL ảnh trực tiếp"
+            />
+            <ImageField source="image" label="Ảnh hiện tại" />
+            <ImageInput
+                source="uploadImage"
+                label="Option 2: Chèn ảnh từ máy"
+                accept={{ "image/*": [".png", ".jpg", ".jpeg", ".webp"] }}
+                multiple={false}
+                helperText="Chọn ảnh nếu muốn thay ảnh hiện tại"
+            >
+                <ImageField source="src" title="title" />
+            </ImageInput>
+
+            <TextInput source="link" label="Đường dẫn khi bấm" fullWidth />
+
+            <NumberInput source="position" label="Vị trí hiển thị" />
+
+            <BooleanInput source="active" label="Hiển thị" />
+        </SimpleForm>
+    </Edit>
+);

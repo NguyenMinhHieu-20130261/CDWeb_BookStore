@@ -33,7 +33,7 @@ const ListActions = () => (
 
 export const PromotionList = () => (
     <List
-        title="Danh sách mã giảm giá"
+        title="Quản lý mã giảm giá"
         sort={{ field: "id", order: "DESC" }}
         perPage={10}
         filters={PromotionSearch}
