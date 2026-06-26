@@ -2,7 +2,7 @@ import { AuthProvider } from 'react-admin';
 
 export const authProvider: AuthProvider = {
     login: ({ username, password }) =>  {
-        const request = new Request('http://localhost:8080/api/auth/signin', {
+        const request = new Request(`${import.meta.env.VITE_API_URL}/auth/signin`, {
             method: 'POST',
             body: JSON.stringify({ username, password }),
             headers: new Headers({ 'Content-Type': 'application/json' }),
@@ -21,8 +21,26 @@ export const authProvider: AuthProvider = {
                 throw new Error('Sai tài khoản hoặc mật khẩu')
             });
     },
-    logout: () => {
-        localStorage.removeItem('auth');
+    logout: async () => {
+        const auth = JSON.parse(localStorage.getItem("auth") || "{}");
+        const token = auth?.token || localStorage.getItem("token");
+        try {
+            if (token) {
+                await fetch(`${import.meta.env.VITE_API_URL}/auth/logout`, {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+            }
+        } catch (e) {
+            console.error("Logout API error:", e);
+        } finally {
+            localStorage.removeItem("auth");
+            localStorage.removeItem("user");
+            localStorage.removeItem("token");
+        }
+
         return Promise.resolve();
     },
     checkError: (error) => {

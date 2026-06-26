@@ -8,6 +8,7 @@ import vn.edu.hcmuaf.fit.bookshop.dto.order.OrderRequest;
 import vn.edu.hcmuaf.fit.bookshop.entity.*;
 import vn.edu.hcmuaf.fit.bookshop.service.*;
 import org.springframework.data.domain.*;
+import org.springframework.security.core.Authentication;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,41 +18,57 @@ import java.util.Map;
 @RequestMapping("/api/orders")
 @CrossOrigin("*")
 public class OrderController {
-    @Autowired
-    private UserService userService;
+
     @Autowired
     private OrderService orderService;
-    @Autowired
-    private CartService cartService;
 
-    @GetMapping("/user/{userId}")
+    @GetMapping("/user")
     public List<Order> getOrdersByUser_Id(
-            @PathVariable Integer userId,
+            Authentication authentication,
             @RequestParam(defaultValue = "newest") String sort
     ) {
-        return orderService.getOrdersByUser_Id(userId, sort);
+        User user = (User) authentication.getPrincipal();
+        return orderService.getOrdersByUser_Id(user.getId(), sort);
     }
     @GetMapping("/detail/{orderId}")
-    public ResponseEntity<?> getOrderDetail(@PathVariable Integer orderId) {
+    public ResponseEntity<?> getOrderDetail(
+            @PathVariable Integer orderId,
+            Authentication authentication
+        ) {
         try {
-            return ResponseEntity.ok(orderService.getOrderDetail(orderId));
+            User user = (User) authentication.getPrincipal();
+            return ResponseEntity.ok(
+                    orderService.getOrderDetailForUser(orderId, user.getId())
+            );        
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
     @PostMapping("/create")
-    public ResponseEntity<?> createOrder(@RequestBody OrderRequest orderRequest) {
+    public ResponseEntity<?> createOrder(
+            @RequestBody OrderRequest orderRequest,
+            Authentication authentication
+    ) {
         try {
+            User user = (User) authentication.getPrincipal();
+            orderRequest.setUserId(user.getId());
+
             Order savedOrder = orderService.createOrder(orderRequest);
             return ResponseEntity.ok(savedOrder);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
     @PutMapping("/cancel/{orderId}")
-    public ResponseEntity<?> cancelOrder(@PathVariable Integer orderId) {
+    public ResponseEntity<?> cancelOrder(
+            @PathVariable Integer orderId,
+            Authentication authentication
+    ) {
         try {
-            Order cancelledOrder = orderService.cancelOrder(orderId);
+            User user = (User) authentication.getPrincipal();
+
+            Order cancelledOrder = orderService.cancelOrderForUser(orderId,user.getId());
             return ResponseEntity.ok(cancelledOrder);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

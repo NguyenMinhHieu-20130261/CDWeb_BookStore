@@ -55,12 +55,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order getOrderDetail(Integer orderId) {
-        return orderRepo.findById(orderId)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn hàng"));
-    }
-
-    @Override
     @Transactional
     public Order createOrder(OrderRequest orderRequest) {
         if (orderRequest.getUserId() == null) {
@@ -175,9 +169,17 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public Order cancelOrder(Integer orderId) {
+    public Order cancelOrderForUser(Integer orderId, Integer userId) {
         Order order = orderRepo.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn hàng"));
+
+        if (!order.getUser().getId().equals(userId)) {
+            throw new RuntimeException("Bạn không có quyền hủy đơn hàng này");
+        }
+
+        if (!"pending".equals(order.getStatus().getSlug())) {
+            throw new RuntimeException("Chỉ có thể hủy đơn hàng đang chờ xử lý");
+        }
 
         OrderStatus cancelledStatus = orderStatusRepo.findById(6)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy trạng thái hủy đơn hàng"));
@@ -186,7 +188,7 @@ public class OrderServiceImpl implements OrderService {
         return orderRepo.save(order);
     }
     //admin
-        @Override
+    @Override
     public Page<Order> getAllOrders(int page, int perPage, String sort, String order) {
         Sort.Direction direction = order.equalsIgnoreCase("desc")
                 ? Sort.Direction.DESC
@@ -208,5 +210,16 @@ public class OrderServiceImpl implements OrderService {
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy trạng thái"));
         existing.setStatus(status);
         return orderRepo.save(existing);
+    }
+    @Override
+    public Order getOrderDetailForUser(Integer orderId, Integer userId) {
+        Order order = orderRepo.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn hàng"));
+
+        if (!order.getUser().getId().equals(userId)) {
+            throw new RuntimeException("Bạn không có quyền xem đơn hàng này");
+        }
+
+        return order;
     }
 }

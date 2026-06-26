@@ -53,7 +53,12 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void removeFromCart(int cartItemId) {
+    public void removeFromCart(Integer cartItemId, Integer userId) {
+        Cart cart = cartRepo.findById(cartItemId).orElseThrow();
+
+        if (!cart.getUser().getId().equals(userId)) {
+            throw new RuntimeException("Bạn không có quyền thao tác giỏ hàng này");
+        }
         cartRepo.deleteById(cartItemId);
     }
 
@@ -81,9 +86,11 @@ public class CartServiceImpl implements CartService {
         return carts;    
     }
     @Override
-    public ResponseEntity<?> updateQuantity(int cartItemId, int quantity) {
-        Cart cart = cartRepo.findById(cartItemId)
-                .orElseThrow();
+    public ResponseEntity<?> updateQuantity(Integer cartItemId, Integer quantity, Integer userId) {
+        Cart cart = cartRepo.findById(cartItemId).orElseThrow();
+        if (!cart.getUser().getId().equals(userId)) {
+            throw new RuntimeException("Bạn không có quyền thao tác giỏ hàng này");
+        }
         cart.setQuantity(quantity);
         return ResponseEntity.ok(
             cartRepo.save(cart)
