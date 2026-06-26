@@ -65,7 +65,7 @@ export const Header = () => {
                 return;
             }
             try {
-                const data = await api.fetchData(`/cart/items/${user.id}`);
+                const data = await api.fetchData(`/cart/items`);
                 const count = data.reduce(
                     (sum, item) => sum + item.quantity,
                     0

@@ -84,7 +84,7 @@ export const Checkout = () => {
         const fetchCartAndProvinces = async () => {
             try {
                 // Fetch cart items
-                const items = await api.fetchData(`/cart/items/${user.id}`);
+                const items = await api.fetchData(`/cart/items`);
                 setCartItems(items);
 
                 // Fetch provinces
@@ -146,7 +146,7 @@ export const Checkout = () => {
         try {
             setCouponError("");
             setCouponSuccess("");
-            const res = await api.fetchData(`/promotions/validate?code=${couponCode.trim()}&userId=${user.id}`);
+            const res = await api.fetchData(`/promotions/validate?code=${couponCode.trim()}`);
             if (res) {
                 setAppliedPromotion(res);
                 setCouponSuccess(`Áp dụng mã giảm giá "${res.code}" thành công! Giảm ${res.discountPercent}%`);

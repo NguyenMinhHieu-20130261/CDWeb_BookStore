@@ -7,8 +7,8 @@ import vn.edu.hcmuaf.fit.bookshop.entity.Cart;
 
 public interface CartService {
     ResponseEntity<?> addToCart(Cart cartItem);
-    void removeFromCart(int cartItemId);
+    void removeFromCart(Integer cartItemId, Integer userId);
+    ResponseEntity<?> updateQuantity( Integer cartItemId,  Integer quantity,  Integer userId);
     List<Cart> getCartItems();
     List<Cart> getCartItemsByUserId(Integer userId);
-    ResponseEntity<?> updateQuantity(int cartItemId, int quantity);
 }

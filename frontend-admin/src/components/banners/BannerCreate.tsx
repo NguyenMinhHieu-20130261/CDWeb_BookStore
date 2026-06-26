@@ -59,36 +59,3 @@ export const BannerCreate = () => (
         </SimpleForm>
     </Create>
 );
-
-export const BannerEdit = () => (
-    <Edit transform={transform}>
-        <SimpleForm>
-            <TextInput source="title" label="Tiêu đề" validate={req} fullWidth />
-
-            <TextInput source="subtitle" label="Mô tả" fullWidth />
-
-            {/* Link ảnh */}
-            <TextInput
-                source="image"
-                label="Link ảnh"
-                helperText="Nếu upload ảnh mới thì có thể bỏ qua"
-                fullWidth
-            />
-
-            {/* Upload */}
-            <ImageInput
-                source="uploadImage"
-                label="Hoặc tải ảnh mới"
-                accept={{ "image/*": [".png", ".jpg", ".jpeg", ".webp"] }}
-            >
-                <ImageField source="src" />
-            </ImageInput>
-
-            <TextInput source="link" label="Đường dẫn khi bấm" fullWidth />
-
-            <NumberInput source="position" label="Vị trí" />
-
-            <BooleanInput source="active" label="Hiển thị" />
-        </SimpleForm>
-    </Edit>
-);

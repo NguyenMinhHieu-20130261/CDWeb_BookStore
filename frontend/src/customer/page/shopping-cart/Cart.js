@@ -17,7 +17,7 @@ export const ProductsInCart = () => {
                 setLoading(false);
                 return;
             }
-            const res = await api.fetchData(`/cart/items/${user.id}`);
+            const res = await api.fetchData(`/cart/items`);
             setCartItems(res);
         } catch (error) {
             console.log("Lỗi lấy giỏ hàng:", error);

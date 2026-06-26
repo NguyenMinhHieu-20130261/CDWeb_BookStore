@@ -3,8 +3,10 @@ package vn.edu.hcmuaf.fit.bookshop.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.hcmuaf.fit.bookshop.entity.Promotion;
+import vn.edu.hcmuaf.fit.bookshop.entity.User;
 import vn.edu.hcmuaf.fit.bookshop.service.PromotionService;
 
 import java.util.Optional;
@@ -13,7 +15,6 @@ import org.springframework.http.HttpStatus;
 
 @RestController
 @RequestMapping("/api/promotions")
-@CrossOrigin("*")
 public class PromotionController {
 
     @Autowired
@@ -23,7 +24,10 @@ public class PromotionController {
     private vn.edu.hcmuaf.fit.bookshop.repository.OrderRepo orderRepo;
 
     @GetMapping("/validate")
-    public ResponseEntity<?> validatePromotion(@RequestParam String code, @RequestParam Integer userId) {
+    public ResponseEntity<?> validatePromotion(@RequestParam String code, Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        Integer userId = user.getId();
+
         Optional<Promotion> promoOpt = promotionService.getPromotionByCode(code.trim());
         if (promoOpt.isEmpty()) {
             return ResponseEntity.badRequest().body(Map.of("message", "Mã giảm giá không tồn tại"));

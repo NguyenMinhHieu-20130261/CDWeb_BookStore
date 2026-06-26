@@ -6,12 +6,14 @@ import org.springframework.data.domain.Page;
 
 import vn.edu.hcmuaf.fit.bookshop.dto.order.OrderRequest;
 import vn.edu.hcmuaf.fit.bookshop.entity.Order;
+import vn.edu.hcmuaf.fit.bookshop.entity.User;
 
 public interface OrderService {
+    //user
     List<Order> getOrdersByUser_Id(Integer user_Id, String sort);
-    Order getOrderDetail(Integer orderId);
     Order createOrder(OrderRequest orderRequest);
-    Order cancelOrder(Integer orderId);
+    Order getOrderDetailForUser(Integer orderId, Integer userId);
+    Order cancelOrderForUser(Integer orderId,Integer userId);
     //admin
     Page<Order> getAllOrders(int page, int perPage, String sort, String order);
     Order getOrderById(Integer id);
