@@ -38,7 +38,7 @@ export const ProductDetail = () => {
     useEffect(() => {
         const fetchProdList = async () => {
             try {
-                const data = await api.fetchData('/products');
+                const data = await api.fetchData('/products/active');
                 // console.log("products", data);
                 const productList = Array.isArray(data) ? data : data.data || [];
                 setListProduct(productList);

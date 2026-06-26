@@ -67,6 +67,15 @@ const Category = () => {
                     className="mt-4 widget-content collapse show"
                     aria-labelledby="widgetHeading-woocommerce_product_categories-2">
                     <ul className="product-categories">
+                        <li className="cat-item parent-cat">
+                            <Link
+                                to="/product-list"
+                                className="category-parent-link all-category"
+                            >
+                                <i className="fa-solid fa-book mr-2 p-2d75"/>
+                                Tất cả
+                            </Link>
+                        </li>
                         {parentCategories.map(parent => {
                             const children = categories.filter(
                                 child => child.parentId === parent.id

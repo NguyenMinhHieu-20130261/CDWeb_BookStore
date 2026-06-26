@@ -36,6 +36,7 @@ const ListActions = () => (
 );
 export const InventoryList = () => (
     <List
+        title="Quản lý lô hàng"
         sort={{ field: "remainingQuantity", order: "DESC" }}
         perPage={10}
         filters={InventorySearch}

@@ -9,9 +9,9 @@ import {
     FunctionField,
     TopToolbar,
     EditButton,
-    DeleteButton,
 } from "react-admin";
 import { Box, Chip, Typography, Divider } from "@mui/material";
+import DeleteButton from "../../layout/DeleteButton";
 
 const BlogShowActions = () => (
     <TopToolbar>

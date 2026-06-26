@@ -36,6 +36,7 @@ export const ReviewList = () => {
     return (
         <Box display="flex">
             <List
+                title="Quản lý đánh giá"
                 sort={{field: 'createdAt', order: 'DESC'}}
                 perPage={10}
                 actions={<VisitorListActions/>}

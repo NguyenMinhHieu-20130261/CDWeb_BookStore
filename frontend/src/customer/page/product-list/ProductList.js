@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Pagination from "../../components/general/Pagination";
 import BreadCrumb from "../../components/general/Breadcrumb";
 import Sidebar from "./sub-components/Sidebar";
@@ -14,6 +14,57 @@ const ProductList = () => {
     const [loading, setLoading] = useState(true);
     const [selectedPriceRange, setSelectedPriceRange] = useState(null);
     const {categoryId} = useParams();
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setPageSize] = useState(20);
+    const totalPages = Math.ceil(products.length / pageSize) || 1;
+    const [sortType, setSortType] = useState("default");
+
+    const getProductPrice = (product) => {
+        return Number(product.currentPrice || product.salePrice || product.price || 0);
+    };
+
+    const sortedProducts = useMemo(() => {
+        const sorted = [...products];
+
+        switch (sortType) {
+            case "price":
+                return sorted.sort((a, b) => getProductPrice(a) - getProductPrice(b));
+
+            case "price-desc":
+                return sorted.sort((a, b) => getProductPrice(b) - getProductPrice(a));
+
+            case "date":
+                return sorted.sort(
+                    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+                );
+
+            case "name":
+                return sorted.sort((a, b) =>
+                    a.title.localeCompare(b.title, "vi")
+                );
+
+            default:
+                return sorted;
+        }
+    }, [products, sortType]);
+
+    const pagedProducts = useMemo(() => {
+        if (pageSize === -1) return sortedProducts;
+
+        const startIndex = (currentPage - 1) * pageSize;
+        const endIndex = startIndex + pageSize;
+
+        return sortedProducts.slice(startIndex, endIndex);
+    }, [sortedProducts, currentPage, pageSize]);
+
+    const handlePageChange = (page) => {
+        if (page < 1 || page > totalPages) return;
+
+        setCurrentPage(page);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
     useEffect(() => {
         const fetchProdList = async () => {
             try {
@@ -27,6 +78,7 @@ const ProductList = () => {
                 
                 setProducts(productList);
                 setAllProducts(productList);
+                setCurrentPage(1);
             } catch (error) {
                 console.log("Lỗi",  error);
             } finally {
@@ -108,33 +160,58 @@ const ProductList = () => {
                                         className="shop-control-bar d-lg-flex justify-content-between align-items-center mb-5 text-center text-md-left">
                                         <div className="shop-control-bar__left mb-3 m-lg-0">
                                             <p className="woocommerce-result-count m-0">
-                                                Hiển thị {products.length} sản phẩm </p>
+                                                Hiển thị {pagedProducts.length} / {products.length} sản phẩm
+                                            </p>
                                         </div>
                                         <div className="shop-control-bar__right d-md-flex align-items-center">
-                                            <form className="woocommerce-ordering mb-4 m-md-0" method="get">
-                                                <select name="orderby"
-                                                        className="orderby js-select selectpicker dropdown-select"
-                                                        aria-label="Shop order"
-                                                        data-style="border-bottom shadow-none outline-none py-2">
-                                                    <option value="menu_order">Default sorting
-                                                    </option>
-                                                    <option value="popularity">Sort by popularity</option>
-                                                    <option value="rating">Sort by average rating</option>
-                                                    <option value="date">Sort by latest</option>
-                                                    <option value="price">Sort by price: low to high</option>
-                                                    <option value="price-desc">Sort by price: high to low</option>
+
+                                            <form
+                                                method="POST" 
+                                                className="woocommerce-ordering mb-4 m-md-0"    
+                                            >
+                                                <label>
+                                                    <i className="fa-solid fa-arrow-down-wide-short mr-2"></i>
+                                                    Sắp xếp theo
+                                                </label>
+                                                <select
+                                                    name="orderby"
+                                                    className="dropdown-select orderby"
+                                                    data-style="border-bottom shadow-none outline-none py-2"
+                                                    value={sortType}
+                                                    onChange={(e) => {
+                                                        setSortType(e.target.value);
+                                                        setCurrentPage(1);
+                                                    }}
+                                                >
+                                                    <option value="default">Mặc định</option>
+                                                    <option value="date">Mới nhất</option>
+                                                    <option value="name">Tên A-Z</option>
+                                                    <option value="price">Giá: thấp đến cao</option>
+                                                    <option value="price-desc">Giá: cao đến thấp</option>
                                                 </select>
                                                 <input type="hidden" name="paged" value="1"/>
                                             </form>
                                             <form method="POST"
-                                                  className="number-of-items ml-md-4 mb-4 m-md-0 d-none d-xl-block">
+                                                className="number-of-items ml-md-4 mb-4 m-md-0 d-none d-xl-block"
+                                                onSubmit={(e) => e.preventDefault()}
+                                            >
+                                                <label>
+                                                    <i className="fa-solid fa-list mr-2"></i>
+                                                    Hiển thị
+                                                </label>
                                                 <select name="ppp" 
-                                                        className="dropdown-select orderby"
-                                                        data-style="border-bottom shadow-none outline-none py-2">
-                                                    <option value="20">Show 20</option>
-                                                    <option value="40">Show 40</option>
-                                                    <option value="80">Show 80</option>
-                                                    <option value="-1">Show All</option>
+                                                    className="dropdown-select orderby"
+                                                    data-style="border-bottom shadow-none outline-none py-2"
+                                                    value={pageSize}
+                                                    onChange={(e) => {
+                                                        setPageSize(Number(e.target.value));
+                                                        setCurrentPage(1);
+                                                    }}
+                                                >
+                                                    <option value={10}>10 sản phẩm</option>
+                                                    <option value={20}>20 sản phẩm</option>
+                                                    <option value={50}>50 sản phẩm</option>
+                                                    <option value={-1}>tất cả sản phẩm</option>
                                                 </select>
                                             </form>
                                         </div>
@@ -145,13 +222,14 @@ const ProductList = () => {
                                         <p>Đang tải sản phẩm...</p>
                                     ) : (
                                         <ProductGrid 
-                                        products={products} 
-                                        handleAddToCart={handleAddToCart}
+                                            products={pagedProducts} 
+                                            handleAddToCart={handleAddToCart}
                                         />
                                     )}
-                                    <Pagination/>
+
                                 </div>
-                            </main>
+
+                            </main>                          
                         </div>
                         <Sidebar
                             products={allProducts}
@@ -159,6 +237,12 @@ const ProductList = () => {
                             handlePriceFilterChange={handlePriceFilterChange}
                         />                    
                         </div>
+                        <Pagination 
+                            style ={{minWidth:"100%"}}
+                            currentPage={currentPage}
+                            totalPages={totalPages}
+                            onPageChange={handlePageChange}
+                        /> 
                 </div>
             </div>
         </>

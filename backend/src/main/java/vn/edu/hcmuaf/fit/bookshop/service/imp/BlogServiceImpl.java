@@ -23,13 +23,18 @@ public class BlogServiceImpl implements BlogService {
     private final BlogRepo blogRepo;
 
     @Override
-    public List<Blog> getActiveBlogs() {
-        return blogRepo.findByStatusOrderByCreatedAtDesc(1);
-    }
+    public Page<Blog> getActiveBlogsPage(int page, int size, Integer categoryId) {
+        Pageable pageable = PageRequest.of(
+                page,
+                size,
+                Sort.by(Sort.Direction.DESC, "createdAt")
+        );
 
-    @Override
-    public List<Blog> getActiveBlogsByCategory(Integer categoryId) {
-        return blogRepo.findByCategoryIdAndStatusOrderByCreatedAtDesc(categoryId, 1);
+        if (categoryId == null) {
+            return blogRepo.findByStatus(1, pageable);
+        }
+
+        return blogRepo.findByStatusAndCategoryId(1, categoryId, pageable);
     }
     @Override
     public Blog getBlogDetail(String slug) {

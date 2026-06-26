@@ -8,8 +8,7 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 public interface BlogService {
-    List<Blog> getActiveBlogs();
-    List<Blog> getActiveBlogsByCategory(Integer categoryId);
+    Page<Blog> getActiveBlogsPage(int page, int size, Integer categoryId);
     Blog getBlogDetail(String slug);
     //admin
     Blog getBlogById(Integer id);

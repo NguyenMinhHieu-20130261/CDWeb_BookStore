@@ -2,9 +2,10 @@ import {
     Show,
     TopToolbar,
     EditButton,
-    DeleteButton,
     useShowContext,
 } from "react-admin";
+import DeleteButton from "../../layout/DeleteButton";
+
 import {
     Avatar,
     Box,

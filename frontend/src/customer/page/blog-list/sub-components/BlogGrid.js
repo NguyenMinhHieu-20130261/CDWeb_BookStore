@@ -3,27 +3,31 @@ import React, { useEffect, useState } from "react";
 import api from "../../../../service/ApiService";
 import { useLocation, useParams } from "react-router-dom";
 
-const BlogGrid = () => {
+const BlogGrid = ({currentPage,setTotalPages}) => {
     const [blogs, setBlogs] = useState([]);
     const [loading, setLoading] = useState(true);
     const {cateId} = useParams();
     const location = useLocation();
     const currentCategoryName = location.state?.categoryName || location.state?.title;
     const currentCategoryId = cateId;
+
     useEffect(() => {
         const fetchBlogs = async () => {
             setLoading(true);
             try {
                 // Nếu cateId là "all" hoặc không tồn tại, lấy tất cả bài viết
-                let data;
-                if (!cateId || cateId === "all") {
-                    data = await api.fetchData("/blogs");
-                } else {
-                    data = await api.fetchData(`/blogs/category/${cateId}`);
-                }
+                const size = 2;
+
+                const url =
+                    !cateId || cateId === "all"
+                        ? `/blogs/active-page?page=${currentPage - 1}&size=${size}`
+                        : `/blogs/active-page?page=${currentPage - 1}&size=${size}&categoryId=${cateId}`;
+
+                const data = await api.fetchData(url);
                 // console.log("BLOGS:", data);
 
-                setBlogs(data);
+                setBlogs(data.content);
+                setTotalPages(data.totalPages);
             } catch (error) {
                 console.log("Lỗi khi lấy danh sách bài viết:", error);
             } finally {
@@ -31,8 +35,8 @@ const BlogGrid = () => {
             }
         };
         fetchBlogs();
-    }, [cateId]);
-
+    }, [cateId, currentPage, setTotalPages]);
+    
     if (loading) {
         return <div style={{textAlign: 'center'}}>Đang tải...</div>;
     }

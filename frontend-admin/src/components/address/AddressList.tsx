@@ -20,7 +20,7 @@ const AddressActions = () => (
 
 export const AddressList = () => (
     <List
-        title="Danh sách địa chỉ"
+        title="Quản lý địa chỉ"
         perPage={10}
         sort={{
             field:"id",

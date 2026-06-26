@@ -28,7 +28,7 @@ const BlogListActions = () => (
 
 export const BlogList = () => (
     <List
-        title="Danh sách bài viết"
+        title="Quản lý bài viết"
         sort={{ field: "id", order: "DESC" }}
         perPage={5}
         actions={<BlogListActions />}

@@ -201,7 +201,9 @@ export const Header = () => {
                                             <span 
                                                 className="cart-contents-total"
                                             >
-                                                <span className="woocommerce-Price-amount amount">
+                                                <span className="woocommerce-Price-amount amount"
+                                                    style={{color:"#505050"}}
+                                                >
                                                     {FormatCurrency(totalPrice)}
                                                 </span>
                                             </span>

@@ -22,20 +22,22 @@ const VisitorListActions = () => (
     </TopToolbar>
 );
 export const UserList = () => (
-    <List sort={{field: 'id', order: 'ASC'}} perPage={10}
-          actions={<VisitorListActions/>}
-          filters={<UserSearch/>}
-          sx={{
-              '& .column-title': {
-                  maxWidth: '16em',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap',
-              },
-              '& .column-commentable': {
-                  maxWidth: '4em',
-              },
-          }}
+    <List 
+        title="Quản lý người dùng"
+        sort={{field: 'id', order: 'ASC'}} perPage={10}
+        actions={<VisitorListActions/>}
+        filters={<UserSearch/>}
+        sx={{
+            '& .column-title': {
+                maxWidth: '16em',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+            },
+            '& .column-commentable': {
+                maxWidth: '4em',
+            },
+        }}
     >
         <DatagridConfigurable
             rowClick="show"
