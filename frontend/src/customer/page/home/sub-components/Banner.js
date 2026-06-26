@@ -1,55 +1,61 @@
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import { useEffect, useState } from "react";
 
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "../../../assets/css/style-slider.css";
-import bannerImage1 from "../../../assets/img/Banner/banner1.jpg";
-import bannerImage2 from "../../../assets/img/Banner/banner2.jpg";
-import bannerImage3 from "../../../assets/img/Banner/banner3.jpg";
-import bannerImage4 from "../../../assets/img/Banner/banner4.jpg";
 
+import api from "../../../../service/ApiService";
+
+// import bannerImage1 from "../../../assets/img/Banner/banner1.jpg";
+// import bannerImage2 from "../../../assets/img/Banner/banner2.jpg";
+// import bannerImage3 from "../../../assets/img/Banner/banner3.jpg";
+// import bannerImage4 from "../../../assets/img/Banner/banner4.jpg";
 export const Banner = () => {
-    const banners = [
-        {
-            image: bannerImage1,
-            pretitle: "BookStore",
-            title: "Vũ trụ sách mở ra",
-            subtitle: "Muôn vàn ưu đãi hot!",
-            link: "/product-list",
-        },
-        {
-            image: bannerImage2,
-            pretitle: "Khuyến mãi",
-            title: "Sách đặc sắc",
-            subtitle: "Ưu đãi trong tháng",
-            link: "/product-list",
-        },
-        {
-            image: bannerImage3,
-            pretitle: "Bán chạy",
-            title: "Những cuốn sách",
-            subtitle: "Được yêu thích nhất",
-            link: "/product-list",
-        },
-        {
-            image: bannerImage4,
-            pretitle: "Tri thức",
-            title: "Đọc sách mỗi ngày",
-            subtitle: "Khám phá thế giới mới",
-            link: "/product-list",
-        },
-    ];
+    const [banners, setBanners] = useState([]);
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
         const fetchBanners = async () => {
-            const data = await api.fetchData("/banners/active");
-            setBanners(data);
+            try {
+                const data = await api.fetchData("/banners/active");
+                setBanners(Array.isArray(data) ? data : []);
+            } catch (error) {
+                console.error("Lỗi lấy banner:", error);
+            } finally {
+                setLoading(false);
+            }
         };
 
         fetchBanners();
     }, []);
+    if (loading) {
+        return (
+            <section className="home-banner-slider">
+                <div className="container">
+                    <div className="banner-loading">
+                        <div className="spinner-border text-primary" role="status">
+                            <span className="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
+    }
+    if (banners.length === 0) {
+        return (
+            <section className="home-banner-slider">
+                <div className="container">
+                    <div className="banner-empty">
+                        Chưa có banner nào.
+                    </div>
+                </div>
+            </section>
+        );
+    }
     return (
         <section className="home-banner-slider">
             <div className="container">
@@ -75,7 +81,7 @@ export const Banner = () => {
                                 }}
                             >
                                 <div className="home-banner-content">
-                                    <p>{banner.pretitle}</p>
+                                    <p>{banner.pretitle|| "BookStore"}</p>
                                     <h2>{banner.title}</h2>
                                     <h3>{banner.subtitle}</h3>
 

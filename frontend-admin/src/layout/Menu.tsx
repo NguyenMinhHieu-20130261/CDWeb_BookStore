@@ -15,19 +15,22 @@ import RateReviewIcon from "@mui/icons-material/RateReview";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
+import ImageIcon from "@mui/icons-material/Image";
 
 import SubMenu from "./SubMenu";
 type MenuName =
     | "menuProducts"
     | "menuBlogs"
     | "menuUsers"
-    | "menuOrders";
+    | "menuOrders"
+    | "menuOthers";
 const Menu = ({dense = false}: any) => {
     const [state, setState] = useState({
         menuProducts: true,
         menuBlogs: true,
         menuUsers: true,
         menuOrders: true,
+        menuOthers:true,
     });
     const [open] = useSidebarState();
     const handleToggle = (menu:MenuName)=>{
@@ -142,6 +145,21 @@ const Menu = ({dense = false}: any) => {
                     to="/promotions"
                     primaryText="Mã giảm giá"
                     leftIcon={<LocalOfferIcon/>}
+                    dense={dense}
+                />
+            </SubMenu>
+            {/* Others */}
+            <SubMenu
+                handleToggle={() => handleToggle("menuOthers")}
+                isOpen={state.menuOthers}
+                name="Others"
+                icon={<ReceiptLongIcon />}
+                dense={dense}
+            >
+                <MenuItemLink
+                    to="/banners"
+                    primaryText="Banner"
+                    leftIcon={<ImageIcon />}
                     dense={dense}
                 />
             </SubMenu>

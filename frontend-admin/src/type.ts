@@ -181,3 +181,17 @@ export interface OrderDetail extends RaRecord {
     quantity: number;
     totalMoney: number;
 }
+// Banner
+export interface Banner extends RaRecord {
+    id: number;
+    title: string;
+    subtitle?: string;
+    image: string;
+    link?: string;
+    position: number;
+    active: boolean;
+    createdAt?: string;
+    updatedAt?: string;
+    createdBy?: User;
+    updatedBy?: User;
+}

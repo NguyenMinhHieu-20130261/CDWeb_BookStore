@@ -73,3 +73,21 @@
 .home-banner-slider .swiper-pagination-bullet-active {
     background: #00aeef;
 }
+.banner-loading{
+    height:460px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:16px;
+    background:#f8f8f8;
+}
+
+.banner-empty{
+    height:460px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:16px;
+    background:#f8f8f8;
+    color:#666;
+}
