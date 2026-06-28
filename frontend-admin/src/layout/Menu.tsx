@@ -14,18 +14,23 @@ import ArticleIcon from "@mui/icons-material/Article";
 import RateReviewIcon from "@mui/icons-material/RateReview";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
+import ImageIcon from "@mui/icons-material/Image";
 
 import SubMenu from "./SubMenu";
 type MenuName =
     | "menuProducts"
     | "menuBlogs"
-    | "menuUsers";
+    | "menuUsers"
+    | "menuOrders"
+    | "menuOthers";
 const Menu = ({dense = false}: any) => {
     const [state, setState] = useState({
         menuProducts: true,
         menuBlogs: true,
         menuUsers: true,
+        menuOrders: true,
+        menuOthers:true,
     });
     const [open] = useSidebarState();
     const handleToggle = (menu:MenuName)=>{
@@ -75,18 +80,7 @@ const Menu = ({dense = false}: any) => {
                     leftIcon={<InventoryIcon/>}
                     dense={dense}
                 />
-                <MenuItemLink
-                    to="/promotions"
-                    primaryText="Mã giảm giá"
-                    leftIcon={<LocalOfferIcon/>}
-                    dense={dense}
-                />
-                <MenuItemLink
-                    to="/orders"
-                    primaryText="Đơn hàng"
-                    leftIcon={<ShoppingCartIcon/>}
-                    dense={dense}
-                />
+
             </SubMenu>
             {/* Blog */}
             <SubMenu
@@ -133,7 +127,42 @@ const Menu = ({dense = false}: any) => {
                     dense={dense}
                 />
             </SubMenu>
+            {/* Order */}
+            <SubMenu
+                handleToggle={() => handleToggle("menuOrders")}
+                isOpen={state.menuOrders}
+                name="Orders"
+                icon={<ReceiptLongIcon />}
+                dense={dense}
+            >
+                <MenuItemLink
+                    to="/orders"
+                    primaryText="Đơn hàng"
+                    leftIcon={<ReceiptLongIcon />}
+                    dense={dense}
+                />
+                <MenuItemLink
+                    to="/promotions"
+                    primaryText="Mã giảm giá"
+                    leftIcon={<LocalOfferIcon/>}
+                    dense={dense}
+                />
+            </SubMenu>
+            {/* Others */}
+            <SubMenu
+                handleToggle={() => handleToggle("menuOthers")}
+                isOpen={state.menuOthers}
+                name="Others"
+                icon={<ReceiptLongIcon />}
+                dense={dense}
+            >
+                <MenuItemLink
+                    to="/banners"
+                    primaryText="Banner"
+                    leftIcon={<ImageIcon />}
+                    dense={dense}
+                />
+            </SubMenu>
         </Box>
     )
 }
-export default Menu;

@@ -4,7 +4,7 @@ import { uploadImage,uploadImages } from "../service/ImageUploader";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080/api";
 const getAuthConfig = () => {
-    
+
     const auth = JSON.parse(localStorage.getItem("auth") || "{}");
     const user = JSON.parse(localStorage.getItem("user") || "{}");
     const token = auth.token ||user.token || localStorage.getItem("token");
@@ -21,7 +21,6 @@ const resourceMap: Record<string, string> = {
     blogs: "blogs",
     "blog-cate": "blog-cate",
     address: "address",
-    orders: "orders/admin",
 };
 const getApiPath = (resource: string) => {
     return resourceMap[resource] || resource;
@@ -65,7 +64,7 @@ const dataProvider: DataProvider = {
         const res = await axios.get(url, getAuthConfig());
 
         return {
-            data: res.data,
+            data: res.data.data ?? res.data,
         };
     },
     create: async (resource, params) => {
@@ -115,7 +114,7 @@ const dataProvider: DataProvider = {
             getAuthConfig()
         );        
         return {
-            data: res.data,
+            data: res.data.data ?? res.data,
         };
     },
     update: async (resource, params) => {
@@ -150,7 +149,7 @@ const dataProvider: DataProvider = {
             getAuthConfig()
         );       
         return {
-            data: res.data,
+            data: res.data.data ?? res.data,
         };
     },
     delete: async (resource, params) => {
@@ -160,7 +159,7 @@ const dataProvider: DataProvider = {
             getAuthConfig()
         );
         return {
-            data: res.data,
+            data: res.data.data ?? res.data,
         };
     },
     getMany: async (resource, params) => {
@@ -187,7 +186,7 @@ const dataProvider: DataProvider = {
             },
             ...getAuthConfig(),
         });
-        const data = Array.isArray(res.data) ? res.data : res.data.data;
+        const data = Array.isArray(res.data) ? res.data : res.data.data ?? res.data;
         return {
             data,
             total: Array.isArray(res.data)
@@ -227,5 +226,3 @@ const dataProvider: DataProvider = {
         };
     },
 };
-
-export default dataProvider;
