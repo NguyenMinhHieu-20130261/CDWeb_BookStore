@@ -27,7 +27,6 @@ public class Order {
     @JsonIgnoreProperties({
             "role",
             "password",
-            "addresses",
             "createdAt",
             "updatedAt",
             "hibernateLazyInitializer",
@@ -36,6 +35,7 @@ public class Order {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
     @OneToOne
     @JoinColumn(name = "shipping_address")
     private Address shippingAddress;
@@ -63,15 +63,9 @@ public class Order {
     @Column(name = "note")
     private String note;
 
-    @JsonIgnoreProperties({"product.category","product.images"})
-    @OneToMany(
-        mappedBy = "order",
-        cascade = CascadeType.ALL,
-        fetch = FetchType.LAZY
-    )
-    private List<OrderDetail> orderDetails;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    List<OrderDetail> orderDetails;
 
-    @JsonIgnoreProperties({"product"})
     @ManyToOne
     @JoinColumn(name = "discount_id")
     private Promotion promotion;
