@@ -1,11 +1,11 @@
 import { OrderList } from "./OrderList";
 import { OrderShow } from "./OrderShow";
 import { OrderEdit } from "./OrderEdit";
-import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 export default {
     list: OrderList,
     show: OrderShow,
     edit: OrderEdit,
-    icon: ReceiptLongIcon,
+    icon: ShoppingCartIcon,
 };
