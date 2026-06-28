@@ -4,17 +4,20 @@ import { uploadImage,uploadImages } from "../service/ImageUploader";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080/api";
 const getAuthConfig = () => {
-
     const auth = JSON.parse(localStorage.getItem("auth") || "{}");
     const user = JSON.parse(localStorage.getItem("user") || "{}");
-    const token = auth.token ||user.token || localStorage.getItem("token");
+    const token = auth.token || user.token || localStorage.getItem("token");
     console.log("TOKEN SEND:", token);
-    return {
-        headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-        },
+    
+    const headers: Record<string, string> = {
+        "Content-Type": "application/json",
     };
+    
+    if (token && token !== "null" && token !== "undefined" && token.trim() !== "") {
+        headers.Authorization = `Bearer ${token}`;
+    }
+    
+    return { headers };
 };
 const resourceMap: Record<string, string> = {
     category: "category",
@@ -226,3 +229,5 @@ const dataProvider: DataProvider = {
         };
     },
 };
+
+export default dataProvider;
