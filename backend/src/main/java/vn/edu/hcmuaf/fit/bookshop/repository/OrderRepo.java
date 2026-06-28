@@ -7,8 +7,9 @@ import java.util.List;
 
 import vn.edu.hcmuaf.fit.bookshop.entity.Order;
 
-public interface OrderRepo extends JpaRepository<Order, Integer>, JpaSpecificationExecutor<Order> {
+public interface OrderRepo extends JpaRepository<Order, Integer>, JpaSpecificationExecutor<Order>{
     List<Order> findByUser_Id(Integer userId, Sort sort);
     List<Order> findByUser_Id(Integer userId);
     boolean existsByUser_IdAndPromotion_Id(Integer userId, Integer promotionId);
 }
+
