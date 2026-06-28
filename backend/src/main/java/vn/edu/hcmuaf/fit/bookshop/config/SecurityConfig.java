@@ -49,6 +49,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/api/orders").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.GET, "/api/orders/{id}").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/api/orders/{id}").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/api/orders/{id}").hasRole("ADMIN")
                 // Product
                 .requestMatchers(HttpMethod.POST, "/api/products/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/api/products/**").hasRole("ADMIN")

@@ -75,14 +75,15 @@ public class OrderController {
         }
     }
     //admin
-        @GetMapping
+    @GetMapping
     public ResponseEntity<?> getAllOrders(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int perPage,
             @RequestParam(defaultValue = "id") String sort,
+            @RequestParam(defaultValue = "{}") String filter,
             @RequestParam(defaultValue = "DESC") String order
     ) {
-        Page<Order> result = orderService.getAllOrders(page, perPage, sort, order);
+        Page<Order> result = orderService.getAllOrders(page, perPage, sort, filter, order);
 
         return ResponseEntity.ok(Map.of(
                 "data", result.getContent(),
@@ -104,15 +105,25 @@ public class OrderController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateOrderStatus(
+    public ResponseEntity<?> updateOrder(
             @PathVariable Integer id,
             @RequestBody Map<String, Object> body
     ) {
-        Map<String, Object> status = (Map<String, Object>) body.get("status");
-        Integer statusId = (Integer) status.get("id");
+        try {
+            Order updated = orderService.updateOrder(id, body);
+            return ResponseEntity.ok(Map.of("data", updated));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
-        Order updated = orderService.updateOrderStatus(id, statusId);
-
-        return ResponseEntity.ok(Map.of("data", updated));
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteOrder(@PathVariable Integer id) {
+        try {
+            orderService.deleteOrder(id);
+            return ResponseEntity.ok(Map.of("data", Map.of("id", id)));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

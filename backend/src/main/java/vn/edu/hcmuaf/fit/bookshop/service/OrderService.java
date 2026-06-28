@@ -15,9 +15,11 @@ public interface OrderService {
     Order getOrderDetailForUser(Integer orderId, Integer userId);
     Order cancelOrderForUser(Integer orderId,Integer userId);
     //admin
-    Page<Order> getAllOrders(int page, int perPage, String sort, String order);
+    Page<Order> getAllOrders(int page, int perPage, String sort, String filter, String order);
     Order getOrderById(Integer id);
     Order updateOrderStatus(Integer id, Integer statusId);
+    Order updateOrder(Integer id, java.util.Map<String, Object> body);
+    void deleteOrder(Integer id);
 }
 
 

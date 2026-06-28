@@ -14,6 +14,10 @@ import vn.edu.hcmuaf.fit.bookshop.service.OrderService;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonNode;
+import jakarta.persistence.criteria.Predicate;
 
 @Service
 @RequiredArgsConstructor
@@ -45,6 +49,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     public List<Order> getOrdersByUser_Id(Integer userId, String sort) {
+        Sort orderSort;
+        if ("oldest".equalsIgnoreCase(sort)) {
+            orderSort = Sort.by(Sort.Direction.ASC, "orderDate");
+        } else {
+            orderSort = Sort.by(Sort.Direction.DESC, "orderDate");
+        }
         return orderRepo.findByUser_Id(userId, orderSort);
     }
 
@@ -183,12 +193,73 @@ public class OrderServiceImpl implements OrderService {
     }
     //admin
     @Override
-    public Page<Order> getAllOrders(int page, int perPage, String sort, String order) {
+    public Page<Order> getAllOrders(int page, int perPage, String sort, String filter, String order) {
         Sort.Direction direction = order.equalsIgnoreCase("desc")
                 ? Sort.Direction.DESC
                 : Sort.Direction.ASC;
         Pageable pageable = PageRequest.of(page, perPage, Sort.by(direction, sort));
-        return orderRepo.findAll(pageable);
+
+        if (filter == null || filter.isEmpty() || filter.equals("{}")) {
+            return orderRepo.findAll(pageable);
+        }
+
+        return orderRepo.findAll((root, query, cb) -> {
+            try {
+                ObjectMapper mapper = new ObjectMapper();
+                JsonNode json = mapper.readTree(filter);
+                List<Predicate> predicates = new ArrayList<>();
+
+                if (json.has("id") && !json.get("id").asText().isBlank()) {
+                    try {
+                        Integer orderId = Integer.parseInt(json.get("id").asText().trim());
+                        predicates.add(cb.equal(root.get("id"), orderId));
+                    } catch (NumberFormatException ignored) {}
+                }
+
+                if (json.has("q") && !json.get("q").asText().isBlank()) {
+                    String q = json.get("q").asText().toLowerCase().trim();
+                    
+                    var userJoin = root.join("user", jakarta.persistence.criteria.JoinType.LEFT);
+                    var addrJoin = root.join("shippingAddress", jakarta.persistence.criteria.JoinType.LEFT);
+                    
+                    List<Predicate> qPredicates = new ArrayList<>();
+                    qPredicates.add(cb.like(cb.lower(root.get("orderCode")), "%" + q + "%"));
+                    qPredicates.add(cb.like(cb.lower(addrJoin.get("fullName")), "%" + q + "%"));
+                    qPredicates.add(cb.like(cb.lower(userJoin.get("username")), "%" + q + "%"));
+                    qPredicates.add(cb.like(cb.lower(userJoin.get("email")), "%" + q + "%"));
+                    
+                    try {
+                        Integer qId = Integer.parseInt(q);
+                        qPredicates.add(cb.equal(root.get("id"), qId));
+                    } catch (NumberFormatException ignored) {}
+                    
+                    predicates.add(cb.or(qPredicates.toArray(new Predicate[0])));
+                }
+
+                if (json.has("fullName") && !json.get("fullName").asText().isBlank()) {
+                    String fullName = json.get("fullName").asText().toLowerCase().trim();
+                    var addrJoin = root.join("shippingAddress", jakarta.persistence.criteria.JoinType.LEFT);
+                    predicates.add(cb.like(cb.lower(addrJoin.get("fullName")), "%" + fullName + "%"));
+                }
+
+                if (json.has("orderCode") && !json.get("orderCode").asText().isBlank()) {
+                    String orderCode = json.get("orderCode").asText().toLowerCase().trim();
+                    predicates.add(cb.like(cb.lower(root.get("orderCode")), "%" + orderCode + "%"));
+                }
+
+                if (json.has("statusId") && !json.get("statusId").asText().isBlank()) {
+                    try {
+                        Integer statusId = Integer.parseInt(json.get("statusId").asText().trim());
+                        var statusJoin = root.join("status", jakarta.persistence.criteria.JoinType.LEFT);
+                        predicates.add(cb.equal(statusJoin.get("id"), statusId));
+                    } catch (NumberFormatException ignored) {}
+                }
+
+                return cb.and(predicates.toArray(new Predicate[0]));
+            } catch (Exception e) {
+                return cb.conjunction();
+            }
+        }, pageable);
     }
 
     @Override
@@ -215,5 +286,85 @@ public class OrderServiceImpl implements OrderService {
         }
 
         return order;
+    }
+
+    @Override
+    @Transactional
+    public Order updateOrder(Integer id, Map<String, Object> body) {
+        Order existing = getOrderById(id);
+
+        if (body.containsKey("orderTotal")) {
+            existing.setOrderTotal(Integer.parseInt(body.get("orderTotal").toString()));
+        }
+        if (body.containsKey("totalQuantity")) {
+            existing.setTotalQuantity(Integer.parseInt(body.get("totalQuantity").toString()));
+        }
+        if (body.containsKey("paymentMethod")) {
+            existing.setPaymentMethod((String) body.get("paymentMethod"));
+        }
+        if (body.containsKey("note")) {
+            existing.setNote((String) body.get("note"));
+        }
+
+        // status
+        if (body.containsKey("status")) {
+            Object statusObj = body.get("status");
+            if (statusObj instanceof Map) {
+                Map<?, ?> statusMap = (Map<?, ?>) statusObj;
+                if (statusMap.containsKey("id")) {
+                    Integer statusId = Integer.parseInt(statusMap.get("id").toString());
+                    OrderStatus status = orderStatusRepo.findById(statusId)
+                            .orElseThrow(() -> new RuntimeException("Không tìm thấy trạng thái"));
+                    existing.setStatus(status);
+                }
+            }
+        }
+
+        // shippingAddress
+        if (body.containsKey("shippingAddress")) {
+            Object addrObj = body.get("shippingAddress");
+            if (addrObj instanceof Map) {
+                Map<?, ?> addrMap = (Map<?, ?>) addrObj;
+                Address addr = existing.getShippingAddress();
+                if (addr == null) {
+                    addr = new Address();
+                    addr.setUser(existing.getUser());
+                    existing.setShippingAddress(addr);
+                }
+                if (addrMap.containsKey("fullName")) {
+                    addr.setFullName((String) addrMap.get("fullName"));
+                }
+                if (addrMap.containsKey("phoneNumber")) {
+                    addr.setPhoneNumber((String) addrMap.get("phoneNumber"));
+                }
+                if (addrMap.containsKey("detailAdrs")) {
+                    addr.setDetailAdrs((String) addrMap.get("detailAdrs"));
+                }
+                if (addrMap.containsKey("provinceCity")) {
+                    addr.setProvinceCity((String) addrMap.get("provinceCity"));
+                }
+                if (addrMap.containsKey("countyDistrict")) {
+                    addr.setCountyDistrict((String) addrMap.get("countyDistrict"));
+                }
+                if (addrMap.containsKey("wardCommune")) {
+                    addr.setWardCommune((String) addrMap.get("wardCommune"));
+                }
+                addressRepo.save(addr);
+            }
+        }
+
+        return orderRepo.save(existing);
+    }
+
+    @Override
+    @Transactional
+    public void deleteOrder(Integer id) {
+        Order order = orderRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn hàng"));
+        Address address = order.getShippingAddress();
+        orderRepo.delete(order);
+        if (address != null) {
+            addressRepo.delete(address);
+        }
     }
 }

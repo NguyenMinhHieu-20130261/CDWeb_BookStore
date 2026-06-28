@@ -166,3 +166,5 @@ const Menu = ({dense = false}: any) => {
         </Box>
     )
 }
+
+export default Menu;

@@ -1,8 +1,10 @@
 import { AuthProvider } from 'react-admin';
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080/api";
+
 export const authProvider: AuthProvider = {
     login: ({ username, password }) =>  {
-        const request = new Request(`${import.meta.env.VITE_API_URL}/auth/signin`, {
+        const request = new Request(`${API_URL}/auth/signin`, {
             method: 'POST',
             body: JSON.stringify({ username, password }),
             headers: new Headers({ 'Content-Type': 'application/json' }),
@@ -25,8 +27,8 @@ export const authProvider: AuthProvider = {
         const auth = JSON.parse(localStorage.getItem("auth") || "{}");
         const token = auth?.token || localStorage.getItem("token");
         try {
-            if (token) {
-                await fetch(`${import.meta.env.VITE_API_URL}/auth/logout`, {
+            if (token && token !== "null" && token !== "undefined") {
+                await fetch(`${API_URL}/auth/logout`, {
                     method: "POST",
                     headers: {
                         Authorization: `Bearer ${token}`,
