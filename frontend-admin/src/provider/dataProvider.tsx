@@ -21,6 +21,7 @@ const resourceMap: Record<string, string> = {
     blogs: "blogs",
     "blog-cate": "blog-cate",
     address: "address",
+    orders: "orders/admin",
 };
 const getApiPath = (resource: string) => {
     return resourceMap[resource] || resource;
@@ -64,7 +65,7 @@ const dataProvider: DataProvider = {
         const res = await axios.get(url, getAuthConfig());
 
         return {
-            data: res.data.data ?? res.data,
+            data: res.data,
         };
     },
     create: async (resource, params) => {
@@ -114,7 +115,7 @@ const dataProvider: DataProvider = {
             getAuthConfig()
         );        
         return {
-            data: res.data.data ?? res.data,
+            data: res.data,
         };
     },
     update: async (resource, params) => {
@@ -149,7 +150,7 @@ const dataProvider: DataProvider = {
             getAuthConfig()
         );       
         return {
-            data: res.data.data ?? res.data,
+            data: res.data,
         };
     },
     delete: async (resource, params) => {
@@ -159,7 +160,7 @@ const dataProvider: DataProvider = {
             getAuthConfig()
         );
         return {
-            data: res.data.data ?? res.data,
+            data: res.data,
         };
     },
     getMany: async (resource, params) => {
@@ -186,7 +187,7 @@ const dataProvider: DataProvider = {
             },
             ...getAuthConfig(),
         });
-        const data = Array.isArray(res.data) ? res.data : res.data.data ?? res.data;
+        const data = Array.isArray(res.data) ? res.data : res.data.data;
         return {
             data,
             total: Array.isArray(res.data)
