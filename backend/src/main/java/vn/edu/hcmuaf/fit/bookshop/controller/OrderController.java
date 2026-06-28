@@ -1,118 +1,116 @@
 package vn.edu.hcmuaf.fit.bookshop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import vn.edu.hcmuaf.fit.bookshop.dto.order.OrderRequest;
+import vn.edu.hcmuaf.fit.bookshop.dto.request.OrderRequest;
 import vn.edu.hcmuaf.fit.bookshop.entity.*;
 import vn.edu.hcmuaf.fit.bookshop.service.*;
-import org.springframework.data.domain.*;
-import org.springframework.security.core.Authentication;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/orders")
 @CrossOrigin("*")
 public class OrderController {
-
+    @Autowired
+    private UserService userService;
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private CartService cartService;
 
-    @GetMapping("/user")
+    @GetMapping("/{userId}")
     public List<Order> getOrdersByUser_Id(
-            Authentication authentication,
+            @PathVariable Integer userId,
             @RequestParam(defaultValue = "newest") String sort
     ) {
-        User user = (User) authentication.getPrincipal();
-        return orderService.getOrdersByUser_Id(user.getId(), sort);
+        return orderService.getOrdersByUser_Id(userId, sort);
     }
     @GetMapping("/detail/{orderId}")
-    public ResponseEntity<?> getOrderDetail(
-            @PathVariable Integer orderId,
-            Authentication authentication
-        ) {
+    public ResponseEntity<?> getOrderDetail(@PathVariable Integer orderId) {
         try {
-            User user = (User) authentication.getPrincipal();
-            return ResponseEntity.ok(
-                    orderService.getOrderDetailForUser(orderId, user.getId())
-            );        
+            return ResponseEntity.ok(orderService.getOrderDetail(orderId));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
     @PostMapping("/create")
-    public ResponseEntity<?> createOrder(
-            @RequestBody OrderRequest orderRequest,
-            Authentication authentication
-    ) {
+    public ResponseEntity<?> createOrder(@RequestBody OrderRequest orderRequest) {
         try {
-            User user = (User) authentication.getPrincipal();
-            orderRequest.setUserId(user.getId());
-
             Order savedOrder = orderService.createOrder(orderRequest);
             return ResponseEntity.ok(savedOrder);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
     @PutMapping("/cancel/{orderId}")
-    public ResponseEntity<?> cancelOrder(
-            @PathVariable Integer orderId,
-            Authentication authentication
-    ) {
+    public ResponseEntity<?> cancelOrder(@PathVariable Integer orderId) {
         try {
-            User user = (User) authentication.getPrincipal();
-
-            Order cancelledOrder = orderService.cancelOrderForUser(orderId,user.getId());
+            Order cancelledOrder = orderService.cancelOrder(orderId);
             return ResponseEntity.ok(cancelledOrder);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-    //admin
-        @GetMapping
-    public ResponseEntity<?> getAllOrders(
+
+    @GetMapping("/admin")
+    public ResponseEntity<Page<Order>> getAllOrders(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int perPage,
             @RequestParam(defaultValue = "id") String sort,
-            @RequestParam(defaultValue = "DESC") String order
+            @RequestParam(defaultValue = "{}") String filter,
+            @RequestParam(defaultValue = "ASC") String order
     ) {
-        Page<Order> result = orderService.getAllOrders(page, perPage, sort, order);
-
-        return ResponseEntity.ok(Map.of(
-                "data", result.getContent(),
-                "total", result.getTotalElements()
-        ));
+        Page<Order> orders = orderService.getAllOrders(page, perPage, sort, filter, order);
+        return ResponseEntity.ok(orders);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getOrderById(@PathVariable Integer id) {
+    @GetMapping("/admin/{id}")
+    public ResponseEntity<Order> getOrderById(@PathVariable Integer id) {
         try {
-            Order order = orderService.getOrderById(id);
-            return ResponseEntity.ok(
-                    Map.of("data", order)
-            );
+            Order order = orderService.getOrderDetail(id);
+            return ResponseEntity.ok(order);
         } catch (Exception e) {
-            return ResponseEntity.notFound()
-                    .build();
+            return ResponseEntity.notFound().build();
         }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateOrderStatus(
-            @PathVariable Integer id,
-            @RequestBody Map<String, Object> body
-    ) {
-        Map<String, Object> status = (Map<String, Object>) body.get("status");
-        Integer statusId = (Integer) status.get("id");
+    @PutMapping("/admin/{id}")
+    public ResponseEntity<?> updateOrder(@PathVariable Integer id, @RequestBody Order updatedOrder) {
+        try {
+            if (updatedOrder.getShippingAddress() == null) {
+                return ResponseEntity.badRequest().body(Map.of("message", "Địa chỉ giao hàng không được để trống"));
+            }
+            if (updatedOrder.getShippingAddress().getFullName() == null || updatedOrder.getShippingAddress().getFullName().trim().isEmpty()) {
+                return ResponseEntity.badRequest().body(Map.of("message", "Tên người mua không được để trống"));
+            }
+            if (updatedOrder.getPaymentMethod() == null || updatedOrder.getPaymentMethod().trim().isEmpty()) {
+                return ResponseEntity.badRequest().body(Map.of("message", "Phương thức thanh toán không được để trống"));
+            }
+            if (updatedOrder.getStatus() == null || updatedOrder.getStatus().getId() == null) {
+                return ResponseEntity.badRequest().body(Map.of("message", "Trạng thái đơn hàng không được để trống"));
+            }
 
-        Order updated = orderService.updateOrderStatus(id, statusId);
+            Order saved = orderService.updateOrder(id, updatedOrder);
+            return ResponseEntity.ok(saved);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
+        }
+    }
 
-        return ResponseEntity.ok(Map.of("data", updated));
+    @DeleteMapping("/admin/{id}")
+    public ResponseEntity<?> deleteOrder(@PathVariable Integer id) {
+        try {
+            orderService.deleteOrder(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
+        }
     }
 }
+
