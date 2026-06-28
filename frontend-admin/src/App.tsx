@@ -15,8 +15,8 @@ import address from "./components/address";
 import reviews from "./components/reviews";
 import inventory from "./components/inventory";
 import promotions from "./components/promotions";
-import orders from "./components/orders";
-import banners from "./components/banners";
+import orders from "./components/Order";
+
 
 const App = () => (
   <Admin 
@@ -36,8 +36,6 @@ const App = () => (
     <Resource name="inventory" {...inventory} />
     <Resource name="promotions" {...promotions} />
     <Resource name="orders" {...orders} />
-    <Resource name="order-status" />
-    <Resource name="banners" {...banners} />
   </Admin>
 );
 
