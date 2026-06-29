@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import vn.edu.hcmuaf.fit.bookshop.dto.order.OrderReplyRequest;
 import vn.edu.hcmuaf.fit.bookshop.dto.order.OrderRequest;
 import vn.edu.hcmuaf.fit.bookshop.entity.*;
 import vn.edu.hcmuaf.fit.bookshop.repository.*;
@@ -305,7 +306,9 @@ public class OrderServiceImpl implements OrderService {
         if (body.containsKey("note")) {
             existing.setNote((String) body.get("note"));
         }
-
+        if (body.containsKey("shopReply")) {
+            existing.setShopReply((String) body.get("shopReply"));
+        }
         // status
         if (body.containsKey("status")) {
             Object statusObj = body.get("status");

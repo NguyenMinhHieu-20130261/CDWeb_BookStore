@@ -75,4 +75,7 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "discount_id")
     private Promotion promotion;
+
+    @Column(name = "shop_reply", columnDefinition = "TEXT")
+    private String shopReply;
 }

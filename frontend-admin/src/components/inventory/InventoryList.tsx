@@ -11,7 +11,7 @@ import {
     ShowButton,
     EditButton,
 } from "react-admin";
-import DeleteButton from "../../layout/DeleteButton";
+import DeleteButton from "../../layout/general/DeleteButton";
 import * as React from "react";
 import { InventorySearch } from "./InventorySearch";
 import {

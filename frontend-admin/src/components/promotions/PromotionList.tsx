@@ -12,7 +12,7 @@ import {
     TopToolbar,
     CreateButton,
 } from "react-admin";
-import DeleteButton from "../../layout/DeleteButton";
+import DeleteButton from "../../layout/general/DeleteButton";
 import * as React from "react";
 import { PromotionSearch } from "./PromotionSearch";
 

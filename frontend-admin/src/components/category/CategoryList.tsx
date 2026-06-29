@@ -6,7 +6,7 @@ import {
     EditButton,
     DateField,
 } from "react-admin";
-import DeleteButton from "../../layout/DeleteButton";
+import DeleteButton from "../../layout/general/DeleteButton";
 import { CategorySearch } from "./CategorySearch";
 export const CategoryList = () => (
     <List

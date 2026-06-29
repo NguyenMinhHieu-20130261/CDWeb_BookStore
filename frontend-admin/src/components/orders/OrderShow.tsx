@@ -12,9 +12,22 @@ import {
     TopToolbar,
     ListButton
 } from "react-admin";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
+import {
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
+    Button,
+    Chip,
+    Card,
+    CardContent,
+    Stack,
+    Box,
+    Typography,
+    Divider,
+
+} from "@mui/material";
+import { ProductQuickView } from "../../layout/general/ProductQuickView";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const OrderTitle = () => {
@@ -63,8 +76,17 @@ const OrderSummary = () => {
 };
 
 export const OrderShow = () => {
+    const [selectedProduct, setSelectedProduct] = React.useState<any>(null);
+
     return (
-        <Show title={<OrderTitle />} actions={<OrderShowActions />}>
+        <Show 
+            title={<OrderTitle />} 
+            actions={<OrderShowActions />}
+             sx={{
+                marginBottom:"15px",
+                paddingBottom:"10px"
+            }}   
+        >
             <SimpleShowLayout>
                 <TextField source="orderCode" label="Mã đơn hàng" />
                 <DateField source="orderDate" label="Ngày đặt hàng" showTime />
@@ -82,8 +104,22 @@ export const OrderShow = () => {
                 
                 <ArrayField source="orderDetails" label={false}>
                     <Datagrid bulkActionButtons={false}>
-                        <TextField source="product.title" label="Tên sản phẩm" />
-                        <FunctionField
+                    <FunctionField
+                        label="Tên sản phẩm"
+                        render={(record: any) => (
+                            <Button
+                                variant="text"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setSelectedProduct(record.product);
+                                }}
+                                sx={{ textTransform: "none", fontWeight: 600, p: 0 }}
+                            >
+                                {record?.product?.title || "Sản phẩm"}
+                            </Button>
+                        )}
+                    />                        
+                    <FunctionField
                             label="Đơn giá"
                             render={(record: any) =>
                                 record?.product?.currentPrice != null
@@ -112,6 +148,11 @@ export const OrderShow = () => {
                     )}
                 />
             </SimpleShowLayout>
+            <ProductQuickView
+                product={selectedProduct}
+                open={!!selectedProduct}
+                onClose={() => setSelectedProduct(null)}
+            />
         </Show>
     );
 };
