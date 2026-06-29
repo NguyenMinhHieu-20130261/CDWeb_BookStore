@@ -44,6 +44,17 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/error").permitAll()
+                // PUB
+                .requestMatchers(HttpMethod.GET, "/api/category/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/products-images/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/blogs/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/blog-cate/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/blog-detail/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/search/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/banners/active").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/reviews/product/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/reviews/*").permitAll()
                 /// ADMIN
                 // order
                 .requestMatchers(HttpMethod.GET, "/api/orders").hasRole("ADMIN")
@@ -108,18 +119,6 @@ public class SecurityConfig {
                 //api riêng cho promotion user
                 .requestMatchers(HttpMethod.GET, "/api/promotions/validate").authenticated()
                 .requestMatchers("/api/address/**").authenticated()
-
-                // PUB
-                .requestMatchers(HttpMethod.GET, "/api/category/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/products-images/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/blogs/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/blog-cate/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/blog-detail/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/search/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/banners/active").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/reviews/product/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/reviews/*").permitAll()
                 .anyRequest().authenticated()
             );
             // .authorizeHttpRequests(auth -> auth
