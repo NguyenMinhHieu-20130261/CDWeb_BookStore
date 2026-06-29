@@ -9,7 +9,7 @@ import {
     ExportButton,
     SelectColumnsButton,
 } from "react-admin";
-import DeleteButton from "../../layout/DeleteButton";
+import DeleteButton from "../../layout/general/DeleteButton";
 
 const AddressActions = () => (
     <TopToolbar>

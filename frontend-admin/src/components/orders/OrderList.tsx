@@ -7,6 +7,7 @@ import {
     SelectColumnsButton,
     TextField,
     TopToolbar,
+    EditButton,
 } from "react-admin";
 import * as React from "react";
 import { useState } from "react";
@@ -15,7 +16,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import Box from "@mui/material/Box";
 import { OrderSearch } from "./OrderSearch";
 import { OrderEdit } from "./OrderEdit";
-import DeleteButton from "../../layout/DeleteButton";
+import DeleteButton from "../../layout/general/DeleteButton";
 
 const getStatusStyles = (slug: string) => {
     switch (slug) {
@@ -71,19 +72,19 @@ const ListActions = () => (
 );
 
 export const OrderList = () => {
-    const [editOpen, setEditOpen] = useState(false);
-    const [editId, setEditId] = useState<number | null>(null);
+    // const [editOpen, setEditOpen] = useState(false);
+    // const [editId, setEditId] = useState<number | null>(null);
 
-    const handleEditClick = (id: number, event: React.MouseEvent) => {
-        event.stopPropagation(); // Ngăn chặn sự kiện rowClick="show"
-        setEditId(id);
-        setEditOpen(true);
-    };
+    // const handleEditClick = (id: number, event: React.MouseEvent) => {
+    //     event.stopPropagation(); // Ngăn chặn sự kiện rowClick="show"
+    //     setEditId(id);
+    //     setEditOpen(true);
+    // };
 
-    const handleClose = () => {
-        setEditOpen(false);
-        setEditId(null);
-    };
+    // const handleClose = () => {
+    //     setEditOpen(false);
+    //     setEditId(null);
+    // };
 
     return (
         <>
@@ -177,32 +178,23 @@ export const OrderList = () => {
                             );
                         }}
                     />
-
-                    <FunctionField
+                    {/* <FunctionField
                         label="Hành động"
                         render={(record: any) => (
                             <Button
                                 startIcon={<EditIcon />}
                                 size="small"
                                 variant="outlined"
-                                onClick={(e) => handleEditClick(record.id, e)}
+                                // onClick={(e) => handleEditClick(record.id, e)}
                             >
                                 Sửa
                             </Button>
                         )}
-                    />
-
+                    /> */}
+                    <EditButton/>
                     <DeleteButton param="đơn hàng" />
                 </DatagridConfigurable>
             </List>
-
-            {editOpen && editId !== null && (
-                <OrderEdit
-                    id={editId}
-                    open={editOpen}
-                    onClose={handleClose}
-                />
-            )}
         </>
     );
 };

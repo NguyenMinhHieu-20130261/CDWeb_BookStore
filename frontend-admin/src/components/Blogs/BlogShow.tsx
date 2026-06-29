@@ -11,7 +11,7 @@ import {
     EditButton,
 } from "react-admin";
 import { Box, Chip, Typography, Divider } from "@mui/material";
-import DeleteButton from "../../layout/DeleteButton";
+import DeleteButton from "../../layout/general/DeleteButton";
 
 const BlogShowActions = () => (
     <TopToolbar>

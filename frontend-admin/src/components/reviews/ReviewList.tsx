@@ -16,7 +16,7 @@ import { matchPath, useLocation, useNavigate } from 'react-router-dom';
 import { useCallback } from 'react';
 import { Box, Drawer } from '@mui/material';
 import ReviewShow from "./ReviewShow";
-import DeleteButton from "../../layout/DeleteButton";
+import DeleteButton from "../../layout/general/DeleteButton";
 
 const VisitorListActions = () => (
     <TopToolbar>

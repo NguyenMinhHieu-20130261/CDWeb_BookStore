@@ -7,7 +7,7 @@ import {
     NumberField,
     TextField,
 } from "react-admin";
-import DeleteButton from "../../layout/DeleteButton";
+import DeleteButton from "../../layout/general/DeleteButton";
 
 export const BannerList = () => (
     <List title="Quản lý Banner">

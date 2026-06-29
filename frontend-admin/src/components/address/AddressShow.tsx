@@ -3,7 +3,7 @@ import {
     TopToolbar,
     useShowContext,
 } from "react-admin";
-import DeleteButton from "../../layout/DeleteButton";
+import DeleteButton from "../../layout/general/DeleteButton";
 
 import {
     Box,

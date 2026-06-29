@@ -6,7 +6,6 @@ import org.springframework.data.domain.Page;
 
 import vn.edu.hcmuaf.fit.bookshop.dto.order.OrderRequest;
 import vn.edu.hcmuaf.fit.bookshop.entity.Order;
-import vn.edu.hcmuaf.fit.bookshop.entity.User;
 
 public interface OrderService {
     //user
