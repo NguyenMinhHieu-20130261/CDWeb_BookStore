@@ -16,4 +16,7 @@ public interface OtpVerificationRepo extends JpaRepository<OtpVerification, Inte
         @Transactional
         @Modifying
         void deleteByUserId(Integer userId);
+
+        Optional<OtpVerification> findTopByEmailOrderByCreatedAtDesc(String email);
+        void deleteByEmail(String email);
 }

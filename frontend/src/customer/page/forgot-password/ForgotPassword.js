@@ -39,7 +39,9 @@ const ForgotPassword = () => {
             newPassword
         }, dispatch);
         setMessage("Đổi mật khẩu thành công");
-        navigate("/sign-in"); 
+        setTimeout(() => {
+            navigate("/sign-in");
+        }, 2000);
     } catch (err) {
         setMessage(err.response?.data || "OTP sai hoặc lỗi");
     } finally {
@@ -114,6 +116,13 @@ const ForgotPassword = () => {
                                                     required
                                                 />
                                             </div>
+                                            <button
+                                                type="button"
+                                                onClick={handleSendOTP}
+                                                disabled={loading}
+                                            >
+                                                Gửi lại OTP
+                                            </button>
                                             <button className="button_forgot d-block mx-auto"
                                             style={{border: "none"}}
                                             disabled={loading}
