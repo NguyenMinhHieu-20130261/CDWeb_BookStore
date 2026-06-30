@@ -159,3 +159,62 @@ export const changePassword = async (
         throw err;
     }
 };
+//SIGNUP OTP
+export const sendRegisterOtp = async (data, dispatch) => {
+    dispatch(registerStart());
+
+    try {
+        const res = await api.sendData(
+            "/auth/signup/send-otp",
+            data
+        );
+
+        dispatch(registerSuccess(res));
+
+        return {
+            success: true,
+            message: res
+        };
+    } catch (err) {
+        dispatch(registerFailure());
+
+        console.log(err.response?.data);
+
+        return {
+            success: false,
+            message:
+                typeof err.response?.data === "string"
+                    ? err.response.data
+                    : err.response?.data?.message || "Gửi OTP thất bại"
+        };
+    }
+};
+export const verifyRegisterOtp = async (data, dispatch) => {
+    dispatch(registerStart());
+
+    try {
+        const res = await api.sendData(
+            "/auth/signup/verify",
+            data
+        );
+
+        dispatch(registerSuccess(res));
+
+        return {
+            success: true,
+            message: res
+        };
+    } catch (err) {
+        dispatch(registerFailure());
+
+        console.log(err.response?.data);
+
+        return {
+            success: false,
+            message:
+                typeof err.response?.data === "string"
+                    ? err.response.data
+                    : err.response?.data?.message || "Xác thực OTP thất bại"
+        };
+    }
+};
