@@ -16,7 +16,7 @@ const BlogGrid = ({currentPage,setTotalPages}) => {
             setLoading(true);
             try {
                 // Nếu cateId là "all" hoặc không tồn tại, lấy tất cả bài viết
-                const size = 2;
+                const size = 6;
 
                 const url =
                     !cateId || cateId === "all"
@@ -44,7 +44,7 @@ const BlogGrid = ({currentPage,setTotalPages}) => {
         <>
             <div className="tab-pane fade active show" id="all_cats" role="tabpanel" aria-labelledby="tab-all_cats">
                 {blogs.length > 0 ? ( 
-                    <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+                    <div className="row row-cols-1 row-cols-md-3 row-cols-lg-3">
                         {blogs.map(blog => (
                             <BlogItem
                                 key={blog.id}
