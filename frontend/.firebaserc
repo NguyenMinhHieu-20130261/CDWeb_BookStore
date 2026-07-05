@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "book-store-123-15fa5"
-  }
+  },
+  "targets": {
+    "book-store-123-15fa5": {
+      "hosting": {
+        "client": [
+          "book-store-client"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }
