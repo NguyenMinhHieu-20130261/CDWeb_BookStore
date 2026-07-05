@@ -2,23 +2,23 @@ import {Link} from "react-router-dom";
 import {useSelector,useDispatch} from "react-redux";
 import React,{useState}from "react";
 import {useNavigate} from "react-router-dom";
-import { loginSuccess, logoutSuccess } from "../../../Store/AuthSlice";
+// import { loginSuccess, logoutSuccess } from "../../../Store/AuthSlice";
 import { SearchBar } from "../general/SearchComponents";
 import "../../assets/css/style-search.css"
 import "../../assets/css/style-cart.css"
 import api from "../../../service/ApiService"
 import {logoutUser} from "../../../Store/ApiRequest";
 import FormatCurrency from "../../../utils/FormatCurrency";
+import NotificationDropdown from "../general/NotificationDropdown";
 
 export const Header = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [unread, setUnread] = useState(0);
     const [parentCategories, setParentCategories] = React.useState([]);
     const [categories, setCategories] = React.useState([]);
     const [isSearchOpen, setIsSearchOpen] = React.useState(false);
     //cart total
-    const [cart, setCart] = useState([]);
+    // const [cart, setCart] = useState([]);
     const [totalItems, setTotalItems] = useState(0);
     const [totalPrice, setTotalPrice] = useState(0);
     // lấy user từ redux store
@@ -86,26 +86,6 @@ export const Header = () => {
         };
         loadCart();
     }, [user]);
-    //notify
-    React.useEffect(() => {
-        const loadNotification = async () => {
-            if (!user?.id) {
-                setUnread(0);
-                return;
-            }
-
-            try {
-                const count = await api.fetchData(
-                    `/notifications/user/${user.id}/unread-count`
-                );
-                setUnread(count);
-            } catch (error) {
-                console.log("Load notification error:", error);
-            }
-        };
-
-        loadNotification();
-    }, [user]);
     return (
         <header id="site-header" className="site-header site-header__v12 mb-7 pb-1">
             <div className="masthead">
@@ -123,7 +103,7 @@ export const Header = () => {
                                                     goldleaf@gmail.com </span>
                                                     <div className="h6 mb-0">
                                                         Gửi mail ngay!
-                                                    </div>a
+                                                    </div>
                                                 </div>
                                             </div>
                                         </Link>
@@ -236,38 +216,8 @@ export const Header = () => {
                                     </div>
                                 </div>
                             </Link>
-                            <Link
-                                to="/user/notification"
-                                className="d-block nav-link text-dark ml-2"
-                            >
-                                <div
-                                    className="d-flex align-items-center text-white font-size-2 text-lh-sm position-relative"
-                                >
-
-                                    {unread > 0 && (
-                                        <span
-                                            className="position-absolute width-16 height-16 rounded-circle d-flex align-items-center justify-content-center font-size-n9 left-0 top-0 ml-n2 mt-n1 text-white bg-danger"
-                                        >
-                                            {unread}
-                                        </span>
-                                    )}
-
-                                    <div>
-                                        <i className="fa-solid fa-bell font-size-5 text-dark"/>
-                                    </div>
-
-                                    <div className="ml-2 d-none d-lg-block text-dark">
-                                        <span className="text-secondary-gray-1090 font-size-1">
-                                            Thông báo
-                                        </span>
-                                        <div>
-                                            {unread > 0
-                                                ? `${unread} chưa đọc`
-                                                : "Không có"}
-                                        </div>
-                                    </div>
-                                </div>
-                            </Link>
+                            {/* NOTIFY AREA */}
+                            {user && <NotificationDropdown user={user} />}
                         </div>
                     </div>
                 </div>
