@@ -8,6 +8,7 @@ import vn.edu.hcmuaf.fit.bookshop.entity.Category;
 import vn.edu.hcmuaf.fit.bookshop.entity.User;
 import vn.edu.hcmuaf.fit.bookshop.repository.CategoryRepo;
 import vn.edu.hcmuaf.fit.bookshop.service.CategoryService;
+import vn.edu.hcmuaf.fit.bookshop.service.SystemLogService;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,6 +26,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
     private CategoryRepo categoryRepo;
+
+    @Autowired
+    private SystemLogService systemLogService;
 
     @Override
     public List<Category> getAllCategories() {
@@ -117,6 +121,13 @@ public class CategoryServiceImpl implements CategoryService {
         Category saved = categoryRepo.save(existingCate);
 
         log.info("Cập nhật danh mục thành công id={}, name={}", saved.getId(), saved.getName());
+        systemLogService.saveLog(
+            "UPDATE_CATEGORY",
+            "INFO",
+            "ADMIN cập nhật danh mục có id = "+ saved.getId(),
+            null,
+            "ADMIN"
+        );
         return saved;
     }
 
@@ -145,6 +156,13 @@ public class CategoryServiceImpl implements CategoryService {
         Category saved = categoryRepo.save(category);
 
         log.info("Tạo danh mục thành công id={}, name={}", saved.getId(), saved.getName());
+        systemLogService.saveLog(
+            "CREATE_CATEGORY",
+            "INFO",
+            "ADMIN tạo danh mục có id = "+ saved.getId(),
+            null,
+            "ADMIN"
+        );
         return saved;
     }
 
@@ -159,6 +177,13 @@ public class CategoryServiceImpl implements CategoryService {
         Category saved = categoryRepo.save(category);
 
         log.info("Đã chuyển danh mục id={} sang inactive", saved.getId());
+        systemLogService.saveLog(
+            "DELETE_CATEGORY",
+            "WARN",
+            "ADMIN đổi trạng thái cho danh mục có id = "+ saved.getId(),
+            null,
+            "ADMIN"
+        );
         return saved;
     }
     

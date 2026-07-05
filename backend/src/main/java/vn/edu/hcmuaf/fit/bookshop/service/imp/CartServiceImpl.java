@@ -11,6 +11,7 @@ import vn.edu.hcmuaf.fit.bookshop.entity.Cart;
 import vn.edu.hcmuaf.fit.bookshop.repository.CartRepo;
 import vn.edu.hcmuaf.fit.bookshop.repository.ProductImageRepo;
 import vn.edu.hcmuaf.fit.bookshop.service.CartService;
+import vn.edu.hcmuaf.fit.bookshop.service.SystemLogService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -21,6 +22,9 @@ public class CartServiceImpl implements CartService {
 
     @Autowired
     private ProductImageRepo productImageRepo;
+    
+    @Autowired
+    private SystemLogService systemLogService;
 
     @Override
     public ResponseEntity<?> addToCart(Cart cartItem) {

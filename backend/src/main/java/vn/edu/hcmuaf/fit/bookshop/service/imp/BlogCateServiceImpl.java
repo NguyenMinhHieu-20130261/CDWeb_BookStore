@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import vn.edu.hcmuaf.fit.bookshop.entity.BlogCategory;
 import vn.edu.hcmuaf.fit.bookshop.repository.BlogCateRepo;
 import vn.edu.hcmuaf.fit.bookshop.service.BlogCateService;
+import vn.edu.hcmuaf.fit.bookshop.service.SystemLogService;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +17,9 @@ import lombok.extern.slf4j.Slf4j;
 public class BlogCateServiceImpl implements BlogCateService {
     @Autowired
     private BlogCateRepo blogCateRepo;
+
+    @Autowired
+    private SystemLogService systemLogService;
 
     @Override
     public List<BlogCategory> getAllBlogCate() {
@@ -50,6 +54,13 @@ public class BlogCateServiceImpl implements BlogCateService {
         }
         BlogCategory saved = blogCateRepo.save(blogCategory);
         log.info("Tạo danh mục blog thành công id={}, name={}", saved.getId(), saved.getName());
+        systemLogService.saveLog(
+            "CREATE_CATEGORY_BLOG",
+            "INFO",
+            "ADMIN tạo danh mục blog có id = "+ saved.getId(),
+            null,
+            "ADMIN"
+        );
         return saved;
     }
 
@@ -65,6 +76,13 @@ public class BlogCateServiceImpl implements BlogCateService {
         old.setActive(blogCategory.getActive());
         BlogCategory saved = blogCateRepo.save(old);
         log.info("Cập nhật danh mục blog thành công id={}, name={}", saved.getId(), saved.getName());
+        systemLogService.saveLog(
+            "UPDATE_CATEGORY_BLOG",
+            "INFO",
+            "ADMIN cập nhật danh mục blog có id = "+ saved.getId(),
+            null,
+            "ADMIN"
+        );
         return saved;
     }
 
@@ -78,5 +96,12 @@ public class BlogCateServiceImpl implements BlogCateService {
                 });
         blogCateRepo.delete(old);
         log.info("Đã xóa danh mục blog id={}", id);
+        systemLogService.saveLog(
+            "DELETE_CATEGORY_BLOG",
+            "INFO",
+            "ADMIN xóa danh mục blog có id = "+ old.getId(),
+            null,
+            "ADMIN"
+        );
     }
 }

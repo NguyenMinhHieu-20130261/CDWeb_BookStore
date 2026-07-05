@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import vn.edu.hcmuaf.fit.bookshop.entity.Address;
 import vn.edu.hcmuaf.fit.bookshop.repository.AddressRepo;
 import vn.edu.hcmuaf.fit.bookshop.service.AddressService;
+import vn.edu.hcmuaf.fit.bookshop.service.SystemLogService;
 import vn.edu.hcmuaf.fit.bookshop.service.ValidationService;
 import vn.edu.hcmuaf.fit.bookshop.entity.User;
 import vn.edu.hcmuaf.fit.bookshop.repository.UserRepo;
@@ -27,6 +28,9 @@ public class AddressServiceImpl implements AddressService {
 
     @Autowired
     private ValidationService validationService;
+    
+    @Autowired
+    private SystemLogService systemLogService;
 
     @Override
     public List<Address> getUserAddresses(Integer userId) {
@@ -75,6 +79,13 @@ public class AddressServiceImpl implements AddressService {
         }
         addressRepo.delete(address);
         log.info("Đã xóa địa chỉ id={} của userId={}", addressId, userId);
+        systemLogService.saveLog(
+            "DELETE_USER_ADDRESS",
+            "INFO",
+            "User xóa địa chỉ có id = "+ address.getId(),
+            null,
+            "User"
+        );
     }
 
     @Override
@@ -109,6 +120,13 @@ public class AddressServiceImpl implements AddressService {
         Address saved = addressRepo.save(existingAddress);
 
         log.info("Cập nhật địa chỉ thành công id={}", saved.getId());
+        systemLogService.saveLog(
+            "UPDATE_USER_ADDRESS",
+            "INFO",
+            "User cập nhật địa chỉ có id = "+ address.getId(),
+            null,
+            "User"
+        );
         return saved;
     }
     @Override
@@ -130,6 +148,13 @@ public class AddressServiceImpl implements AddressService {
         addressRepo.save(defaultAdrs);
 
         log.info("User {} đã đặt địa chỉ {} làm mặc định", userId, addressId);
+        systemLogService.saveLog(
+            "DEFAULT_USER_ADDRESS",
+            "INFO",
+            "User cập nhật mặc định cho địa chỉ có id = "+ defaultAdrs.getId(),
+            null,
+            "User"
+        );
     }
     //admin
     @Override
@@ -145,6 +170,13 @@ public class AddressServiceImpl implements AddressService {
                     return new RuntimeException("Không tìm thấy địa chỉ");
                 });
         addressRepo.delete(address);
+        systemLogService.saveLog(
+            "DELETE_USER_ADDRESS",
+            "INFO",
+            "User xóa địa chỉ có id = "+ address.getId(),
+            null,
+            "User"
+        );
         log.info("Admin đã xóa địa chỉ id={}", addressId);
     }
 }

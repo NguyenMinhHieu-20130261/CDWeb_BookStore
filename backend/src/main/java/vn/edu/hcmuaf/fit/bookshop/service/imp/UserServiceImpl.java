@@ -15,6 +15,7 @@ import vn.edu.hcmuaf.fit.bookshop.entity.Role;
 import vn.edu.hcmuaf.fit.bookshop.entity.User;
 import vn.edu.hcmuaf.fit.bookshop.repository.RoleRepo;
 import vn.edu.hcmuaf.fit.bookshop.repository.UserRepo;
+import vn.edu.hcmuaf.fit.bookshop.service.SystemLogService;
 import vn.edu.hcmuaf.fit.bookshop.service.UserService;
 
 @Slf4j
@@ -29,6 +30,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private SystemLogService systemLogService;
 
     @Override
     public Page<User> getAllUsers(int page, int perPage) {
@@ -61,6 +65,13 @@ public class UserServiceImpl implements UserService {
         }
         User saved = userRepo.save(user);
         log.info("Tạo user thành công: id={}, username={}", saved.getId(), saved.getUsername());
+        systemLogService.saveLog(
+                "CREATE_USER",
+                "INFO",
+                "Người dùng tạo user có id = " + saved.getId() + ", username = " + saved.getUsername(),
+                null,
+                "ADMIN"
+        );
         return saved;
     }
 
@@ -87,6 +98,13 @@ public class UserServiceImpl implements UserService {
         User saved = userRepo.save(oldUser);
 
         log.info("Cập nhật user thành công: id={}", saved.getId());
+        systemLogService.saveLog(
+                "UPDATE_USER",
+                "INFO",
+                "Admin đã cập nhật user có id = " + id + ", username = " + oldUser.getUsername(),
+                null,
+                "ADMIN"
+        );
         return saved;
     }
 
@@ -97,6 +115,13 @@ public class UserServiceImpl implements UserService {
         User user = getUserById(id);
         userRepo.delete(user);
 
+        systemLogService.saveLog(
+                "DELETE_USER",
+                "INFO",
+                "Admin đã xóa user có id = " + id + ", username = " + user.getUsername(),
+                null,
+                "ADMIN"
+        );
         log.info("Đã xóa user id={}", id);
     }
 }

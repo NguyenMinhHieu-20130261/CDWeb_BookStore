@@ -14,6 +14,7 @@ import vn.edu.hcmuaf.fit.bookshop.entity.Product;
 import vn.edu.hcmuaf.fit.bookshop.repository.InventoryRepo;
 import vn.edu.hcmuaf.fit.bookshop.repository.ProductRepo;
 import vn.edu.hcmuaf.fit.bookshop.service.InventoryService;
+import vn.edu.hcmuaf.fit.bookshop.service.SystemLogService;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,6 +31,9 @@ public class InventoryServiceImpl implements InventoryService {
 
     @Autowired
     private ProductRepo productRepo;
+    
+    @Autowired
+    private SystemLogService systemLogService;
 
     @Override
     public Page<Inventory> getAll(String q, Boolean active, Pageable pageable,String stockStatus) {
@@ -166,6 +170,13 @@ public class InventoryServiceImpl implements InventoryService {
             result.add(saved);
         }
         log.info("Nhập kho hoàn tất, tổng số lô={}", result.size());
+        systemLogService.saveLog(
+            "CREATE_INVENTORY",
+            "INFO",
+            "ADMIN tạo lô hàng có = "+ result,
+            null,
+            "ADMIN"
+        );
         return result;
     }
     private String generateBatchCode() {
@@ -194,6 +205,13 @@ public class InventoryServiceImpl implements InventoryService {
         inventory.setUpdatedAt(new Date());
         Inventory saved = inventoryRepo.save(inventory);
         log.info("Cập nhật lô hàng thành công id={}", saved.getId());
+        systemLogService.saveLog(
+            "UPDATE_INVENTORY",
+            "INFO",
+            "ADMIN cập nhật lô hàng có id = " + saved.getId(),
+            null,
+            "ADMIN"
+        );
         return saved;
     }
 }

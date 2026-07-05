@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import vn.edu.hcmuaf.fit.bookshop.entity.Promotion;
 import vn.edu.hcmuaf.fit.bookshop.repository.PromotionRepo;
 import vn.edu.hcmuaf.fit.bookshop.service.PromotionService;
+import vn.edu.hcmuaf.fit.bookshop.service.SystemLogService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,9 @@ public class PromotionServiceImpl implements PromotionService {
     @Autowired
     private PromotionRepo promotionRepo;
 
+    @Autowired
+    private SystemLogService systemLogService;
+    
     @Override
     public Page<Promotion> getAllPromotions(int page, int perPage, String sort, String filter, String order) {
         log.debug("Lấy danh sách promotion: page={}, perPage={}, sort={}, order={}, filter={}",

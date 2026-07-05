@@ -1,6 +1,8 @@
 package vn.edu.hcmuaf.fit.bookshop.service.imp;
 
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,7 @@ import vn.edu.hcmuaf.fit.bookshop.entity.BlogCategory;
 import vn.edu.hcmuaf.fit.bookshop.entity.User;
 import vn.edu.hcmuaf.fit.bookshop.repository.BlogRepo;
 import vn.edu.hcmuaf.fit.bookshop.service.BlogService;
+import vn.edu.hcmuaf.fit.bookshop.service.SystemLogService;
 
 import java.util.Date;
 import java.util.List;
@@ -23,6 +26,9 @@ import lombok.extern.slf4j.Slf4j;
 public class BlogServiceImpl implements BlogService {
 
     private final BlogRepo blogRepo;
+    
+    @Autowired
+    private SystemLogService systemLogService;
 
     @Override
     public Page<Blog> getActiveBlogsPage(int page, int size, Integer categoryId) {
@@ -129,6 +135,13 @@ public class BlogServiceImpl implements BlogService {
         Blog saved = blogRepo.save(existingBlog);
 
         log.info("Cập nhật blog thành công id={}, title={}", saved.getId(), saved.getTitle());
+        systemLogService.saveLog(
+            "UPDATE_BLOG",
+            "INFO",
+            "ADMIN cập nhật blog có id = "+ saved.getId(),
+            null,
+            "ADMIN"
+        );
         return saved;
     }
     @Override
@@ -160,6 +173,13 @@ public class BlogServiceImpl implements BlogService {
         Blog saved = blogRepo.save(blog);
 
         log.info("Tạo blog thành công id={}, title={}", saved.getId(), saved.getTitle());
+        systemLogService.saveLog(
+            "CREATE_BLOG",
+            "INFO",
+            "ADMIN tạo có id = "+ saved.getId(),
+            null,
+            "ADMIN"
+        );
         return saved;
     }
     @Override
@@ -174,6 +194,13 @@ public class BlogServiceImpl implements BlogService {
         Blog saved = blogRepo.save(blog);
 
         log.info("Đã chuyển blog id={} sang status=0", saved.getId());
+        systemLogService.saveLog(
+            "DELETE_BLOG",
+            "INFO",
+            "ADMIN xóa blog có id = "+ saved.getId(),
+            null,
+            "ADMIN"
+        );
         return saved;
     }
 }

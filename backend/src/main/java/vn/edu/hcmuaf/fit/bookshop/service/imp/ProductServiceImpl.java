@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +21,7 @@ import vn.edu.hcmuaf.fit.bookshop.repository.ProductRepo;
 import vn.edu.hcmuaf.fit.bookshop.repository.UserRepo;
 import vn.edu.hcmuaf.fit.bookshop.service.CategoryService;
 import vn.edu.hcmuaf.fit.bookshop.service.ProductService;
+import vn.edu.hcmuaf.fit.bookshop.service.SystemLogService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -30,8 +32,9 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepo productRepo;
     private final CategoryService categoryService;
     private final UserRepo userRepo;
-    // @Autowired
-    // private ProductImageRepo productImageRepo;
+
+    @Autowired
+    private SystemLogService systemLogService;
 
     @Override
     public List<Product> getActiveProducts() {
@@ -132,6 +135,13 @@ public class ProductServiceImpl implements ProductService {
         Product saved = productRepo.save(newProduct);
 
         log.info("Sản phẩm {} đã được cập nhật", saved.getId() );
+        systemLogService.saveLog(
+            "UPDATE_PRODUCT",
+            "INFO",
+            "ADMIN cập nhật sản phẩm có id = " + saved.getId() + ", title = " + saved.getTitle(),
+            null,
+            "ADMIN"
+        );
         return saved;
     }
     @Override
@@ -168,6 +178,13 @@ public class ProductServiceImpl implements ProductService {
             saved.getId(),
             saved.getSlug()
         );
+        systemLogService.saveLog(
+                "CREATE_PRODUCT",
+                "INFO",
+                "ADMIN tạo sản phẩm có id = " + saved.getId() + ", username = " + saved.getTitle(),
+                null,
+                "ADMIN"
+        );
         return saved;
     }
     @Override
@@ -181,6 +198,13 @@ public class ProductServiceImpl implements ProductService {
         Product saved = productRepo.save(product);
 
         log.info("Đã chuyển sản phẩm {} sang inactive",saved.getId());
+        systemLogService.saveLog(
+            "DELETE_PRODUCT",
+            "INFO",
+            "ADMIN cập nhật trạng thái sản phẩm có id = " + saved.getId() + ", title = " + saved.getTitle(),
+            null,
+            "ADMIN"
+        );
         return saved;
     }
     @Override

@@ -7,6 +7,7 @@ import { LoginPage } from "./layout/Login";
 import { MyLayout } from "./layout/MainLayout";
 import { Route } from "react-router-dom";
 import AdminNotification from "./components/notifications/AdminNotification";
+import { SystemLogList } from "./components/log/SystemLogList";
 
 import category from "./components/category";
 import products from "./components/products";
@@ -35,6 +36,7 @@ const App = () => (
             element={<AdminNotification/>}
         />
     </CustomRoutes>
+    <Resource name="logs" list={SystemLogList} />
     <Resource name="products" {...products} />
     <Resource name="category" {...category}/>
     <Resource name="blogs" {...blogs}/>

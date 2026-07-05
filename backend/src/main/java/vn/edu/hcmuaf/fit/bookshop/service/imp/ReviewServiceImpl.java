@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import vn.edu.hcmuaf.fit.bookshop.entity.Review;
 import vn.edu.hcmuaf.fit.bookshop.repository.ReviewRepo;
 import vn.edu.hcmuaf.fit.bookshop.service.ReviewService;
+import vn.edu.hcmuaf.fit.bookshop.service.SystemLogService;
 import vn.edu.hcmuaf.fit.bookshop.service.ValidationService;
 
 import java.util.HashMap;
@@ -30,6 +31,9 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Autowired
     private ValidationService validationService;
+
+    @Autowired
+    private SystemLogService systemLogService;
 
     @Override
     public List<Review> getReviewsByProduct(Integer productId, Integer rating, String sort) {
@@ -130,6 +134,13 @@ public class ReviewServiceImpl implements ReviewService {
         Review saved = reviewRepo.save(review);
 
         log.info("Phản hồi review thành công id={}", saved.getId());
+        systemLogService.saveLog(
+                "REPLY_REVIEW_ADMIN",
+                "INFO",
+                "Admin " + " đã phản hồi review có id = " + id + " repy:" + review.getReply(),
+                null,
+                "USER"
+        );
         return saved;
     }
 
@@ -141,5 +152,12 @@ public class ReviewServiceImpl implements ReviewService {
         }
         reviewRepo.deleteById(id);
         log.info("Đã xóa review id={}", id);
+        systemLogService.saveLog(
+                "REPLY_REVIEW_ADMIN",
+                "INFO",
+                "Admin " + " đã phản hồi review có id = " + id,
+                null,
+                "ADMIN"
+        );
     }
 }

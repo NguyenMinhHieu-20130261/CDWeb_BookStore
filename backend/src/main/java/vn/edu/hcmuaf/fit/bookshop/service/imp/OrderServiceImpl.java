@@ -9,8 +9,11 @@ import vn.edu.hcmuaf.fit.bookshop.dto.order.OrderReplyRequest;
 import vn.edu.hcmuaf.fit.bookshop.dto.order.OrderRequest;
 import vn.edu.hcmuaf.fit.bookshop.entity.*;
 import vn.edu.hcmuaf.fit.bookshop.repository.*;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import vn.edu.hcmuaf.fit.bookshop.service.OrderService;
+import vn.edu.hcmuaf.fit.bookshop.service.SystemLogService;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,6 +35,9 @@ public class OrderServiceImpl implements OrderService {
     private final AddressRepo addressRepo;
     private final OrderStatusRepo orderStatusRepo;
     private final org.springframework.jdbc.core.JdbcTemplate jdbcTemplate;
+    
+    @Autowired
+    private SystemLogService systemLogService;
 
     @jakarta.annotation.PostConstruct
     public void init() {
@@ -181,6 +187,13 @@ public class OrderServiceImpl implements OrderService {
             cartItems.size(),
             user.getId()
         );
+        systemLogService.saveLog(
+            "USER_ORDER",
+            "INFO",
+            "USER đặt đơn hàng đơn hàng có id = " + order.getId() + ", username = " + order.getUser(),
+            null,
+            "USER"
+        );
         return savedOrder;
     }
 
@@ -211,6 +224,13 @@ public class OrderServiceImpl implements OrderService {
         log.info(
             "Đơn {} đã bị hủy",
             orderId
+        );
+        systemLogService.saveLog(
+            "CANCEL_ORDER",
+            "INFO",
+            "USER cập nhật trạng thái đơn hàng có id = " + order.getId() + ", username = " + order.getUser(),
+            null,
+            "USER"
         );
         return orderRepo.save(order);
     }
@@ -306,6 +326,13 @@ public class OrderServiceImpl implements OrderService {
             "Đơn {} cập nhật trạng thái thành công",
             id
         );
+        systemLogService.saveLog(
+            "DELETE_ORDER",
+            "INFO",
+            "ADMIN cập nhật trạng thái đơn hàng có id = " + existing.getId() + ", username = " + existing.getUser(),
+            null,
+            "ADMIN"
+        );
         return orderRepo.save(existing);
     }
     @Override
@@ -386,6 +413,13 @@ public class OrderServiceImpl implements OrderService {
                 addressRepo.save(addr);
             }
         }
+        systemLogService.saveLog(
+            "DELETE_ORDER",
+            "INFO",
+            "ADMIN cập nhật đơn hàng có id = " + existing.getId() + ", username = " + existing.getUser(),
+            null,
+            "ADMIN"
+        );
         log.info("Đơn {} đã được cập nhật", id);
         return orderRepo.save(existing);
     }
@@ -400,6 +434,13 @@ public class OrderServiceImpl implements OrderService {
         orderRepo.delete(order);
         if (address != null) {
             log.info("Đã xóa đơn {}",id);
+            systemLogService.saveLog(
+                "DELETE_ORDER",
+                "WARN",
+                "ADMIN xóa đơn hàng có id = " + order.getId() + ", username = " + order.getUser(),
+                null,
+                "ADMIN"
+            );
             addressRepo.delete(address);
         }
     }
