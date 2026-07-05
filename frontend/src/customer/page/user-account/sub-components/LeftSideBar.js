@@ -1,9 +1,10 @@
 import React from "react";
 import SideBarItem from "./SideBarItem";
 import { useSelector } from "react-redux";
+import api from "../../../../service/ApiService";
 
 const LeftSideBar = () => {
-
+    const [unread, setUnread] = React.useState(0);
     const user = useSelector((state) => state.auth.user);
 
     const fullName =
@@ -15,6 +16,22 @@ const LeftSideBar = () => {
         user?.userInformation?.avatar ||
         "https://i.pravatar.cc/100";
 
+    React.useEffect(() => {
+        const loadUnread = async () => {
+            if (!user?.id) return;
+
+            try {
+                const count = await api.fetchData(
+                    `/notifications/user/${user.id}/unread-count`
+                );
+                setUnread(count);
+            } catch (e) {
+                console.log(e);
+            }
+        };
+
+        loadUnread();
+    }, [user]);
     return (
         <div className="col-md-3 d-block p-0 pr-6 left-side-bar">
             <div className="account-of">
@@ -43,6 +60,12 @@ const LeftSideBar = () => {
                     to="/user/order"
                     iconClassName="fa-solid fa-clipboard"
                     itemName="Đơn hàng của tôi"
+                />
+                <SideBarItem
+                    to="/user/notification"
+                    iconClassName="fa-solid fa-bell"
+                    itemName="Thông báo"
+                    badge={unread}
                 />
             </ul>
         </div>

@@ -2,6 +2,7 @@ package vn.edu.hcmuaf.fit.bookshop.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.*;
@@ -83,4 +84,8 @@ public class User {
     protected void onUpdate() {
         updatedAt = new Date();
     }
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"user"})
+    private List<Notification> notifications;
 }

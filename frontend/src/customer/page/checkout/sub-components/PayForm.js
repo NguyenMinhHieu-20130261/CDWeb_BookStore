@@ -25,6 +25,7 @@ const PayForm = ({
             <div className="checkout__input">
                 <p>Họ và tên<span>*</span></p>
                 <input
+                    style={{color:"black"}}
                     type="text"
                     value={fullName}
                     placeholder="Nhập họ và tên người nhận"
@@ -36,6 +37,7 @@ const PayForm = ({
             <div className="checkout__input">
                 <p>Số điện thoại<span>*</span></p>
                 <input
+                    style={{color:"black"}}
                     type="text"
                     value={phoneNumber}
                     placeholder="Nhập số điện thoại"

@@ -21,6 +21,7 @@ import UpdateAddress from "../customer/page/user-address/UpdateAddress";
 import UserOrders from "../customer/page/user-orders/UserOrders";
 import UserWishlist from "../customer/page/user-wishlist/UserWishlist";
 import OrderDetail from "../customer/page/order-detail/OrderDetail";
+import UserNotification from "../customer/page/user-notify/UserNotification";
 
 const CustomerRouter = () => {
     return (
@@ -56,6 +57,7 @@ const CustomerRouter = () => {
                 <Route path="/user/order" element={<UserOrders/>}/>
                 <Route path="/user/order/:orderId" element={<OrderDetail/>}/>
                 <Route path="/user/wishlist" element={<UserWishlist/>}/>
+                <Route path="/user/notification" element={<UserNotification/>}/>
             </Routes>
             <Footer/>
         </div>

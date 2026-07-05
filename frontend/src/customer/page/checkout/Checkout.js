@@ -8,26 +8,27 @@ import api from "../../../service/ApiService";
 import ProvinceService from "../../../service/ProvinceService";
 import ValidateService  from "../../../service/ValidateService";
 import WindowPopup from "../../components/general/WindowPopup";
+import "../../assets/css/style-checkout.css"
 
-export const Coupon = () => {
-    const handleCouponLinkClick = (e) => {
-        e.preventDefault();
-        const inputEl = document.querySelector(".checkout__coupon__section input");
-        if (inputEl) {
-            inputEl.scrollIntoView({ behavior: "smooth", block: "center" });
-            inputEl.focus();
-        }
-    };
+// export const Coupon = () => {
+//     const handleCouponLinkClick = (e) => {
+//         e.preventDefault();
+//         const inputEl = document.querySelector(".checkout__coupon__section input");
+//         if (inputEl) {
+//             inputEl.scrollIntoView({ behavior: "smooth", block: "center" });
+//             inputEl.focus();
+//         }
+//     };
 
-    return (
-        <div className="row">
-            <div className="col-lg-12">
-                <h6><span className="icon_tag_alt"></span> Bạn có mã giảm giá ? <Link to="" onClick={handleCouponLinkClick}>Nhấn vào đây</Link> để nhập mã giảm giá
-                </h6>
-            </div>
-        </div>
-    );
-};
+//     return (
+//         <div className="row">
+//             <div className="col-lg-12">
+//                 <h6><span className="icon_tag_alt"></span> Bạn có mã giảm giá ? <Link to="" onClick={handleCouponLinkClick}>Nhấn vào đây</Link> để nhập mã giảm giá
+//                 </h6>
+//             </div>
+//         </div>
+//     );
+// };
 
 export const Checkout = () => {
     const navigate = useNavigate();
@@ -66,6 +67,10 @@ export const Checkout = () => {
     const [appliedPromotion, setAppliedPromotion] = useState(null);
     const [couponError, setCouponError] = useState("");
     const [couponSuccess, setCouponSuccess] = useState("");
+    //address selection 
+    const [addresses, setAddresses] = useState([]);
+    const [showAddressPopup, setShowAddressPopup] = useState(false);
+    const [selectedAddressId, setSelectedAddressId] = useState(null);
 
     useEffect(() => {
         if (!user.id) {
@@ -90,6 +95,12 @@ export const Checkout = () => {
                 // Fetch provinces
                 const provinceList = await ProvinceService.getProvinces();
                 setProvinces(provinceList);
+                // fetch list
+                const addressList = await api.fetchData(`/address/${user.id}`);
+                const sortedAddresses = [...addressList].sort((a, b) => {
+                    return (b.isDefault === true) - (a.isDefault === true);
+                });
+                setAddresses(sortedAddresses);
             } catch (err) {
                 console.error("Lỗi khi tải thông tin giỏ hàng/tỉnh thành:", err);
             } finally {
@@ -99,6 +110,36 @@ export const Checkout = () => {
 
         fetchCartAndProvinces();
     }, [navigate,user.id]);
+
+    const handleSelectAddress = async (address) => {
+        setSelectedAddressId(address.id);
+
+        setFullName(address.fullName || "");
+        setPhoneNumber(address.phoneNumber || "");
+        setDetailAdrs(address.detailAdrs || address.detail_adrs || "");
+
+        const provinceObj = provinces.find(p => p.name === address.provinceCity);
+        const provinceId = provinceObj ? String(provinceObj.code) : "";
+
+        const districtList = provinceId
+            ? await ProvinceService.getDistricts(provinceId)
+            : [];
+
+        const districtId = address.districtId ? String(address.districtId) : "";
+
+        const wardList = districtId
+            ? await ProvinceService.getWards(districtId)
+            : [];
+
+        setDistricts(districtList);
+        setWards(wardList);
+
+        setSelectedProvince(provinceId);
+        setSelectedDistrict(districtId);
+        setSelectedWard(address.wardCode || "");
+
+        setShowAddressPopup(false);
+    };
 
     const handleProvinceChange = async (provinceCode) => {
         setSelectedProvince(provinceCode);
@@ -223,18 +264,18 @@ export const Checkout = () => {
         try {
             const provinceObj = provinces.find((p) => p.code === Number(selectedProvince));
             const districtObj = districts.find((d) => d.code === Number(selectedDistrict));
-            const wardObj = wards.find((w) => w.code === selectedWard);
+            const wardObj = wards.find((w) => String(w.code) === String(selectedWard));
 
             const payload = {
                 userId: user.id,
                 fullName,
                 phoneNumber,
                 detailAdrs,
-                provinceCity: provinceObj?.name,
-                countyDistrict: districtObj?.name,
-                wardCommune: wardObj?.name,
+                provinceCity: provinceObj?.name || selectedProvince,
+                countyDistrict: districtObj?.name || selectedDistrict,
+                wardCommune: wardObj?.name || selectedWard,
                 wardCode: selectedWard,
-                districtId: Number(selectedDistrict),
+                districtId: Number(selectedDistrict) || null,
                 note,
                 paymentMethod,
                 promotionId: appliedPromotion ? appliedPromotion.id : null
@@ -280,6 +321,54 @@ export const Checkout = () => {
 
     return (
         <div>
+            {showAddressPopup && (
+                <div className="address-modal-overlay">
+                    <div className="address-modal">
+                        <div className="address-modal-header">
+                            <h4>Chọn địa chỉ giao hàng</h4>
+                            <button type="button" onClick={() => setShowAddressPopup(false)}>
+                                ×
+                            </button>
+                        </div>
+
+                        {addresses.length === 0 ? (
+                            <p>Bạn chưa có địa chỉ nào.</p>
+                        ) : (
+                            addresses.map((address) => (
+                                <div
+                                    key={address.id}
+                                    className={`address-option ${
+                                        address.isDefault ? "default-address" : ""
+                                    } ${
+                                        selectedAddressId === address.id ? "selected-address" : ""
+                                    }`}
+                                >
+                                    <div>
+                                        <strong>{address.fullName}</strong> | {address.phoneNumber}
+                                        <p>
+                                            {address.detailAdrs || address.detail_adrs},{" "}
+                                            {address.wardCommune}, {address.countyDistrict},{" "}
+                                            {address.provinceCity}
+                                        </p>
+
+                                        {address.isDefault && (
+                                            <span className="default-badge">Mặc định</span>
+                                        )}
+                                    </div>
+
+                                    <button
+                                        type="button"
+                                        className="select-address-btn"
+                                        onClick={() => handleSelectAddress(address)}
+                                    >
+                                        Chọn
+                                    </button>
+                                </div>
+                            ))
+                        )}
+                    </div>
+                </div>
+            )}
             <WindowPopup
                 visible={popupInfo.visible}
                 type={popupInfo.type}
@@ -290,9 +379,18 @@ export const Checkout = () => {
             <Breadcrumb />
             <section className="checkout spad">
                 <div className="container">
-                    <Coupon />
+                    {/* <Coupon /> */}
                     <div className="checkout__form">
                         <h4>Thông tin thanh toán</h4>
+                        <div style={{ marginBottom: "20px" }}>
+                            <button
+                                type="button"
+                                className="site-btn"
+                                onClick={() => setShowAddressPopup(true)}
+                            >
+                                Chọn địa chỉ có sẵn
+                            </button>
+                        </div>
                         <form onSubmit={handlePlaceOrder}>
                             <div className="row">
                                 <PayForm
