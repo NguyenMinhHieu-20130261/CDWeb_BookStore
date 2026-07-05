@@ -3,8 +3,10 @@ import axios from "axios";
 class ApiService {
     constructor() {
         const baseURL =
-            process.env.REACT_APP_API_URL ||
-            "https://cdwebbookstore-production.up.railway.app/api";
+            // process.env.REACT_APP_API_URL ||
+            // "https://cdwebbookstore-production.up.railway.app/api"||
+            process.env.REACT_APP_LOCAL_API ||
+            "http://localhost:8080/api";
 
         console.log(baseURL);
         this.api = axios.create({

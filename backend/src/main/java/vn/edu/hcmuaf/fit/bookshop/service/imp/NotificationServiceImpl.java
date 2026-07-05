@@ -20,9 +20,9 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public List<Notification> getNotificationsByUser(Integer userId) {
-        return notificationRepo.findByUserIdOrIsBroadcastTrueOrderByCreatedAtDesc(userId);
+        return notificationRepo.findByUserIdOrderByCreatedAtDesc(userId);    
     }
-
+       
     @Override
     public List<Notification> getPersonalNotifications(Integer userId) {
         return notificationRepo.findByUserIdOrderByCreatedAtDesc(userId);
@@ -89,7 +89,7 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public void markAllAsRead(Integer userId) {
         List<Notification> notifications =
-                notificationRepo.findByUserIdAndIsReadFalseOrderByCreatedAtDesc(userId);
+                notificationRepo.findByUserIdAndIsReadFalseOrIsBroadcastTrueAndIsReadFalseOrderByCreatedAtDesc(userId);
 
         for (Notification notification : notifications) {
             notification.setIsRead(true);
@@ -100,7 +100,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public long countUnread(Integer userId) {
-        return notificationRepo.countByUserIdAndIsReadFalse(userId);
+        return notificationRepo.countByUserIdAndIsReadFalseOrIsBroadcastTrueAndIsReadFalse(userId);
     }
 
     @Override

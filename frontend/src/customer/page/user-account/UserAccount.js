@@ -6,11 +6,14 @@ import { useSelector,useDispatch  } from "react-redux";
 import { loginSuccess } from "../../../Store/AuthSlice";
 import api from "../../../service/ApiService";
 import { useNavigate } from "react-router-dom";
+import { uploadImage } from "../../../service/ImageUploadService";
+import DefaultAvatar from "../../assets/img/user/user.jpg";
 
 const UserAccount = () => {
     const user = useSelector(state => state.auth.login.currentUser);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [uploading, setUploading] = useState(false);
     // Form data state
     const [userData, setUserData] = useState({
         fullName: "",
@@ -18,7 +21,7 @@ const UserAccount = () => {
         gender: "",
         username: "",
         email: "",
-        avatar: "https://via.placeholder.com/150",
+        avatar: "",
         day: "01",
         month: "01",
         year: "2000"
@@ -46,7 +49,7 @@ const UserAccount = () => {
                     gender: data.gender || "",
                     username: user.username || "",
                     email: user.email || "",
-                    avatar: data.avatar || "https://via.placeholder.com/150",
+                    avatar: data.avatar || DefaultAvatar,
 
                     year: birthdayParts ? birthdayParts[0] : "2000",
                     month: birthdayParts ? birthdayParts[1] : "01",
@@ -102,7 +105,41 @@ const UserAccount = () => {
             alert("Cập nhật thông tin thất bại");
         }
     };
+    //img upload
+    const handleImageChange = async (e) => {
 
+        const file = e.target.files[0];
+
+        if (!file) return;
+
+        if (!file.type.startsWith("image/")) {
+            alert("Vui lòng chọn file ảnh");
+            return;
+        }
+
+        if (file.size > 5 * 1024 * 1024) {
+            alert("Ảnh phải nhỏ hơn 5MB");
+            return;
+        }
+
+        try {
+            setUploading(true);
+
+            const imageUrl = await uploadImage(file);
+
+            setUserData(prev => ({
+                ...prev,
+                avatar: imageUrl
+            }));
+
+            alert("Upload ảnh thành công");
+        } catch (error) {
+            console.log("Upload avatar error:", error);
+            alert("Upload ảnh thất bại");
+        } finally {
+            setUploading(false);
+        }
+    };
     return (
         <>
             <Breadcrumb/>
@@ -248,14 +285,27 @@ const UserAccount = () => {
                                 <h4>Ảnh đại diện</h4>
 
                                 <div className="text-center">
-                                    <img src={ userData.avatar}
-                                         alt="avatar"
-                                         style={{width: "120px", borderRadius: "50%"}}/>
-
-                                    <input type="file"
-                                           className="form-control mt-3"
-                                        //    onChange={handleImageChange}
+                                    <img
+                                        src={userData.avatar}
+                                        alt="avatar"
+                                        style={{
+                                            width: "120px",
+                                            height: "120px",
+                                            objectFit: "cover",
+                                            borderRadius: "50%"
+                                        }}
                                     />
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        className="form-control mt-3"
+                                        onChange={handleImageChange}
+                                    />
+                                    {uploading && (
+                                        <div className="text-muted mt-2">
+                                            Đang tải ảnh...
+                                        </div>
+                                    )}
                                 </div>
                             </div>
 

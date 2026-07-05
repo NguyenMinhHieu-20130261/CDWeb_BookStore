@@ -20,8 +20,7 @@ public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    @JsonBackReference
+        
     @JsonIgnoreProperties({
             "addresses",
             "userInformation",
@@ -34,10 +33,10 @@ public class Notification {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-
+    
     @Enumerated(EnumType.STRING)
-    @Column(name = "type")
-    private NotificationType type;
+    @Column(nullable = false)
+    private NotificationType type = NotificationType.SYSTEM;
 
     @Column(name = "title", nullable = false)
     private String title;
