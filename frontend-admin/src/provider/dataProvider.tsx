@@ -2,7 +2,12 @@ import type { DataProvider } from "react-admin";
 import axios from "axios";
 import { uploadImage,uploadImages } from "../service/ImageUploader";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080/api";
+const API_URL = 
+        // import.meta.env.VITE_API_URL ||
+        // "https://cdwebbookstore-production.up.railway.app/api"||
+        import.meta.env.LOCAL_API ||
+        "http://localhost:8080/api";
+
 const getAuthConfig = () => {
     const auth = JSON.parse(localStorage.getItem("auth") || "{}");
     const user = JSON.parse(localStorage.getItem("user") || "{}");
