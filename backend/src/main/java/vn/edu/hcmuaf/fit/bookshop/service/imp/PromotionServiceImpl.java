@@ -9,20 +9,29 @@ import org.springframework.stereotype.Service;
 import vn.edu.hcmuaf.fit.bookshop.entity.Promotion;
 import vn.edu.hcmuaf.fit.bookshop.repository.PromotionRepo;
 import vn.edu.hcmuaf.fit.bookshop.service.PromotionService;
+import vn.edu.hcmuaf.fit.bookshop.service.SystemLogService;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Date;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class PromotionServiceImpl implements PromotionService {
 
     @Autowired
     private PromotionRepo promotionRepo;
 
+    @Autowired
+    private SystemLogService systemLogService;
+    
     @Override
     public Page<Promotion> getAllPromotions(int page, int perPage, String sort, String filter, String order) {
+        log.debug("Lấy danh sách promotion: page={}, perPage={}, sort={}, order={}, filter={}",
+            page,perPage, sort, order, filter
+        );
         updateExpiredPromotions(); // Tự động cập nhật trạng thái khi truy vấn
         Sort.Direction direction = order.equalsIgnoreCase("desc")
                 ? Sort.Direction.DESC
@@ -69,6 +78,11 @@ public class PromotionServiceImpl implements PromotionService {
 
     @Override
     public Promotion createPromotion(Promotion promotion) {
+        log.info(
+            "Tạo mã giảm giá: code={}, name={}",
+            promotion.getCode(),
+            promotion.getName()
+        );
         if (promotion.getUsageCount() == null) {
             promotion.setUsageCount(0);
         }
@@ -79,11 +93,18 @@ public class PromotionServiceImpl implements PromotionService {
         if (promotion.getIsCode() == null) {
             promotion.setIsCode(true);
         }
-        return promotionRepo.save(promotion);
+        Promotion saved = promotionRepo.save(promotion);
+
+        log.info("Tạo promotion thành công: id={}, code={}",
+            saved.getId(),
+            saved.getCode()
+        );
+        return saved;
     }
 
     @Override
     public Promotion updatePromotion(Integer id, Promotion promotion) {
+        log.info("Cập nhật promotion id={}", id);
         Promotion existing = promotionRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy mã giảm giá"));
 
@@ -99,15 +120,19 @@ public class PromotionServiceImpl implements PromotionService {
         if (promotion.getDiscountPercent() != null) {
             existing.setDiscount(promotion.getDiscountPercent().intValue());
         }
+        Promotion saved = promotionRepo.save(existing);
 
-        return promotionRepo.save(existing);
+        log.info("Promotion {} đã được cập nhật", saved.getId() );
+        return saved;
     }
 
     @Override
     public void deletePromotion(Integer id) {
+        log.warn("Xóa promotion id={}",id);
         Promotion existing = promotionRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy mã giảm giá"));
         promotionRepo.delete(existing);
+        log.info("Đã xóa promotion id={}", id);
     }
 
     @Override
@@ -132,6 +157,7 @@ public class PromotionServiceImpl implements PromotionService {
 
     @Override
     public void updateExpiredPromotions() {
+        log.debug("Kiểm tra promotion hết hạn");
         promotionRepo.deactivateExpiredPromotions(new Date());
     }
 

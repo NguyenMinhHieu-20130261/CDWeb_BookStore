@@ -1,10 +1,13 @@
-import { Admin, Resource } from "react-admin";
+import { Admin, Resource,CustomRoutes  } from "react-admin";
 import dataProvider from "./provider/dataProvider";
 import authProvider from "./provider/authProvider";
 
 import Dashboard from "./components/dashbroad/Dashbroad";
 import { LoginPage } from "./layout/Login";
 import { MyLayout } from "./layout/MainLayout";
+import { Route } from "react-router-dom";
+import AdminNotification from "./components/notifications/AdminNotification";
+import { SystemLogList } from "./components/log/SystemLogList";
 
 import category from "./components/category";
 import products from "./components/products";
@@ -27,6 +30,13 @@ const App = () => (
     layout={MyLayout}
     dashboard={Dashboard}    
     >
+    <CustomRoutes>
+        <Route
+            path="/admin-notifications"
+            element={<AdminNotification/>}
+        />
+    </CustomRoutes>
+    <Resource name="logs" list={SystemLogList} />
     <Resource name="products" {...products} />
     <Resource name="category" {...category}/>
     <Resource name="blogs" {...blogs}/>

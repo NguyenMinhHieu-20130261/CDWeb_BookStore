@@ -13,12 +13,15 @@ import org.springframework.data.domain.Pageable;
 import vn.edu.hcmuaf.fit.bookshop.entity.Review;
 import vn.edu.hcmuaf.fit.bookshop.repository.ReviewRepo;
 import vn.edu.hcmuaf.fit.bookshop.service.ReviewService;
+import vn.edu.hcmuaf.fit.bookshop.service.SystemLogService;
 import vn.edu.hcmuaf.fit.bookshop.service.ValidationService;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ReviewServiceImpl implements ReviewService {
@@ -29,8 +32,12 @@ public class ReviewServiceImpl implements ReviewService {
     @Autowired
     private ValidationService validationService;
 
+    @Autowired
+    private SystemLogService systemLogService;
+
     @Override
     public List<Review> getReviewsByProduct(Integer productId, Integer rating, String sort) {
+        log.debug("Lấy review productId={}, rating={}, sort={}", productId, rating, sort);
         Sort reviewSort;
         if ("oldest".equalsIgnoreCase(sort)) {
             reviewSort = Sort.by(Sort.Direction.ASC, "createdAt");
@@ -44,6 +51,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
     @Override
     public Map<String, Object> getReviewSummary(Integer productId) {
+        log.debug("Tính tổng quan đánh giá productId={}", productId);
         List<Review> reviews = reviewRepo.findByProduct_Id(productId);
         long totalReviews = reviews.size();
 
@@ -60,6 +68,9 @@ public class ReviewServiceImpl implements ReviewService {
 //admin
     @Override
     public Page<Review> getReviews(int page, int perPage, String sort, String filter, String order) {
+        log.debug("Admin lấy danh sách review: page={}, perPage={}, sort={}, order={}, filter={}",
+                page, perPage, sort,order, filter
+        );
         Sort.Direction direction = order.equalsIgnoreCase("desc")
                 ? Sort.Direction.DESC
                 : Sort.Direction.ASC;
@@ -71,6 +82,7 @@ public class ReviewServiceImpl implements ReviewService {
         if (keyword.isBlank()) {
             return reviewRepo.findAll(pageable);
         }
+        log.debug("Tìm kiếm review với keyword={}", keyword);
 
         return reviewRepo.findAll((root, query, cb) ->
                 cb.or(
@@ -104,23 +116,48 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public Review getReviewById(Integer id) {
+        log.debug("Lấy review id={}", id);
+
         return reviewRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy đánh giá"));
+                .orElseThrow(() -> {
+                    log.warn("Không tìm thấy review id={}", id);
+                    return new RuntimeException("Không tìm thấy đánh giá");
+                });
     }
 
     @Override
     public Review updateReviewReply(Integer id, String reply) {
+        log.info("Admin phản hồi review id={}", id);
         Review review = getReviewById(id);
         review.setReply(reply);
         review.setUpdatedAt(new java.util.Date());
-        return reviewRepo.save(review);
+        Review saved = reviewRepo.save(review);
+
+        log.info("Phản hồi review thành công id={}", saved.getId());
+        systemLogService.saveLog(
+                "REPLY_REVIEW_ADMIN",
+                "INFO",
+                "Admin " + " đã phản hồi review có id = " + id + " repy:" + review.getReply(),
+                null,
+                "USER"
+        );
+        return saved;
     }
 
     @Override
     public void deleteReview(Integer id) {
+        log.warn("Xóa review id={}", id);
         if (!reviewRepo.existsById(id)) {
             throw new RuntimeException("Không tìm thấy đánh giá");
         }
         reviewRepo.deleteById(id);
+        log.info("Đã xóa review id={}", id);
+        systemLogService.saveLog(
+                "REPLY_REVIEW_ADMIN",
+                "INFO",
+                "Admin " + " đã phản hồi review có id = " + id,
+                null,
+                "ADMIN"
+        );
     }
 }

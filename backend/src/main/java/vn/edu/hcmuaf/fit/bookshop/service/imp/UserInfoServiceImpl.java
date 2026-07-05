@@ -2,11 +2,15 @@ package vn.edu.hcmuaf.fit.bookshop.service.imp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import vn.edu.hcmuaf.fit.bookshop.entity.UserInformation;
 import vn.edu.hcmuaf.fit.bookshop.repository.UserInfoRepo;
+import vn.edu.hcmuaf.fit.bookshop.service.SystemLogService;
 import vn.edu.hcmuaf.fit.bookshop.service.UserInfoService;
 import vn.edu.hcmuaf.fit.bookshop.service.ValidationService;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class UserInfoServiceImpl implements UserInfoService {
 
@@ -14,7 +18,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     private UserInfoRepo userInfoRepo;
 
     @Autowired
-    private ValidationService validationService;
+    private SystemLogService systemLogService;
 
     @Override
     public UserInformation getInfoByUserId(Integer userId) {
@@ -40,6 +44,14 @@ public class UserInfoServiceImpl implements UserInfoService {
         existingInfo.setGender(userInfo.getGender());
         existingInfo.setBirthday(userInfo.getBirthday());
         existingInfo.setAvatar(userInfo.getAvatar());
+        log.info("User '{}' đăng nhập thành công", existingInfo.getUser().getUsername());
+        systemLogService.saveLog(
+                "UPDATE_USER",
+                "INFO",
+                "Người dùng đã cập nhật user có id = " + existingInfo.getId() + ", username = " + existingInfo.getFullName(),
+                null,
+                "USER"
+        );
         return userInfoRepo.save(existingInfo);
     }
 }

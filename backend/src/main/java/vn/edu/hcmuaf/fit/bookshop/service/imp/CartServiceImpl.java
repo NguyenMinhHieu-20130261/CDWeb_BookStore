@@ -11,7 +11,10 @@ import vn.edu.hcmuaf.fit.bookshop.entity.Cart;
 import vn.edu.hcmuaf.fit.bookshop.repository.CartRepo;
 import vn.edu.hcmuaf.fit.bookshop.repository.ProductImageRepo;
 import vn.edu.hcmuaf.fit.bookshop.service.CartService;
+import vn.edu.hcmuaf.fit.bookshop.service.SystemLogService;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class CartServiceImpl implements CartService {
     @Autowired
@@ -19,9 +22,13 @@ public class CartServiceImpl implements CartService {
 
     @Autowired
     private ProductImageRepo productImageRepo;
+    
+    @Autowired
+    private SystemLogService systemLogService;
 
     @Override
     public ResponseEntity<?> addToCart(Cart cartItem) {
+        log.info("Yêu cầu thêm sản phẩm vào giỏ hàng");
         if (cartItem.getProduct() == null || cartItem.getProduct().getId() == null) {
             return ResponseEntity.badRequest().body("Yêu cầu sản phẩm");
         }
@@ -36,7 +43,12 @@ public class CartServiceImpl implements CartService {
 
         Integer userId = cartItem.getUser().getId();
         Integer productId = cartItem.getProduct().getId();
-
+        log.info(
+            "User {} thêm product {} vào giỏ, quantity={}",
+            userId,
+            productId,
+            cartItem.getQuantity()
+        );        
         Optional<Cart> existingCartItem =
                 cartRepo.findByUserIdAndProductId(userId, productId);
 
@@ -44,21 +56,34 @@ public class CartServiceImpl implements CartService {
             Cart existing = existingCartItem.get();
             existing.setQuantity(existing.getQuantity() + cartItem.getQuantity());
             cartRepo.save(existing);
-
+            log.info(
+                "Cập nhật số lượng giỏ hàng: userId={}, productId={}, newQuantity={}",
+                userId,
+                productId,
+                existing.getQuantity()
+            );
             return ResponseEntity.ok(existing);
         }
-
         Cart savedCartItem = cartRepo.save(cartItem);
+
+        log.info(
+            "Thêm mới cart item thành công: cartId={}, userId={}, productId={}",
+            savedCartItem.getId(),
+            userId,
+            productId
+        );
         return ResponseEntity.ok(savedCartItem);
     }
 
     @Override
     public void removeFromCart(Integer cartItemId, Integer userId) {
+        log.warn("User {} xóa cartItem {}", userId, cartItemId);
         Cart cart = cartRepo.findById(cartItemId).orElseThrow();
 
         if (!cart.getUser().getId().equals(userId)) {
             throw new RuntimeException("Bạn không có quyền thao tác giỏ hàng này");
         }
+        log.info("Đã xóa cartItem {}", cartItemId);
         cartRepo.deleteById(cartItemId);
     }
 
@@ -77,23 +102,35 @@ public class CartServiceImpl implements CartService {
             );
             
             var images = productImageRepo.findByProduct_Id(productId);
-            System.out.println(
-            "PRODUCT " + productId 
-            + " IMAGE SIZE: " 
-            + images.size()
-        );
+            log.debug(
+                "Product {} có {} ảnh trong giỏ hàng user {}",
+                productId,
+                images.size(),
+                userId
+            );
         }
         return carts;    
     }
     @Override
     public ResponseEntity<?> updateQuantity(Integer cartItemId, Integer quantity, Integer userId) {
+        log.info(
+            "User {} cập nhật cartItem {} quantity={}",
+            userId,
+            cartItemId,
+            quantity
+        );
         Cart cart = cartRepo.findById(cartItemId).orElseThrow();
         if (!cart.getUser().getId().equals(userId)) {
             throw new RuntimeException("Bạn không có quyền thao tác giỏ hàng này");
         }
         cart.setQuantity(quantity);
-        return ResponseEntity.ok(
-            cartRepo.save(cart)
+        Cart saved = cartRepo.save(cart);
+
+        log.info(
+            "Cập nhật số lượng cartItem {} thành công, quantity={}",
+            cartItemId,
+            saved.getQuantity()
         );
+        return ResponseEntity.ok(saved);
     }
 }

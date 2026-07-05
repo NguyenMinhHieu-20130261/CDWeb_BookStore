@@ -14,12 +14,15 @@ import vn.edu.hcmuaf.fit.bookshop.entity.Product;
 import vn.edu.hcmuaf.fit.bookshop.repository.InventoryRepo;
 import vn.edu.hcmuaf.fit.bookshop.repository.ProductRepo;
 import vn.edu.hcmuaf.fit.bookshop.service.InventoryService;
+import vn.edu.hcmuaf.fit.bookshop.service.SystemLogService;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class InventoryServiceImpl implements InventoryService {
 
@@ -28,9 +31,18 @@ public class InventoryServiceImpl implements InventoryService {
 
     @Autowired
     private ProductRepo productRepo;
+    
+    @Autowired
+    private SystemLogService systemLogService;
 
     @Override
     public Page<Inventory> getAll(String q, Boolean active, Pageable pageable,String stockStatus) {
+        log.debug(
+            "Lấy danh sách lô hàng: q={}, active={}, stockStatus={}",
+            q,
+            active,
+            stockStatus
+        );
         Specification<Inventory> spec = (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
 
@@ -107,6 +119,7 @@ public class InventoryServiceImpl implements InventoryService {
 
     @Override
     public List<Inventory> createInventory(InventoryCreateRequest request) {
+        log.info("Bắt đầu nhập kho");
         if (request.getInventoryRequest() == null || request.getInventoryRequest().isEmpty()) {
             throw new RuntimeException("Danh sách nhập kho không được rỗng");
         }
@@ -126,6 +139,14 @@ public class InventoryServiceImpl implements InventoryService {
             if (item.getSalePrice() == null || item.getSalePrice() < item.getImportPrice()) {
                 throw new RuntimeException("Giá bán không được nhỏ hơn giá nhập");
             }
+            log.info(
+                "Nhập kho sản phẩm id={}, title={}, quantity={}, importPrice={}, salePrice={}",
+                product.getId(),
+                product.getTitle(),
+                item.getQuantity(),
+                item.getImportPrice(),
+                item.getSalePrice()
+            );
             Inventory inventory = new Inventory();
 
             inventory.setBatchCode(generateBatchCode());
@@ -139,8 +160,23 @@ public class InventoryServiceImpl implements InventoryService {
             inventory.setUpdatedAt(now);
             inventory.setActive(true);
             inventory.setNote(item.getNote());
-            result.add(inventoryRepo.save(inventory));
+            Inventory saved = inventoryRepo.save(inventory);
+
+            log.info(
+                "Tạo lô hàng thành công: id={}, batchCode={}",
+                saved.getId(),
+                saved.getBatchCode()
+            );
+            result.add(saved);
         }
+        log.info("Nhập kho hoàn tất, tổng số lô={}", result.size());
+        systemLogService.saveLog(
+            "CREATE_INVENTORY",
+            "INFO",
+            "ADMIN tạo lô hàng có = "+ result,
+            null,
+            "ADMIN"
+        );
         return result;
     }
     private String generateBatchCode() {
@@ -150,19 +186,32 @@ public class InventoryServiceImpl implements InventoryService {
 
     @Override
     public Inventory getById(Integer id) {
+        log.debug("Lấy lô hàng id={}", id);
         return inventoryRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy lô hàng ID: " + id));
+                .orElseThrow(() -> {
+                    log.warn("Không tìm thấy lô hàng id={}", id);
+                    return new RuntimeException("Không tìm thấy lô hàng ID: " + id);
+                });
     }
 
     @Override
     public Inventory updateInventory(Integer id, Inventory request) {
+        log.info("Cập nhật lô hàng id={}", id);
         Inventory inventory = inventoryRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy lô hàng ID: " + id));
 
         inventory.setActive(request.getActive());
         inventory.setNote(request.getNote());
         inventory.setUpdatedAt(new Date());
-
-        return inventoryRepo.save(inventory);
+        Inventory saved = inventoryRepo.save(inventory);
+        log.info("Cập nhật lô hàng thành công id={}", saved.getId());
+        systemLogService.saveLog(
+            "UPDATE_INVENTORY",
+            "INFO",
+            "ADMIN cập nhật lô hàng có id = " + saved.getId(),
+            null,
+            "ADMIN"
+        );
+        return saved;
     }
 }

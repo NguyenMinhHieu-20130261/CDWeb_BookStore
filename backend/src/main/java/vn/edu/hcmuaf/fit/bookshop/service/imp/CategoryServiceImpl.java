@@ -8,6 +8,7 @@ import vn.edu.hcmuaf.fit.bookshop.entity.Category;
 import vn.edu.hcmuaf.fit.bookshop.entity.User;
 import vn.edu.hcmuaf.fit.bookshop.repository.CategoryRepo;
 import vn.edu.hcmuaf.fit.bookshop.service.CategoryService;
+import vn.edu.hcmuaf.fit.bookshop.service.SystemLogService;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,12 +18,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
     private CategoryRepo categoryRepo;
+
+    @Autowired
+    private SystemLogService systemLogService;
 
     @Override
     public List<Category> getAllCategories() {
@@ -46,6 +52,9 @@ public class CategoryServiceImpl implements CategoryService {
     //admin
     @Override
     public Page<Category> getAllCategories(int page, int perPage, String sort, String filter, String order) {
+        log.debug("Admin lấy danh sách danh mục: page={}, perPage={}, sort={}, order={}, filter={}",
+            page, perPage, sort,order,filter
+        );
         Sort.Direction direction = order.equalsIgnoreCase("desc")
                 ? Sort.Direction.DESC
                 : Sort.Direction.ASC;
@@ -93,8 +102,13 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category updateCategory(Integer id, Category category) {
+        log.info("Cập nhật danh mục id={}", id);
         Category existingCate = categoryRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm"));
+            .orElseThrow(() -> {
+                log.warn("Không tìm thấy danh mục id={}", id);
+                return new RuntimeException("Không tìm thấy danh mục");
+            });
+        
         existingCate.setName(category.getName());
         existingCate.setActive(category.isActive());
         if (category.getParentCategory() != null 
@@ -104,12 +118,24 @@ public class CategoryServiceImpl implements CategoryService {
             existingCate.setParentCategory(null);
         }
         existingCate.setUpdatedAt(new Date());
-        return categoryRepo.save(existingCate);
+        Category saved = categoryRepo.save(existingCate);
+
+        log.info("Cập nhật danh mục thành công id={}, name={}", saved.getId(), saved.getName());
+        systemLogService.saveLog(
+            "UPDATE_CATEGORY",
+            "INFO",
+            "ADMIN cập nhật danh mục có id = "+ saved.getId(),
+            null,
+            "ADMIN"
+        );
+        return saved;
     }
 
     @Override
     public Category createCategory(Category category, User admin) {
-
+        log.info("Admin {} tạo danh mục '{}'",
+            admin.getUsername(), category.getName()
+        );
         category.setCreatedBy(admin);
         category.setUpdatedBy(admin);
         category.setCreatedAt(new Date());
@@ -127,18 +153,38 @@ public class CategoryServiceImpl implements CategoryService {
         } else {
             category.setParentCategory(null);
         }
-        return categoryRepo.save(category);
+        Category saved = categoryRepo.save(category);
+
+        log.info("Tạo danh mục thành công id={}, name={}", saved.getId(), saved.getName());
+        systemLogService.saveLog(
+            "CREATE_CATEGORY",
+            "INFO",
+            "ADMIN tạo danh mục có id = "+ saved.getId(),
+            null,
+            "ADMIN"
+        );
+        return saved;
     }
 
     @Override
     public Category deleteCategory(Integer id, User admin) {
+        log.warn("Admin {} xóa mềm danh mục id={}", admin.getUsername(), id);
         Category category = categoryRepo.findById(id)
                     .orElseThrow(() ->new RuntimeException("Không tìm thấy danh mục"));
-            category.setActive(false);
-            category.setUpdatedBy(admin);
-            category.setUpdatedAt(new Date());
+        category.setActive(false);
+        category.setUpdatedBy(admin);
+        category.setUpdatedAt(new Date());
+        Category saved = categoryRepo.save(category);
 
-            return categoryRepo.save(category);
+        log.info("Đã chuyển danh mục id={} sang inactive", saved.getId());
+        systemLogService.saveLog(
+            "DELETE_CATEGORY",
+            "WARN",
+            "ADMIN đổi trạng thái cho danh mục có id = "+ saved.getId(),
+            null,
+            "ADMIN"
+        );
+        return saved;
     }
     
 }

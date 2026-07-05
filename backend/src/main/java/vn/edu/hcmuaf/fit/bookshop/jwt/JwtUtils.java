@@ -36,7 +36,7 @@ public class JwtUtils {
         if (user.getRole() != null && user.getRole().getDescription() != null) {
             claims.put("role", user.getRole().getDescription().name());
         }
-        System.out.println("JWT SECRET = " + jwtSecret);
+        // System.out.println("JWT SECRET = " + jwtSecret);
         return Jwts.builder()
                 .claims(claims)
                 .subject(user.getUsername())
@@ -63,7 +63,7 @@ public class JwtUtils {
         } catch (IllegalArgumentException e) {
             logger.error("JWT claims string is empty: {}", e.getMessage());
         }
-        System.out.println("JWT SECRET = " + jwtSecret);
+        // System.out.println("JWT SECRET = " + jwtSecret);
         return false;
     }
     private Claims getClaims(String token) {

@@ -2,10 +2,11 @@ import React from "react";
 import SideBarItem from "./SideBarItem";
 import { useSelector } from "react-redux";
 import api from "../../../../service/ApiService";
+import DefaultAvatar from "../../../assets/img/user/user.jpg";
 
 const LeftSideBar = () => {
     const [unread, setUnread] = React.useState(0);
-    const user = useSelector((state) => state.auth.user);
+    const user = useSelector((state) => state.auth.login.currentUser);
 
     const fullName =
         user?.userInformation?.fullName ||
@@ -14,7 +15,7 @@ const LeftSideBar = () => {
 
     const avatar =
         user?.userInformation?.avatar ||
-        "https://i.pravatar.cc/100";
+        DefaultAvatar;
 
     React.useEffect(() => {
         const loadUnread = async () => {
@@ -35,10 +36,17 @@ const LeftSideBar = () => {
     return (
         <div className="col-md-3 d-block p-0 pr-6 left-side-bar">
             <div className="account-of">
-                <img
-                    src={avatar}
-                    alt="avatar"
-                />
+            <img
+                src={avatar}
+                alt="avatar"
+                style={{
+                    width: "60px",
+                    height: "60px",
+                    borderRadius: "50%",
+                    objectFit: "cover",
+                    objectPosition: "center"
+                }}
+            />
                 <div className="info">
                     Tài khoản của
                     <strong>{fullName}</strong>
