@@ -1,5 +1,7 @@
 package vn.edu.hcmuaf.fit.bookshop.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,7 +11,11 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 @Entity
-@Table(name = "roles")
+@JsonIgnoreProperties({
+        "hibernateLazyInitializer",
+        "handler"
+})
+@Table(name = "role")
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

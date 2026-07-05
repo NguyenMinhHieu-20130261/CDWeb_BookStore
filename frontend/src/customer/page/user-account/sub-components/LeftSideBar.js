@@ -1,0 +1,52 @@
+import React from "react";
+import SideBarItem from "./SideBarItem";
+import { useSelector } from "react-redux";
+
+const LeftSideBar = () => {
+
+    const user = useSelector((state) => state.auth.user);
+
+    const fullName =
+        user?.userInformation?.fullName ||
+        user?.username ||
+        "Người dùng";
+
+    const avatar =
+        user?.userInformation?.avatar ||
+        "https://i.pravatar.cc/100";
+
+    return (
+        <div className="col-md-3 d-block p-0 pr-6 left-side-bar">
+            <div className="account-of">
+                <img
+                    src={avatar}
+                    alt="avatar"
+                />
+                <div className="info">
+                    Tài khoản của
+                    <strong>{fullName}</strong>
+                </div>
+            </div>
+
+            <ul style={{listStyle: "none", padding: 0, margin: 0}}>
+                <SideBarItem
+                    to="/user/info"
+                    iconClassName="fa-solid fa-user"
+                    itemName="Thông tin tài khoản"
+                />
+                <SideBarItem
+                    to="/user/address"
+                    iconClassName="fa-solid fa-location-dot"
+                    itemName="Sổ địa chỉ"
+                />
+                <SideBarItem
+                    to="/user/order"
+                    iconClassName="fa-solid fa-clipboard"
+                    itemName="Đơn hàng của tôi"
+                />
+            </ul>
+        </div>
+    );
+};
+
+export default LeftSideBar;
