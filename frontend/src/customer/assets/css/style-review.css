@@ -1,0 +1,20 @@
+.checked {
+    color: #f6c343;
+}
+
+.rate span {
+    color: #CDCFD0;
+    margin-right: 2px;
+}
+.checked {
+    color: #f6c343;
+}
+
+.text-yellow-darker span {
+    color: #CDCFD0;
+    margin-right: 2px;
+}
+
+.text-yellow-darker span.checked {
+    color: #f6c343;
+}

@@ -1259,10 +1259,13 @@ ol {
 /*---------------------
   Shop Grid
 -----------------------*/
-
 .product {
     padding-top: 80px;
     padding-bottom: 80px;
+}
+.product-pad {
+    padding-top: 30px !important;
+    padding-bottom: 30px !important;
 }
 
 .product__discount {
@@ -1425,6 +1428,9 @@ ol {
 
 .product__discount__slider.owl-carousel .owl-dots button:last-child {
     margin-right: 0;
+}
+.product__add-to-cart{
+    font-size: 13px;
 }
 
 .filter__item {
@@ -2278,4 +2284,54 @@ ol {
     letter-spacing: 2px;
     width: 100%;
     margin-top: 10px;
+}
+.atc-text{
+    font-size: 10px!important;
+}
+/* No user */
+.no-user{
+    text-align: center;
+    padding: 80px 0 !important;
+    width: 100%;
+}
+.no-user-text{
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+.no-user-link{
+    display: inline-block;
+    padding: 10px 30px;
+    background-color: #f75454;
+    color: #fff;
+    border-radius: 5px;
+}
+/* CART quantity */
+.cart-quantity-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+.cart-quantity-box input {
+    width: 45px;
+    height: 35px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+.qty-btn {
+    width: 32px;
+    height: 35px;
+    border: none;
+    background-color: #7fad39;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.qty-btn:hover {
+    background-color: #6f9632;
+}
+
+.cart-contents-total{
+    color: black !important;
 }
