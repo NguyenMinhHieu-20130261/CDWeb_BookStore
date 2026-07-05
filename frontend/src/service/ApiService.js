@@ -2,8 +2,11 @@ import axios from "axios";
 
 class ApiService {
     constructor() {
-        const baseURL = process.env.REACT_APP_API_URL;
+        const baseURL =
+            process.env.REACT_APP_API_URL ||
+            "https://cdwebbookstore-production.up.railway.app/api";
 
+        console.log(baseURL);
         this.api = axios.create({
             baseURL: baseURL,
             headers: {
