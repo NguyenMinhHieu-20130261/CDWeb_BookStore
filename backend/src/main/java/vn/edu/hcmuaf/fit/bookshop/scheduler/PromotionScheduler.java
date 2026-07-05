@@ -12,7 +12,7 @@ public class PromotionScheduler {
     private PromotionService promotionService;
 
     // Quét mỗi 60 giây (60000 ms) để tự động cập nhật các mã giảm giá đã quá hạn
-    @Scheduled(fixedRate = 60000)
+    @Scheduled(fixedRate = 3600000)
     public void autoUpdateExpiredPromotions() {
         try {
             promotionService.updateExpiredPromotions();
