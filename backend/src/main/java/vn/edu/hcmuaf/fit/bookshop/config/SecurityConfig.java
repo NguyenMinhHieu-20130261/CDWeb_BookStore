@@ -46,6 +46,7 @@ public class SecurityConfig {
                 .requestMatchers("/error").permitAll()
                 // PUB
                 .requestMatchers(HttpMethod.GET, "/api/category/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/notifications/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/products-images/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/blogs/**").permitAll()

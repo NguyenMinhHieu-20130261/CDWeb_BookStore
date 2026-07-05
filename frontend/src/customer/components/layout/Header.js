@@ -13,6 +13,7 @@ import FormatCurrency from "../../../utils/FormatCurrency";
 export const Header = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [unread, setUnread] = useState(0);
     const [parentCategories, setParentCategories] = React.useState([]);
     const [categories, setCategories] = React.useState([]);
     const [isSearchOpen, setIsSearchOpen] = React.useState(false);
@@ -58,6 +59,7 @@ export const Header = () => {
         );
         return children;
     };
+    //cart
     React.useEffect(() => {
         const loadCart = async () => {
             if (!user?.id) {
@@ -83,6 +85,26 @@ export const Header = () => {
             }
         };
         loadCart();
+    }, [user]);
+    //notify
+    React.useEffect(() => {
+        const loadNotification = async () => {
+            if (!user?.id) {
+                setUnread(0);
+                return;
+            }
+
+            try {
+                const count = await api.fetchData(
+                    `/notifications/user/${user.id}/unread-count`
+                );
+                setUnread(count);
+            } catch (error) {
+                console.log("Load notification error:", error);
+            }
+        };
+
+        loadNotification();
     }, [user]);
     return (
         <header id="site-header" className="site-header site-header__v12 mb-7 pb-1">
@@ -143,18 +165,21 @@ export const Header = () => {
                                         </div>
                                         <div className="user-dropdown-menu">
                                             <Link to="/user/info" className="user-dropdown-item">
-                                                <i className="fa-solid fa-user-circle"></i>
+                                                <i className="fa-solid fa-user-circle"/>
                                                 <span>Thông tin người dùng</span>
                                             </Link>
                                             <Link to="/user/address" className="user-dropdown-item">
-                                                <i className="fa-solid fa-location-dot"></i>
+                                                <i className="fa-solid fa-location-dot"/>
                                                 <span>Địa chỉ người dùng</span>
                                             </Link>
                                             <Link to="/user/order" className="user-dropdown-item">
-                                                <i className="fa-solid fa-box"></i>
+                                                <i className="fa-solid fa-box"/>
                                                 <span>Đơn hàng</span>
                                             </Link>
-                                            
+                                            <Link to="/user/notification" className="user-dropdown-item">
+                                                <i className="fa-solid fa-bell text-dark"/>
+                                                <span>Thông báo</span>
+                                            </Link>
                                             <button
                                                 type="button"
                                                 className="user-dropdown-item logout-item"
@@ -207,6 +232,38 @@ export const Header = () => {
                                                     {FormatCurrency(totalPrice)}
                                                 </span>
                                             </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </Link>
+                            <Link
+                                to="/user/notification"
+                                className="d-block nav-link text-dark ml-2"
+                            >
+                                <div
+                                    className="d-flex align-items-center text-white font-size-2 text-lh-sm position-relative"
+                                >
+
+                                    {unread > 0 && (
+                                        <span
+                                            className="position-absolute width-16 height-16 rounded-circle d-flex align-items-center justify-content-center font-size-n9 left-0 top-0 ml-n2 mt-n1 text-white bg-danger"
+                                        >
+                                            {unread}
+                                        </span>
+                                    )}
+
+                                    <div>
+                                        <i className="fa-solid fa-bell font-size-5 text-dark"/>
+                                    </div>
+
+                                    <div className="ml-2 d-none d-lg-block text-dark">
+                                        <span className="text-secondary-gray-1090 font-size-1">
+                                            Thông báo
+                                        </span>
+                                        <div>
+                                            {unread > 0
+                                                ? `${unread} chưa đọc`
+                                                : "Không có"}
                                         </div>
                                     </div>
                                 </div>
