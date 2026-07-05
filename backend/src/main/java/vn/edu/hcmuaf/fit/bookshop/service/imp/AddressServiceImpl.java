@@ -13,7 +13,9 @@ import vn.edu.hcmuaf.fit.bookshop.service.AddressService;
 import vn.edu.hcmuaf.fit.bookshop.service.ValidationService;
 import vn.edu.hcmuaf.fit.bookshop.entity.User;
 import vn.edu.hcmuaf.fit.bookshop.repository.UserRepo;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class AddressServiceImpl implements AddressService {
 
@@ -28,8 +30,10 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public List<Address> getUserAddresses(Integer userId) {
+        log.debug("Lấy danh sách địa chỉ của userId={}", userId);
         return addressRepo.findByUserId(userId);
     }
+
     //Validate
     private void validateAddress(Address address) {
         validationService.validateFullName(address.getFullName());
@@ -42,29 +46,50 @@ public class AddressServiceImpl implements AddressService {
     //userfunc
     @Override
     public Address saveAddress(Address address) {
+        log.info("User {} thêm địa chỉ mới", address.getUser().getId());
+
         validateAddress(address);
         Integer userId = address.getUser().getId();
         User user = userRepo.findById(userId)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy user"));
+                .orElseThrow(() -> {
+                    log.warn("Không tìm thấy user id={}", userId);
+                    return new RuntimeException("Không tìm thấy user");
+                });
         address.setUser(user);
-        return addressRepo.save(address);
+        Address saved = addressRepo.save(address);
+
+        log.info("Thêm địa chỉ thành công: addressId={}, userId={}", saved.getId(), userId);
+        return saved;
     }
     @Override
     public void deleteAddress(Integer addressId, Integer userId) {
+        log.warn("User {} yêu cầu xóa địa chỉ {}", userId, addressId);
         Address address = addressRepo.findById(addressId)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy địa chỉ"));
+            .orElseThrow(() -> {
+                log.warn("Không tìm thấy địa chỉ id={}", addressId);
+                return new RuntimeException("Không tìm thấy địa chỉ");
+            });
         if (!address.getUser().getId().equals(userId)) {
+            log.warn("User {} không có quyền xóa địa chỉ {}", userId, addressId);
             throw new RuntimeException("Bạn không có quyền xóa địa chỉ này");
         }
         addressRepo.delete(address);
+        log.info("Đã xóa địa chỉ id={} của userId={}", addressId, userId);
     }
+
     @Override
     public Address getAddressById(Integer addressId) {
+        log.debug("Lấy địa chỉ id={}", addressId);
         return addressRepo.findById(addressId)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy địa chỉ"));
+            .orElseThrow(() -> {
+                log.warn("Không tìm thấy địa chỉ id={}", addressId);
+                return new RuntimeException("Không tìm thấy địa chỉ");
+            });
     }
+
     @Override
     public Address updateAddress(Integer addressId, Address address) {
+        log.info("Cập nhật địa chỉ id={}", addressId);
         validateAddress(address);
 
         Address existingAddress = getAddressById(addressId);
@@ -81,13 +106,19 @@ public class AddressServiceImpl implements AddressService {
         existingAddress.setWardCode(address.getWardCode());
 
         existingAddress.setIsDefault(address.getIsDefault());
+        Address saved = addressRepo.save(existingAddress);
 
-        return addressRepo.save(existingAddress);
+        log.info("Cập nhật địa chỉ thành công id={}", saved.getId());
+        return saved;
     }
     @Override
     public void setDefaultAddress(java.lang.Integer addressId) {
+        log.info("Đặt địa chỉ mặc định id={}", addressId);
         Address defaultAdrs = addressRepo.findById(addressId)
-                        .orElseThrow(() -> new RuntimeException("Không tìm thấy địa chỉ"));
+            .orElseThrow(() -> {
+                log.warn("Không tìm thấy địa chỉ id={}", addressId);
+                return new RuntimeException("Không tìm thấy địa chỉ");
+            });
         Integer userId = defaultAdrs.getUser().getId();
 
         List<Address> userAddresses = addressRepo.findByUserId(userId);
@@ -97,6 +128,8 @@ public class AddressServiceImpl implements AddressService {
         defaultAdrs.setIsDefault(true);
         addressRepo.saveAll(userAddresses);
         addressRepo.save(defaultAdrs);
+
+        log.info("User {} đã đặt địa chỉ {} làm mặc định", userId, addressId);
     }
     //admin
     @Override
@@ -105,9 +138,13 @@ public class AddressServiceImpl implements AddressService {
     }
     @Override
     public void adminDeleteAddress(Integer addressId) {
+        log.warn("Admin xóa địa chỉ id={}", addressId);
         Address address = addressRepo.findById(addressId)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy địa chỉ"));
-
+                .orElseThrow(() -> {
+                    log.warn("Không tìm thấy địa chỉ id={}", addressId);
+                    return new RuntimeException("Không tìm thấy địa chỉ");
+                });
         addressRepo.delete(address);
+        log.info("Admin đã xóa địa chỉ id={}", addressId);
     }
 }

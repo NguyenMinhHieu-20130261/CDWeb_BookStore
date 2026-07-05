@@ -16,6 +16,7 @@ import InventoryIcon from "@mui/icons-material/Inventory";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import ImageIcon from "@mui/icons-material/Image";
+import NotificationsIcon from "@mui/icons-material/Notifications";
 
 import SubMenu from "./SubMenu";
 type MenuName =
@@ -160,6 +161,12 @@ const Menu = ({dense = false}: any) => {
                     to="/banners"
                     primaryText="Banner"
                     leftIcon={<ImageIcon />}
+                    dense={dense}
+                />
+                <MenuItemLink
+                    to="/admin-notifications"
+                    primaryText="Thông báo"
+                    leftIcon={<NotificationsIcon />}
                     dense={dense}
                 />
             </SubMenu>

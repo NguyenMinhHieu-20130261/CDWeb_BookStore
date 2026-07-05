@@ -20,7 +20,9 @@ import vn.edu.hcmuaf.fit.bookshop.repository.ProductRepo;
 import vn.edu.hcmuaf.fit.bookshop.repository.UserRepo;
 import vn.edu.hcmuaf.fit.bookshop.service.CategoryService;
 import vn.edu.hcmuaf.fit.bookshop.service.ProductService;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
@@ -92,11 +94,16 @@ public class ProductServiceImpl implements ProductService {
     //Admin
     @Override
     public Product getProductById(Integer id) {
+        log.debug("Lấy sản phẩm id={}",id);
         return productRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm"));
+            .orElseThrow(() -> {
+                log.warn("Không tìm thấy sản phẩm id={}",id);
+                return new RuntimeException("Không tìm thấy sản phẩm");
+            });
     }
     @Override
     public Product updateProduct(Integer id, Product product) {
+        log.info("Cập nhật sản phẩm id={}",id);
         Product newProduct  = productRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm"));
         newProduct .setCategory(product.getCategory());
@@ -122,10 +129,18 @@ public class ProductServiceImpl implements ProductService {
                 newProduct .getDetail().setDescription(product.getDetail().getDescription());
             }
         }
-        return productRepo.save(newProduct );
+        Product saved = productRepo.save(newProduct);
+
+        log.info("Sản phẩm {} đã được cập nhật", saved.getId() );
+        return saved;
     }
     @Override
     public Product createProduct(Product product, User admin) {
+        log.info(
+            "Admin {} tạo sản phẩm '{}'",
+            admin.getUsername(),
+            product.getTitle()
+        );
         product.setSlug(
             toSlug(product.getTitle()) 
             + "-" 
@@ -146,21 +161,33 @@ public class ProductServiceImpl implements ProductService {
             });
         }
         product.setActive(true);
+        Product saved = productRepo.save(product);
 
-        return productRepo.save(product);
+        log.info(
+            "Tạo sản phẩm thành công: id={}, slug={}",
+            saved.getId(),
+            saved.getSlug()
+        );
+        return saved;
     }
     @Override
     public Product deleteProduct(Integer id, User admin) {
+        log.warn("Admin {} xóa sản phẩm {}", admin.getUsername(),id);
         Product product = productRepo.findById(id)
                 .orElseThrow(() ->new RuntimeException("Không tìm thấy sản phẩm"));
         product.setActive(false);
         product.setUpdatedBy(admin);
         product.setUpdatedAt(new Date());
+        Product saved = productRepo.save(product);
 
-        return productRepo.save(product);
+        log.info("Đã chuyển sản phẩm {} sang inactive",saved.getId());
+        return saved;
     }
     @Override
     public Page<Product> getProducts(int page, int size, String sort, String filter, String order) {
+        log.debug("Admin lấy danh sách sản phẩm: page={}, size={}, filter={}",
+            page, size, filter
+        );
         Sort.Direction direction = order.equalsIgnoreCase("DESC")
                 ? Sort.Direction.DESC
                 : Sort.Direction.ASC;

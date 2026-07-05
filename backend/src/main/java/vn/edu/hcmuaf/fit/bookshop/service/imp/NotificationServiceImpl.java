@@ -10,7 +10,9 @@ import vn.edu.hcmuaf.fit.bookshop.repository.UserRepo;
 import vn.edu.hcmuaf.fit.bookshop.service.NotificationService;
 
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class NotificationServiceImpl implements NotificationService {
@@ -20,7 +22,8 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public List<Notification> getNotificationsByUser(Integer userId) {
-        return notificationRepo.findByUserIdOrderByCreatedAtDesc(userId);    
+        log.debug("Lấy danh sách notification của userId={}", userId);
+        return notificationRepo.findByUserIdOrderByCreatedAtDesc(userId);            
     }
        
     @Override
@@ -30,8 +33,12 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public Notification getNotificationById(Integer id) {
+        log.debug("Lấy notification id={}", id);
         return notificationRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy thông báo"));
+            .orElseThrow(() -> {
+                log.warn("Không tìm thấy notification id={}", id);
+                return new RuntimeException("Không tìm thấy thông báo");
+            });
     }
 
     @Override
@@ -42,6 +49,7 @@ public class NotificationServiceImpl implements NotificationService {
             String message,
             String targetUrl
     ) {
+        log.info("Tạo notification cho userId={}, type={}, title={}", userId, type, title);
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy user"));
 
@@ -54,7 +62,10 @@ public class NotificationServiceImpl implements NotificationService {
         notification.setIsRead(false);
         notification.setIsBroadcast(false);
 
-        return notificationRepo.save(notification);
+        Notification saved = notificationRepo.save(notification);
+
+        log.info("Notification {} đã được tạo cho userId={}", saved.getId(), userId);
+        return saved;
     }
 
     @Override
@@ -72,22 +83,35 @@ public class NotificationServiceImpl implements NotificationService {
         notification.setTargetUrl(targetUrl);
         notification.setIsRead(false);
         notification.setIsBroadcast(true);
+        log.info("Tạo broadcast notification: {}", title);
 
-        return notificationRepo.save(notification);
+        Notification saved = notificationRepo.save(notification);
+
+        log.info("Broadcast notification {} đã tạo", saved.getId());
+        return saved;
     }
 
     @Override
     public Notification markAsRead(Integer id) {
+        log.info("Đánh dấu notification {} đã đọc", id);
+
         Notification notification = notificationRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy thông báo"));
+                .orElseThrow(() -> {
+                    log.warn("Không tìm thấy notification id={}", id);
+                    return new RuntimeException("Không tìm thấy thông báo");
+                });
 
         notification.setIsRead(true);
+        Notification saved = notificationRepo.save(notification);
 
-        return notificationRepo.save(notification);
+        log.info("Notification {} đã được đánh dấu đã đọc", id);
+        return saved;
     }
 
     @Override
     public void markAllAsRead(Integer userId) {
+        log.info("User {} đọc tất cả notification", userId);
+
         List<Notification> notifications =
                 notificationRepo.findByUserIdAndIsReadFalseOrIsBroadcastTrueAndIsReadFalseOrderByCreatedAtDesc(userId);
 
@@ -96,6 +120,7 @@ public class NotificationServiceImpl implements NotificationService {
         }
 
         notificationRepo.saveAll(notifications);
+        log.info("Đã cập nhật {} notification thành đã đọc cho userId={}", notifications.size(), userId);
     }
 
     @Override
@@ -107,7 +132,10 @@ public class NotificationServiceImpl implements NotificationService {
     public void deleteNotification(Integer id) {
         Notification notification = notificationRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy thông báo"));
+        log.warn("Xóa notification {}", id);
 
         notificationRepo.delete(notification);
+
+        log.info("Đã xóa notification {}", id);
     }
 }

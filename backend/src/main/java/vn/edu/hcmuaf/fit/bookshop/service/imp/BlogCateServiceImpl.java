@@ -9,7 +9,9 @@ import vn.edu.hcmuaf.fit.bookshop.service.BlogCateService;
 
 import java.util.List;
 import java.util.Optional;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class BlogCateServiceImpl implements BlogCateService {
     @Autowired
@@ -17,12 +19,15 @@ public class BlogCateServiceImpl implements BlogCateService {
 
     @Override
     public List<BlogCategory> getAllBlogCate() {
+        log.debug("Lấy toàn bộ danh mục blog");
         return blogCateRepo.findAll();
     }
 
     @Override
     public Page<BlogCategory> getAllBlogCate(int page, int perPage, String sort, String filter, String order) {
-
+        log.debug(
+                "Admin lấy danh sách danh mục blog: page={}, perPage={}, sort={}, order={}, filter={}",
+                page,perPage,sort,order,filter);
         Sort.Direction direction = order.equalsIgnoreCase("desc")
                 ? Sort.Direction.DESC
                 : Sort.Direction.ASC;
@@ -30,35 +35,48 @@ public class BlogCateServiceImpl implements BlogCateService {
         Pageable pageable = PageRequest.of(page, perPage, Sort.by(direction, sort));
         return blogCateRepo.findAll(pageable);
     }
+
     @Override
     public Optional<BlogCategory> getBlogCateById(Integer id) {
+        log.debug("Lấy danh mục blog id={}", id);
         return blogCateRepo.findById(id);
     }
+
     @Override
     public BlogCategory createBlogCate(BlogCategory blogCategory) {
+        log.info("Tạo danh mục blog '{}'", blogCategory.getName());
         if (blogCategory.getActive() == false) {
             blogCategory.setActive(true);
         }
-
-        return blogCateRepo.save(blogCategory);
+        BlogCategory saved = blogCateRepo.save(blogCategory);
+        log.info("Tạo danh mục blog thành công id={}, name={}", saved.getId(), saved.getName());
+        return saved;
     }
 
     @Override
     public BlogCategory updateBlogCate(Integer id, BlogCategory blogCategory) {
+        log.info("Cập nhật danh mục blog id={}", id);
         BlogCategory old = blogCateRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy danh mục blog"));
-
+                .orElseThrow(() -> {
+                    log.warn("Không tìm thấy danh mục blog id={}", id);
+                    return new RuntimeException("Không tìm thấy danh mục blog");
+                });
         old.setName(blogCategory.getName());
         old.setActive(blogCategory.getActive());
-
-        return blogCateRepo.save(old);
+        BlogCategory saved = blogCateRepo.save(old);
+        log.info("Cập nhật danh mục blog thành công id={}, name={}", saved.getId(), saved.getName());
+        return saved;
     }
 
     @Override
     public void deleteBlogCate(Integer id) {
+        log.warn("Xóa danh mục blog id={}", id);
         BlogCategory old = blogCateRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy danh mục blog"));
-
+                .orElseThrow(() -> {
+                    log.warn("Không tìm thấy danh mục blog id={}", id);
+                    return new RuntimeException("Không tìm thấy danh mục blog");
+                });
         blogCateRepo.delete(old);
+        log.info("Đã xóa danh mục blog id={}", id);
     }
 }

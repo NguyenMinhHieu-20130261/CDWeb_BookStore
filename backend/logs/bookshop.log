@@ -1,0 +1,701 @@
+2026-07-05 10:03:53 INFO  v.e.h.f.b.ShopBackendApplication - Starting ShopBackendApplication using Java 17.0.18 with PID 13928 (C:\Users\MSI\Desktop\CD_WEB\backend\target\classes started by MSI in C:\Users\MSI\Desktop\CD_WEB\backend)
+2026-07-05 10:03:53 DEBUG v.e.h.f.b.ShopBackendApplication - Running with Spring Boot v3.2.6, Spring v6.1.8
+2026-07-05 10:03:53 INFO  v.e.h.f.b.ShopBackendApplication - The following 1 profile is active: "local"
+2026-07-05 10:03:53 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-05 10:03:53 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 36 ms. Found 21 JPA repository interfaces.
+2026-07-05 10:03:53 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-05 10:03:53 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-05 10:03:53 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.24]
+2026-07-05 10:03:53 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-07-05 10:03:53 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 302 ms
+2026-07-05 10:03:53 INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-07-05 10:03:53 INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-07-05 10:03:53 INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-05 10:03:53 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-7 - Starting...
+2026-07-05 10:03:53 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-7 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3292d21f
+2026-07-05 10:03:53 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-7 - Start completed.
+2026-07-05 10:03:53 WARN  org.hibernate.dialect.Dialect - HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+2026-07-05 10:03:53 WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-05 10:03:54 INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-05 10:03:54 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05 10:03:54 DEBUG v.e.h.f.bookshop.jwt.AuthTokenFilter - Filter 'authTokenFilter' configured for use
+2026-07-05 10:03:54 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-05 10:03:54 WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: e7e5efdb-d9c3-45ad-becd-888664e24e39
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-07-05 10:03:54 INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3bf5933b, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1e60e1b1, org.springframework.security.web.context.SecurityContextHolderFilter@4cd44027, org.springframework.security.web.header.HeaderWriterFilter@d883eb0, org.springframework.web.filter.CorsFilter@76181fde, org.springframework.security.web.authentication.logout.LogoutFilter@6fd94d31, vn.edu.hcmuaf.fit.bookshop.jwt.AuthTokenFilter@6800a47d, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@31f8d519, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7dc91028, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@431bf96a, org.springframework.security.web.session.SessionManagementFilter@5bd4f06b, org.springframework.security.web.access.ExceptionTranslationFilter@297a8569, org.springframework.security.web.access.intercept.AuthorizationFilter@2d0306b9]
+2026-07-05 10:03:54 INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-07-05 10:03:54 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-07-05 10:03:54 INFO  v.e.h.f.b.ShopBackendApplication - Started ShopBackendApplication in 0.983 seconds (process running for 2004.444)
+2026-07-05 10:03:54 INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2026-07-05 10:03:55 INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-07-05 10:03:55 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05 10:03:55 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-7 - Shutdown initiated...
+2026-07-05 10:03:55 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-7 - Shutdown completed.
+2026-07-05 10:03:55 INFO  v.e.h.f.b.ShopBackendApplication - Starting ShopBackendApplication using Java 17.0.18 with PID 13928 (C:\Users\MSI\Desktop\CD_WEB\backend\target\classes started by MSI in C:\Users\MSI\Desktop\CD_WEB\backend)
+2026-07-05 10:03:55 DEBUG v.e.h.f.b.ShopBackendApplication - Running with Spring Boot v3.2.6, Spring v6.1.8
+2026-07-05 10:03:55 INFO  v.e.h.f.b.ShopBackendApplication - The following 1 profile is active: "local"
+2026-07-05 10:03:56 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-05 10:03:56 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 27 ms. Found 21 JPA repository interfaces.
+2026-07-05 10:03:56 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-05 10:03:56 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-05 10:03:56 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.24]
+2026-07-05 10:03:56 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-07-05 10:03:56 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 233 ms
+2026-07-05 10:03:56 INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-07-05 10:03:56 INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-07-05 10:03:56 INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-05 10:03:56 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-8 - Starting...
+2026-07-05 10:03:56 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-8 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1c7a68c2
+2026-07-05 10:03:56 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-8 - Start completed.
+2026-07-05 10:03:56 WARN  org.hibernate.dialect.Dialect - HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+2026-07-05 10:03:56 WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-05 10:03:56 INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-05 10:03:56 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05 10:03:56 DEBUG v.e.h.f.bookshop.jwt.AuthTokenFilter - Filter 'authTokenFilter' configured for use
+2026-07-05 10:03:56 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-05 10:03:56 WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 01f633a2-f9e2-4ba7-9a4e-721abec3b713
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-07-05 10:03:56 INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@7b4a91bd, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@e2569f0, org.springframework.security.web.context.SecurityContextHolderFilter@71ff66ee, org.springframework.security.web.header.HeaderWriterFilter@4dc44f4a, org.springframework.web.filter.CorsFilter@e733fe, org.springframework.security.web.authentication.logout.LogoutFilter@7030b559, vn.edu.hcmuaf.fit.bookshop.jwt.AuthTokenFilter@102ec570, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7fd2c72d, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@10037982, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@20e15fb8, org.springframework.security.web.session.SessionManagementFilter@28784c69, org.springframework.security.web.access.ExceptionTranslationFilter@2ac48cf0, org.springframework.security.web.access.intercept.AuthorizationFilter@12f65a00]
+2026-07-05 10:03:56 INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-07-05 10:03:56 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-07-05 10:03:56 INFO  v.e.h.f.b.ShopBackendApplication - Started ShopBackendApplication in 0.812 seconds (process running for 2006.72)
+2026-07-05 10:03:56 INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2026-07-05 10:04:47 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-05 10:04:47 INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-07-05 10:04:47 INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-07-05 10:05:35 INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-07-05 10:05:35 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05 10:05:35 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-8 - Shutdown initiated...
+2026-07-05 10:05:35 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-8 - Shutdown completed.
+2026-07-05 10:05:35 INFO  v.e.h.f.b.ShopBackendApplication - Starting ShopBackendApplication using Java 17.0.18 with PID 13928 (C:\Users\MSI\Desktop\CD_WEB\backend\target\classes started by MSI in C:\Users\MSI\Desktop\CD_WEB\backend)
+2026-07-05 10:05:35 DEBUG v.e.h.f.b.ShopBackendApplication - Running with Spring Boot v3.2.6, Spring v6.1.8
+2026-07-05 10:05:35 INFO  v.e.h.f.b.ShopBackendApplication - The following 1 profile is active: "local"
+2026-07-05 10:05:35 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-05 10:05:35 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 29 ms. Found 21 JPA repository interfaces.
+2026-07-05 10:05:35 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-05 10:05:35 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-05 10:05:35 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.24]
+2026-07-05 10:05:35 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-07-05 10:05:35 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 240 ms
+2026-07-05 10:05:35 INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-07-05 10:05:35 INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-07-05 10:05:35 INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-05 10:05:35 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-9 - Starting...
+2026-07-05 10:05:35 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-9 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6e0408e5
+2026-07-05 10:05:35 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-9 - Start completed.
+2026-07-05 10:05:35 WARN  org.hibernate.dialect.Dialect - HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+2026-07-05 10:05:35 WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-05 10:05:36 INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-05 10:05:36 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05 10:05:36 DEBUG v.e.h.f.bookshop.jwt.AuthTokenFilter - Filter 'authTokenFilter' configured for use
+2026-07-05 10:05:36 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-05 10:05:36 WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: a3b5c3f3-58f0-4c66-a8d7-6280ad00b19f
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-07-05 10:05:36 INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@41aacfd0, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@161ffc13, org.springframework.security.web.context.SecurityContextHolderFilter@367049d2, org.springframework.security.web.header.HeaderWriterFilter@736ff528, org.springframework.web.filter.CorsFilter@7e79fec0, org.springframework.security.web.authentication.logout.LogoutFilter@2aefb1bf, vn.edu.hcmuaf.fit.bookshop.jwt.AuthTokenFilter@54df1f55, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@36506e82, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3a9a0bd5, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@f0cc7aa, org.springframework.security.web.session.SessionManagementFilter@47cc72ec, org.springframework.security.web.access.ExceptionTranslationFilter@4368791f, org.springframework.security.web.access.intercept.AuthorizationFilter@75508a97]
+2026-07-05 10:05:36 INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-07-05 10:05:36 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-07-05 10:05:36 INFO  v.e.h.f.b.ShopBackendApplication - Started ShopBackendApplication in 0.832 seconds (process running for 2106.45)
+2026-07-05 10:05:36 INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2026-07-05 10:05:47 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-05 10:05:47 INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-07-05 10:05:47 INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-07-05 10:08:12 INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-07-05 10:08:12 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05 10:08:12 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-9 - Shutdown initiated...
+2026-07-05 10:08:12 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-9 - Shutdown completed.
+2026-07-05 10:08:12 INFO  v.e.h.f.b.ShopBackendApplication - Starting ShopBackendApplication using Java 17.0.18 with PID 13928 (C:\Users\MSI\Desktop\CD_WEB\backend\target\classes started by MSI in C:\Users\MSI\Desktop\CD_WEB\backend)
+2026-07-05 10:08:12 DEBUG v.e.h.f.b.ShopBackendApplication - Running with Spring Boot v3.2.6, Spring v6.1.8
+2026-07-05 10:08:12 INFO  v.e.h.f.b.ShopBackendApplication - The following 1 profile is active: "local"
+2026-07-05 10:08:13 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-05 10:08:13 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 28 ms. Found 21 JPA repository interfaces.
+2026-07-05 10:08:13 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-05 10:08:13 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-05 10:08:13 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.24]
+2026-07-05 10:08:13 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-07-05 10:08:13 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 230 ms
+2026-07-05 10:08:13 INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-07-05 10:08:13 INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-07-05 10:08:13 INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-05 10:08:13 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-10 - Starting...
+2026-07-05 10:08:13 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-10 - Added connection com.mysql.cj.jdbc.ConnectionImpl@560f8d6d
+2026-07-05 10:08:13 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-10 - Start completed.
+2026-07-05 10:08:13 WARN  org.hibernate.dialect.Dialect - HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+2026-07-05 10:08:13 WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-05 10:08:13 INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-05 10:08:13 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05 10:08:13 DEBUG v.e.h.f.bookshop.jwt.AuthTokenFilter - Filter 'authTokenFilter' configured for use
+2026-07-05 10:08:13 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-05 10:08:13 WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: d27eb88f-3729-40d1-b9fb-84d689cee2b7
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-07-05 10:08:13 INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@13100711, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@40597206, org.springframework.security.web.context.SecurityContextHolderFilter@7396d375, org.springframework.security.web.header.HeaderWriterFilter@6b75b1f2, org.springframework.web.filter.CorsFilter@7bc8e7f1, org.springframework.security.web.authentication.logout.LogoutFilter@6676bd88, vn.edu.hcmuaf.fit.bookshop.jwt.AuthTokenFilter@1b3ac7f9, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@30ad5a2f, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@769187e9, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@196182de, org.springframework.security.web.session.SessionManagementFilter@399d9cf6, org.springframework.security.web.access.ExceptionTranslationFilter@51425747, org.springframework.security.web.access.intercept.AuthorizationFilter@468489e7]
+2026-07-05 10:08:13 INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-07-05 10:08:13 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-07-05 10:08:13 INFO  v.e.h.f.b.ShopBackendApplication - Started ShopBackendApplication in 0.825 seconds (process running for 2263.769)
+2026-07-05 10:08:13 INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2026-07-05 10:08:47 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-05 10:08:47 INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-07-05 10:08:47 INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2026-07-05 10:08:52 INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-07-05 10:08:52 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05 10:08:52 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-10 - Shutdown initiated...
+2026-07-05 10:08:52 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-10 - Shutdown completed.
+2026-07-05 10:08:52 INFO  v.e.h.f.b.ShopBackendApplication - Starting ShopBackendApplication using Java 17.0.18 with PID 13928 (C:\Users\MSI\Desktop\CD_WEB\backend\target\classes started by MSI in C:\Users\MSI\Desktop\CD_WEB\backend)
+2026-07-05 10:08:52 DEBUG v.e.h.f.b.ShopBackendApplication - Running with Spring Boot v3.2.6, Spring v6.1.8
+2026-07-05 10:08:52 INFO  v.e.h.f.b.ShopBackendApplication - The following 1 profile is active: "local"
+2026-07-05 10:08:52 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-05 10:08:52 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 28 ms. Found 21 JPA repository interfaces.
+2026-07-05 10:08:52 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-05 10:08:52 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-05 10:08:52 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.24]
+2026-07-05 10:08:52 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-07-05 10:08:52 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 240 ms
+2026-07-05 10:08:52 INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-07-05 10:08:52 INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-07-05 10:08:52 INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-05 10:08:52 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-11 - Starting...
+2026-07-05 10:08:52 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-11 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5be0255c
+2026-07-05 10:08:52 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-11 - Start completed.
+2026-07-05 10:08:52 WARN  org.hibernate.dialect.Dialect - HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+2026-07-05 10:08:52 WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-05 10:08:52 INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-05 10:08:52 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05 10:08:52 DEBUG v.e.h.f.bookshop.jwt.AuthTokenFilter - Filter 'authTokenFilter' configured for use
+2026-07-05 10:08:52 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-05 10:08:52 WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 91f83f9f-e70c-40ef-bc54-05405d3178c4
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-07-05 10:08:53 INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@42183955, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3d6b9af3, org.springframework.security.web.context.SecurityContextHolderFilter@6580f1e5, org.springframework.security.web.header.HeaderWriterFilter@6f29aa9e, org.springframework.web.filter.CorsFilter@4eb36ed6, org.springframework.security.web.authentication.logout.LogoutFilter@6ab2a7d2, vn.edu.hcmuaf.fit.bookshop.jwt.AuthTokenFilter@27b99cd4, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3bdd0aae, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@19822a11, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@66567511, org.springframework.security.web.session.SessionManagementFilter@1220dc1, org.springframework.security.web.access.ExceptionTranslationFilter@62679c9f, org.springframework.security.web.access.intercept.AuthorizationFilter@31333fde]
+2026-07-05 10:08:53 INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-07-05 10:08:53 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-07-05 10:08:53 INFO  v.e.h.f.b.ShopBackendApplication - Started ShopBackendApplication in 0.834 seconds (process running for 2303.046)
+2026-07-05 10:08:53 INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2026-07-05 10:09:09 INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-07-05 10:09:09 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05 10:09:09 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-11 - Shutdown initiated...
+2026-07-05 10:09:09 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-11 - Shutdown completed.
+2026-07-05 10:09:10 INFO  v.e.h.f.b.ShopBackendApplication - Starting ShopBackendApplication using Java 17.0.18 with PID 13928 (C:\Users\MSI\Desktop\CD_WEB\backend\target\classes started by MSI in C:\Users\MSI\Desktop\CD_WEB\backend)
+2026-07-05 10:09:10 DEBUG v.e.h.f.b.ShopBackendApplication - Running with Spring Boot v3.2.6, Spring v6.1.8
+2026-07-05 10:09:10 INFO  v.e.h.f.b.ShopBackendApplication - The following 1 profile is active: "local"
+2026-07-05 10:09:10 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-05 10:09:10 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 30 ms. Found 21 JPA repository interfaces.
+2026-07-05 10:09:10 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-05 10:09:10 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-05 10:09:10 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.24]
+2026-07-05 10:09:10 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-07-05 10:09:10 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 255 ms
+2026-07-05 10:09:10 INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-07-05 10:09:10 INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-07-05 10:09:10 INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-05 10:09:10 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-12 - Starting...
+2026-07-05 10:09:10 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-12 - Added connection com.mysql.cj.jdbc.ConnectionImpl@431e653d
+2026-07-05 10:09:10 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-12 - Start completed.
+2026-07-05 10:09:10 WARN  org.hibernate.dialect.Dialect - HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+2026-07-05 10:09:10 WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-05 10:09:10 INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-05 10:09:10 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05 10:09:10 DEBUG v.e.h.f.bookshop.jwt.AuthTokenFilter - Filter 'authTokenFilter' configured for use
+2026-07-05 10:09:10 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-05 10:09:10 WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: c79f00fa-d414-41f8-939f-28208b13669e
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-07-05 10:09:10 INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@343cc3d2, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@24bd23df, org.springframework.security.web.context.SecurityContextHolderFilter@b982f50, org.springframework.security.web.header.HeaderWriterFilter@72c951e0, org.springframework.web.filter.CorsFilter@36a8eea0, org.springframework.security.web.authentication.logout.LogoutFilter@646e9ffd, vn.edu.hcmuaf.fit.bookshop.jwt.AuthTokenFilter@443559c7, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@395b8442, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@12584d8, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7bf175f8, org.springframework.security.web.session.SessionManagementFilter@5f55729, org.springframework.security.web.access.ExceptionTranslationFilter@522c0bba, org.springframework.security.web.access.intercept.AuthorizationFilter@2cdc3914]
+2026-07-05 10:09:10 INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-07-05 10:09:10 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-07-05 10:09:10 INFO  v.e.h.f.b.ShopBackendApplication - Started ShopBackendApplication in 0.849 seconds (process running for 2320.812)
+2026-07-05 10:09:10 INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2026-07-05 10:09:22 INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-07-05 10:09:22 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05 10:09:22 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-12 - Shutdown initiated...
+2026-07-05 10:09:22 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-12 - Shutdown completed.
+2026-07-05 10:09:22 INFO  v.e.h.f.b.ShopBackendApplication - Starting ShopBackendApplication using Java 17.0.18 with PID 13928 (C:\Users\MSI\Desktop\CD_WEB\backend\target\classes started by MSI in C:\Users\MSI\Desktop\CD_WEB\backend)
+2026-07-05 10:09:22 DEBUG v.e.h.f.b.ShopBackendApplication - Running with Spring Boot v3.2.6, Spring v6.1.8
+2026-07-05 10:09:22 INFO  v.e.h.f.b.ShopBackendApplication - The following 1 profile is active: "local"
+2026-07-05 10:09:22 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-05 10:09:22 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 27 ms. Found 21 JPA repository interfaces.
+2026-07-05 10:09:22 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-05 10:09:22 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-05 10:09:22 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.24]
+2026-07-05 10:09:22 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-07-05 10:09:22 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 255 ms
+2026-07-05 10:09:22 INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-07-05 10:09:22 INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-07-05 10:09:22 INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-05 10:09:22 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-13 - Starting...
+2026-07-05 10:09:22 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-13 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5d91c39e
+2026-07-05 10:09:22 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-13 - Start completed.
+2026-07-05 10:09:22 WARN  org.hibernate.dialect.Dialect - HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+2026-07-05 10:09:22 WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-05 10:09:23 INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-05 10:09:23 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05 10:09:23 DEBUG v.e.h.f.bookshop.jwt.AuthTokenFilter - Filter 'authTokenFilter' configured for use
+2026-07-05 10:09:23 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-05 10:09:23 WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: bd01190f-b91b-4cce-90f2-ad638b52dfa3
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-07-05 10:09:23 INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@346f2b2c, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7fe75b12, org.springframework.security.web.context.SecurityContextHolderFilter@47c6ea42, org.springframework.security.web.header.HeaderWriterFilter@3fd89df6, org.springframework.web.filter.CorsFilter@f48696e, org.springframework.security.web.authentication.logout.LogoutFilter@37ef9596, vn.edu.hcmuaf.fit.bookshop.jwt.AuthTokenFilter@71519570, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@c710a5b, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@77bd010e, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@36941de3, org.springframework.security.web.session.SessionManagementFilter@30500adc, org.springframework.security.web.access.ExceptionTranslationFilter@329f3c75, org.springframework.security.web.access.intercept.AuthorizationFilter@2ce2a0e4]
+2026-07-05 10:09:23 INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-07-05 10:09:23 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-07-05 10:09:23 INFO  v.e.h.f.b.ShopBackendApplication - Started ShopBackendApplication in 0.827 seconds (process running for 2333.389)
+2026-07-05 10:09:23 INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2026-07-05 10:09:47 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-05 10:09:47 INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-07-05 10:09:47 INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2026-07-05 10:12:43 INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-07-05 10:12:43 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05 10:12:43 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-13 - Shutdown initiated...
+2026-07-05 10:12:43 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-13 - Shutdown completed.
+2026-07-05 10:12:43 INFO  v.e.h.f.b.ShopBackendApplication - Starting ShopBackendApplication using Java 17.0.18 with PID 13928 (C:\Users\MSI\Desktop\CD_WEB\backend\target\classes started by MSI in C:\Users\MSI\Desktop\CD_WEB\backend)
+2026-07-05 10:12:43 DEBUG v.e.h.f.b.ShopBackendApplication - Running with Spring Boot v3.2.6, Spring v6.1.8
+2026-07-05 10:12:43 INFO  v.e.h.f.b.ShopBackendApplication - The following 1 profile is active: "local"
+2026-07-05 10:12:43 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-05 10:12:43 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 28 ms. Found 21 JPA repository interfaces.
+2026-07-05 10:12:43 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-05 10:12:43 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-05 10:12:43 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.24]
+2026-07-05 10:12:43 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-07-05 10:12:43 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 242 ms
+2026-07-05 10:12:43 INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-07-05 10:12:43 INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-07-05 10:12:43 INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-05 10:12:43 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-14 - Starting...
+2026-07-05 10:12:43 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-14 - Added connection com.mysql.cj.jdbc.ConnectionImpl@141c8812
+2026-07-05 10:12:43 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-14 - Start completed.
+2026-07-05 10:12:43 WARN  org.hibernate.dialect.Dialect - HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+2026-07-05 10:12:43 WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-05 10:12:43 INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-05 10:12:43 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05 10:12:43 DEBUG v.e.h.f.bookshop.jwt.AuthTokenFilter - Filter 'authTokenFilter' configured for use
+2026-07-05 10:12:43 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-05 10:12:43 WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 5df4c138-2624-4a81-be88-e9a3cb974ce7
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-07-05 10:12:43 INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5ad2d423, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@55463d96, org.springframework.security.web.context.SecurityContextHolderFilter@1d7b61fa, org.springframework.security.web.header.HeaderWriterFilter@50bda027, org.springframework.web.filter.CorsFilter@3de60ce2, org.springframework.security.web.authentication.logout.LogoutFilter@31d7c996, vn.edu.hcmuaf.fit.bookshop.jwt.AuthTokenFilter@519a0e0e, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3e2d67c4, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3ac44be, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@758235fb, org.springframework.security.web.session.SessionManagementFilter@5ba5e301, org.springframework.security.web.access.ExceptionTranslationFilter@10b66871, org.springframework.security.web.access.intercept.AuthorizationFilter@579aab7]
+2026-07-05 10:12:43 INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-07-05 10:12:43 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-07-05 10:12:43 INFO  v.e.h.f.b.ShopBackendApplication - Started ShopBackendApplication in 0.799 seconds (process running for 2533.818)
+2026-07-05 10:12:43 INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2026-07-05 10:12:47 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-05 10:12:47 INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-07-05 10:12:47 INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2026-07-05 10:14:08 INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-07-05 10:14:08 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05 10:14:08 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-14 - Shutdown initiated...
+2026-07-05 10:14:08 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-14 - Shutdown completed.
+2026-07-05 10:14:08 INFO  v.e.h.f.b.ShopBackendApplication - Starting ShopBackendApplication using Java 17.0.18 with PID 13928 (C:\Users\MSI\Desktop\CD_WEB\backend\target\classes started by MSI in C:\Users\MSI\Desktop\CD_WEB\backend)
+2026-07-05 10:14:08 DEBUG v.e.h.f.b.ShopBackendApplication - Running with Spring Boot v3.2.6, Spring v6.1.8
+2026-07-05 10:14:08 INFO  v.e.h.f.b.ShopBackendApplication - The following 1 profile is active: "local"
+2026-07-05 10:14:08 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-05 10:14:08 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 28 ms. Found 21 JPA repository interfaces.
+2026-07-05 10:14:08 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-05 10:14:08 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-05 10:14:08 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.24]
+2026-07-05 10:14:08 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-07-05 10:14:08 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 240 ms
+2026-07-05 10:14:08 INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-07-05 10:14:08 INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-07-05 10:14:08 INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-05 10:14:08 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-15 - Starting...
+2026-07-05 10:14:08 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-15 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3c0e1473
+2026-07-05 10:14:08 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-15 - Start completed.
+2026-07-05 10:14:08 WARN  org.hibernate.dialect.Dialect - HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+2026-07-05 10:14:08 WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-05 10:14:08 INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-05 10:14:09 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05 10:14:09 DEBUG v.e.h.f.bookshop.jwt.AuthTokenFilter - Filter 'authTokenFilter' configured for use
+2026-07-05 10:14:09 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-05 10:14:09 WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 2c95acd1-3037-4b9a-b954-0d7a3f1e193a
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-07-05 10:14:09 INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@2768c1a7, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5bc8b8c0, org.springframework.security.web.context.SecurityContextHolderFilter@61222dd0, org.springframework.security.web.header.HeaderWriterFilter@9fab1c6, org.springframework.web.filter.CorsFilter@6f327a54, org.springframework.security.web.authentication.logout.LogoutFilter@5795693b, vn.edu.hcmuaf.fit.bookshop.jwt.AuthTokenFilter@4a421f1b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4365cd8e, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1f4d30a5, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5bc9e063, org.springframework.security.web.session.SessionManagementFilter@1c44830c, org.springframework.security.web.access.ExceptionTranslationFilter@52ee0163, org.springframework.security.web.access.intercept.AuthorizationFilter@4c4f0019]
+2026-07-05 10:14:09 INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-07-05 10:14:09 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-07-05 10:14:09 INFO  v.e.h.f.b.ShopBackendApplication - Started ShopBackendApplication in 0.808 seconds (process running for 2619.301)
+2026-07-05 10:14:09 INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2026-07-05 10:14:47 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-05 10:14:47 INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-07-05 10:14:47 INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2026-07-05 10:15:30 INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-07-05 10:15:30 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05 10:15:30 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-15 - Shutdown initiated...
+2026-07-05 10:15:30 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-15 - Shutdown completed.
+2026-07-05 10:15:30 INFO  v.e.h.f.b.ShopBackendApplication - Starting ShopBackendApplication using Java 17.0.18 with PID 13928 (C:\Users\MSI\Desktop\CD_WEB\backend\target\classes started by MSI in C:\Users\MSI\Desktop\CD_WEB\backend)
+2026-07-05 10:15:30 DEBUG v.e.h.f.b.ShopBackendApplication - Running with Spring Boot v3.2.6, Spring v6.1.8
+2026-07-05 10:15:30 INFO  v.e.h.f.b.ShopBackendApplication - The following 1 profile is active: "local"
+2026-07-05 10:15:31 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-05 10:15:31 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 29 ms. Found 21 JPA repository interfaces.
+2026-07-05 10:15:31 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-05 10:15:31 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-05 10:15:31 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.24]
+2026-07-05 10:15:31 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-07-05 10:15:31 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 238 ms
+2026-07-05 10:15:31 INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-07-05 10:15:31 INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-07-05 10:15:31 INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-05 10:15:31 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-16 - Starting...
+2026-07-05 10:15:31 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-16 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2a0cc938
+2026-07-05 10:15:31 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-16 - Start completed.
+2026-07-05 10:15:31 WARN  org.hibernate.dialect.Dialect - HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+2026-07-05 10:15:31 WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-05 10:15:31 INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-05 10:15:31 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05 10:15:31 DEBUG v.e.h.f.bookshop.jwt.AuthTokenFilter - Filter 'authTokenFilter' configured for use
+2026-07-05 10:15:31 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-05 10:15:31 WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 752024ee-71f3-41e5-8fa7-d8d33f05bb6f
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-07-05 10:15:31 INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@29c2ef6a, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@69f3f5b2, org.springframework.security.web.context.SecurityContextHolderFilter@55be9d78, org.springframework.security.web.header.HeaderWriterFilter@42bdb4f9, org.springframework.web.filter.CorsFilter@752b5374, org.springframework.security.web.authentication.logout.LogoutFilter@6c058e9e, vn.edu.hcmuaf.fit.bookshop.jwt.AuthTokenFilter@2442dfe7, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@a971b12, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@25a27cc5, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4f7da51c, org.springframework.security.web.session.SessionManagementFilter@385a1c28, org.springframework.security.web.access.ExceptionTranslationFilter@6167c227, org.springframework.security.web.access.intercept.AuthorizationFilter@688a4cc9]
+2026-07-05 10:15:31 INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-07-05 10:15:31 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-07-05 10:15:31 INFO  v.e.h.f.b.ShopBackendApplication - Started ShopBackendApplication in 0.818 seconds (process running for 2701.735)
+2026-07-05 10:15:31 INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2026-07-05 10:15:47 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-05 10:15:47 INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-07-05 10:15:47 INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-07-05 10:16:09 INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-07-05 10:16:09 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05 10:16:09 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-16 - Shutdown initiated...
+2026-07-05 10:16:09 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-16 - Shutdown completed.
+2026-07-05 10:16:09 INFO  v.e.h.f.b.ShopBackendApplication - Starting ShopBackendApplication using Java 17.0.18 with PID 13928 (C:\Users\MSI\Desktop\CD_WEB\backend\target\classes started by MSI in C:\Users\MSI\Desktop\CD_WEB\backend)
+2026-07-05 10:16:09 DEBUG v.e.h.f.b.ShopBackendApplication - Running with Spring Boot v3.2.6, Spring v6.1.8
+2026-07-05 10:16:09 INFO  v.e.h.f.b.ShopBackendApplication - The following 1 profile is active: "local"
+2026-07-05 10:16:09 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-05 10:16:09 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 28 ms. Found 21 JPA repository interfaces.
+2026-07-05 10:16:09 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-05 10:16:09 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-05 10:16:09 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.24]
+2026-07-05 10:16:09 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-07-05 10:16:09 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 236 ms
+2026-07-05 10:16:09 INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-07-05 10:16:09 INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-07-05 10:16:09 INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-05 10:16:09 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-17 - Starting...
+2026-07-05 10:16:09 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-17 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6f03e5e3
+2026-07-05 10:16:09 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-17 - Start completed.
+2026-07-05 10:16:09 WARN  org.hibernate.dialect.Dialect - HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+2026-07-05 10:16:09 WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-05 10:16:09 INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-05 10:16:09 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05 10:16:09 DEBUG v.e.h.f.bookshop.jwt.AuthTokenFilter - Filter 'authTokenFilter' configured for use
+2026-07-05 10:16:09 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-05 10:16:09 WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 2ae0b6a7-3a19-4cf2-9433-efb9bc386d19
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-07-05 10:16:09 INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@293bbf20, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@526841bf, org.springframework.security.web.context.SecurityContextHolderFilter@29d6e7cc, org.springframework.security.web.header.HeaderWriterFilter@1f9522cf, org.springframework.web.filter.CorsFilter@3e8b59c9, org.springframework.security.web.authentication.logout.LogoutFilter@67738b6b, vn.edu.hcmuaf.fit.bookshop.jwt.AuthTokenFilter@793f5535, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@22278516, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@149248c7, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4175315b, org.springframework.security.web.session.SessionManagementFilter@5ca63b9e, org.springframework.security.web.access.ExceptionTranslationFilter@24d5f5fd, org.springframework.security.web.access.intercept.AuthorizationFilter@7f30062d]
+2026-07-05 10:16:09 INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-07-05 10:16:09 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-07-05 10:16:09 INFO  v.e.h.f.b.ShopBackendApplication - Started ShopBackendApplication in 0.798 seconds (process running for 2739.889)
+2026-07-05 10:16:09 INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2026-07-05 10:16:30 INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-07-05 10:16:30 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05 10:16:30 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-17 - Shutdown initiated...
+2026-07-05 10:16:30 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-17 - Shutdown completed.
+2026-07-05 10:16:30 INFO  v.e.h.f.b.ShopBackendApplication - Starting ShopBackendApplication using Java 17.0.18 with PID 13928 (C:\Users\MSI\Desktop\CD_WEB\backend\target\classes started by MSI in C:\Users\MSI\Desktop\CD_WEB\backend)
+2026-07-05 10:16:30 DEBUG v.e.h.f.b.ShopBackendApplication - Running with Spring Boot v3.2.6, Spring v6.1.8
+2026-07-05 10:16:30 INFO  v.e.h.f.b.ShopBackendApplication - The following 1 profile is active: "local"
+2026-07-05 10:16:30 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-05 10:16:31 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 31 ms. Found 21 JPA repository interfaces.
+2026-07-05 10:16:31 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-05 10:16:31 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-05 10:16:31 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.24]
+2026-07-05 10:16:31 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-07-05 10:16:31 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 247 ms
+2026-07-05 10:16:31 INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-07-05 10:16:31 INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-07-05 10:16:31 INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-05 10:16:31 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-18 - Starting...
+2026-07-05 10:16:31 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-18 - Added connection com.mysql.cj.jdbc.ConnectionImpl@38659ade
+2026-07-05 10:16:31 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-18 - Start completed.
+2026-07-05 10:16:31 WARN  org.hibernate.dialect.Dialect - HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+2026-07-05 10:16:31 WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-05 10:16:31 INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-05 10:16:31 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05 10:16:31 DEBUG v.e.h.f.bookshop.jwt.AuthTokenFilter - Filter 'authTokenFilter' configured for use
+2026-07-05 10:16:31 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-05 10:16:31 WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: f9a7462b-3d44-4998-b653-d8ad1cd66a0b
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-07-05 10:16:31 INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4d1d8a04, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@48e3be4c, org.springframework.security.web.context.SecurityContextHolderFilter@30057126, org.springframework.security.web.header.HeaderWriterFilter@1a6d413, org.springframework.web.filter.CorsFilter@390b96a6, org.springframework.security.web.authentication.logout.LogoutFilter@508aae2d, vn.edu.hcmuaf.fit.bookshop.jwt.AuthTokenFilter@356bce2c, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@25bb42b0, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@120a0c58, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5f5558d7, org.springframework.security.web.session.SessionManagementFilter@e1afa8a, org.springframework.security.web.access.ExceptionTranslationFilter@6b5fce98, org.springframework.security.web.access.intercept.AuthorizationFilter@6d717921]
+2026-07-05 10:16:31 INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-07-05 10:16:31 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-07-05 10:16:31 INFO  v.e.h.f.b.ShopBackendApplication - Started ShopBackendApplication in 0.83 seconds (process running for 2761.665)
+2026-07-05 10:16:31 INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2026-07-05 10:16:47 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-05 10:16:47 INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-07-05 10:16:47 INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2026-07-05 10:18:15 INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-07-05 10:18:15 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05 10:18:15 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-18 - Shutdown initiated...
+2026-07-05 10:18:15 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-18 - Shutdown completed.
+2026-07-05 10:18:15 INFO  v.e.h.f.b.ShopBackendApplication - Starting ShopBackendApplication using Java 17.0.18 with PID 13928 (C:\Users\MSI\Desktop\CD_WEB\backend\target\classes started by MSI in C:\Users\MSI\Desktop\CD_WEB\backend)
+2026-07-05 10:18:15 DEBUG v.e.h.f.b.ShopBackendApplication - Running with Spring Boot v3.2.6, Spring v6.1.8
+2026-07-05 10:18:15 INFO  v.e.h.f.b.ShopBackendApplication - The following 1 profile is active: "local"
+2026-07-05 10:18:15 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-05 10:18:15 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 28 ms. Found 21 JPA repository interfaces.
+2026-07-05 10:18:16 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-05 10:18:16 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-05 10:18:16 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.24]
+2026-07-05 10:18:16 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-07-05 10:18:16 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 253 ms
+2026-07-05 10:18:16 INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-07-05 10:18:16 INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-07-05 10:18:16 INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-05 10:18:16 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-19 - Starting...
+2026-07-05 10:18:16 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-19 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7e5405e1
+2026-07-05 10:18:16 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-19 - Start completed.
+2026-07-05 10:18:16 WARN  org.hibernate.dialect.Dialect - HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+2026-07-05 10:18:16 WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-05 10:18:16 INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-05 10:18:16 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05 10:18:16 DEBUG v.e.h.f.bookshop.jwt.AuthTokenFilter - Filter 'authTokenFilter' configured for use
+2026-07-05 10:18:16 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-05 10:18:16 WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 336acb26-1f72-455e-b593-e545a21d87fa
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-07-05 10:18:16 INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@7bce17a8, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@788fc95e, org.springframework.security.web.context.SecurityContextHolderFilter@e9dcb7f, org.springframework.security.web.header.HeaderWriterFilter@6d50f102, org.springframework.web.filter.CorsFilter@4aae254c, org.springframework.security.web.authentication.logout.LogoutFilter@545ae30c, vn.edu.hcmuaf.fit.bookshop.jwt.AuthTokenFilter@1b310e9d, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3c1b3e8a, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@56a900ea, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6162d3f2, org.springframework.security.web.session.SessionManagementFilter@89d455d, org.springframework.security.web.access.ExceptionTranslationFilter@9377066, org.springframework.security.web.access.intercept.AuthorizationFilter@2fe080f3]
+2026-07-05 10:18:16 INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-07-05 10:18:16 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-07-05 10:18:16 INFO  v.e.h.f.b.ShopBackendApplication - Started ShopBackendApplication in 0.826 seconds (process running for 2866.596)
+2026-07-05 10:18:16 INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2026-07-05 10:18:28 INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-07-05 10:18:28 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05 10:18:28 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-19 - Shutdown initiated...
+2026-07-05 10:18:28 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-19 - Shutdown completed.
+2026-07-05 10:18:28 INFO  v.e.h.f.b.ShopBackendApplication - Starting ShopBackendApplication using Java 17.0.18 with PID 13928 (C:\Users\MSI\Desktop\CD_WEB\backend\target\classes started by MSI in C:\Users\MSI\Desktop\CD_WEB\backend)
+2026-07-05 10:18:28 DEBUG v.e.h.f.b.ShopBackendApplication - Running with Spring Boot v3.2.6, Spring v6.1.8
+2026-07-05 10:18:28 INFO  v.e.h.f.b.ShopBackendApplication - The following 1 profile is active: "local"
+2026-07-05 10:18:28 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-05 10:18:28 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 29 ms. Found 21 JPA repository interfaces.
+2026-07-05 10:18:28 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-05 10:18:28 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-05 10:18:28 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.24]
+2026-07-05 10:18:28 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-07-05 10:18:28 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 277 ms
+2026-07-05 10:18:28 INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-07-05 10:18:28 INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-07-05 10:18:28 INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-05 10:18:28 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-20 - Starting...
+2026-07-05 10:18:28 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-20 - Added connection com.mysql.cj.jdbc.ConnectionImpl@340188c5
+2026-07-05 10:18:28 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-20 - Start completed.
+2026-07-05 10:18:28 WARN  org.hibernate.dialect.Dialect - HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+2026-07-05 10:18:28 WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-05 10:18:28 INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-05 10:18:28 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05 10:18:29 DEBUG v.e.h.f.bookshop.jwt.AuthTokenFilter - Filter 'authTokenFilter' configured for use
+2026-07-05 10:18:29 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-05 10:18:29 WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 054c17a9-fbc0-4981-b358-ffcd89501236
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-07-05 10:18:29 INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@82409be, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1a5b942, org.springframework.security.web.context.SecurityContextHolderFilter@15cdd8b4, org.springframework.security.web.header.HeaderWriterFilter@62ea0a2b, org.springframework.web.filter.CorsFilter@6193f63d, org.springframework.security.web.authentication.logout.LogoutFilter@1c82b141, vn.edu.hcmuaf.fit.bookshop.jwt.AuthTokenFilter@7c1905e, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6a6a490a, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@58e3bd3e, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3ecab677, org.springframework.security.web.session.SessionManagementFilter@54dd7e07, org.springframework.security.web.access.ExceptionTranslationFilter@6a02bb5c, org.springframework.security.web.access.intercept.AuthorizationFilter@61d7da32]
+2026-07-05 10:18:29 INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-07-05 10:18:29 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-07-05 10:18:29 INFO  v.e.h.f.b.ShopBackendApplication - Started ShopBackendApplication in 0.888 seconds (process running for 2879.26)
+2026-07-05 10:18:29 INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2026-07-05 10:18:47 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-05 10:18:47 INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-07-05 10:18:47 INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2026-07-05 10:19:14 INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-07-05 10:19:14 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05 10:19:14 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-20 - Shutdown initiated...
+2026-07-05 10:19:14 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-20 - Shutdown completed.
+2026-07-05 10:19:14 INFO  v.e.h.f.b.ShopBackendApplication - Starting ShopBackendApplication using Java 17.0.18 with PID 13928 (C:\Users\MSI\Desktop\CD_WEB\backend\target\classes started by MSI in C:\Users\MSI\Desktop\CD_WEB\backend)
+2026-07-05 10:19:14 DEBUG v.e.h.f.b.ShopBackendApplication - Running with Spring Boot v3.2.6, Spring v6.1.8
+2026-07-05 10:19:14 INFO  v.e.h.f.b.ShopBackendApplication - The following 1 profile is active: "local"
+2026-07-05 10:19:14 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-05 10:19:15 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 36 ms. Found 21 JPA repository interfaces.
+2026-07-05 10:19:15 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-05 10:19:15 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-05 10:19:15 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.24]
+2026-07-05 10:19:15 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-07-05 10:19:15 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 279 ms
+2026-07-05 10:19:15 INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-07-05 10:19:15 INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-07-05 10:19:15 INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-05 10:19:15 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-21 - Starting...
+2026-07-05 10:19:15 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-21 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6403c31d
+2026-07-05 10:19:15 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-21 - Start completed.
+2026-07-05 10:19:15 WARN  org.hibernate.dialect.Dialect - HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+2026-07-05 10:19:15 WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-05 10:19:15 INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-05 10:19:15 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05 10:19:15 DEBUG v.e.h.f.bookshop.jwt.AuthTokenFilter - Filter 'authTokenFilter' configured for use
+2026-07-05 10:19:15 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-05 10:19:15 WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 7329d23c-35ac-43be-8b4b-e192eafdf372
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-07-05 10:19:15 INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@52ea1c38, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@19ed9d6b, org.springframework.security.web.context.SecurityContextHolderFilter@439e3f23, org.springframework.security.web.header.HeaderWriterFilter@51b8525b, org.springframework.web.filter.CorsFilter@258b7440, org.springframework.security.web.authentication.logout.LogoutFilter@5f328fc9, vn.edu.hcmuaf.fit.bookshop.jwt.AuthTokenFilter@287a307b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1ea4becf, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@d9d0dca, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@49bbce29, org.springframework.security.web.session.SessionManagementFilter@21b8244c, org.springframework.security.web.access.ExceptionTranslationFilter@5ad0e6f1, org.springframework.security.web.access.intercept.AuthorizationFilter@14da22a]
+2026-07-05 10:19:15 INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-07-05 10:19:15 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-07-05 10:19:15 INFO  v.e.h.f.b.ShopBackendApplication - Started ShopBackendApplication in 0.962 seconds (process running for 2925.756)
+2026-07-05 10:19:15 INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2026-07-05 10:19:47 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-05 10:19:47 INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-07-05 10:19:47 INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2026-07-05 10:20:20 INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-07-05 10:20:21 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05 10:20:21 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-21 - Shutdown initiated...
+2026-07-05 10:20:21 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-21 - Shutdown completed.
+2026-07-05 10:20:21 INFO  v.e.h.f.b.ShopBackendApplication - Starting ShopBackendApplication using Java 17.0.18 with PID 13928 (C:\Users\MSI\Desktop\CD_WEB\backend\target\classes started by MSI in C:\Users\MSI\Desktop\CD_WEB\backend)
+2026-07-05 10:20:21 DEBUG v.e.h.f.b.ShopBackendApplication - Running with Spring Boot v3.2.6, Spring v6.1.8
+2026-07-05 10:20:21 INFO  v.e.h.f.b.ShopBackendApplication - The following 1 profile is active: "local"
+2026-07-05 10:20:21 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-05 10:20:21 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 29 ms. Found 21 JPA repository interfaces.
+2026-07-05 10:20:21 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-05 10:20:21 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-05 10:20:21 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.24]
+2026-07-05 10:20:21 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-07-05 10:20:21 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 270 ms
+2026-07-05 10:20:21 INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-07-05 10:20:21 INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-07-05 10:20:21 INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-05 10:20:21 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-22 - Starting...
+2026-07-05 10:20:21 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-22 - Added connection com.mysql.cj.jdbc.ConnectionImpl@26fa37cd
+2026-07-05 10:20:21 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-22 - Start completed.
+2026-07-05 10:20:21 WARN  org.hibernate.dialect.Dialect - HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+2026-07-05 10:20:21 WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-05 10:20:21 INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-05 10:20:21 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05 10:20:21 DEBUG v.e.h.f.bookshop.jwt.AuthTokenFilter - Filter 'authTokenFilter' configured for use
+2026-07-05 10:20:21 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-05 10:20:21 WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 54009fdf-897b-4678-96d7-1ff6abbbb47e
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-07-05 10:20:21 INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@59ab4451, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@73a26712, org.springframework.security.web.context.SecurityContextHolderFilter@76ad0087, org.springframework.security.web.header.HeaderWriterFilter@e336875, org.springframework.web.filter.CorsFilter@4fac4c93, org.springframework.security.web.authentication.logout.LogoutFilter@69b8736d, vn.edu.hcmuaf.fit.bookshop.jwt.AuthTokenFilter@423ac9f1, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2d629ddd, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@388738c4, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@707f8565, org.springframework.security.web.session.SessionManagementFilter@6ba49c63, org.springframework.security.web.access.ExceptionTranslationFilter@3d2cc708, org.springframework.security.web.access.intercept.AuthorizationFilter@51cdc43f]
+2026-07-05 10:20:21 INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-07-05 10:20:21 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-07-05 10:20:21 INFO  v.e.h.f.b.ShopBackendApplication - Started ShopBackendApplication in 0.89 seconds (process running for 2991.917)
+2026-07-05 10:20:21 INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2026-07-05 10:20:47 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-05 10:20:47 INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-07-05 10:20:47 INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2026-07-05 10:21:12 INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-07-05 10:21:12 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05 10:21:12 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-22 - Shutdown initiated...
+2026-07-05 10:21:12 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-22 - Shutdown completed.
+2026-07-05 10:21:12 INFO  v.e.h.f.b.ShopBackendApplication - Starting ShopBackendApplication using Java 17.0.18 with PID 13928 (C:\Users\MSI\Desktop\CD_WEB\backend\target\classes started by MSI in C:\Users\MSI\Desktop\CD_WEB\backend)
+2026-07-05 10:21:12 DEBUG v.e.h.f.b.ShopBackendApplication - Running with Spring Boot v3.2.6, Spring v6.1.8
+2026-07-05 10:21:12 INFO  v.e.h.f.b.ShopBackendApplication - The following 1 profile is active: "local"
+2026-07-05 10:21:12 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-05 10:21:12 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 27 ms. Found 21 JPA repository interfaces.
+2026-07-05 10:21:12 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-05 10:21:12 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-05 10:21:12 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.24]
+2026-07-05 10:21:12 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-07-05 10:21:12 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 249 ms
+2026-07-05 10:21:12 INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-07-05 10:21:12 INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-07-05 10:21:12 INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-05 10:21:12 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-23 - Starting...
+2026-07-05 10:21:12 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-23 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1a0f726b
+2026-07-05 10:21:12 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-23 - Start completed.
+2026-07-05 10:21:12 WARN  org.hibernate.dialect.Dialect - HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+2026-07-05 10:21:12 WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-05 10:21:13 INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-05 10:21:13 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05 10:21:13 DEBUG v.e.h.f.bookshop.jwt.AuthTokenFilter - Filter 'authTokenFilter' configured for use
+2026-07-05 10:21:13 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-05 10:21:13 WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: fea1c41f-0c31-4b6d-a90f-1a9dee7b5cbd
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-07-05 10:21:13 INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@60dc3cfe, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@78bfe66a, org.springframework.security.web.context.SecurityContextHolderFilter@37df8cdb, org.springframework.security.web.header.HeaderWriterFilter@4ff9997d, org.springframework.web.filter.CorsFilter@7b7b0917, org.springframework.security.web.authentication.logout.LogoutFilter@2d96adb2, vn.edu.hcmuaf.fit.bookshop.jwt.AuthTokenFilter@57638226, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2ded2045, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2edc76f4, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@e1c80f, org.springframework.security.web.session.SessionManagementFilter@2acc5781, org.springframework.security.web.access.ExceptionTranslationFilter@637f2af7, org.springframework.security.web.access.intercept.AuthorizationFilter@249bef58]
+2026-07-05 10:21:13 INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-07-05 10:21:13 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-07-05 10:21:13 INFO  v.e.h.f.b.ShopBackendApplication - Started ShopBackendApplication in 0.813 seconds (process running for 3043.42)
+2026-07-05 10:21:13 INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2026-07-05 10:21:47 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-05 10:21:47 INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-07-05 10:21:47 INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2026-07-05 10:22:02 INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-07-05 10:22:02 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05 10:22:02 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-23 - Shutdown initiated...
+2026-07-05 10:22:02 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-23 - Shutdown completed.
+2026-07-05 10:22:02 INFO  v.e.h.f.b.ShopBackendApplication - Starting ShopBackendApplication using Java 17.0.18 with PID 13928 (C:\Users\MSI\Desktop\CD_WEB\backend\target\classes started by MSI in C:\Users\MSI\Desktop\CD_WEB\backend)
+2026-07-05 10:22:02 DEBUG v.e.h.f.b.ShopBackendApplication - Running with Spring Boot v3.2.6, Spring v6.1.8
+2026-07-05 10:22:02 INFO  v.e.h.f.b.ShopBackendApplication - The following 1 profile is active: "local"
+2026-07-05 10:22:02 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-05 10:22:02 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 28 ms. Found 21 JPA repository interfaces.
+2026-07-05 10:22:02 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-05 10:22:02 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-05 10:22:02 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.24]
+2026-07-05 10:22:02 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-07-05 10:22:02 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 256 ms
+2026-07-05 10:22:02 INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-07-05 10:22:02 INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-07-05 10:22:02 INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-05 10:22:02 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-24 - Starting...
+2026-07-05 10:22:02 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-24 - Added connection com.mysql.cj.jdbc.ConnectionImpl@629f8e6b
+2026-07-05 10:22:02 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-24 - Start completed.
+2026-07-05 10:22:02 WARN  org.hibernate.dialect.Dialect - HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+2026-07-05 10:22:02 WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-05 10:22:02 INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-05 10:22:02 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05 10:22:02 DEBUG v.e.h.f.bookshop.jwt.AuthTokenFilter - Filter 'authTokenFilter' configured for use
+2026-07-05 10:22:02 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-05 10:22:02 WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 74e24afa-df8d-42fc-844f-320a4e1902a2
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-07-05 10:22:02 INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@419746c6, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5d39dc01, org.springframework.security.web.context.SecurityContextHolderFilter@75dc3475, org.springframework.security.web.header.HeaderWriterFilter@11d9894e, org.springframework.web.filter.CorsFilter@575bea5e, org.springframework.security.web.authentication.logout.LogoutFilter@38f488d5, vn.edu.hcmuaf.fit.bookshop.jwt.AuthTokenFilter@30e92334, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6b0a980e, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@36c4ffd8, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@14f36367, org.springframework.security.web.session.SessionManagementFilter@2a361ee9, org.springframework.security.web.access.ExceptionTranslationFilter@771d3aaa, org.springframework.security.web.access.intercept.AuthorizationFilter@162aa82a]
+2026-07-05 10:22:02 INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-07-05 10:22:02 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-07-05 10:22:02 INFO  v.e.h.f.b.ShopBackendApplication - Started ShopBackendApplication in 0.81 seconds (process running for 3092.923)
+2026-07-05 10:22:02 INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2026-07-05 10:22:05 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05 10:22:05 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-24 - Shutdown initiated...
+2026-07-05 10:22:05 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-24 - Shutdown completed.

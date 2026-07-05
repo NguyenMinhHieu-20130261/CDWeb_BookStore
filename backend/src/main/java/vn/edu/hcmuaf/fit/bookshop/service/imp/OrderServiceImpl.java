@@ -19,7 +19,9 @@ import java.util.Map;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.persistence.criteria.Predicate;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
@@ -62,6 +64,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public Order createOrder(OrderRequest orderRequest) {
+        log.info("Bắt đầu tạo đơn hàng cho user {}",orderRequest.getUserId());
         if (orderRequest.getUserId() == null) {
             throw new RuntimeException("User ID không được để trống");
         }
@@ -69,10 +72,10 @@ public class OrderServiceImpl implements OrderService {
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng"));
 
         List<Cart> cartItems = cartRepo.findByUserId(orderRequest.getUserId());
+        log.debug("User {} có {} sản phẩm trong giỏ",user.getId(),cartItems.size());
         if (cartItems.isEmpty()) {
             throw new RuntimeException("Giỏ hàng của bạn đang trống");
         }
-
         // 1. Tạo và lưu địa chỉ giao hàng mới
         Address address = Address.builder()
                 .user(user)
@@ -165,19 +168,33 @@ public class OrderServiceImpl implements OrderService {
         order.setTotalQuantity(totalQuantity);
 
         Order savedOrder = orderRepo.save(order);
-
+        log.info(
+            "Đơn hàng {} được tạo thành công, tổng tiền={}, số lượng={}",
+            savedOrder.getOrderCode(),
+            savedOrder.getOrderTotal(),
+            savedOrder.getTotalQuantity()
+        );
         // 4. Xóa giỏ hàng
         cartRepo.deleteAll(cartItems);
-
+        log.debug(
+            "Đã xóa {} sản phẩm khỏi giỏ hàng user {}",
+            cartItems.size(),
+            user.getId()
+        );
         return savedOrder;
     }
 
     @Override
     @Transactional
     public Order cancelOrderForUser(Integer orderId, Integer userId) {
+        log.info(
+            "User {} yêu cầu hủy đơn {}",
+            userId,
+            orderId
+        );
         Order order = orderRepo.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn hàng"));
-
+        
         if (!order.getUser().getId().equals(userId)) {
             throw new RuntimeException("Bạn không có quyền hủy đơn hàng này");
         }
@@ -190,6 +207,11 @@ public class OrderServiceImpl implements OrderService {
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy trạng thái hủy đơn hàng"));
 
         order.setStatus(cancelledStatus);
+
+        log.info(
+            "Đơn {} đã bị hủy",
+            orderId
+        );
         return orderRepo.save(order);
     }
     //admin
@@ -271,10 +293,19 @@ public class OrderServiceImpl implements OrderService {
     
     @Override
     public Order updateOrderStatus(Integer id, Integer statusId) {
+        log.info(
+            "Admin cập nhật trạng thái đơn {} -> {}",
+            id,
+            statusId
+        );
         Order existing = getOrderById(id);
         OrderStatus status = orderStatusRepo.findById(statusId)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy trạng thái"));
         existing.setStatus(status);
+        log.info(
+            "Đơn {} cập nhật trạng thái thành công",
+            id
+        );
         return orderRepo.save(existing);
     }
     @Override
@@ -293,7 +324,7 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public Order updateOrder(Integer id, Map<String, Object> body) {
         Order existing = getOrderById(id);
-
+        log.info("Admin cập nhật đơn {}", id);
         if (body.containsKey("orderTotal")) {
             existing.setOrderTotal(Integer.parseInt(body.get("orderTotal").toString()));
         }
@@ -355,18 +386,20 @@ public class OrderServiceImpl implements OrderService {
                 addressRepo.save(addr);
             }
         }
-
+        log.info("Đơn {} đã được cập nhật", id);
         return orderRepo.save(existing);
     }
 
     @Override
     @Transactional
     public void deleteOrder(Integer id) {
+        log.warn("Admin xóa đơn {}",id);
         Order order = orderRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn hàng"));
         Address address = order.getShippingAddress();
         orderRepo.delete(order);
         if (address != null) {
+            log.info("Đã xóa đơn {}",id);
             addressRepo.delete(address);
         }
     }
