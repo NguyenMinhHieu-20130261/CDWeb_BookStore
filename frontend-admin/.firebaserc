@@ -1,5 +1,6 @@
 {
   "projects": {
     "default": "book-store-123-15fa5"
-  }
+  },
+  "etags": {}
 }
