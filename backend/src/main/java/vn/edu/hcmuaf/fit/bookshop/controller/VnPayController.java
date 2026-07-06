@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.*;
 import vn.edu.hcmuaf.fit.bookshop.dto.vnpay.VnPayCreateRequest;
+import vn.edu.hcmuaf.fit.bookshop.service.OrderService;
 import vn.edu.hcmuaf.fit.bookshop.service.VnPayService;
 
 @RestController
@@ -19,6 +20,7 @@ import vn.edu.hcmuaf.fit.bookshop.service.VnPayService;
 public class VnPayController {
 
     private final VnPayService vnPayService;
+    private final OrderService orderService;
 
     @PostMapping("/create")
     public ResponseEntity<?> createPayment(@RequestBody VnPayCreateRequest request,
@@ -31,17 +33,43 @@ public class VnPayController {
     public ResponseEntity<?> vnpayReturn(@RequestParam Map<String, String> params) {
         boolean valid = vnPayService.verifyPayment(params);
 
-        if (!valid) {
-            return ResponseEntity.badRequest().body("Sai chữ ký VNPay");
+        String orderIdStr = params.get("vnp_TxnRef");
+        Integer orderId = Integer.parseInt(orderIdStr);
+
+        String frontendUrl = System.getenv("FRONTEND_URL");
+        if (frontendUrl == null || frontendUrl.isBlank()) {
+            frontendUrl = "http://localhost:3000";
         }
 
         String responseCode = params.get("vnp_ResponseCode");
+        String paymentStatus;
 
-        if ("00".equals(responseCode)) {
-            return ResponseEntity.ok("Thanh toán thành công");
+        if (!valid) {
+            paymentStatus = "invalid";
+            orderService.updatePaymentFailed(orderId);
+        } else if ("00".equals(responseCode)) {
+            paymentStatus = "success";
+            orderService.clearCartAfterPaymentSuccess(orderId);
+        } else if ("24".equals(responseCode)) {
+            paymentStatus = "cancel";
+            orderService.updatePaymentFailed(orderId);
+        } else if ("15".equals(responseCode)) {
+            paymentStatus = "timeout";
+            orderService.updatePaymentFailed(orderId);
+        } else {
+            paymentStatus = "failed";
+            orderService.updatePaymentFailed(orderId);
         }
 
-        return ResponseEntity.badRequest().body("Thanh toán thất bại");
+        String redirectUrl = frontendUrl
+                + "/payment-result?status="
+                + paymentStatus
+                + "&orderId="
+                + orderId;
+
+        return ResponseEntity.status(302)
+                .header("Location", redirectUrl)
+                .build();
     }
 
     @GetMapping("/ipn")

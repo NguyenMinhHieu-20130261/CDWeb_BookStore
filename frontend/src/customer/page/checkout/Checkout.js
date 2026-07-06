@@ -47,7 +47,7 @@ export const Checkout = () => {
     const [selectedWard, setSelectedWard] = useState("");
 
     const [note, setNote] = useState("");
-    const [paymentMethod, setPaymentMethod] = useState("Thanh toán khi nhận hàng");
+    const [paymentMethod, setPaymentMethod] = useState("COD");
     const [isConfirmed, setIsConfirmed] = useState(false);
 
     // Cart and UI state
@@ -71,7 +71,7 @@ export const Checkout = () => {
     const [addresses, setAddresses] = useState([]);
     const [showAddressPopup, setShowAddressPopup] = useState(false);
     const [selectedAddressId, setSelectedAddressId] = useState(null);
-
+    
     useEffect(() => {
         if (!user.id) {
             setPopupInfo({
@@ -121,22 +121,25 @@ export const Checkout = () => {
         const provinceObj = provinces.find(p => p.name === address.provinceCity);
         const provinceId = provinceObj ? String(provinceObj.code) : "";
 
-        const districtList = provinceId
-            ? await ProvinceService.getDistricts(provinceId)
-            : [];
-
-        const districtId = address.districtId ? String(address.districtId) : "";
-
-        const wardList = districtId
-            ? await ProvinceService.getWards(districtId)
-            : [];
-
-        setDistricts(districtList);
-        setWards(wardList);
-
         setSelectedProvince(provinceId);
-        setSelectedDistrict(districtId);
-        setSelectedWard(address.wardCode || "");
+
+        setDistricts([
+            {
+                code: Number(address.districtId),
+                name: address.countyDistrict,
+            },
+        ]);
+
+        setSelectedDistrict(String(address.districtId));
+
+        setWards([
+            {
+                code: address.wardCode,
+                name: address.wardCommune,
+            },
+        ]);
+
+        setSelectedWard(String(address.wardCode));
 
         setShowAddressPopup(false);
     };
@@ -208,7 +211,20 @@ export const Checkout = () => {
         setCouponError("");
         setCouponSuccess("");
     };
+    // lấy totalAmount
+    const calculateTotalAmount = () => {
+        return cartItems.reduce((total, item) => {
+            const price =
+                item.product?.currentPrice ||
+                item.currentPrice ||
+                item.price ||
+                0;
 
+            const quantity = item.quantity || 1;
+
+            return total + price * quantity;
+        }, 0);
+    };
     const handlePlaceOrder = async (e) => {
         e.preventDefault();
 
@@ -280,9 +296,24 @@ export const Checkout = () => {
                 paymentMethod,
                 promotionId: appliedPromotion ? appliedPromotion.id : null
             };
-
-            await api.sendData("/orders/create", payload);
-
+            
+            const order = await api.sendData("/orders/create", payload);
+            console.log("ORDER RES:", order);
+            //vn pay
+            if (paymentMethod === "VNPAY") {
+                const amount = calculateTotalAmount();
+                if (!amount || amount <= 0) {
+                    throw new Error("Giỏ hàng trống hoặc tổng tiền không hợp lệ");
+                }
+                const paymentRes = await api.sendData("/payments/vnpay/create", {
+                    orderId: order.id,
+                    amount: Number(amount),
+                    orderInfo: `Thanh toán đơn hàng ${order.orderCode || order.code || order.id}`,
+                });
+                window.location.href = paymentRes.paymentUrl;
+                return;
+            }
+            console.log("123123" +  payload);          
             setPopupInfo({
                 visible: true,
                 type: "success",
@@ -295,11 +326,16 @@ export const Checkout = () => {
             }, 1500);
         } catch (error) {
             console.error("Lỗi đặt hàng:", error);
+            const errData = error.response?.data;
+            const errorMessage =
+                typeof errData === "string"
+                    ? errData
+                    : errData?.message || errData?.error || "Đặt hàng thất bại";
             setPopupInfo({
                 visible: true,
-                type: "error",
-                title: "Đặt hàng thất bại",
-                message: error.response?.data || "Đã xảy ra lỗi trong quá trình xử lý đơn hàng"
+                title: "Lỗi đặt hàng",
+                message: error.message || errorMessage,
+                type: "error"
             });
         } finally {
             setIsSubmitting(false);

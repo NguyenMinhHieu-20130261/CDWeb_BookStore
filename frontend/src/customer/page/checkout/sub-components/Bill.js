@@ -82,28 +82,33 @@ const Bill = ({
                 <p style={{ fontSize: "14px", color: "#666", marginTop: "5px" }}>
                     Tôi xác nhận thông tin đơn hàng và những thông tin tôi đã nhập là chính xác.
                 </p>
-
+                {/* checkout area */}
                 <div className="Checkout-container" style={{ marginTop: "15px" }}>
                     <div className="checkout__input__checkbox">
-                        <label htmlFor="payment">
+                        <label htmlFor="cod">
                             Thanh toán khi nhận hàng
                             <input
-                                type="checkbox"
-                                id="payment"
-                                checked={paymentMethod === "Thanh toán khi nhận hàng"}
-                                onChange={() => setPaymentMethod("Thanh toán khi nhận hàng")}
+                                type="radio"
+                                id="cod"
+                                name="paymentMethod"
+                                value="COD"
+                                checked={paymentMethod === "COD"}
+                                onChange={() => setPaymentMethod("COD")}
                             />
                             <span className="checkmark"></span>
                         </label>
                     </div>
+
                     <div className="checkout__input__checkbox">
-                        <label htmlFor="paypal">
-                            Thanh toán qua thẻ
+                        <label htmlFor="vnpay">
+                            Thanh toán VNPay
                             <input
-                                type="checkbox"
-                                id="paypal"
-                                checked={paymentMethod === "Thanh toán qua thẻ"}
-                                onChange={() => setPaymentMethod("Thanh toán qua thẻ")}
+                                type="radio"
+                                id="vnpay"
+                                name="paymentMethod"
+                                value="VNPAY"
+                                checked={paymentMethod === "VNPAY"}
+                                onChange={() => setPaymentMethod("VNPAY")}
                             />
                             <span className="checkmark"></span>
                         </label>

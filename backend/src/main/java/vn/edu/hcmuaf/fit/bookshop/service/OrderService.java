@@ -19,6 +19,8 @@ public interface OrderService {
     Order updateOrderStatus(Integer id, Integer statusId);
     Order updateOrder(Integer id, java.util.Map<String, Object> body);
     void deleteOrder(Integer id);
+    void clearCartAfterPaymentSuccess(Integer orderId);
+    Order updatePaymentFailed(Integer orderId);
 }
 
 
