@@ -181,12 +181,12 @@ public class OrderServiceImpl implements OrderService {
             savedOrder.getTotalQuantity()
         );
         // 4. Xóa giỏ hàng
-        cartRepo.deleteAll(cartItems);
-        log.debug(
-            "Đã xóa {} sản phẩm khỏi giỏ hàng user {}",
-            cartItems.size(),
-            user.getId()
-        );
+        // cartRepo.deleteAll(cartItems);
+        // log.debug(
+        //     "Đã xóa {} sản phẩm khỏi giỏ hàng user {}",
+        //     cartItems.size(),
+        //     user.getId()
+        // );
         systemLogService.saveLog(
             "USER_ORDER",
             "INFO",
@@ -443,5 +443,30 @@ public class OrderServiceImpl implements OrderService {
             );
             addressRepo.delete(address);
         }
+    }
+    //xóa cart khi xong đơn hàng
+    @Override
+    @Transactional
+    public void clearCartAfterPaymentSuccess(Integer orderId) {
+        Order order = orderRepo.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn hàng"));
+
+        Integer userId = order.getUser().getId();
+        List<Cart> cartItems = cartRepo.findByUserId(userId);
+
+        cartRepo.deleteAll(cartItems);
+    }
+    // xl khi đơn hàng fail
+    @Override
+    @Transactional
+    public Order updatePaymentFailed(Integer orderId) {
+        Order order = orderRepo.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn hàng"));
+
+        OrderStatus cancelledStatus = orderStatusRepo.findById(6)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy trạng thái hủy"));
+
+        order.setStatus(cancelledStatus);
+        return orderRepo.save(order);
     }
 }

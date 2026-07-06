@@ -22,6 +22,7 @@ import UserOrders from "../customer/page/user-orders/UserOrders";
 import UserWishlist from "../customer/page/user-wishlist/UserWishlist";
 import OrderDetail from "../customer/page/order-detail/OrderDetail";
 import UserNotification from "../customer/page/user-notify/UserNotification";
+import PaymentResult from "../customer/page/payment-result/PaymentResult";
 
 const CustomerRouter = () => {
     return (
@@ -49,6 +50,7 @@ const CustomerRouter = () => {
                 {/* checkout */}
                 <Route path="/cart" element={<Cart/>}/>
                 <Route path="/check-out" element={<Checkout/>}/>
+                <Route path="/payment-result"element={<PaymentResult />}/>
                 {/* user */}
                 <Route path="/user/info" element={<UserAccount/>}/>
                 <Route path="/user/address" element={<UserAddress/>}/>
