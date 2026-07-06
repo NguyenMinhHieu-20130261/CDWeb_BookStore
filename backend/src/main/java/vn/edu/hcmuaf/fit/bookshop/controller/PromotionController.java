@@ -3,6 +3,7 @@ package vn.edu.hcmuaf.fit.bookshop.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.hcmuaf.fit.bookshop.entity.Promotion;
@@ -72,6 +73,7 @@ public class PromotionController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> createPromotion(@RequestBody Promotion promotion) {
         // Validate required fields
         if (promotion.getCode() == null || promotion.getCode().trim().isEmpty()) {
@@ -121,6 +123,7 @@ public class PromotionController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updatePromotion(@PathVariable Integer id, @RequestBody Promotion promotion) {
         // Validate existence
         if (!promotionService.getPromotionById(id).isPresent()) {
@@ -172,6 +175,7 @@ public class PromotionController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deletePromotion(@PathVariable Integer id) {
         promotionService.deletePromotion(id);
         return ResponseEntity.ok().build();

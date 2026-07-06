@@ -3,6 +3,7 @@ package vn.edu.hcmuaf.fit.bookshop.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import vn.edu.hcmuaf.fit.bookshop.dto.user.AdminUpdateUserRequest;
@@ -38,12 +39,14 @@ public class UserController {
     }
     
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteUser(@PathVariable Integer id) {
         userService.deleteUser(id);
         return ResponseEntity.ok("Xóa user thành công");
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateUser(
             @PathVariable Integer id,
             @RequestBody AdminUpdateUserRequest request    

@@ -12,4 +12,5 @@ public class NotificationRequest {
     private String title;
     private String message;
     private String targetUrl;
+    private Boolean isBroadcast;
 }

@@ -9,6 +9,7 @@ import vn.edu.hcmuaf.fit.bookshop.dto.order.OrderRequest;
 import vn.edu.hcmuaf.fit.bookshop.entity.*;
 import vn.edu.hcmuaf.fit.bookshop.service.*;
 import org.springframework.data.domain.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 
 import java.util.List;
@@ -119,6 +120,7 @@ public class OrderController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteOrder(@PathVariable Integer id) {
         try {
             orderService.deleteOrder(id);

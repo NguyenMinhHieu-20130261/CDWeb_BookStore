@@ -3,6 +3,7 @@ package vn.edu.hcmuaf.fit.bookshop.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.hcmuaf.fit.bookshop.entity.Category;
@@ -68,6 +69,7 @@ public class CategoryController {
         return ResponseEntity.ok(updated);
     }
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Category> createProduct(
             @RequestBody Category category,
             Authentication authentication
@@ -78,6 +80,7 @@ public class CategoryController {
         );
     }
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Category> deleteCategory(
             @PathVariable Integer id,
             Authentication authentication

@@ -20,7 +20,7 @@ import inventory from "./components/inventory";
 import promotions from "./components/promotions";
 import orders from "./components/orders";
 import banners from "./components/banners";
-
+import notifications from "./components/notifications";
 
 const App = () => (
   <Admin 
@@ -36,6 +36,7 @@ const App = () => (
             element={<AdminNotification/>}
         />
     </CustomRoutes>
+    <Resource name="notifications"  options={{ label: "Thông báo" }} {...notifications}/>
     <Resource name="logs" list={SystemLogList} />
     <Resource name="products" {...products} />
     <Resource name="category" {...category}/>

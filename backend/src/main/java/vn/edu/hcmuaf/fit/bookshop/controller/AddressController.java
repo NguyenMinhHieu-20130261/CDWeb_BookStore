@@ -2,6 +2,7 @@ package vn.edu.hcmuaf.fit.bookshop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -77,6 +78,7 @@ public class AddressController {
         );
     }
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> adminDeleteAddress(@PathVariable Integer id) {
         addressService.adminDeleteAddress(id);
         return ResponseEntity.ok("Xóa địa chỉ thành công");

@@ -164,7 +164,7 @@ const Menu = ({dense = false}: any) => {
                     dense={dense}
                 />
                 <MenuItemLink
-                    to="/admin-notifications"
+                    to="/notifications"
                     primaryText="Thông báo"
                     leftIcon={<NotificationsIcon />}
                     dense={dense}

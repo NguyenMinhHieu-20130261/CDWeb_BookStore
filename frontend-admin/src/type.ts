@@ -195,3 +195,16 @@ export interface Banner extends RaRecord {
     createdBy?: User;
     updatedBy?: User;
 }
+// notify
+export interface Notification extends RaRecord {
+    id: number;
+    user?: User;
+    type: "SYSTEM" | "ORDER" | "PROMOTION" | "PRODUCT" | "REVIEW" | "INVENTORY" | "ADMIN";
+    title: string;
+    message: string;
+    targetUrl?: string;
+    isRead: boolean;
+    isBroadcast: boolean;
+    createdAt?: string;
+    updatedAt?: string;
+}

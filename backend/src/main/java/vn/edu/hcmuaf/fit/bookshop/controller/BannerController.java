@@ -5,6 +5,7 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,7 +38,8 @@ public class BannerController {
             bannerRepo.findById(id).orElseThrow()
         );
     }
-        @PostMapping
+    @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> createBanner(@RequestBody Banner banner) {
         banner.setCreatedAt(new Date());
         banner.setUpdatedAt(new Date());
@@ -62,6 +64,7 @@ public class BannerController {
         return ResponseEntity.ok(bannerRepo.save(old));
     }
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteBanner(@PathVariable Integer id) {
         bannerRepo.deleteById(id);
         return ResponseEntity.ok().build();
