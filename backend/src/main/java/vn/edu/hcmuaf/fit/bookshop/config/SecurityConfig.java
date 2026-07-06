@@ -59,6 +59,10 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/api/reviews/product/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/reviews/*").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/notifications/**").permitAll()
+                //vnpay
+                .requestMatchers(HttpMethod.GET, "/api/payments/vnpay/return").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/payments/vnpay/ipn").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/payments/vnpay/create").authenticated()
                 /// ADMIN
                 // order
                 .requestMatchers(HttpMethod.GET, "/api/orders").hasRole("ADMIN")
