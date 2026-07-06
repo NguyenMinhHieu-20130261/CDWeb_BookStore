@@ -47,19 +47,20 @@ export const BlogDetail = () => {
                             <img  
                                 width="1400"
                                 height="650"
-                                src={blog.thumbnail || "https://bookworm.madrasthemes.com/wp-content/uploads/2020/08/img1-13.jpg"}
+                                src={blog.thumbnail || "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=1400&q=80"}
                                 className="img-fluid d-block mx-auto wp-post-image"
                                 alt={blog.title}
                                 style={{
                                     width: "100%",
                                     height: "500px",
-                                    objectFit: "cover"
+                                    objectFit: "cover",
+                                    borderRadius: "8px"
                                 }}
                             />
                             <div style={{ marginTop: "-120px", position: "relative", zIndex: 2 }}>
                                 <BlogContent blog={blog} />
                             </div>
-                            <Author/>
+                            <Author blog={blog} />
                         </article>
                     </div>
                 </div>
