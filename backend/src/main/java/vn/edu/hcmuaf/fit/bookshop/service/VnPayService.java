@@ -16,6 +16,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 @Service
 @RequiredArgsConstructor
@@ -37,14 +40,30 @@ public class VnPayService {
         params.put("vnp_OrderInfo", request.getOrderInfo());
         params.put("vnp_OrderType", "other");
         params.put("vnp_Locale", "vn");
+        params.put("vnp_BankCode", "NCB");
         params.put("vnp_ReturnUrl", config.getReturnUrl());
         params.put("vnp_IpAddr", ipAddress);
-        params.put("vnp_CreateDate", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")));
+        //createdate
+        Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
 
+        String createDate = formatter.format(cld.getTime());
+
+        cld.add(Calendar.MINUTE, 15);
+        params.put("vnp_CreateDate", createDate);
+        //
+        cld.add(Calendar.HOUR, 2);
+        String expireDate = formatter.format(cld.getTime());
+
+        params.put("vnp_ExpireDate", expireDate);
         String queryUrl = buildQuery(params);
         String hashData = buildHashData(params);
         String secureHash = hmacSHA512(config.getHashSecret(), hashData);
-
+        // log
+        System.out.println("VNPay createDate = " + createDate);
+        System.out.println("VNPay expireDate = " + expireDate);
+        System.out.println("Server timezone = " + TimeZone.getDefault().getID());
+        
         return config.getPayUrl() + "?" + queryUrl + "&vnp_SecureHash=" + secureHash;
     }
 
