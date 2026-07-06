@@ -50,7 +50,7 @@ const SideBarItems = ({product}) =>{
 const SideBar = ({listProduct= []}) => {
     const newProducts = listProduct.slice(0, 3);
     return (
-        <div id="secondary" className="sidebar widget-area order-2 left-sidebar" role="complementary">
+        <div id="secondary" className="sidebar widget-area order-2 left-sidebar col-lg-3" role="complementary">
             <div id="widgetAccordion">
                 <div id="woocommerce_products-2" className="widget p-4d875 border my-4 woocommerce widget_products">
                     <h4 className="font-size-3 mb-4">Sản phẩm mới</h4>

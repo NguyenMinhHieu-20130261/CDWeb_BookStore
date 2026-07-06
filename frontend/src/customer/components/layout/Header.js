@@ -160,6 +160,10 @@ export const Header = () => {
                                                 <i className="fa-solid fa-bell text-dark"/>
                                                 <span>Thông báo</span>
                                             </Link>
+                                            <Link to="/user/wishlist" className="user-dropdown-item">
+                                                <i className="fa-solid fa-heart text-danger"/>
+                                                <span>Sản phẩm yêu thích</span>
+                                            </Link>
                                             <button
                                                 type="button"
                                                 className="user-dropdown-item logout-item"

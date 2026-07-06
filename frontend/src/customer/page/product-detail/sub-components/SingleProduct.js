@@ -28,6 +28,42 @@ const SingleProduct = ({product,handleAddToCart}) => {
         message: "",
         type: ""
     });
+    const [isFavorite, setIsFavorite] = useState(false);
+
+    useEffect(() => {
+        const checkFavoriteStatus = async () => {
+            const user = JSON.parse(localStorage.getItem("user"));
+            if (user && user.id && product?.id) {
+                try {
+                    const wishlistData = await api.fetchData("/wishlist");
+                    const isFav = (wishlistData || []).some(item => item.product?.id === product.id);
+                    setIsFavorite(isFav);
+                } catch (err) {
+                    console.error("Lỗi check wishlist:", err);
+                }
+            }
+        };
+        checkFavoriteStatus();
+    }, [product?.id]);
+
+    const handleWishlistClick = async (e) => {
+        e.preventDefault();
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (!user || !user.id) {
+            alert("Bạn cần đăng nhập để sử dụng chức năng yêu thích");
+            navigate("/sign-in");
+            return;
+        }
+        const newFav = !isFavorite;
+        setIsFavorite(newFav);
+        try {
+            await api.sendData(`/wishlist/toggle/${product.id}`);
+        } catch (error) {
+            console.error("Lỗi toggle wishlist:", error);
+            setIsFavorite(!newFav);
+            alert("Có lỗi xảy ra, vui lòng thử lại sau.");
+        }
+    };
     const hidePopup = () => {
         setPopupInfo(prev => ({
             ...prev,
@@ -231,19 +267,13 @@ const SingleProduct = ({product,handleAddToCart}) => {
                             <div className="add-wishlist-button mt-4">
                                 <Link to="" rel="nofollow" 
                                         className="add_to_wishlist single_add_to_wishlist"
+                                        style={isFavorite ? {color: '#f75454'} : {}}
+                                        onClick={handleWishlistClick}
                                         data-title="Add to wishlist">
-                                    <i className="fa-regular fa-heart"></i> <span
-                                    className="text">Thêm vào yêu thích</span>
+                                    <i className={isFavorite ? "fa-solid fa-heart" : "fa-regular fa-heart"}></i> <span
+                                    className="text">{isFavorite ? "Đã yêu thích" : "Thêm vào yêu thích"}</span>
                                 </Link>
                             </div>
-                            {/* <div className="add-wishlist-button mt-4">
-                                <Link style={{color: '#f75454'}} to="" rel="nofollow"
-                                        className="add_to_wishlist single_add_to_wishlist"
-                                        data-title="Add to wishlist">
-                                    <i className="fa-solid fa-heart"></i> <span
-                                    className="text">Yêu thích</span>
-                                </Link>
-                            </div> */}
                         </div>
                     </div>
                 </div>

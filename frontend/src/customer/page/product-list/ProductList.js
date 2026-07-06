@@ -73,9 +73,21 @@ const ProductList = () => {
                     url = `/products/main-category/${categoryId}`;
                 }
                 const data = await api.fetchData(url);
-                // console.log("products", data);
                 const productList = Array.isArray(data) ? data : data.data || [];
                 
+                const user = JSON.parse(localStorage.getItem("user"));
+                if (user && user.id) {
+                    try {
+                        const wishlistData = await api.fetchData("/wishlist");
+                        const wishlistProductIds = new Set((wishlistData || []).map(item => item.product?.id));
+                        productList.forEach(prod => {
+                            prod.favorite = wishlistProductIds.has(prod.id);
+                        });
+                    } catch (err) {
+                        console.error("Lỗi lấy danh sách yêu thích:", err);
+                    }
+                }
+
                 setProducts(productList);
                 setAllProducts(productList);
                 setCurrentPage(1);

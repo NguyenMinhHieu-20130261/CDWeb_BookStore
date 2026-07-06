@@ -2,6 +2,21 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../../../../service/ApiService";
 
+const renderStars = (value) => {
+    const rounded = Math.round(value);
+    return [1, 2, 3, 4, 5].map((star) => (
+        <span
+            key={star}
+            style={{
+                color: star <= rounded ? "#f6c343" : "#CDCFD0",
+                marginRight: "2px"
+            }}
+        >
+            <i className="fa-solid fa-star"></i>
+        </span>
+    ));
+};
+
 const TopReviewCard = ({ product, isLast }) => {
     const [summary, setSummary] = useState({ averageRating: 0, totalReviews: 0 });
 
@@ -67,10 +82,8 @@ const TopReviewCard = ({ product, isLast }) => {
                         </span>
                     </div>
                     <div className="bwgb-products-list__product-rating product__rating d-flex align-items-center font-size-2">
-                        <div className="star-rating" role="img" aria-label={`Rated ${summary.averageRating.toFixed(2)} out of 5`}>
-                            <span style={{ width: `${ratingPercent}%` }}>
-                                Rated <strong className="rating">{summary.averageRating.toFixed(2)}</strong> out of 5
-                            </span>
+                        <div className="d-flex align-items-center mr-2">
+                            {renderStars(summary.averageRating)}
                         </div>
                         <span className="bwgb-products-list__product-rating-count">({summary.totalReviews})</span>
                     </div>

@@ -1,44 +1,83 @@
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import React from "react";
 import api from "../../../../service/ApiService";
 const ProductCard = ({product,handleAddToCart}) =>{
+    const navigate = useNavigate();
+    const [isFavorite, setIsFavorite] = React.useState(product.favorite || false);
+
+    React.useEffect(() => {
+        setIsFavorite(product.favorite || false);
+    }, [product.favorite]);
+
+    const handleWishlistClick = async (e) => {
+        e.preventDefault();
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (!user || !user.id) {
+            alert("Bạn cần đăng nhập để sử dụng chức năng yêu thích");
+            navigate("/sign-in");
+            return;
+        }
+        const newFav = !isFavorite;
+        setIsFavorite(newFav);
+        try {
+            await api.sendData(`/wishlist/toggle/${product.id}`);
+        } catch (error) {
+            console.error("Lỗi toggle wishlist:", error);
+            setIsFavorite(!newFav);
+            alert("Có lỗi xảy ra, vui lòng thử lại sau.");
+        }
+    };
+
     const productImage = product.images?.length > 0
                         ? product.images[0].image
                         : "/assets/img/no-image.png";
     return(
-        <div className="product-card product add-to-wishlist-after_add_to_cart type-product">
+        <div
+            className="product-card product add-to-wishlist-after_add_to_cart type-product"
+            style={{
+                width: "270px",
+                flex: "0 0 270px",
+                minHeight: "480px",
+                margin: "10px"
+            }}
+        >
             <div className="product__inner overflow-hidden p-3 p-md-4d875 w-100">
                 <div className="woocommerce-LoopProduct-link woocommerce-loop-product__link d-block position-relative">
-                    <div className="woocommerce-loop-product__thumbnail">
-                        <Link to="/"
+                    <div className="woocommerce-loop-product__thumbnail" style={{ height: "180px", display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
+                        <Link to={`/product-detail/${product.slug}`}
                             className="d-block bwgb-products-carousel__product-image mx-auto attachment-shop_catalog size-shop_catalog wp-post-image img-fluid">
                             <img
-                                width="120"
-                                height="183"
+                                style={{ height: "160px", width: "auto", objectFit: "contain" }}
                                 className="attachment-bookworm-120x183-crop size-bookworm-120x183-crop"
                                 src={productImage}
                                 alt={product.title}
                                 />
                         </Link>
+                        <button
+                            className={`wishlist-btn ${
+                                isFavorite ? "active" : ""
+                            }`}
+                            onClick={handleWishlistClick}
+                        >
+                            <i className={isFavorite ? "fa-solid fa-heart" : "fa-regular fa-heart"}></i>
+                        </button>
                     </div>
 
                     <div className="woocommerce-loop-product__body product__body pt-3 bg-white">
                         <div className="woocommerce-loop-product__format text-uppercase font-size-1 mb-1 text-truncate text-primary">
-                            <Link to="/">
-                            format
-                            {/* {product.format} */}
+                            <Link to={`/product-detail/${product.slug}`}>
+                                Sách
                             </Link>
                         </div>
 
-                        <h2 className="bwgb-products-carousel__product-title woocommerce-loop-product__title product__title h6 text-lh-md mb-1 text-height-2 crop-text-2 h-dark">
-                            <Link to="/">
-                            Tựa đề
-                            {product.title}
+                        <h2 className="bwgb-products-carousel__product-title woocommerce-loop-product__title product__title h6 text-lh-md mb-1 text-height-2 crop-text-2 h-dark" style={{ minHeight: "44px", overflow: "hidden" }}>
+                            <Link to={`/product-detail/${product.slug}`}>
+                                {product.title}
                             </Link>
                         </h2>
 
                         <div className="woocommerce-loop-product__author font-size-2 text-truncate mb-1">
-                            <Link to="/" className="text-gray-700">
+                            <Link to={`/product-detail/${product.slug}`} className="text-gray-700">
                                 {product.author || "Đang cập nhật"}
                             </Link>
                         </div>
@@ -54,7 +93,7 @@ const ProductCard = ({product,handleAddToCart}) =>{
                         </div>
                     </div>
 
-                    <div className="product__hover d-flex align-items-center bwgb-products-carousel__add-to-cart-icon-only">
+                    <div className="product__hover d-flex align-items-center bwgb-products-carousel__add-to-cart-icon-only mt-3">
                         <div
                             className="button product_type_simple add_to_cart_button text-uppercase text-dark h-dark font-weight-medium mr-auto"
                             title="Add to cart"
@@ -69,9 +108,9 @@ const ProductCard = ({product,handleAddToCart}) =>{
                         </div>
                         <div className="yith-wcwl-add-to-wishlist">
                             <div className="yith-wcwl-add-button">
-                                <Link to="/">
-                                    <i className="flaticon-heart"/>
-                                    <span className="text"> Thêm vào yêu thích</span>
+                                <Link to="" onClick={handleWishlistClick} style={{color: isFavorite ? '#f75454' : '#606060'}}>
+                                    <i className={isFavorite ? "fa-solid fa-heart" : "fa-regular fa-heart"}/>
+                                    <span className="text"> {isFavorite ? " Đã yêu thích" : " Thêm vào yêu thích"}</span>
                                 </Link>
                             </div>
                         </div>
@@ -114,7 +153,22 @@ export const NewBooks = ({handleAddToCart}) => {
             try {
                 setLoadingProducts(true);
                 const data = await api.fetchData(`/products/latest/${selectedCategoryId}`);
-                setProducts(data);
+                const productList = data || [];
+
+                const user = JSON.parse(localStorage.getItem("user"));
+                if (user && user.id) {
+                    try {
+                        const wishlistData = await api.fetchData("/wishlist");
+                        const wishlistProductIds = new Set((wishlistData || []).map(item => item.product?.id));
+                        productList.forEach(prod => {
+                            prod.favorite = wishlistProductIds.has(prod.id);
+                        });
+                    } catch (err) {
+                        console.error("Lỗi lấy danh sách yêu thích:", err);
+                    }
+                }
+
+                setProducts(productList);
             } catch (error) {
                 console.error("Lỗi load product theo cate:", error);
                 setProducts([]);
@@ -168,7 +222,7 @@ export const NewBooks = ({handleAddToCart}) => {
 
                                             <div className="slick-list draggable">
                                                 <div className="slick-track"
-                                                    style={{ opacity: 1, width: '1638px', transform: 'translate3d(0px, 0px, 0px)' }}>
+                                                    style={{ opacity: 1, display: 'flex', flexWrap: 'wrap' }}>
                                                 {loadingProducts ? (
                                                     <p className="p-4">Đang tải sản phẩm...</p>
                                                 ) : products.length > 0 ? (
