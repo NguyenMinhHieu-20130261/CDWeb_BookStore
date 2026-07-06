@@ -3,6 +3,7 @@ package vn.edu.hcmuaf.fit.bookshop.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -73,10 +74,12 @@ public class InventoryController {
         return ResponseEntity.ok(response);
     }
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> createInventory(@RequestBody InventoryCreateRequest request) {
         return ResponseEntity.ok(inventoryService.createInventory(request));
     }
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateInventory(
             @PathVariable Integer id,
             @RequestBody Inventory request

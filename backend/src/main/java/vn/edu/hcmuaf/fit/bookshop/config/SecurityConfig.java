@@ -3,6 +3,7 @@ package vn.edu.hcmuaf.fit.bookshop.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -13,6 +14,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import vn.edu.hcmuaf.fit.bookshop.jwt.AuthEntryPointJwt;
 import vn.edu.hcmuaf.fit.bookshop.jwt.AuthTokenFilter;
 
+@EnableMethodSecurity
 @Configuration
 public class SecurityConfig {
 
@@ -56,6 +58,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/api/banners/active").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/reviews/product/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/reviews/*").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/notifications/**").permitAll()
                 /// ADMIN
                 // order
                 .requestMatchers(HttpMethod.GET, "/api/orders").hasRole("ADMIN")
@@ -102,6 +105,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.DELETE, "/api/address/{id}").hasRole("ADMIN")
                 //review
                 .requestMatchers(HttpMethod.GET, "/api/reviews").hasRole("ADMIN")
+                //notification
+                .requestMatchers(HttpMethod.POST, "/api/notifications/broadcast").hasRole("ADMIN")
 
                 // AUTH user
                 .requestMatchers("/api/userinfo/**").authenticated()
@@ -117,6 +122,10 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/api/reviews/**").authenticated()
                 .requestMatchers(HttpMethod.PUT, "/api/reviews/**").authenticated()
                 .requestMatchers(HttpMethod.DELETE, "/api/reviews/**").authenticated()
+                //notify
+                .requestMatchers(HttpMethod.POST, "/api/notifications/**").authenticated()
+                .requestMatchers(HttpMethod.PUT, "/api/notifications/**").authenticated()
+                .requestMatchers(HttpMethod.DELETE, "/api/notifications/**").authenticated()
                 //api riêng cho promotion user
                 .requestMatchers(HttpMethod.GET, "/api/promotions/validate").authenticated()
                 .requestMatchers("/api/address/**").authenticated()

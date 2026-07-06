@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.hcmuaf.fit.bookshop.entity.Product;
@@ -69,6 +70,7 @@ public class ProductController {
         return ResponseEntity.ok(products);
     }
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Product> updateProduct(
             @PathVariable Integer id,
             @RequestBody Product product
@@ -77,6 +79,7 @@ public class ProductController {
         return ResponseEntity.ok(updated);
     }
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Product> createProduct(
             @RequestBody Product product,
             Authentication authentication
@@ -87,6 +90,7 @@ public class ProductController {
         );
     }
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Product> deleteProduct(
             @PathVariable Integer id,
             Authentication authentication

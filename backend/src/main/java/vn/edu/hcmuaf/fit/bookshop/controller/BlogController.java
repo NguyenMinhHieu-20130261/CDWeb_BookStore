@@ -3,6 +3,7 @@ package vn.edu.hcmuaf.fit.bookshop.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -59,6 +60,7 @@ public class BlogController {
         return ResponseEntity.ok(blogs);
     }
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Blog> updateBlog(
             @PathVariable Integer id,
             @RequestBody Blog blog
@@ -67,6 +69,7 @@ public class BlogController {
         return ResponseEntity.ok(updated);
     }
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Blog> createProduct(
             @RequestBody Blog blog,
             Authentication authentication
@@ -77,6 +80,7 @@ public class BlogController {
         );
     }
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Blog> deleteCategory(
             @PathVariable Integer id,
             Authentication authentication

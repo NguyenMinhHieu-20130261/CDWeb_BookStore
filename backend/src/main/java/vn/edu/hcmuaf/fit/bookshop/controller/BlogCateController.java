@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import vn.edu.hcmuaf.fit.bookshop.service.BlogCateService;
@@ -64,6 +65,7 @@ public class BlogCateController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> createBlogCate(
             @RequestBody BlogCategory blogCategory
     ) {
@@ -73,6 +75,7 @@ public class BlogCateController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateBlogCate(
             @PathVariable Integer id,
             @RequestBody BlogCategory blogCategory
@@ -83,6 +86,7 @@ public class BlogCateController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteBlogCate(@PathVariable Integer id) {
         blogCateService.deleteBlogCate(id);
         return ResponseEntity.ok("Xóa danh mục blog thành công");
