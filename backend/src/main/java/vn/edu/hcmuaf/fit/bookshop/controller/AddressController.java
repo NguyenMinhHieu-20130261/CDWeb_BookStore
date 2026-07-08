@@ -80,7 +80,13 @@ public class AddressController {
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> adminDeleteAddress(@PathVariable Integer id) {
-        addressService.adminDeleteAddress(id);
-        return ResponseEntity.ok("Xóa địa chỉ thành công");
+        try {
+            addressService.adminDeleteAddress(id);
+            return ResponseEntity.ok("Xóa địa chỉ thành công");
+        } catch (org.springframework.dao.DataIntegrityViolationException e) {
+            return ResponseEntity.status(400).body(java.util.Map.of("message", "Không thể xóa địa chỉ này vì đang được sử dụng trong các đơn hàng hoặc dữ liệu khác."));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(java.util.Map.of("message", "Lỗi hệ thống khi xóa địa chỉ: " + e.getMessage()));
+        }
     }
 }
