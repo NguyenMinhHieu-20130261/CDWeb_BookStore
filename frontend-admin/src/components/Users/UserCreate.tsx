@@ -6,6 +6,8 @@ import {
     PasswordInput,
     SelectInput,
     email,
+    ImageInput,
+    ImageField,
 } from 'react-admin';
 import { Box, Typography } from '@mui/material';
 export const validateForm = (
@@ -22,7 +24,7 @@ export const validateForm = (
         errors.phone = 'Vui lòng nhập số điện thoại';
     }
     if (!values.avatar) {
-        errors.avatar = 'Vui lòng nhập đường dẫn ảnh đại diện';
+        errors.avatar = 'Vui lòng chọn ảnh đại diện';
     }
     if (!values.password) {
         errors.password = 'Vui lòng nhập mật khẩu';
@@ -70,10 +72,12 @@ export const UserCreate = () => (
             </Box>
             <Box display={{ xs: 'block', sm: 'flex', width: '100%' }}>
                 <Box flex={1} mr={{ xs: 0, sm: '0.5em' }}>
-            <TextInput type="phone" source="phone" isRequired fullWidth />
+                    <TextInput type="phone" source="phone" isRequired fullWidth />
                 </Box>
                 <Box flex={1} ml={{ xs: 0, sm: '0.5em' }}>
-            <TextInput type="avatar" source="avatar" isRequired fullWidth />
+                    <ImageInput source="avatar" label="Ảnh đại diện" accept={{ "image/*": [".png", ".jpg", ".jpeg", ".webp"] }} isRequired placeholder="Thả ảnh hoặc nhấp để chọn">
+                        <ImageField source="src" />
+                    </ImageInput>
                 </Box>
             </Box>
             <TextInput type="email" source="email" isRequired fullWidth />
@@ -83,10 +87,9 @@ export const UserCreate = () => (
                     source="role"
                     choices={[
                         { id: 1, name: 'ADMIN' },
-                        { id: 2, name: 'MODERATOR' },
-                        { id: 3, name: 'USER' },
+                        { id: 2, name: 'USER' },
                     ]}
-                    defaultValue={3}
+                    defaultValue={2}
                 />
             <Box display={{ xs: 'block', sm: 'flex', width: '100%' }}>
                 <Box flex={1} mr={{ xs: 0, sm: '0.5em' }}>

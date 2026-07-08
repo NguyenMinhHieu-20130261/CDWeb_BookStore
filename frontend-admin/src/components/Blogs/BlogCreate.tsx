@@ -25,9 +25,11 @@ export const BlogCreate = () => {
         ...data,
 
         thumbnail:
-            typeof data.thumbnail === "string"
+            data.thumbnail?.rawFile instanceof File
                 ? data.thumbnail
-                : data.thumbnail?.src,
+                : (typeof data.thumbnail === "string"
+                    ? data.thumbnail
+                    : data.thumbnail?.src),
 
         status:data.status ? 1 : 0,
 

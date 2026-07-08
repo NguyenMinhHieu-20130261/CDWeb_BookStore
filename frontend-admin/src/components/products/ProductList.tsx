@@ -50,17 +50,20 @@ export const ProductList = () => (
             <TextField source="title" label="Tên sản phẩm"/>
             <FunctionField
                 label="Hình ảnh"
-                render={(record: any) =>
-                    record?.image ? (
+                render={(record: any) => {
+                    const firstImage = record?.image || (record?.images && record.images.length > 0
+                        ? record.images[0].image
+                        : null);
+                    return firstImage ? (
                         <img
-                            src={record.image}
+                            src={firstImage}
                             alt={record.title}
                             style={{ maxWidth: 70, maxHeight: 70, objectFit: "contain" }}
                         />
                     ) : (
                         "Chưa có ảnh"
-                    )
-                }
+                    );
+                }}
             />
             <NumberField source="oldPrice" options={{
                 style: 'currency',

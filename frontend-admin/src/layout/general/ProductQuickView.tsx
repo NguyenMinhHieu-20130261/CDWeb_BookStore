@@ -30,20 +30,25 @@ export const ProductQuickView = ({
 
             <DialogContent dividers>
                 <Stack spacing={2}>
-                    {product.image && (
-                        <Box
-                            component="img"
-                            src={product.image}
-                            alt={product.title}
-                            sx={{
-                                width: "100%",
-                                maxHeight: 260,
-                                objectFit: "contain",
-                                borderRadius: 2,
-                                bgcolor: "#f7f7f7",
-                            }}
-                        />
-                    )}
+                    {(() => {
+                        const firstImage = product.image || (product.images && product.images.length > 0
+                            ? product.images[0].image
+                            : null);
+                        return firstImage ? (
+                            <Box
+                                component="img"
+                                src={firstImage}
+                                alt={product.title}
+                                sx={{
+                                    width: "100%",
+                                    maxHeight: 260,
+                                    objectFit: "contain",
+                                    borderRadius: 2,
+                                    bgcolor: "#f7f7f7",
+                                }}
+                            />
+                        ) : null;
+                    })()}
 
                     <Typography variant="h6" fontWeight={700}>
                         {product.title}

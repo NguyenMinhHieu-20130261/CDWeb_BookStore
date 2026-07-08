@@ -25,9 +25,11 @@ export const BlogEdit = () => {
         ...data,
 
         thumbnail:
-            typeof data.thumbnail === "string"
+            data.thumbnail?.rawFile instanceof File
                 ? data.thumbnail
-                : data.thumbnail?.src,
+                : (typeof data.thumbnail === "string"
+                    ? data.thumbnail
+                    : data.thumbnail?.src),
 
         status: data.status === true || data.status === 1 ? 1 : 0,
 
@@ -61,13 +63,6 @@ export const BlogEdit = () => {
                         }
 
                         return value;
-                    }}
-                    parse={(value) => {
-                        if (!value) return null;
-
-                        if (typeof value === "string") return value;
-
-                        return value.src;
                     }}
                     placeholder="Thả ảnh để tải lên hoặc nhấp để chọn ảnh."
                 >

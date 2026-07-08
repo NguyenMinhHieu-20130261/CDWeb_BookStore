@@ -13,6 +13,7 @@ import vn.edu.hcmuaf.fit.bookshop.entity.Blog;
 import vn.edu.hcmuaf.fit.bookshop.entity.BlogCategory;
 import vn.edu.hcmuaf.fit.bookshop.entity.User;
 import vn.edu.hcmuaf.fit.bookshop.repository.BlogRepo;
+import vn.edu.hcmuaf.fit.bookshop.repository.BlogCateRepo;
 import vn.edu.hcmuaf.fit.bookshop.service.BlogService;
 import vn.edu.hcmuaf.fit.bookshop.service.SystemLogService;
 
@@ -29,6 +30,9 @@ public class BlogServiceImpl implements BlogService {
     
     @Autowired
     private SystemLogService systemLogService;
+
+    @Autowired
+    private BlogCateRepo blogCateRepo;
 
     @Override
     public Page<Blog> getActiveBlogsPage(int page, int size, Integer categoryId) {
@@ -150,6 +154,17 @@ public class BlogServiceImpl implements BlogService {
             admin.getUsername(),
             blog.getTitle()
         );
+
+        if (blog.getTitle() == null || blog.getTitle().trim().isEmpty()) {
+            throw new IllegalArgumentException("Tiêu đề bài viết không được để trống");
+        }
+        if (blog.getSlug() == null || blog.getSlug().trim().isEmpty()) {
+            throw new IllegalArgumentException("Đường dẫn tĩnh (Slug) không được để trống");
+        }
+        if (blogRepo.existsBySlug(blog.getSlug().trim())) {
+            throw new IllegalArgumentException("Đường dẫn tĩnh (Slug) đã tồn tại trong hệ thống");
+        }
+
         blog.setCreatedBy(admin);
         blog.setUpdatedBy(admin);
         blog.setCreatedAt(new Date());
@@ -164,6 +179,9 @@ public class BlogServiceImpl implements BlogService {
         }
 
         if (blog.getCategory() != null && blog.getCategory().getId() != 0) {
+            if (!blogCateRepo.existsById(blog.getCategory().getId())) {
+                throw new IllegalArgumentException("Danh mục bài viết không hợp lệ");
+            }
             BlogCategory category = new BlogCategory();
             category.setId(blog.getCategory().getId());
             blog.setCategory(category);

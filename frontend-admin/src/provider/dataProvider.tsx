@@ -1,6 +1,16 @@
-import type { DataProvider } from "react-admin";
+import { DataProvider, HttpError } from "react-admin";
 import axios from "axios";
 import { uploadImage,uploadImages } from "../service/ImageUploader";
+
+// Intercept axios errors to show friendly messages in React Admin
+axios.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        const message = error.response?.data?.message || error.message || "Đã xảy ra lỗi";
+        const status = error.response?.status || 500;
+        return Promise.reject(new HttpError(message, status, error.response?.data));
+    }
+);
 
 const API_URL = 
         // import.meta.env.VITE_API_URL ||
@@ -115,6 +125,36 @@ const dataProvider: DataProvider = {
                         : null
             };
         }
+        if (resource === "blogs") {
+            const thumbnailUrl =
+                data.thumbnail?.rawFile instanceof File
+                    ? await uploadImage(data.thumbnail.rawFile)
+                    : data.thumbnail;
+            data = {
+                ...data,
+                thumbnail: thumbnailUrl,
+            };
+        }
+        if (resource === "users") {
+            const avatarUrl =
+                data.avatar?.rawFile instanceof File
+                    ? await uploadImage(data.avatar.rawFile)
+                    : data.avatar;
+            data = {
+                username: data.username,
+                email: data.email,
+                password: data.password,
+                isLocked: data.locked === 2,
+                role: {
+                    id: data.role || 2,
+                },
+                userInformation: {
+                    fullName: data.fullName,
+                    phoneNumber: data.phone,
+                    avatar: avatarUrl,
+                },
+            };
+        }
         console.log("DATA SEND:", data);
         const res = await axios.post(
             `${API_URL}/${apiPath}`,
@@ -149,6 +189,32 @@ const dataProvider: DataProvider = {
                 parentCategory: data.parentCategory?.id
                     ? { id: data.parentCategory.id }
                     : null,
+            };
+        }
+        if (resource === "blogs") {
+            const thumbnailUrl =
+                data.thumbnail?.rawFile instanceof File
+                    ? await uploadImage(data.thumbnail.rawFile)
+                    : (typeof data.thumbnail === "string" ? data.thumbnail : data.thumbnail?.src);
+            data = {
+                ...data,
+                thumbnail: thumbnailUrl,
+            };
+        }
+        if (resource === "users") {
+            const avatarUrl =
+                data.userInformation?.avatar?.rawFile instanceof File
+                    ? await uploadImage(data.userInformation.avatar.rawFile)
+                    : (typeof data.userInformation?.avatar === "string" ? data.userInformation.avatar : data.userInformation?.avatar?.src);
+            data = {
+                roleId: data.roleId || data.role?.id,
+                isLocked: data.isLocked,
+                userInformation: {
+                    id: data.userInformation?.id,
+                    fullName: data.userInformation?.fullName,
+                    phoneNumber: data.userInformation?.phoneNumber,
+                    avatar: avatarUrl,
+                },
             };
         }
         const res = await axios.put(
