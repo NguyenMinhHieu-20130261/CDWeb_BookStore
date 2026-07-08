@@ -1,21 +1,66 @@
 import "../../assets/css/style-cart.css"
+import {Link} from "react-router-dom";
+import Breadcrumb from "../../components/general/Breadcrumb"
+import { useEffect, useState } from "react";
+import api from "../../../service/ApiService";
+import FormatCurrency from "../../../utils/FormatCurrency";
 
-export const PageLink = () => {
-    return (
-        <div className="page-header border-bottom">
-            <div className="container">
-                <div className="d-md-flex justify-content-between align-items-center py-4">
-                    <nav className="woocommerce-breadcrumb font-size-2"><a className="h-primary"
-                                                                           href="https://bookworm.madrasthemes.com">Home</a><span
-                        className="breadcrumb-separator mx-2"><i
-                        className="fas fa-angle-right"></i></span>Cart
-                    </nav>
-                </div>
-            </div>
-        </div>
-    )
-}
 export const ProductsInCart = () => {
+    const [cartItems, setCartItems] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    const getCartItems = async () => {
+        try {
+            if (!user || !user.id) {
+                setCartItems([]);
+                setLoading(false);
+                return;
+            }
+            const res = await api.fetchData(`/cart/items`);
+            setCartItems(res);
+        } catch (error) {
+            console.log("Lỗi lấy giỏ hàng:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+    const removeCartItem = async (cartItemId) => {
+        try {
+            await api.deleteData(`/cart/remove/${cartItemId}`);
+            getCartItems();
+        } catch (error) {
+            console.log("Lỗi xóa sản phẩm khỏi giỏ hàng:", error);
+        }
+    };
+    const updateQuantity = async (cartItemId, newQuantity) => {
+        if (newQuantity < 1) return;
+
+        try {
+            await api.updateData(`/cart/update-quantity/${cartItemId}`, {
+                quantity: newQuantity
+            });
+            getCartItems();
+        } catch (error) {
+            console.log("Lỗi cập nhật số lượng:", error);
+        }
+    };
+    useEffect(() => {
+        getCartItems();
+    }, []);
+
+    const totalPrice = cartItems.reduce((total, item) => {
+        return total + item.product.currentPrice * item.quantity;
+    }, 0);
+    if (loading) {
+        return (
+            <section className="shoping-cart spad" style={{ margin: "0 90px 0 90px" }}>
+                <div className="container">
+                    <p>Đang tải giỏ hàng...</p>
+                </div>
+            </section>
+        );
+    }
     return (
         <section className="shoping-cart spad" style={{ margin: "0 90px 0 90px" }}>
             <div className="container">
@@ -32,73 +77,85 @@ export const ProductsInCart = () => {
                                     <th></th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                <tr>
-                                    <td className="shoping__cart__item">
-                                        <img src="img/cart/cart-1.jpg" alt=""/>
-                                            <h5>Alaska Giant xám trắng</h5>
-                                    </td>
-                                    <td className="shoping__cart__price">
-                                        25.000.000đ
-                                    </td>
-                                    <td className="shoping__cart__quantity">
-                                        <div className="">
-                                            <div className="pro-qty">
-                                                <input type="text" value="1"/>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className="shoping__cart__total">
-                                        25.000.000đ
-                                    </td>
-                                    <td className="shoping__cart__item__close">
-                                        <i className="fa-solid fa-xmark"></i>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="shoping__cart__item">
-                                        <img src="img/cart/cart-2.jpg" alt=""/>
-                                            <h5>Cún golden siêu phẩm</h5>
-                                    </td>
-                                    <td className="shoping__cart__price">
-                                        30.000.000đ
-                                    </td>
-                                    <td className="shoping__cart__quantity">
-                                        <div className="">
-                                            <div className="pro-qty">
-                                                <input type="text" value="1"/>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className="shoping__cart__total">
-                                        30.000.000đ
-                                    </td>
-                                    <td className="shoping__cart__item__close">
-                                        <i className="fa-solid fa-xmark"></i>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="shoping__cart__item">
-                                        <img src="img/cart/cart-3.jpg" alt=""/>
-                                            <h5>Mèo chân ngắn tai cụp</h5>
-                                    </td>
-                                    <td className="shoping__cart__price">
-                                        30.000.000đ
-                                    </td>
-                                    <td className="shoping__cart__quantity">
-                                        <div className="">
-                                            <div className="pro-qty">
-                                                <input type="text" value="1"/>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className="shoping__cart__total">
-                                        30.000.000đ
-                                    </td>
-                                    <td className="shoping__cart__item__close">
-                                        <i className="fa-solid fa-xmark"></i>
-                                    </td>
-                                </tr>
+                                <tbody 
+                                    style={{width:"100%"}}
+                                >
+                                    {!user ? (
+                                        <tr>
+                                            <td className="no-user" colSpan="5" >
+                                                <div>
+                                                    <p className="no-user-text">
+                                                        Bạn cần đăng nhập để thêm hàng vào giỏ hàng...
+                                                    </p>
+                                                    <Link className="no-user-link" to="/sign-in">
+                                                        Đăng nhập
+                                                    </Link>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ) : cartItems.length === 0 ? (
+                                        <tr>
+                                            <td colSpan="5" style={{ textAlign: "center", padding: "30px" }}>
+                                                Giỏ hàng đang trống
+                                            </td>
+                                        </tr>
+                                    ) : (cartItems.map((item) => {
+                                            const productImage = item.product?.images?.length > 0
+                                                ? item.product.images[0].image
+                                                : "/assets/img/no-image.png";
+                                            console.log("IMAGES:", item.product?.images);
+                                            return(
+                                                <tr key={item.id}>
+                                                    <td className="shoping__cart__item">
+                                                        <img
+                                                            src={productImage}
+                                                            alt={item.product.title}
+                                                            style={{
+                                                                width: "100px",
+                                                                height: "120px",
+                                                                objectFit: "cover"
+                                                            }}
+                                                        />
+                                                        <h5>{item.product.title}</h5>
+                                                    </td>
+                                                    <td className="shoping__cart__price">
+                                                        {FormatCurrency(item.product.currentPrice)}
+                                                    </td>
+                                                    <td className="shoping__cart__quantity">
+                                                        <div className="cart-quantity-box">
+                                                            <button
+                                                                className="qty-btn"
+                                                                onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                                                            >
+                                                                -
+                                                            </button>
+                                                            <input
+                                                                type="text"
+                                                                value={item.quantity}
+                                                                readOnly
+                                                            />
+                                                            <button
+                                                                className="qty-btn"
+                                                                onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                                            >
+                                                                +
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                    <td className="shoping__cart__total">
+                                                        {FormatCurrency(item.product.currentPrice * item.quantity)}
+                                                    </td>
+                                                    <td
+                                                        className="shoping__cart__item__close"
+                                                        onClick={() => removeCartItem(item.id)}
+                                                        style={{ cursor: "pointer" }}
+                                                    >
+                                                        <i className="fa-solid fa-xmark"/>
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })
+                                    )}
                                 </tbody>
                             </table>
                         </div>
@@ -107,31 +164,21 @@ export const ProductsInCart = () => {
                 <div className="row">
                     <div className="col-lg-12">
                         <div className="shoping__cart__btns">
-                            <a href="#" className="primary-btn cart-btn">TIẾP TỤC MUA SẮM</a>
-                            <a href="#" className="primary-btn cart-btn cart-btn-right"><span
-                                className="icon_loading"></span>
-                                &nbsp; Cập nhật giỏ hàng</a>
+                            <Link to="/product-list" className="primary-btn cart-btn">TIẾP TỤC MUA SẮM</Link>
+                            <Link to="" className="primary-btn cart-btn cart-btn-right">
+                                <span className="icon_loading"/>
+                                &nbsp; Cập nhật giỏ hàng
+                            </Link>
                         </div>
                     </div>
-                    <div className="col-lg-6">
-                        <div className="shoping__continue">
-                            <div className="shoping__discount">
-                                <h5>Mã giảm giá</h5>
-                                <form action="#">
-                                    <input type="text" placeholder="Nhập mã giảm giá"/>
-                                        <button type="submit" className="site-btn">APPLY</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-lg-6">
+                    <div className="col-lg-6 offset-lg-6">
                         <div className="shoping__checkout">
                             <h5>Tổng tiền giỏ hàng</h5>
                             <ul>
-                                <li>Tạm tính <span>85.000.000 Đồng</span></li>
-                                <li>Tổng tiền <span>85.000.000 Đồng</span></li>
+                                <li>Tạm tính <span>{FormatCurrency(totalPrice)}</span></li>
+                                <li>Tổng tiền <span>{FormatCurrency(totalPrice)}</span></li>
                             </ul>
-                            <a href="checkout.html" className="primary-btn">CHUYỂN ĐẾN PHẦN THANH TOÁN</a>
+                            <Link to="/check-out" className="primary-btn">CHUYỂN ĐẾN PHẦN THANH TOÁN</Link>
                         </div>
                     </div>
                 </div>
@@ -142,8 +189,8 @@ export const ProductsInCart = () => {
 export const Cart = () => {
     return (
         <div>
-        <PageLink/>
-        <ProductsInCart/>
+            <Breadcrumb/>
+            <ProductsInCart/>
         </div>
     )
 }

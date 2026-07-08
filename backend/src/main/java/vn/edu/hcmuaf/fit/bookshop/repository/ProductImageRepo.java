@@ -1,0 +1,10 @@
+package vn.edu.hcmuaf.fit.bookshop.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import vn.edu.hcmuaf.fit.bookshop.entity.ProductImage;
+
+public interface ProductImageRepo extends JpaRepository<ProductImage, Integer> {
+    List<ProductImage> findByProduct_Id(Integer productId);
+}
