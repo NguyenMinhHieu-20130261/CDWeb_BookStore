@@ -1,6 +1,8 @@
 package vn.edu.hcmuaf.fit.bookshop.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -49,6 +51,7 @@ public class Supplier {
     @Column(name = "updated_at")
     private Date updatedAt;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "supplier")
     private List<Inventory> inventories;
 

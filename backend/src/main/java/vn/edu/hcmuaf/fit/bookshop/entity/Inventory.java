@@ -23,9 +23,20 @@ public class Inventory {
     @Column(name = "batch_code", unique = true)
     private String batchCode;
 
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne
     @JoinColumn(name = "product_id")
+    @JsonIgnoreProperties({
+        "inventories",
+        "orderDetails",
+        "cartItems",
+        "favorites",
+        "reviews",
+        "images",
+        "category",
+        "parentCategory",
+        "hibernateLazyInitializer",
+        "handler"
+    })
     private Product product;
 
     @Column(name = "imported_quantity")
@@ -65,9 +76,13 @@ public class Inventory {
     @JoinColumn(name = "updated_by")
     private User updatedBy;
 
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "supplier_id")
+    @JsonIgnoreProperties({
+        "inventories",
+        "hibernateLazyInitializer",
+        "handler"
+    })
     private Supplier supplier;
 
     @Column(name = "note", columnDefinition = "TEXT")
