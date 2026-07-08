@@ -18,9 +18,11 @@ export const UserEdit = () => {
             fullName: data.userInformation?.fullName,
             phoneNumber: data.userInformation?.phoneNumber,
             avatar:
-                typeof data.userInformation?.avatar === "string"
+                data.userInformation?.avatar?.rawFile instanceof File
                     ? data.userInformation.avatar
-                    : data.userInformation?.avatar?.src,
+                    : (typeof data.userInformation?.avatar === "string"
+                        ? data.userInformation.avatar
+                        : data.userInformation?.avatar?.src),
         },
     });
 
@@ -92,10 +94,6 @@ export const UserEdit = () => {
                                         };
                                     }
                                     return value;
-                                }}
-                                parse={(value) => {
-                                    if (!value) return null;
-                                    return typeof value === "string" ? value : value.src;
                                 }}
                                 placeholder="Chọn ảnh"
                             >

@@ -25,6 +25,26 @@ export const ProductShow = () => {
         if (!record) return null;
         return <span>{record.title}</span>;
     };
+    const ProductImageShow = () => {
+        const record = useRecordContext<Product>();
+        if (!record) return null;
+        const firstImage = record.image || (record.images && record.images.length > 0
+            ? record.images[0].image
+            : null);
+        return firstImage ? (
+            <img
+                src={firstImage}
+                alt={record.title}
+                style={{
+                    maxWidth: "100%",
+                    maxHeight: 320,
+                    objectFit: "contain",
+                }}
+            />
+        ) : (
+            <span>Chưa có ảnh</span>
+        );
+    };
     const ProductShowActions = () => (
         <TopToolbar>
             <EditButton />
@@ -46,16 +66,7 @@ export const ProductShow = () => {
                                 minHeight: 350,
                             }}
                         >
-                            <ImageField
-                                source="image"
-                                sx={{
-                                    "& .RaImageField-image": {
-                                        maxWidth: "100%",
-                                        maxHeight: 320,
-                                        objectFit: "contain",
-                                    },
-                                }}
-                            />
+                            <ProductImageShow />
                         </Box>
                     </Grid>
                     <Grid size={{ xs: 12, md: 8 }}>
