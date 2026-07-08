@@ -158,7 +158,7 @@ export const NewBooks = ({handleAddToCart}) => {
                 const user = JSON.parse(localStorage.getItem("user"));
                 if (user && user.id) {
                     try {
-                        const wishlistData = await api.fetchData("/wishlist");
+                        const wishlistData = await api.fetchData(`/wishlist/${user.id}`);
                         const wishlistProductIds = new Set((wishlistData || []).map(item => item.product?.id));
                         productList.forEach(prod => {
                             prod.favorite = wishlistProductIds.has(prod.id);

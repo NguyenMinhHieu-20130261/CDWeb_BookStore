@@ -42,11 +42,14 @@ public class ReviewController {
         return reviewService.getReviewsByProduct(productId, rating, sort);
     }
     @PostMapping("/add")
-    public ResponseEntity<?> createReview(@RequestBody Map<String, Object> body,Authentication authentication) {
+    public ResponseEntity<?> createReview(
+            @RequestBody Map<String, Object> body,
+            Authentication authentication
+    ) {
         Integer productId = Integer.valueOf(body.get("productId").toString());
         Integer rating = Integer.valueOf(body.get("rating").toString());
         String cmtDetail = body.get("cmtDetail").toString();
-        
+
         User user = (User) authentication.getPrincipal();
 
         Product product = prodRepo.findById(productId)
@@ -57,11 +60,10 @@ public class ReviewController {
         review.setProduct(product);
         review.setRating(rating);
         review.setCmtDetail(cmtDetail);
-        review.setCreatedAt(new Date());
 
-        reviewRepo.save(review);
+        Review saved = reviewService.createReview(review);
 
-        return ResponseEntity.ok("Đánh giá thành công");
+        return ResponseEntity.ok(saved);
     }
     //admin
     @GetMapping

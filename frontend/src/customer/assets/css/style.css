@@ -29850,3 +29850,6 @@ html {
         background-color: rgba(0, 0, 0, var(--tw-bg-opacity))
     }
 }
+.button_forgot + .button_forgot {
+    margin-top: 15px;
+}

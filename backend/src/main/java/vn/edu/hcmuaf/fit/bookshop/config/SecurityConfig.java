@@ -63,6 +63,12 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/api/payments/vnpay/return").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/payments/vnpay/ipn").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/payments/vnpay/create").authenticated()
+                //order user
+                .requestMatchers(HttpMethod.GET, "/api/orders/user").authenticated()
+                .requestMatchers(HttpMethod.GET, "/api/orders/detail/**").authenticated()
+                .requestMatchers(HttpMethod.POST, "/api/orders/create").authenticated()
+                .requestMatchers(HttpMethod.PUT, "/api/orders/cancel/**").authenticated()
+                .requestMatchers("/api/order-status/**").authenticated()
                 /// ADMIN
                 // order
                 .requestMatchers(HttpMethod.GET, "/api/orders").hasRole("ADMIN")
@@ -116,12 +122,6 @@ public class SecurityConfig {
                 .requestMatchers("/api/userinfo/**").authenticated()
                 .requestMatchers("/api/address/**").authenticated()
                 .requestMatchers("/api/cart/**").authenticated()
-                //order
-                .requestMatchers(HttpMethod.GET, "/api/orders/user").authenticated()
-                .requestMatchers(HttpMethod.GET, "/api/orders/detail/**").authenticated()
-                .requestMatchers(HttpMethod.POST, "/api/orders/create").authenticated()
-                .requestMatchers(HttpMethod.PUT, "/api/orders/cancel/**").authenticated()
-                .requestMatchers("/api/order-status/**").authenticated()
                 //review
                 .requestMatchers(HttpMethod.POST, "/api/reviews/**").authenticated()
                 .requestMatchers(HttpMethod.PUT, "/api/reviews/**").authenticated()
