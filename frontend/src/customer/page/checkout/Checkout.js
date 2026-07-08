@@ -330,11 +330,11 @@ export const Checkout = () => {
             const errorMessage =
                 typeof errData === "string"
                     ? errData
-                    : errData?.message || errData?.error || "Đặt hàng thất bại";
+                    : errData?.message || errData?.error || error.message || "Đặt hàng thất bại";
             setPopupInfo({
                 visible: true,
                 title: "Lỗi đặt hàng",
-                message: error.message || errorMessage,
+                message: errorMessage,
                 type: "error"
             });
         } finally {

@@ -4,10 +4,11 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import { useNavigate } from "react-router-dom";
 
 const API_URL = 
-        // import.meta.env.VITE_API_URL ||
-        // "https://cdwebbookstore-production.up.railway.app/api"||
-        import.meta.env.LOCAL_API ||
-        "http://localhost:8080/api";
+        import.meta.env.VITE_API_URL ||
+        "https://cdwebbookstore-production.up.railway.app/api"
+        //|| import.meta.env.LOCAL_API ||
+        // "http://localhost:8080/api"
+        ;
 
 const AdminNotificationBell = () => {
     const [unread, setUnread] = useState(0);
