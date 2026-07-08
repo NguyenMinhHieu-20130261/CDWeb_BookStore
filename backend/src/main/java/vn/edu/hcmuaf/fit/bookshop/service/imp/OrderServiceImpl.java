@@ -12,6 +12,8 @@ import vn.edu.hcmuaf.fit.bookshop.repository.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
+
+import vn.edu.hcmuaf.fit.bookshop.service.NotificationService;
 import vn.edu.hcmuaf.fit.bookshop.service.OrderService;
 import vn.edu.hcmuaf.fit.bookshop.service.SystemLogService;
 
@@ -38,6 +40,9 @@ public class OrderServiceImpl implements OrderService {
     
     @Autowired
     private SystemLogService systemLogService;
+
+    @Autowired
+    private NotificationService notificationService;
 
     @jakarta.annotation.PostConstruct
     public void init() {
@@ -174,6 +179,20 @@ public class OrderServiceImpl implements OrderService {
         order.setTotalQuantity(totalQuantity);
 
         Order savedOrder = orderRepo.save(order);
+        //notify
+        notificationService.createForUser(
+            user.getId(),
+            NotificationType.ORDER,
+            "Đặt hàng thành công",
+            "Đơn hàng " + savedOrder.getOrderCode() + " đã được tạo thành công",
+            "/user/orders/" + savedOrder.getId()
+        );
+        notificationService.createBroadcast(
+            NotificationType.ORDER,
+            "Có đơn hàng mới",
+            "User " + user.getUsername() + " vừa đặt đơn " + savedOrder.getOrderCode(),
+            "/admin/orders/" + savedOrder.getId()
+        );
         log.info(
             "Đơn hàng {} được tạo thành công, tổng tiền={}, số lượng={}",
             savedOrder.getOrderCode(),
