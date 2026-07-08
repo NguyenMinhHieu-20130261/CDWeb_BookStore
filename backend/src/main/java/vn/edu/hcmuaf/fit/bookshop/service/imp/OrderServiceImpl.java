@@ -12,6 +12,8 @@ import vn.edu.hcmuaf.fit.bookshop.repository.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
+
+import vn.edu.hcmuaf.fit.bookshop.service.NotificationService;
 import vn.edu.hcmuaf.fit.bookshop.service.OrderService;
 import vn.edu.hcmuaf.fit.bookshop.service.SystemLogService;
 
@@ -38,6 +40,9 @@ public class OrderServiceImpl implements OrderService {
     
     @Autowired
     private SystemLogService systemLogService;
+
+    @Autowired
+    private NotificationService notificationService;
 
     @jakarta.annotation.PostConstruct
     public void init() {
@@ -174,6 +179,20 @@ public class OrderServiceImpl implements OrderService {
         order.setTotalQuantity(totalQuantity);
 
         Order savedOrder = orderRepo.save(order);
+        //notify
+        notificationService.createForUser(
+            user.getId(),
+            NotificationType.ORDER,
+            "Đặt hàng thành công",
+            "Đơn hàng " + savedOrder.getOrderCode() + " đã được tạo thành công",
+            "/user/orders/" + savedOrder.getId()
+        );
+        notificationService.createBroadcast(
+            NotificationType.ORDER,
+            "Có đơn hàng mới",
+            "User " + user.getUsername() + " vừa đặt đơn " + savedOrder.getOrderCode(),
+            "/admin/orders/" + savedOrder.getId()
+        );
         log.info(
             "Đơn hàng {} được tạo thành công, tổng tiền={}, số lượng={}",
             savedOrder.getOrderCode(),
@@ -220,7 +239,12 @@ public class OrderServiceImpl implements OrderService {
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy trạng thái hủy đơn hàng"));
 
         order.setStatus(cancelledStatus);
-
+        notificationService.createBroadcast(
+            NotificationType.ORDER,
+            "Đơn hàng bị hủy",
+            "User " + order.getUser().getUsername() + " đã hủy đơn " + order.getOrderCode(),
+            "/admin/orders/" + order.getId()
+        );
         log.info(
             "Đơn {} đã bị hủy",
             orderId
@@ -322,6 +346,14 @@ public class OrderServiceImpl implements OrderService {
         OrderStatus status = orderStatusRepo.findById(statusId)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy trạng thái"));
         existing.setStatus(status);
+
+        notificationService.createForUser(
+            existing.getUser().getId(),
+            NotificationType.ORDER,
+            "Cập nhật đơn hàng",
+            "Đơn hàng " + existing.getOrderCode() + " chuyển sang trạng thái: " + status.getName(),
+            "/user/orders/" + existing.getId()
+        );
         log.info(
             "Đơn {} cập nhật trạng thái thành công",
             id
@@ -366,7 +398,15 @@ public class OrderServiceImpl implements OrderService {
         }
         if (body.containsKey("shopReply")) {
             existing.setShopReply((String) body.get("shopReply"));
+            
         }
+        notificationService.createForUser(
+            existing.getUser().getId(),
+            NotificationType.ORDER,
+            "Shop đã phản hồi đơn hàng",
+            "Shop đã phản hồi đơn hàng " + existing.getOrderCode(),
+            "/user/orders/" + existing.getId()
+        );
         // status
         if (body.containsKey("status")) {
             Object statusObj = body.get("status");
@@ -432,6 +472,13 @@ public class OrderServiceImpl implements OrderService {
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn hàng"));
         Address address = order.getShippingAddress();
         orderRepo.delete(order);
+        notificationService.createForUser(
+            order.getUser().getId(),
+            NotificationType.ORDER,
+            "Đơn hàng đã bị xóa",
+            "Đơn hàng " + order.getOrderCode() + " đã bị admin xóa",
+            "/user/orders"
+        );
         if (address != null) {
             log.info("Đã xóa đơn {}",id);
             systemLogService.saveLog(
@@ -467,6 +514,13 @@ public class OrderServiceImpl implements OrderService {
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy trạng thái hủy"));
 
         order.setStatus(cancelledStatus);
+        notificationService.createForUser(
+            order.getUser().getId(),
+            NotificationType.ORDER,
+            "Thanh toán thất bại",
+            "Đơn hàng " + order.getOrderCode() + " đã bị hủy do thanh toán thất bại",
+            "/user/orders/" + order.getId()
+        );
         return orderRepo.save(order);
     }
 }

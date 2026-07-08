@@ -3,6 +3,7 @@ package vn.edu.hcmuaf.fit.bookshop.service;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -55,9 +56,12 @@ public class EmailService {
 
             mailSender.send(message);
             return true;
-
         } catch (MessagingException e) {
+            e.printStackTrace();
             throw new RuntimeException("Không thể tạo email HTML", e);
+        } catch (MailException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Không thể gửi mail SMTP", e);
         }
     }
     //pass mail
@@ -124,7 +128,11 @@ public class EmailService {
             return true;
 
         } catch (MessagingException e) {
-            throw new RuntimeException("Không gửi được email", e);
+            e.printStackTrace();
+            throw new RuntimeException("Không thể tạo email HTML", e);
+        } catch (MailException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Không thể gửi mail SMTP", e);
         }
     }
     //register otp
@@ -169,7 +177,11 @@ public class EmailService {
             return true;
 
         } catch (MessagingException e) {
-            throw new RuntimeException("Không thể gửi OTP đăng ký", e);
+            e.printStackTrace();
+            throw new RuntimeException("Không thể gửi OTP đk", e);
+        } catch (MailException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Không thể gửi OTP đk", e);
         }
     }
     //register mail
@@ -216,7 +228,11 @@ public class EmailService {
             return true;
 
         } catch (MessagingException e) {
-            throw new RuntimeException("Không thể gửi email đăng ký thành công", e);
+            e.printStackTrace();
+            throw new RuntimeException("Không thể gửi email đk thành công", e);
+        } catch (MailException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Không thể gửi mail SMTP", e);
         }
     }
 }
