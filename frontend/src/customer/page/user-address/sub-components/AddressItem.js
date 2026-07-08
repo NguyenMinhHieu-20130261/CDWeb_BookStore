@@ -34,12 +34,35 @@ const AddressItem = ({ address, onDelete, onSetDefault}) => {
             message: "Bạn có muốn đặt địa chỉ này thành mặc định không?"
         });
     };
-    const handleConfirm = () => {
+    const handleConfirm = async () => {
         if (actionType === "delete") {
-            onDelete(address.id);
+            await onDelete(address.id);
+            setPopupInfo({
+                visible: true,
+                type: "success",
+                title: "Thành công",
+                message: "Xóa địa chỉ thành công"
+            });
+
+            setTimeout(() => {
+                window.location.reload();
+            }, 1200);
+
+            return;
         }
+
         if (actionType === "default") {
-            onSetDefault(address.id);
+            await onSetDefault(address.id);
+            setPopupInfo({
+                visible: true,
+                type: "success",
+                title: "Thành công",
+                message: "Đã đặt địa chỉ mặc định"
+            });
+            setTimeout(() => {
+                window.location.reload();
+            }, 1200);
+            return;
         }
         setPopupInfo(prev => ({
             ...prev,

@@ -19,13 +19,15 @@ public class FavoriteProductController {
     @Autowired
     private FavoriteProductService favoriteProductService;
 
-    @GetMapping
-    public ResponseEntity<?> getWishlist(Authentication authentication) {
+    @GetMapping("/{userId}")
+    public ResponseEntity<?> getWishlist(@PathVariable Integer userId) {
         try {
-            User user = (User) authentication.getPrincipal();
-            List<FavoriteProduct> favorites = favoriteProductService.getFavoritesByUserId(user.getId());
+            List<FavoriteProduct> favorites =
+                    favoriteProductService.getFavoritesByUserId(userId);
+
             return ResponseEntity.ok(favorites);
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(500).body(e.getMessage());
         }
     }

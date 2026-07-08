@@ -134,4 +134,23 @@ public class EmailService {
 
         return sendEmail(toEmail, "Chào mừng bạn đến với GoldLeaf BookStore", html);
     }
+    //change pass user 
+    public boolean sendChangePasswordOTP(String toEmail, String username, String otp) {
+        String html = """
+            <div style="font-family:Arial,sans-serif;background:#f6f7fb;padding:30px;">
+                <div style="max-width:540px;margin:auto;background:white;border-radius:14px;padding:30px;">
+                    <h2 style="color:#2f5d3a;">GoldLeaf BookStore</h2>
+                    <p>Xin chào <b>%s</b>,</p>
+                    <p>Bạn đang yêu cầu đổi mật khẩu tài khoản.</p>
+                    <p>Mã OTP của bạn là:</p>
+                    <div style="font-size:32px;font-weight:bold;letter-spacing:6px;color:#2f5d3a;background:#eef7f0;padding:16px;text-align:center;border-radius:10px;">
+                        %s
+                    </div>
+                    <p>Mã này có hiệu lực trong 5 phút.</p>
+                </div>
+            </div>
+            """.formatted(username, otp);
+
+        return sendEmail(toEmail, "Mã OTP đổi mật khẩu GoldLeaf", html);
+    }
 }

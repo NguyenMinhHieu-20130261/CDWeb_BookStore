@@ -8,6 +8,7 @@ import api from "../../../service/ApiService";
 import { useNavigate } from "react-router-dom";
 import { uploadImage } from "../../../service/ImageUploadService";
 import DefaultAvatar from "../../assets/img/user/user.jpg";
+import ChangePasswordPopup from "./sub-components/ChangePasswordPopup";
 
 const UserAccount = () => {
     const user = useSelector(state => state.auth.login.currentUser);
@@ -26,8 +27,9 @@ const UserAccount = () => {
         month: "01",
         year: "2000"
     });
-    
     const [isChecked, setIsChecked] = useState(false);
+    //pass state
+    const [showPasswordPopup, setShowPasswordPopup] = useState(false);
     // load info người dùng khi component mount
     useEffect(() => {
         if (!user || !user.id) {
@@ -159,7 +161,7 @@ const UserAccount = () => {
                                     </div>
 
                                     <div className="row mt-3">
-                                        <div className="col-md-6">
+                                        <div className="col-md-6" readOnly>
                                             <label>Tên đăng nhập</label>
                                             <input 
                                             value={userData.username}
@@ -252,11 +254,14 @@ const UserAccount = () => {
                                     </div>
 
                                     {/* Change password */}
-                                    <div className="mt-3">
-                                        <input type="checkbox"
-                                               checked={isChecked}
-                                               onChange={() => setIsChecked(!isChecked)}/>
-                                        <label className="ml-2">Đổi mật khẩu</label>
+                                    <div className="mt-4">
+                                        <button
+                                            type="button"
+                                            className="btn btn-outline-primary"
+                                            onClick={() => setShowPasswordPopup(true)}
+                                        >
+                                            Đổi mật khẩu
+                                        </button>
                                     </div>
 
                                     {isChecked && (
@@ -313,6 +318,13 @@ const UserAccount = () => {
                     </form>
                 </div>
             </div>
+            {/* CHANGE PASS AREA */}
+            {showPasswordPopup && (
+                <ChangePasswordPopup
+                    email={userData.email}
+                    onClose={() => setShowPasswordPopup(false)}
+                />
+            )}
         </>
     );
 };

@@ -2,7 +2,7 @@ import React from "react";
 import {Link ,useNavigate} from "react-router-dom";
 import {changePassword,sendEmail, verifyOtp} from "../../../Store/ApiRequest";
 import { useDispatch } from "react-redux";
-
+import "../../assets/css/sign-in.css";
 
 const ForgotPassword = () => {
     const navigate = useNavigate();
@@ -42,12 +42,12 @@ const ForgotPassword = () => {
         setTimeout(() => {
             navigate("/sign-in");
         }, 2000);
-    } catch (err) {
-        setMessage(err.response?.data || "OTP sai hoặc lỗi");
-    } finally {
-        setLoading(false);
-    }
-};
+        } catch (err) {
+            setMessage(err.response?.data || "OTP sai hoặc lỗi");
+        } finally {
+            setLoading(false);
+        }
+    };
     return (
         <div className="content">
             <div className="container">
@@ -116,16 +116,21 @@ const ForgotPassword = () => {
                                                     required
                                                 />
                                             </div>
-                                            <button
+                                           <button
                                                 type="button"
+                                                className="button_forgot d-block mx-auto mb-3"
+                                                style={{ border: "none" }}
                                                 onClick={handleSendOTP}
                                                 disabled={loading}
                                             >
-                                                Gửi lại OTP
+                                                {loading ? "Đang xử lý..." : "Gửi lại OTP"}
                                             </button>
-                                            <button className="button_forgot d-block mx-auto"
-                                            style={{border: "none"}}
-                                            disabled={loading}
+
+                                            <button
+                                                type="submit"
+                                                className="button_forgot d-block mx-auto"
+                                                style={{ border: "none" }}
+                                                disabled={loading}
                                             >
                                                 {loading ? "Đang xử lý..." : "Đặt lại mật khẩu"}
                                             </button>

@@ -35,7 +35,7 @@ const SingleProduct = ({product,handleAddToCart}) => {
             const user = JSON.parse(localStorage.getItem("user"));
             if (user && user.id && product?.id) {
                 try {
-                    const wishlistData = await api.fetchData("/wishlist");
+                    const wishlistData = await api.fetchData(`/wishlist/${user.id}`);
                     const isFav = (wishlistData || []).some(item => item.product?.id === product.id);
                     setIsFavorite(isFav);
                 } catch (err) {

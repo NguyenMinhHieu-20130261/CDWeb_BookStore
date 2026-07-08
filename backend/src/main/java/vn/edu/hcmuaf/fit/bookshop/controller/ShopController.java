@@ -168,7 +168,7 @@ public class ShopController {
         //     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
         //             .body("Gửi email thất bại");
         // }
-        System.out.println("OTP for " + email + ": " + otp);
+        // System.out.println("OTP for " + email + ": " + otp);
         return ResponseEntity.ok("OTP đã gửi về email");
     }
     @PostMapping("/verify-otp")
@@ -214,8 +214,8 @@ public class ShopController {
         return ResponseEntity.badRequest()
                 .body("OTP đã hết hạn");
         }
-        System.out.println("INPUT OTP: " + otp);
-        System.out.println("DB OTP: " + otpData.get().getOtpCode());
+        // System.out.println("INPUT OTP: " + otp);
+        // System.out.println("DB OTP: " + otpData.get().getOtpCode());
         return ResponseEntity.ok("OTP hợp lệ");
     }
 
@@ -376,5 +376,32 @@ public class ShopController {
         }
 
         return ResponseEntity.status(HttpStatus.CREATED).body("Đăng ký thành công");
+    }
+    // đổi pass
+    @PostMapping("/change-password/send-otp")
+    public ResponseEntity<?> sendChangePasswordOtp(@RequestBody SendEmailRequest req) {
+        String email = req.getEmail();
+
+        User user = userRepository.findByEmail(email).orElse(null);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email không tồn tại");
+        }
+
+        otpVerificationRepository.deleteByUserId(user.getId());
+
+        String otp = String.valueOf((int) (Math.random() * 900000) + 100000);
+        Date otpExpired = new Date(System.currentTimeMillis() + 5 * 60 * 1000);
+
+        OtpVerification otpVerification = OtpVerification.builder()
+                .otpCode(otp)
+                .expiredAt(otpExpired)
+                .user(user)
+                .build();
+
+        otpVerificationRepository.save(otpVerification);
+
+        emailService.sendChangePasswordOTP(user.getEmail(), user.getUsername(), otp);
+
+        return ResponseEntity.ok("OTP đổi mật khẩu đã gửi về email");
     }
 }
