@@ -17,7 +17,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
                         onClick={() => onPageChange(currentPage - 1)}
                         disabled={currentPage === 1}
                     >
-                        Previous
+                    <span>{"<"}</span>
                     </button>
                 </li>
 
@@ -45,7 +45,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
                         onClick={() => onPageChange(currentPage + 1)}
                         disabled={currentPage === totalPages}
                     >
-                        Next
+                        <span>{">"}</span>
                     </button>
                 </li>
             </ul>

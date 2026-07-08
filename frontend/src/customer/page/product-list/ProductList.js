@@ -17,9 +17,10 @@ const ProductList = () => {
 
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize, setPageSize] = useState(20);
-    const totalPages = Math.ceil(products.length / pageSize) || 1;
     const [sortType, setSortType] = useState("default");
 
+    const [showOutOfStock, setShowOutOfStock] = useState(false);
+    const getQuantity = (product) => Number(product?.detail?.quantity ?? 0);
     const getProductPrice = (product) => {
         return Number(product.currentPrice || product.salePrice || product.price || 0);
     };
@@ -48,15 +49,25 @@ const ProductList = () => {
                 return sorted;
         }
     }, [products, sortType]);
+    //stock product
+    const inStockProducts = useMemo(() => {
+        return sortedProducts.filter(product => getQuantity(product) > 0);
+    }, [sortedProducts]);
+
+    const outOfStockProducts = useMemo(() => {
+        return sortedProducts.filter(product => getQuantity(product) <= 0);
+    }, [sortedProducts]);
 
     const pagedProducts = useMemo(() => {
-        if (pageSize === -1) return sortedProducts;
+        if (pageSize === -1) return inStockProducts;
 
         const startIndex = (currentPage - 1) * pageSize;
         const endIndex = startIndex + pageSize;
 
-        return sortedProducts.slice(startIndex, endIndex);
-    }, [sortedProducts, currentPage, pageSize]);
+        return inStockProducts.slice(startIndex, endIndex);
+    }, [inStockProducts, currentPage, pageSize]);
+
+    const totalPages = Math.ceil(inStockProducts.length / pageSize) || 1;
 
     const handlePageChange = (page) => {
         if (page < 1 || page > totalPages) return;
@@ -68,12 +79,15 @@ const ProductList = () => {
     useEffect(() => {
         const fetchProdList = async () => {
             try {
-                let url = "/products/active";
+                let url = "/products?page=0&perPage=1000";
                 if (categoryId) {
                     url = `/products/main-category/${categoryId}`;
                 }
                 const data = await api.fetchData(url);
-                const productList = Array.isArray(data) ? data : data.data || [];
+
+                const productList = Array.isArray(data)
+                    ? data
+                    : data.content || data.data || [];
                 
                 const user = JSON.parse(localStorage.getItem("user"));
                 if (user && user.id) {
@@ -139,7 +153,9 @@ const ProductList = () => {
             console.log("Lỗi thêm vào giỏ hàng:", error);
             alert("Không thể thêm sản phẩm vào giỏ hàng");
         }
-    };
+    };    
+
+
     return (
         <>
             <BreadCrumb/>
@@ -226,6 +242,17 @@ const ProductList = () => {
                                                     <option value={-1}>tất cả sản phẩm</option>
                                                 </select>
                                             </form>
+                                            <div className="ml-md-4 mb-4 m-md-0 d-flex align-items-center">
+                                                <label className="mb-0 d-flex align-items-center" style={{ cursor: "pointer" }}>
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={showOutOfStock}
+                                                        onChange={(e) => setShowOutOfStock(e.target.checked)}
+                                                        style={{ marginRight: "8px" }}
+                                                    />
+                                                    Hiển thị hết hàng
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -233,10 +260,28 @@ const ProductList = () => {
                                     {loading ? (
                                         <p>Đang tải sản phẩm...</p>
                                     ) : (
-                                        <ProductGrid 
-                                            products={pagedProducts} 
-                                            handleAddToCart={handleAddToCart}
-                                        />
+                                        <>
+                                            <ProductGrid
+                                                products={pagedProducts}
+                                                handleAddToCart={handleAddToCart}
+                                            />
+                                            {showOutOfStock && outOfStockProducts.length > 0 && (
+                                                <div className="mt-6">
+                                                    <div className="container p-0">
+                                                        <hr className="my-5" />
+                                                        <h2 className="font-size-7 mb-4">
+                                                            Sản phẩm hết hàng
+                                                        </h2>
+                                                    </div>
+
+                                                    <ProductGrid
+                                                        products={outOfStockProducts}
+                                                        handleAddToCart={handleAddToCart}
+                                                        outOfStock
+                                                    />
+                                                </div>
+                                            )}
+                                        </>
                                     )}
 
                                 </div>

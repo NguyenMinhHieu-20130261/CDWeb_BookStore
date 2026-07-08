@@ -12,14 +12,14 @@ const SingleProduct = ({product,handleAddToCart}) => {
         totalReviews: 0,
     });
     const prodDetail = product.detail;
-    const remainingQuantity = 90;
+    const remainingQuantity = prodDetail?.quantity ?? 0;
 
     const decreaseQuantity = () => {
         setQuantity(prev => Math.max(1, prev - 1));
     };
 
     const increaseQuantity = () => {
-        setQuantity(prev => prev + 1);
+        setQuantity(prev => Math.min(prev + 1, remainingQuantity));
     };
 
     const [popupInfo, setPopupInfo] = useState({
@@ -93,10 +93,15 @@ const SingleProduct = ({product,handleAddToCart}) => {
             setQuantity("");
             return;
         }
-        const numberValue = Number(value);
-        if (!Number.isNaN(numberValue)) {
-            setQuantity(numberValue);
+        let numberValue = Number(value);
+
+        if (Number.isNaN(numberValue)) return;
+        if (numberValue < 1) numberValue = 1;
+
+        if (numberValue > remainingQuantity) {
+            numberValue = remainingQuantity;
         }
+        setQuantity(numberValue);
     };
     const handleBlur = () => {
         if (!quantity || quantity < 1) {

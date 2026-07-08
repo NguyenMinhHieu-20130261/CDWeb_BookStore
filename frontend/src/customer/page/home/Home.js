@@ -4,6 +4,7 @@ import {NewBooks} from "./sub-components/NewBooks";
 import {Advertise} from "./sub-components/Advertise";
 import {Categories} from "./sub-components/Categories";
 import {Features} from "./sub-components/Features";
+import { BestSellingBook } from "./sub-components/BestSellingBook";
 import LoadingPage from "../../components/general/LoadingPage";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
@@ -55,6 +56,12 @@ export const Home = () => {
                             />
                             <NewBooks
                                 handleAddToCart={handleAddToCart}
+                            />
+                            <div className="container">
+                                <hr className="my-5" />
+                            </div>
+                            <BestSellingBook 
+                                handleAddToCart={handleAddToCart} 
                             />
                             <Advertise/>
                             <Categories/>

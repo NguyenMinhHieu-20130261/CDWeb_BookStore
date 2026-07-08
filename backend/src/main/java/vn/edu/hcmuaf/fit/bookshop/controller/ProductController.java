@@ -52,6 +52,15 @@ public class ProductController {
     public List<Product> getTop2MostReviewedProducts() {
         return productService.getTop2MostReviewedProducts();
     }
+    @GetMapping("/best-selling")
+    public ResponseEntity<Page<Product>> getBestSellingProducts(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        return ResponseEntity.ok(
+                productService.getBestSellingProducts(page, size)
+        );
+    }
     //
     @GetMapping
     public ResponseEntity<Page<Product>> getProducts(
