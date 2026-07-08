@@ -82,6 +82,31 @@ public class ReviewServiceImpl implements ReviewService {
         result.put("totalReviews", totalReviews);
         return result;
     }
+    @Override
+    public Review updateUserReview(Integer reviewId, Integer userId, Integer rating, String cmtDetail) {
+        Review review = getReviewById(reviewId);
+
+        if (!review.getUser().getId().equals(userId)) {
+            throw new RuntimeException("Bạn không có quyền sửa đánh giá này");
+        }
+
+        review.setRating(rating);
+        review.setCmtDetail(cmtDetail);
+        review.setUpdatedAt(new java.util.Date());
+
+        return reviewRepo.save(review);
+    }
+
+    @Override
+    public void deleteUserReview(Integer reviewId, Integer userId) {
+        Review review = getReviewById(reviewId);
+
+        if (!review.getUser().getId().equals(userId)) {
+            throw new RuntimeException("Bạn không có quyền xóa đánh giá này");
+        }
+
+        reviewRepo.delete(review);
+    }
 //admin
     @Override
     public Page<Review> getReviews(int page, int perPage, String sort, String filter, String order) {

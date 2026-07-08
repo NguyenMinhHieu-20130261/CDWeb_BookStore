@@ -86,7 +86,7 @@ public class User {
         updatedAt = new Date();
     }
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonIgnoreProperties({"user"})
     private List<Notification> notifications;
 }

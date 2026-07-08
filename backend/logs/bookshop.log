@@ -23058,3 +23058,769 @@ Caused by: java.net.UnknownHostException: mysql.railway.internal
 	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:62)
 	... 134 common frames omitted
 >>>>>>> 77168ddf92786052cd8315ba7d21c647c8a31921
+2026-07-08 21:15:19 INFO  v.e.h.f.b.ShopBackendApplication - Starting ShopBackendApplication using Java 17.0.18 with PID 7492 (C:\Users\MSI\Desktop\CD_WEB\backend\target\classes started by MSI in C:\Users\MSI\Desktop\CD_WEB\backend)
+2026-07-08 21:15:19 DEBUG v.e.h.f.b.ShopBackendApplication - Running with Spring Boot v3.2.6, Spring v6.1.8
+2026-07-08 21:15:19 INFO  v.e.h.f.b.ShopBackendApplication - The following 1 profile is active: "local"
+2026-07-08 21:15:19 INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-07-08 21:15:19 INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-07-08 21:15:19 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-08 21:15:20 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 78 ms. Found 23 JPA repository interfaces.
+2026-07-08 21:15:20 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-08 21:15:20 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-08 21:15:20 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.24]
+2026-07-08 21:15:20 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-07-08 21:15:20 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1126 ms
+2026-07-08 21:15:20 INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-07-08 21:15:20 INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.8.Final
+2026-07-08 21:15:20 INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-07-08 21:15:20 INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-08 21:15:20 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-07-08 21:15:21 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1313355b
+2026-07-08 21:15:21 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-07-08 21:15:21 WARN  org.hibernate.dialect.Dialect - HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+2026-07-08 21:15:21 WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-08 21:15:21 INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-08 21:15:22 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-08 21:15:22 INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-07-08 21:15:22 DEBUG v.e.h.f.bookshop.jwt.AuthTokenFilter - Filter 'authTokenFilter' configured for use
+2026-07-08 21:15:23 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-08 21:15:23 WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: faa1f7eb-2468-4d19-a0c3-a4307009cbc9
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-07-08 21:15:23 INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@2e6bc8, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5562554c, org.springframework.security.web.context.SecurityContextHolderFilter@33b46203, org.springframework.security.web.header.HeaderWriterFilter@51a32c2d, org.springframework.web.filter.CorsFilter@71b9d29d, org.springframework.security.web.authentication.logout.LogoutFilter@71f7e767, vn.edu.hcmuaf.fit.bookshop.jwt.AuthTokenFilter@ad6f7f4, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@49090b86, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5c5c9a15, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1a6bb075, org.springframework.security.web.session.SessionManagementFilter@33c80676, org.springframework.security.web.access.ExceptionTranslationFilter@5567a36d, org.springframework.security.web.access.intercept.AuthorizationFilter@712487b6]
+2026-07-08 21:15:23 INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-07-08 21:15:23 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-07-08 21:15:23 INFO  v.e.h.f.b.ShopBackendApplication - Started ShopBackendApplication in 4.532 seconds (process running for 4.87)
+2026-07-08 21:15:23 DEBUG v.e.h.f.b.s.imp.PromotionServiceImpl - Ki?m tra promotion h?t h?n
+2026-07-08 21:15:24 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-08 21:15:24 INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-07-08 21:15:24 INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2026-07-08 21:15:24 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:15:28 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:15:28 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 5 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:15:28 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:15:28 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 1 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:15:28 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 2 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:15:29 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - Tính t?ng quan ?ánh giá productId=1
+2026-07-08 21:15:29 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - Tính t?ng quan ?ánh giá productId=3
+2026-07-08 21:15:29 INFO  v.e.h.f.b.s.i.FavoriteProductServiceImpl - Fetching favorites for user id 1
+2026-07-08 21:15:29 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - Tính t?ng quan ?ánh giá productId=1
+2026-07-08 21:15:29 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - Tính t?ng quan ?ánh giá productId=3
+2026-07-08 21:15:31 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 5 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:15:31 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 1 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:15:31 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 2 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:15:31 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 5 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:15:31 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 1 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:15:31 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 2 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:15:33 INFO  v.e.h.f.b.s.i.FavoriteProductServiceImpl - Fetching favorites for user id 1
+2026-07-08 21:15:33 INFO  v.e.h.f.b.s.i.FavoriteProductServiceImpl - Fetching favorites for user id 1
+2026-07-08 21:15:38 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:15:47 INFO  v.e.h.f.b.s.i.FavoriteProductServiceImpl - Fetching favorites for user id 1
+2026-07-08 21:15:47 INFO  v.e.h.f.b.s.i.FavoriteProductServiceImpl - Fetching favorites for user id 1
+2026-07-08 21:15:48 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:15:49 INFO  v.e.h.f.b.s.i.FavoriteProductServiceImpl - Fetching favorites for user id 1
+2026-07-08 21:15:49 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - Tính t?ng quan ?ánh giá productId=3
+2026-07-08 21:15:49 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - L?y review productId=3, rating=null, sort=newest
+2026-07-08 21:15:49 INFO  v.e.h.f.b.s.i.FavoriteProductServiceImpl - Fetching favorites for user id 1
+2026-07-08 21:15:49 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - Tính t?ng quan ?ánh giá productId=3
+2026-07-08 21:15:49 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - L?y review productId=3, rating=null, sort=newest
+2026-07-08 21:15:54 ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.RuntimeException: B?n ch? có th? ?ánh giá s?n ph?m sau khi ?ã mua hàng] with root cause
+java.lang.RuntimeException: B?n ch? có th? ?ánh giá s?n ph?m sau khi ?ã mua hàng
+	at vn.edu.hcmuaf.fit.bookshop.service.imp.ReviewServiceImpl.createReview(ReviewServiceImpl.java:42)
+	at vn.edu.hcmuaf.fit.bookshop.controller.ReviewController.createReview(ReviewController.java:64)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:354)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:716)
+	at vn.edu.hcmuaf.fit.bookshop.controller.ReviewController$$SpringCGLIB$$0.createReview(<generated>)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:110)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:231)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:365)
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:100)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:131)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:85)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at vn.edu.hcmuaf.fit.bookshop.jwt.AuthTokenFilter.doFilterInternal(AuthTokenFilter.java:86)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$3(HandlerMappingIntrospector.java:195)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:230)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:352)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:268)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:389)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+2026-07-08 21:15:58 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:16:08 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:16:18 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:16:29 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:16:39 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:16:49 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:16:59 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:17:09 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:17:19 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:17:51 INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-07-08 21:17:51 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-08 21:17:51 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-07-08 21:17:51 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-07-08 21:17:51 INFO  v.e.h.f.b.ShopBackendApplication - Starting ShopBackendApplication using Java 17.0.18 with PID 7492 (C:\Users\MSI\Desktop\CD_WEB\backend\target\classes started by MSI in C:\Users\MSI\Desktop\CD_WEB\backend)
+2026-07-08 21:17:51 DEBUG v.e.h.f.b.ShopBackendApplication - Running with Spring Boot v3.2.6, Spring v6.1.8
+2026-07-08 21:17:51 INFO  v.e.h.f.b.ShopBackendApplication - The following 1 profile is active: "local"
+2026-07-08 21:17:51 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-08 21:17:51 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 36 ms. Found 23 JPA repository interfaces.
+2026-07-08 21:17:51 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-08 21:17:51 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-08 21:17:51 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.24]
+2026-07-08 21:17:51 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-07-08 21:17:51 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 317 ms
+2026-07-08 21:17:51 INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-07-08 21:17:51 INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-07-08 21:17:51 INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-08 21:17:51 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Starting...
+2026-07-08 21:17:51 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Added connection com.mysql.cj.jdbc.ConnectionImpl@b640f44
+2026-07-08 21:17:51 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Start completed.
+2026-07-08 21:17:51 WARN  org.hibernate.dialect.Dialect - HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+2026-07-08 21:17:51 WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-08 21:17:51 INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-08 21:17:51 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-08 21:17:51 DEBUG v.e.h.f.bookshop.jwt.AuthTokenFilter - Filter 'authTokenFilter' configured for use
+2026-07-08 21:17:52 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-08 21:17:52 WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 052b9261-45d1-49c4-9c09-5e1f4dd9f7df
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-07-08 21:17:52 INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@29a78781, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6d7de4c2, org.springframework.security.web.context.SecurityContextHolderFilter@13a424d4, org.springframework.security.web.header.HeaderWriterFilter@747a0062, org.springframework.web.filter.CorsFilter@5fdd62ee, org.springframework.security.web.authentication.logout.LogoutFilter@109a808f, vn.edu.hcmuaf.fit.bookshop.jwt.AuthTokenFilter@1f290862, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2c2b836d, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@8f6ff9a, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7b93d3f1, org.springframework.security.web.session.SessionManagementFilter@1ba63a04, org.springframework.security.web.access.ExceptionTranslationFilter@6d9a5558, org.springframework.security.web.access.intercept.AuthorizationFilter@5fef60a4]
+2026-07-08 21:17:52 INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-07-08 21:17:52 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-07-08 21:17:52 DEBUG v.e.h.f.b.s.imp.PromotionServiceImpl - Ki?m tra promotion h?t h?n
+2026-07-08 21:17:52 INFO  v.e.h.f.b.ShopBackendApplication - Started ShopBackendApplication in 1.328 seconds (process running for 153.725)
+2026-07-08 21:17:52 INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2026-07-08 21:17:57 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-08 21:17:57 INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-07-08 21:17:57 INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-07-08 21:17:57 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:17:58 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:18:01 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:18:01 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 5 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:18:01 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 1 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:18:01 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:18:01 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 2 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:18:01 INFO  v.e.h.f.b.s.i.FavoriteProductServiceImpl - Fetching favorites for user id 1
+2026-07-08 21:18:01 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - Tính t?ng quan ?ánh giá productId=3
+2026-07-08 21:18:01 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - L?y review productId=3, rating=null, sort=newest
+2026-07-08 21:18:01 INFO  v.e.h.f.b.s.i.FavoriteProductServiceImpl - Fetching favorites for user id 1
+2026-07-08 21:18:01 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - Tính t?ng quan ?ánh giá productId=3
+2026-07-08 21:18:01 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - L?y review productId=3, rating=null, sort=newest
+2026-07-08 21:18:11 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:18:22 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:18:32 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:18:42 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:18:52 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:19:02 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:19:12 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:20:12 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:20:52 DEBUG v.e.h.f.b.s.imp.ProductServiceImpl - Admin l?y danh sách s?n ph?m: page=0, size=10, filter=
+2026-07-08 21:20:54 DEBUG v.e.h.f.b.s.imp.CategoryServiceImpl - Admin l?y danh sách danh m?c: page=0, perPage=10, sort=id, order=DESC, filter={}
+2026-07-08 21:20:55 DEBUG v.e.h.f.b.s.imp.InventoryServiceImpl - L?y danh sách lô hàng: q=null, active=null, stockStatus=null
+2026-07-08 21:20:55 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - Admin l?y danh sách review: page=0, perPage=10, sort=createdAt, order=ASC, filter=
+2026-07-08 21:21:06 INFO  v.e.h.f.b.s.imp.OrderServiceImpl - Admin c?p nh?t ??n 22
+2026-07-08 21:21:06 INFO  v.e.h.f.b.s.i.NotificationServiceImpl - T?o notification cho userId=3, type=ORDER, title=Shop ?ã ph?n h?i ??n hàng
+2026-07-08 21:21:06 INFO  v.e.h.f.b.s.i.NotificationServiceImpl - Notification 13 ?ã ???c t?o cho userId=3
+2026-07-08 21:21:06 INFO  v.e.h.f.b.s.imp.OrderServiceImpl - ??n 22 ?ã ???c c?p nh?t
+2026-07-08 21:21:12 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:21:14 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - Admin l?y danh sách review: page=0, perPage=10, sort=createdAt, order=ASC, filter=
+2026-07-08 21:21:16 DEBUG v.e.h.f.b.s.imp.InventoryServiceImpl - L?y danh sách lô hàng: q=null, active=null, stockStatus=null
+2026-07-08 21:21:23 DEBUG v.e.h.f.b.s.imp.ProductServiceImpl - Admin l?y danh sách s?n ph?m: page=0, size=10, filter=
+2026-07-08 21:21:55 INFO  v.e.h.f.b.s.imp.OrderServiceImpl - Admin c?p nh?t ??n 21
+2026-07-08 21:21:55 INFO  v.e.h.f.b.s.i.NotificationServiceImpl - T?o notification cho userId=3, type=ORDER, title=Shop ?ã ph?n h?i ??n hàng
+2026-07-08 21:21:55 INFO  v.e.h.f.b.s.i.NotificationServiceImpl - Notification 14 ?ã ???c t?o cho userId=3
+2026-07-08 21:21:55 INFO  v.e.h.f.b.s.imp.OrderServiceImpl - ??n 21 ?ã ???c c?p nh?t
+2026-07-08 21:21:59 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:22:01 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 5 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:22:01 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 1 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:22:01 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 2 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:22:01 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 5 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:22:01 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 1 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:22:01 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 2 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:22:01 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:22:04 DEBUG v.e.h.f.b.s.imp.AddressServiceImpl - L?y danh sách ??a ch? c?a userId=1
+2026-07-08 21:22:04 DEBUG v.e.h.f.b.s.imp.AddressServiceImpl - L?y danh sách ??a ch? c?a userId=1
+2026-07-08 21:22:10 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:22:10 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 5 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:22:10 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 1 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:22:10 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:22:10 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 2 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:22:21 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:22:31 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:22:41 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:22:51 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:22:59 INFO  v.e.h.f.b.s.imp.OrderServiceImpl - Admin c?p nh?t ??n 20
+2026-07-08 21:22:59 INFO  v.e.h.f.b.s.i.NotificationServiceImpl - T?o notification cho userId=1, type=ORDER, title=Shop ?ã ph?n h?i ??n hàng
+2026-07-08 21:22:59 INFO  v.e.h.f.b.s.i.NotificationServiceImpl - Notification 15 ?ã ???c t?o cho userId=1
+2026-07-08 21:22:59 INFO  v.e.h.f.b.s.imp.OrderServiceImpl - ??n 20 ?ã ???c c?p nh?t
+2026-07-08 21:23:01 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:23:04 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:23:04 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 5 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:23:04 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:23:04 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 1 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:23:04 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 2 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:23:10 INFO  v.e.h.f.b.s.i.FavoriteProductServiceImpl - Fetching favorites for user id 1
+2026-07-08 21:23:10 INFO  v.e.h.f.b.s.i.FavoriteProductServiceImpl - Fetching favorites for user id 1
+2026-07-08 21:23:12 INFO  v.e.h.f.b.s.i.FavoriteProductServiceImpl - Fetching favorites for user id 1
+2026-07-08 21:23:12 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - Tính t?ng quan ?ánh giá productId=1
+2026-07-08 21:23:12 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - L?y review productId=1, rating=null, sort=newest
+2026-07-08 21:23:12 INFO  v.e.h.f.b.s.i.FavoriteProductServiceImpl - Fetching favorites for user id 1
+2026-07-08 21:23:12 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - Tính t?ng quan ?ánh giá productId=1
+2026-07-08 21:23:12 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - L?y review productId=1, rating=null, sort=newest
+2026-07-08 21:23:14 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:23:24 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:23:34 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:23:44 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:23:54 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:24:04 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:24:14 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:24:24 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:24:53 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:24:54 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:25:04 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:25:06 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - L?y review productId=1, rating=null, sort=newest
+2026-07-08 21:25:14 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:25:24 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:25:34 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:25:44 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:25:54 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:26:04 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:26:14 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:26:24 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:26:34 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:26:53 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:26:53 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - L?y review productId=1, rating=null, sort=newest
+2026-07-08 21:26:53 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - L?y review productId=1, rating=null, sort=newest
+2026-07-08 21:26:54 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:27:04 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:27:14 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:27:24 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:27:34 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:27:44 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:27:54 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:28:04 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:28:14 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:28:24 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:28:34 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:28:44 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:28:54 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:29:04 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:29:12 INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-07-08 21:29:12 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-08 21:29:12 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Shutdown initiated...
+2026-07-08 21:29:12 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Shutdown completed.
+2026-07-08 21:29:12 INFO  v.e.h.f.b.ShopBackendApplication - Starting ShopBackendApplication using Java 17.0.18 with PID 7492 (C:\Users\MSI\Desktop\CD_WEB\backend\target\classes started by MSI in C:\Users\MSI\Desktop\CD_WEB\backend)
+2026-07-08 21:29:12 DEBUG v.e.h.f.b.ShopBackendApplication - Running with Spring Boot v3.2.6, Spring v6.1.8
+2026-07-08 21:29:12 INFO  v.e.h.f.b.ShopBackendApplication - The following 1 profile is active: "local"
+2026-07-08 21:29:12 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-08 21:29:12 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 34 ms. Found 23 JPA repository interfaces.
+2026-07-08 21:29:13 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-08 21:29:13 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-08 21:29:13 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.24]
+2026-07-08 21:29:13 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-07-08 21:29:13 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 359 ms
+2026-07-08 21:29:13 INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-07-08 21:29:13 INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-07-08 21:29:13 INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-08 21:29:13 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Starting...
+2026-07-08 21:29:13 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-3 - Added connection com.mysql.cj.jdbc.ConnectionImpl@18795e79
+2026-07-08 21:29:13 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Start completed.
+2026-07-08 21:29:13 WARN  org.hibernate.dialect.Dialect - HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+2026-07-08 21:29:13 WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-08 21:29:13 INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-08 21:29:13 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-08 21:29:13 DEBUG v.e.h.f.bookshop.jwt.AuthTokenFilter - Filter 'authTokenFilter' configured for use
+2026-07-08 21:29:14 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-08 21:29:14 WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: a7e6f61d-aaf0-4af6-ac88-5ef683e359db
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-07-08 21:29:14 INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@1b951e79, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@984d94, org.springframework.security.web.context.SecurityContextHolderFilter@49bb7538, org.springframework.security.web.header.HeaderWriterFilter@54101b78, org.springframework.web.filter.CorsFilter@fc608ba, org.springframework.security.web.authentication.logout.LogoutFilter@3be40e59, vn.edu.hcmuaf.fit.bookshop.jwt.AuthTokenFilter@6b6cfc94, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@48bf4b2f, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1c20429b, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4b0098df, org.springframework.security.web.session.SessionManagementFilter@75654eb, org.springframework.security.web.access.ExceptionTranslationFilter@8912292, org.springframework.security.web.access.intercept.AuthorizationFilter@179a731e]
+2026-07-08 21:29:14 INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-07-08 21:29:14 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-07-08 21:29:14 DEBUG v.e.h.f.b.s.imp.PromotionServiceImpl - Ki?m tra promotion h?t h?n
+2026-07-08 21:29:14 INFO  v.e.h.f.b.ShopBackendApplication - Started ShopBackendApplication in 1.523 seconds (process running for 835.516)
+2026-07-08 21:29:14 INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2026-07-08 21:29:14 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-08 21:29:14 INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-07-08 21:29:14 INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-07-08 21:29:14 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:29:24 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:29:29 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 5 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:29:29 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 1 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:29:29 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 2 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:29:29 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 5 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:29:29 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 1 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:29:29 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 2 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:29:34 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:29:34 INFO  v.e.h.f.b.s.i.NotificationServiceImpl - ?ánh d?u notification 15 ?ã ??c
+2026-07-08 21:29:34 INFO  v.e.h.f.b.s.i.NotificationServiceImpl - Notification 15 ?ã ???c ?ánh d?u ?ã ??c
+2026-07-08 21:29:38 INFO  v.e.h.f.b.s.i.FavoriteProductServiceImpl - Fetching favorites for user id 1
+2026-07-08 21:29:38 INFO  v.e.h.f.b.s.i.FavoriteProductServiceImpl - Fetching favorites for user id 1
+2026-07-08 21:29:39 INFO  v.e.h.f.b.s.i.FavoriteProductServiceImpl - Fetching favorites for user id 1
+2026-07-08 21:29:41 INFO  v.e.h.f.b.s.i.FavoriteProductServiceImpl - Fetching favorites for user id 1
+2026-07-08 21:29:41 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - Tính t?ng quan ?ánh giá productId=3
+2026-07-08 21:29:41 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - L?y review productId=3, rating=null, sort=newest
+2026-07-08 21:29:41 INFO  v.e.h.f.b.s.i.FavoriteProductServiceImpl - Fetching favorites for user id 1
+2026-07-08 21:29:41 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - Tính t?ng quan ?ánh giá productId=3
+2026-07-08 21:29:41 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - L?y review productId=3, rating=null, sort=newest
+2026-07-08 21:29:44 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:29:54 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:30:04 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:30:14 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:30:24 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:30:34 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:30:44 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:30:54 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:31:12 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:32:12 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:33:12 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:33:25 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - L?y review productId=3, rating=null, sort=newest
+2026-07-08 21:33:25 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:33:34 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:33:44 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:33:54 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:34:04 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:34:14 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:34:15 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - L?y review productId=3, rating=null, sort=newest
+2026-07-08 21:34:15 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - L?y review productId=3, rating=null, sort=newest
+2026-07-08 21:34:24 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:34:34 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:35:12 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:36:06 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - L?y review productId=3, rating=null, sort=newest
+2026-07-08 21:36:08 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:36:13 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:36:13 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 5 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:36:13 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 1 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:36:13 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:36:13 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 2 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:36:13 INFO  v.e.h.f.b.s.i.FavoriteProductServiceImpl - Fetching favorites for user id 1
+2026-07-08 21:36:13 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - L?y review productId=3, rating=null, sort=newest
+2026-07-08 21:36:13 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - Tính t?ng quan ?ánh giá productId=3
+2026-07-08 21:36:13 INFO  v.e.h.f.b.s.i.FavoriteProductServiceImpl - Fetching favorites for user id 1
+2026-07-08 21:36:13 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - Tính t?ng quan ?ánh giá productId=3
+2026-07-08 21:36:13 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - L?y review productId=3, rating=null, sort=newest
+2026-07-08 21:36:24 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:36:34 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:36:44 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:36:54 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:37:04 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:37:14 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:37:24 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:37:53 INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 2 class path changes (0 additions, 0 deletions, 2 modifications)
+2026-07-08 21:37:53 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-08 21:37:53 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Shutdown initiated...
+2026-07-08 21:37:53 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Shutdown completed.
+2026-07-08 21:37:53 INFO  v.e.h.f.b.ShopBackendApplication - Starting ShopBackendApplication using Java 17.0.18 with PID 7492 (C:\Users\MSI\Desktop\CD_WEB\backend\target\classes started by MSI in C:\Users\MSI\Desktop\CD_WEB\backend)
+2026-07-08 21:37:53 DEBUG v.e.h.f.b.ShopBackendApplication - Running with Spring Boot v3.2.6, Spring v6.1.8
+2026-07-08 21:37:53 INFO  v.e.h.f.b.ShopBackendApplication - The following 1 profile is active: "local"
+2026-07-08 21:37:53 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-08 21:37:53 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 36 ms. Found 23 JPA repository interfaces.
+2026-07-08 21:37:53 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-08 21:37:53 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-08 21:37:53 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.24]
+2026-07-08 21:37:54 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-07-08 21:37:54 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 381 ms
+2026-07-08 21:37:54 INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-07-08 21:37:54 INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-07-08 21:37:54 INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-08 21:37:54 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-4 - Starting...
+2026-07-08 21:37:54 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-4 - Added connection com.mysql.cj.jdbc.ConnectionImpl@59d1453f
+2026-07-08 21:37:54 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-4 - Start completed.
+2026-07-08 21:37:54 WARN  org.hibernate.dialect.Dialect - HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+2026-07-08 21:37:54 WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-08 21:37:54 INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-08 21:37:54 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-08 21:37:54 DEBUG v.e.h.f.bookshop.jwt.AuthTokenFilter - Filter 'authTokenFilter' configured for use
+2026-07-08 21:37:54 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-08 21:37:54 WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 98cbf37a-d43c-40a1-9495-54381a626239
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-07-08 21:37:54 INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@51fe8dc8, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6c05c544, org.springframework.security.web.context.SecurityContextHolderFilter@1a64358b, org.springframework.security.web.header.HeaderWriterFilter@59dce99f, org.springframework.web.filter.CorsFilter@45a11dd8, org.springframework.security.web.authentication.logout.LogoutFilter@a7ac27, vn.edu.hcmuaf.fit.bookshop.jwt.AuthTokenFilter@33c7d07c, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@b8f323d, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@35a1a2c2, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2c13559a, org.springframework.security.web.session.SessionManagementFilter@37f7218c, org.springframework.security.web.access.ExceptionTranslationFilter@438a4e14, org.springframework.security.web.access.intercept.AuthorizationFilter@4ac473ed]
+2026-07-08 21:37:55 INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-07-08 21:37:55 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-07-08 21:37:55 DEBUG v.e.h.f.b.s.imp.PromotionServiceImpl - Ki?m tra promotion h?t h?n
+2026-07-08 21:37:55 INFO  v.e.h.f.b.ShopBackendApplication - Started ShopBackendApplication in 1.423 seconds (process running for 1356.237)
+2026-07-08 21:37:55 INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2026-07-08 21:38:12 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-08 21:38:12 INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-07-08 21:38:12 INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-07-08 21:38:12 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:38:19 INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-07-08 21:38:19 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-08 21:38:19 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-4 - Shutdown initiated...
+2026-07-08 21:38:19 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-4 - Shutdown completed.
+2026-07-08 21:38:19 INFO  v.e.h.f.b.ShopBackendApplication - Starting ShopBackendApplication using Java 17.0.18 with PID 7492 (C:\Users\MSI\Desktop\CD_WEB\backend\target\classes started by MSI in C:\Users\MSI\Desktop\CD_WEB\backend)
+2026-07-08 21:38:19 DEBUG v.e.h.f.b.ShopBackendApplication - Running with Spring Boot v3.2.6, Spring v6.1.8
+2026-07-08 21:38:19 INFO  v.e.h.f.b.ShopBackendApplication - The following 1 profile is active: "local"
+2026-07-08 21:38:19 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-08 21:38:19 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 54 ms. Found 23 JPA repository interfaces.
+2026-07-08 21:38:19 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-08 21:38:19 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-08 21:38:19 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.24]
+2026-07-08 21:38:19 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-07-08 21:38:19 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 354 ms
+2026-07-08 21:38:19 INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-07-08 21:38:19 INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-07-08 21:38:19 INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-08 21:38:19 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-5 - Starting...
+2026-07-08 21:38:19 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-5 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7cdea3cf
+2026-07-08 21:38:19 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-5 - Start completed.
+2026-07-08 21:38:19 WARN  org.hibernate.dialect.Dialect - HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+2026-07-08 21:38:19 WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-08 21:38:19 INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-08 21:38:20 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-08 21:38:20 DEBUG v.e.h.f.bookshop.jwt.AuthTokenFilter - Filter 'authTokenFilter' configured for use
+2026-07-08 21:38:20 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-08 21:38:20 WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 6a258237-8a4d-4fe3-a32b-5dd82586160e
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-07-08 21:38:20 INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@702e7920, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@77c26b94, org.springframework.security.web.context.SecurityContextHolderFilter@7e59c330, org.springframework.security.web.header.HeaderWriterFilter@1a32aabf, org.springframework.web.filter.CorsFilter@54ff28f7, org.springframework.security.web.authentication.logout.LogoutFilter@9d1c746, vn.edu.hcmuaf.fit.bookshop.jwt.AuthTokenFilter@30339ba7, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@78aeceaa, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7746f452, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1384fd05, org.springframework.security.web.session.SessionManagementFilter@868d82b, org.springframework.security.web.access.ExceptionTranslationFilter@61ece3a2, org.springframework.security.web.access.intercept.AuthorizationFilter@4720039e]
+2026-07-08 21:38:20 INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-07-08 21:38:20 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-07-08 21:38:20 DEBUG v.e.h.f.b.s.imp.PromotionServiceImpl - Ki?m tra promotion h?t h?n
+2026-07-08 21:38:20 INFO  v.e.h.f.b.ShopBackendApplication - Started ShopBackendApplication in 1.354 seconds (process running for 1381.969)
+2026-07-08 21:38:20 INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2026-07-08 21:38:22 INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-07-08 21:38:22 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-08 21:38:22 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-5 - Shutdown initiated...
+2026-07-08 21:38:22 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-5 - Shutdown completed.
+2026-07-08 21:38:22 INFO  v.e.h.f.b.ShopBackendApplication - Starting ShopBackendApplication using Java 17.0.18 with PID 7492 (C:\Users\MSI\Desktop\CD_WEB\backend\target\classes started by MSI in C:\Users\MSI\Desktop\CD_WEB\backend)
+2026-07-08 21:38:22 DEBUG v.e.h.f.b.ShopBackendApplication - Running with Spring Boot v3.2.6, Spring v6.1.8
+2026-07-08 21:38:22 INFO  v.e.h.f.b.ShopBackendApplication - The following 1 profile is active: "local"
+2026-07-08 21:38:22 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-08 21:38:22 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 38 ms. Found 23 JPA repository interfaces.
+2026-07-08 21:38:22 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-08 21:38:22 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-08 21:38:22 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.24]
+2026-07-08 21:38:22 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-07-08 21:38:22 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 302 ms
+2026-07-08 21:38:22 INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-07-08 21:38:22 INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-07-08 21:38:22 INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-08 21:38:22 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-6 - Starting...
+2026-07-08 21:38:22 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-6 - Added connection com.mysql.cj.jdbc.ConnectionImpl@13a6c101
+2026-07-08 21:38:22 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-6 - Start completed.
+2026-07-08 21:38:22 WARN  org.hibernate.dialect.Dialect - HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+2026-07-08 21:38:22 WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-08 21:38:22 INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-08 21:38:22 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-08 21:38:22 DEBUG v.e.h.f.bookshop.jwt.AuthTokenFilter - Filter 'authTokenFilter' configured for use
+2026-07-08 21:38:23 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-08 21:38:23 WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 89034903-239a-496f-95aa-906bd14f943c
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-07-08 21:38:23 INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@2a911f23, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1ea9f859, org.springframework.security.web.context.SecurityContextHolderFilter@1f262a39, org.springframework.security.web.header.HeaderWriterFilter@4aefc10, org.springframework.web.filter.CorsFilter@427e2b01, org.springframework.security.web.authentication.logout.LogoutFilter@667a4ed6, vn.edu.hcmuaf.fit.bookshop.jwt.AuthTokenFilter@1463c19e, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3aa1f7e8, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@491cd2d0, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1f9a4329, org.springframework.security.web.session.SessionManagementFilter@23445f5d, org.springframework.security.web.access.ExceptionTranslationFilter@2080a459, org.springframework.security.web.access.intercept.AuthorizationFilter@7cf429be]
+2026-07-08 21:38:23 INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-07-08 21:38:23 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-07-08 21:38:23 DEBUG v.e.h.f.b.s.imp.PromotionServiceImpl - Ki?m tra promotion h?t h?n
+2026-07-08 21:38:23 INFO  v.e.h.f.b.ShopBackendApplication - Started ShopBackendApplication in 1.25 seconds (process running for 1384.699)
+2026-07-08 21:38:23 INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2026-07-08 21:38:41 INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 3 class path changes (0 additions, 0 deletions, 3 modifications)
+2026-07-08 21:38:41 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-08 21:38:41 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-6 - Shutdown initiated...
+2026-07-08 21:38:41 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-6 - Shutdown completed.
+2026-07-08 21:38:41 INFO  v.e.h.f.b.ShopBackendApplication - Starting ShopBackendApplication using Java 17.0.18 with PID 7492 (C:\Users\MSI\Desktop\CD_WEB\backend\target\classes started by MSI in C:\Users\MSI\Desktop\CD_WEB\backend)
+2026-07-08 21:38:41 DEBUG v.e.h.f.b.ShopBackendApplication - Running with Spring Boot v3.2.6, Spring v6.1.8
+2026-07-08 21:38:41 INFO  v.e.h.f.b.ShopBackendApplication - The following 1 profile is active: "local"
+2026-07-08 21:38:41 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-08 21:38:41 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 35 ms. Found 23 JPA repository interfaces.
+2026-07-08 21:38:41 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-08 21:38:41 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-08 21:38:41 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.24]
+2026-07-08 21:38:41 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-07-08 21:38:41 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 350 ms
+2026-07-08 21:38:41 INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-07-08 21:38:41 INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-07-08 21:38:41 INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-08 21:38:41 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-7 - Starting...
+2026-07-08 21:38:41 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-7 - Added connection com.mysql.cj.jdbc.ConnectionImpl@f90f8ff
+2026-07-08 21:38:41 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-7 - Start completed.
+2026-07-08 21:38:41 WARN  org.hibernate.dialect.Dialect - HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+2026-07-08 21:38:41 WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-08 21:38:42 INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-08 21:38:42 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-08 21:38:42 DEBUG v.e.h.f.bookshop.jwt.AuthTokenFilter - Filter 'authTokenFilter' configured for use
+2026-07-08 21:38:42 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-08 21:38:42 WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: ab5ec3da-d2c2-40f0-8bd6-a27ec513a573
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-07-08 21:38:42 INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5a63b225, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7ddf9ed5, org.springframework.security.web.context.SecurityContextHolderFilter@cdb1779, org.springframework.security.web.header.HeaderWriterFilter@5347af50, org.springframework.web.filter.CorsFilter@688d7766, org.springframework.security.web.authentication.logout.LogoutFilter@7a7bbc00, vn.edu.hcmuaf.fit.bookshop.jwt.AuthTokenFilter@5673c6c5, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4b30b45, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6ae009ac, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@298c7313, org.springframework.security.web.session.SessionManagementFilter@46a04976, org.springframework.security.web.access.ExceptionTranslationFilter@598a2d5a, org.springframework.security.web.access.intercept.AuthorizationFilter@cc9b13d]
+2026-07-08 21:38:42 INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-07-08 21:38:42 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-07-08 21:38:42 DEBUG v.e.h.f.b.s.imp.PromotionServiceImpl - Ki?m tra promotion h?t h?n
+2026-07-08 21:38:42 INFO  v.e.h.f.b.ShopBackendApplication - Started ShopBackendApplication in 1.431 seconds (process running for 1404.061)
+2026-07-08 21:38:42 INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2026-07-08 21:38:44 INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 2 class path changes (0 additions, 0 deletions, 2 modifications)
+2026-07-08 21:38:44 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-08 21:38:44 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-7 - Shutdown initiated...
+2026-07-08 21:38:44 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-7 - Shutdown completed.
+2026-07-08 21:38:44 INFO  v.e.h.f.b.ShopBackendApplication - Starting ShopBackendApplication using Java 17.0.18 with PID 7492 (C:\Users\MSI\Desktop\CD_WEB\backend\target\classes started by MSI in C:\Users\MSI\Desktop\CD_WEB\backend)
+2026-07-08 21:38:44 DEBUG v.e.h.f.b.ShopBackendApplication - Running with Spring Boot v3.2.6, Spring v6.1.8
+2026-07-08 21:38:44 INFO  v.e.h.f.b.ShopBackendApplication - The following 1 profile is active: "local"
+2026-07-08 21:38:44 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-08 21:38:44 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 44 ms. Found 23 JPA repository interfaces.
+2026-07-08 21:38:45 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-08 21:38:45 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-08 21:38:45 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.24]
+2026-07-08 21:38:45 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-07-08 21:38:45 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 393 ms
+2026-07-08 21:38:45 INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-07-08 21:38:45 INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-07-08 21:38:45 INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-08 21:38:45 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-8 - Starting...
+2026-07-08 21:38:45 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-8 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1538bd11
+2026-07-08 21:38:45 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-8 - Start completed.
+2026-07-08 21:38:45 WARN  org.hibernate.dialect.Dialect - HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+2026-07-08 21:38:45 WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-08 21:38:45 INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-08 21:38:45 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-08 21:38:45 DEBUG v.e.h.f.bookshop.jwt.AuthTokenFilter - Filter 'authTokenFilter' configured for use
+2026-07-08 21:38:46 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-08 21:38:46 WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: d0d729d1-3426-4cf1-9fee-9875ce6ba22f
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-07-08 21:38:46 INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4cfa00a, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@68b3f1fe, org.springframework.security.web.context.SecurityContextHolderFilter@6aad900c, org.springframework.security.web.header.HeaderWriterFilter@15b2aa0c, org.springframework.web.filter.CorsFilter@548fe90e, org.springframework.security.web.authentication.logout.LogoutFilter@2199b13c, vn.edu.hcmuaf.fit.bookshop.jwt.AuthTokenFilter@1af120a3, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@242cb3e7, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@244e9fa4, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2098a5cf, org.springframework.security.web.session.SessionManagementFilter@7edfa417, org.springframework.security.web.access.ExceptionTranslationFilter@460109cf, org.springframework.security.web.access.intercept.AuthorizationFilter@30088d75]
+2026-07-08 21:38:46 INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-07-08 21:38:46 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-07-08 21:38:46 DEBUG v.e.h.f.b.s.imp.PromotionServiceImpl - Ki?m tra promotion h?t h?n
+2026-07-08 21:38:46 INFO  v.e.h.f.b.ShopBackendApplication - Started ShopBackendApplication in 1.664 seconds (process running for 1407.656)
+2026-07-08 21:38:46 INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2026-07-08 21:38:46 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-08 21:38:46 INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-07-08 21:38:46 INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2026-07-08 21:38:46 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:38:51 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - L?y review id=6
+2026-07-08 21:38:52 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - L?y review productId=3, rating=null, sort=newest
+2026-07-08 21:38:53 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:38:55 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - L?y review id=6
+2026-07-08 21:38:55 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - L?y review productId=3, rating=null, sort=newest
+2026-07-08 21:38:58 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:38:58 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 5 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:38:58 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:38:58 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 1 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:38:58 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 2 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:38:58 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - L?y review productId=3, rating=null, sort=newest
+2026-07-08 21:38:58 INFO  v.e.h.f.b.s.i.FavoriteProductServiceImpl - Fetching favorites for user id 1
+2026-07-08 21:38:58 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - Tính t?ng quan ?ánh giá productId=3
+2026-07-08 21:38:58 INFO  v.e.h.f.b.s.i.FavoriteProductServiceImpl - Fetching favorites for user id 1
+2026-07-08 21:38:58 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - Tính t?ng quan ?ánh giá productId=3
+2026-07-08 21:38:58 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - L?y review productId=3, rating=null, sort=newest
+2026-07-08 21:39:01 WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: failed to lazily initialize a collection of role: vn.edu.hcmuaf.fit.bookshop.entity.User.notifications: could not initialize proxy - no Session]
+2026-07-08 21:39:08 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:39:13 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:39:13 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 5 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:39:13 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 1 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:39:13 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:39:13 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 2 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:39:13 INFO  v.e.h.f.b.s.i.FavoriteProductServiceImpl - Fetching favorites for user id 1
+2026-07-08 21:39:13 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - Tính t?ng quan ?ánh giá productId=3
+2026-07-08 21:39:13 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - L?y review productId=3, rating=null, sort=newest
+2026-07-08 21:39:13 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - Tính t?ng quan ?ánh giá productId=3
+2026-07-08 21:39:13 INFO  v.e.h.f.b.s.i.FavoriteProductServiceImpl - Fetching favorites for user id 1
+2026-07-08 21:39:13 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - L?y review productId=3, rating=null, sort=newest
+2026-07-08 21:39:23 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:39:23 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - L?y review id=39
+2026-07-08 21:39:23 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - L?y review productId=3, rating=null, sort=newest
+2026-07-08 21:39:28 WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: failed to lazily initialize a collection of role: vn.edu.hcmuaf.fit.bookshop.entity.User.notifications: could not initialize proxy - no Session]
+2026-07-08 21:39:34 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:39:41 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:39:41 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 5 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:39:41 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 1 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:39:41 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:39:41 DEBUG v.e.h.f.b.s.imp.CartServiceImpl - Product 2 có 1 ?nh trong gi? hàng user 1
+2026-07-08 21:39:41 INFO  v.e.h.f.b.s.i.FavoriteProductServiceImpl - Fetching favorites for user id 1
+2026-07-08 21:39:41 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - Tính t?ng quan ?ánh giá productId=3
+2026-07-08 21:39:41 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - L?y review productId=3, rating=null, sort=newest
+2026-07-08 21:39:41 INFO  v.e.h.f.b.s.i.FavoriteProductServiceImpl - Fetching favorites for user id 1
+2026-07-08 21:39:41 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - Tính t?ng quan ?ánh giá productId=3
+2026-07-08 21:39:41 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - L?y review productId=3, rating=null, sort=newest
+2026-07-08 21:39:52 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:40:02 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:40:12 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:40:22 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:40:32 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:40:42 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:40:50 INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 2 class path changes (0 additions, 0 deletions, 2 modifications)
+2026-07-08 21:40:50 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-08 21:40:50 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-8 - Shutdown initiated...
+2026-07-08 21:40:50 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-8 - Shutdown completed.
+2026-07-08 21:40:50 INFO  v.e.h.f.b.ShopBackendApplication - Starting ShopBackendApplication using Java 17.0.18 with PID 7492 (C:\Users\MSI\Desktop\CD_WEB\backend\target\classes started by MSI in C:\Users\MSI\Desktop\CD_WEB\backend)
+2026-07-08 21:40:50 DEBUG v.e.h.f.b.ShopBackendApplication - Running with Spring Boot v3.2.6, Spring v6.1.8
+2026-07-08 21:40:50 INFO  v.e.h.f.b.ShopBackendApplication - The following 1 profile is active: "local"
+2026-07-08 21:40:50 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-08 21:40:50 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 32 ms. Found 23 JPA repository interfaces.
+2026-07-08 21:40:50 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-08 21:40:50 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-08 21:40:50 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.24]
+2026-07-08 21:40:50 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-07-08 21:40:50 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 305 ms
+2026-07-08 21:40:50 INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-07-08 21:40:50 INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-07-08 21:40:50 INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-08 21:40:50 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-9 - Starting...
+2026-07-08 21:40:50 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-9 - Added connection com.mysql.cj.jdbc.ConnectionImpl@40a5768c
+2026-07-08 21:40:50 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-9 - Start completed.
+2026-07-08 21:40:50 WARN  org.hibernate.dialect.Dialect - HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+2026-07-08 21:40:50 WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-08 21:40:50 INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-08 21:40:50 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-08 21:40:50 DEBUG v.e.h.f.bookshop.jwt.AuthTokenFilter - Filter 'authTokenFilter' configured for use
+2026-07-08 21:40:51 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-08 21:40:51 WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 7c5a217b-6dbd-4c9a-83be-0d9690f7d4d8
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-07-08 21:40:51 INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@597c35f5, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@40526fef, org.springframework.security.web.context.SecurityContextHolderFilter@13b052f5, org.springframework.security.web.header.HeaderWriterFilter@1d83c756, org.springframework.web.filter.CorsFilter@69c119d2, org.springframework.security.web.authentication.logout.LogoutFilter@32456e43, vn.edu.hcmuaf.fit.bookshop.jwt.AuthTokenFilter@37b24bf1, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5364c121, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@50de156c, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4848f037, org.springframework.security.web.session.SessionManagementFilter@282b6eb3, org.springframework.security.web.access.ExceptionTranslationFilter@2dfdbd27, org.springframework.security.web.access.intercept.AuthorizationFilter@6788d401]
+2026-07-08 21:40:51 INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-07-08 21:40:51 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-07-08 21:40:51 DEBUG v.e.h.f.b.s.imp.PromotionServiceImpl - Ki?m tra promotion h?t h?n
+2026-07-08 21:40:51 INFO  v.e.h.f.b.ShopBackendApplication - Started ShopBackendApplication in 1.346 seconds (process running for 1532.805)
+2026-07-08 21:40:51 INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2026-07-08 21:40:52 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-08 21:40:52 INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-07-08 21:40:52 INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2026-07-08 21:40:52 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:41:12 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:41:18 INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-07-08 21:41:18 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-08 21:41:18 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-9 - Shutdown initiated...
+2026-07-08 21:41:18 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-9 - Shutdown completed.
+2026-07-08 21:41:18 INFO  v.e.h.f.b.ShopBackendApplication - Starting ShopBackendApplication using Java 17.0.18 with PID 7492 (C:\Users\MSI\Desktop\CD_WEB\backend\target\classes started by MSI in C:\Users\MSI\Desktop\CD_WEB\backend)
+2026-07-08 21:41:18 DEBUG v.e.h.f.b.ShopBackendApplication - Running with Spring Boot v3.2.6, Spring v6.1.8
+2026-07-08 21:41:18 INFO  v.e.h.f.b.ShopBackendApplication - The following 1 profile is active: "local"
+2026-07-08 21:41:18 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-08 21:41:18 INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 48 ms. Found 23 JPA repository interfaces.
+2026-07-08 21:41:18 INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-07-08 21:41:18 INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-07-08 21:41:18 INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.24]
+2026-07-08 21:41:18 INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-07-08 21:41:18 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 283 ms
+2026-07-08 21:41:18 INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-07-08 21:41:18 INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-07-08 21:41:18 INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-08 21:41:18 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-10 - Starting...
+2026-07-08 21:41:18 INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-10 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5de2a201
+2026-07-08 21:41:18 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-10 - Start completed.
+2026-07-08 21:41:18 WARN  org.hibernate.dialect.Dialect - HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+2026-07-08 21:41:18 WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-08 21:41:19 INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-08 21:41:19 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-08 21:41:19 DEBUG v.e.h.f.bookshop.jwt.AuthTokenFilter - Filter 'authTokenFilter' configured for use

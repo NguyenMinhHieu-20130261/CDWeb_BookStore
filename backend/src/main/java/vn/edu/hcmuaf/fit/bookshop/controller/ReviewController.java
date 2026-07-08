@@ -46,24 +46,58 @@ public class ReviewController {
             @RequestBody Map<String, Object> body,
             Authentication authentication
     ) {
-        Integer productId = Integer.valueOf(body.get("productId").toString());
+        try {
+            Integer productId = Integer.valueOf(body.get("productId").toString());
+            Integer rating = Integer.valueOf(body.get("rating").toString());
+            String cmtDetail = body.get("cmtDetail").toString();
+
+            User user = (User) authentication.getPrincipal();
+
+            Product product = prodRepo.findById(productId)
+                    .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm"));
+
+            Review review = new Review();
+            review.setUser(user);
+            review.setProduct(product);
+            review.setRating(rating);
+            review.setCmtDetail(cmtDetail);
+
+            Review saved = reviewService.createReview(review);
+
+            return ResponseEntity.ok(saved);
+
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "message", e.getMessage()
+            ));
+        }
+    }
+    @PutMapping("/user/{id}")
+    public ResponseEntity<?> updateMyReview(
+            @PathVariable Integer id,
+            @RequestBody Map<String, Object> body,
+            Authentication authentication
+    ) {
+        User user = (User) authentication.getPrincipal();
+
         Integer rating = Integer.valueOf(body.get("rating").toString());
         String cmtDetail = body.get("cmtDetail").toString();
 
+        Review updated = reviewService.updateUserReview(id, user.getId(), rating, cmtDetail);
+
+        return ResponseEntity.ok(updated);
+    }
+
+    @DeleteMapping("/user/{id}")
+    public ResponseEntity<?> deleteMyReview(
+            @PathVariable Integer id,
+            Authentication authentication
+    ) {
         User user = (User) authentication.getPrincipal();
 
-        Product product = prodRepo.findById(productId)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm"));
+        reviewService.deleteUserReview(id, user.getId());
 
-        Review review = new Review();
-        review.setUser(user);
-        review.setProduct(product);
-        review.setRating(rating);
-        review.setCmtDetail(cmtDetail);
-
-        Review saved = reviewService.createReview(review);
-
-        return ResponseEntity.ok(saved);
+        return ResponseEntity.ok("Xóa đánh giá thành công");
     }
     //admin
     @GetMapping

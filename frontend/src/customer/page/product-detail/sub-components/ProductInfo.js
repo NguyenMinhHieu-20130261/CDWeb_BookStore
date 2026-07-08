@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {Link} from "react-router-dom";
 import api from "../../../../service/ApiService.js";
+import WindowPopup from "../../../components/general/WindowPopup.js";
 
 const ProductInfo = ({product}) => {
     const prodDetail = product.detail;
@@ -15,9 +16,20 @@ const ProductInfo = ({product}) => {
     const [submitting, setSubmitting] = useState(false);
     const [reviewError, setReviewError] = useState("");
 
+    const [editingReviewId, setEditingReviewId] = useState(null);
+    const [editComment, setEditComment] = useState("");
+    const [editRating, setEditRating] = useState(5);
+
     const user = JSON.parse(localStorage.getItem("user"));
     const isLoggedIn = !!user;
-    
+
+    const [popupInfo,setPopupInfo] = useState({
+        visible:false,
+        type:"",
+        title:"",
+        message:""
+    });
+
     const fetchReviews = async () => {
         try {
             let url = `/reviews/product/${product.id}?sort=${sortReview}`;
@@ -54,7 +66,18 @@ const ProductInfo = ({product}) => {
             await fetchReviews();
             // console.log("REVIEWS:", rating);
         } catch (error) {
-            console.error("Lỗi gửi review:", error);
+            const message =
+            error.response?.data?.message ||
+            error.response?.data ||
+            "Gửi đánh giá thất bại";
+
+            console.log("Lỗi gửi review:", message);
+            setPopupInfo({
+                visible: true,
+                type: "error",
+                title: "Thất bại",
+                message: message
+            });
             if (error.response?.status === 401 || error.response?.status === 403) {
                 setReviewError("Bạn cần đăng nhập để viết đánh giá.");
             } else {
@@ -96,34 +119,88 @@ const ProductInfo = ({product}) => {
             </span>
         ));
     };
+    //edit review
+    const isOwnerReview = (review) => {
+        return Number(review.user?.id) === Number(user?.id);
+    };
+
+    const handleStartEdit = (review) => {
+        setEditingReviewId(review.id);
+        setEditComment(review.cmtDetail || "");
+        setEditRating(review.rating || 5);
+    };
+
+    const handleCancelEdit = () => {
+        setEditingReviewId(null);
+        setEditComment("");
+        setEditRating(5);
+    };
+
+    const handleUpdateReview = async (reviewId) => {
+        try {
+            await api.updateData(`/reviews/user/${reviewId}`, {
+                rating: Number(editRating),
+                cmtDetail: editComment.trim(),
+            });
+
+            setPopupInfo({
+                visible: true,
+                type: "success",
+                title: "Thành công",
+                message: "Cập nhật đánh giá thành công"
+            });
+
+            handleCancelEdit();
+            await fetchReviews();
+        } catch (error) {
+            setPopupInfo({
+                visible: true,
+                type: "error",
+                title: "Thất bại",
+                message: error.response?.data?.message || "Không thể cập nhật đánh giá"
+            });
+        }
+    };
+
+    const handleDeleteReview = async (reviewId) => {
+        if (!window.confirm("Bạn có chắc muốn xóa đánh giá này?")) return;
+
+        try {
+            await api.deleteData(`/reviews/user/${reviewId}`);
+
+            setPopupInfo({
+                visible: true,
+                type: "success",
+                title: "Thành công",
+                message: "Xóa đánh giá thành công"
+            });
+
+            await fetchReviews();
+        } catch (error) {
+            setPopupInfo({
+                visible: true,
+                type: "error",
+                title: "Thất bại",
+                message: error.response?.data?.message || "Không thể xóa đánh giá"
+            });
+        }
+    };
+    const hidePopup = () => {
+        setPopupInfo(prev=>({
+            ...prev,
+            visible:false
+        }));
+    };
     return (
         <div className="woocommerce-tabs wc-tabs-wrapper mx-lg-auto">
             <div className="classic-nav">
-                {/*<ul className="tabs wc-tabs nav container justify-content-md-center flex-nowrap flex-md-wrap overflow-auto overflow-md-visble"*/}
-                {/*    role="tablist">*/}
-                {/*    <li className="description_tab flex-shrink-0 flex-md-shrink-1 nav-item" id="tab-title-description"*/}
-                {/*        role="tab" aria-controls="tab-description">*/}
-                {/*        <a href="product-detail#tab-description" className="nav-link font-weight-medium py-4">*/}
-                {/*            Description </a>*/}
-                {/*    </li>*/}
-                {/*    <li className="additional_information_tab flex-shrink-0 flex-md-shrink-1 nav-item"*/}
-                {/*        id="tab-title-additional_information" role="tab" aria-controls="tab-additional_information">*/}
-                {/*        <a href="product-detail#tab-additional_information"*/}
-                {/*           className="nav-link font-weight-medium py-4">*/}
-                {/*            Product Details </a>*/}
-                {/*    </li>*/}
-                {/*    <li className="videos_tab flex-shrink-0 flex-md-shrink-1 nav-item" id="tab-title-videos" role="tab"*/}
-                {/*        aria-controls="tab-videos">*/}
-                {/*        <a href="product-detail#tab-videos" className="nav-link font-weight-medium py-4">*/}
-                {/*            Videos </a>*/}
-                {/*    </li>*/}
-                {/*    <li className="reviews_tab flex-shrink-0 flex-md-shrink-1 nav-item" id="tab-title-reviews"*/}
-                {/*        role="tab" aria-controls="tab-reviews">*/}
-                {/*        <a href="product-detail#tab-reviews" className="nav-link font-weight-medium py-4">*/}
-                {/*            Reviews (1) </a>*/}
-                {/*    </li>*/}
-                {/*</ul>*/}
-                {/*<div className="tab-content">*/}
+                <WindowPopup
+                    visible={popupInfo.visible}
+                    type={popupInfo.type}
+                    title={popupInfo.title}
+                    message={popupInfo.message}
+                    onClose={hidePopup}
+                />
                 <div
                     className="border p-3 my-4 woocommerce-Tabs-panel woocommerce-Tabs-panel--description panel entry-content wc-tab font-size-2"
                     id="tab-description" role="tabpanel" aria-labelledby="tab-title-description">
@@ -312,39 +389,72 @@ const ProductInfo = ({product}) => {
                                         key={review.id}
                                         className="review byuser even thread-even depth-1 mb-4 pb-5 border-bottom"
                                     >
-                                        <div className="comment_container">
-                                            <div className="comment-text">
-                                                <div className="d-md-flex align-items-center mb-3">
-                                                    <h6 className="mb-0 mr-3">
-                                                        {review.fullName || review.username || "Người dùng"}
-                                                    </h6>
-                                                    <div>
-                                                        {renderStars(review.rating)}
-                                                    </div>
-                                                </div>
-
-                                                <div className="description mb-4 text-lh-md">
-                                                    <p>{review.cmtDetail}</p>
-                                                </div>
-
-                                                <div className="text-gray-600">
-                                                    {review.createdAt || "Không rõ thời gian"}
-                                                </div>
-
-                                                {review.reply && (
-                                                    <div className="admin-reply mt-3 p-3 bg-light rounded" style={{ marginLeft: '24px', borderLeft: '3px solid #1e88e5' }}>
-                                                        <div className="d-flex align-items-center mb-1">
-                                                            <h6 className="mb-0 text-primary mr-2" style={{ fontWeight: 'bold', fontSize: '0.9rem' }}>
-                                                                Phản hồi từ cửa hàng
-                                                            </h6>
-                                                        </div>
-                                                        <div className="reply-content text-lh-md text-dark font-size-2">
-                                                            <p className="mb-0">{review.reply}</p>
-                                                        </div>
-                                                    </div>
-                                                )}
+                                        <div className="d-md-flex align-items-center mb-3 justify-content-between">
+                                            <div className="d-flex align-items-center">
+                                                <h6 className="mb-0 mr-3">
+                                                    {review.user?.userInformation?.fullName || review.user?.username || "Người dùng"}
+                                                </h6>
+                                                <div>{renderStars(review.rating)}</div>
                                             </div>
+
+                                            {isOwnerReview(review) && (
+                                                <div>
+                                                    <button
+                                                        className="btn btn-sm btn-outline-primary mr-2"
+                                                        onClick={() => handleStartEdit(review)}
+                                                    >
+                                                        Sửa
+                                                    </button>
+                                                    <button
+                                                        className="btn btn-sm btn-outline-danger"
+                                                        onClick={() => handleDeleteReview(review.id)}
+                                                    >
+                                                        Xóa
+                                                    </button>
+                                                </div>
+                                            )}
                                         </div>
+
+                                        {editingReviewId === review.id ? (
+                                            <div className="mb-4">
+                                                <select
+                                                    className="form-control mb-2"
+                                                    value={editRating}
+                                                    onChange={(e) => setEditRating(e.target.value)}
+                                                >
+                                                    <option value="5">5 sao</option>
+                                                    <option value="4">4 sao</option>
+                                                    <option value="3">3 sao</option>
+                                                    <option value="2">2 sao</option>
+                                                    <option value="1">1 sao</option>
+                                                </select>
+
+                                                <textarea
+                                                    className="form-control mb-2"
+                                                    rows="3"
+                                                    value={editComment}
+                                                    onChange={(e) => setEditComment(e.target.value)}
+                                                />
+
+                                                <button
+                                                    className="btn btn-sm btn-primary mr-2"
+                                                    onClick={() => handleUpdateReview(review.id)}
+                                                >
+                                                    Lưu
+                                                </button>
+
+                                                <button
+                                                    className="btn btn-sm btn-secondary"
+                                                    onClick={handleCancelEdit}
+                                                >
+                                                    Hủy
+                                                </button>
+                                            </div>
+                                        ) : (
+                                            <div className="description mb-4 text-lh-md">
+                                                <p>{review.cmtDetail}</p>
+                                            </div>
+                                        )}
                                     </li>
                                 ))
                             ) : (
