@@ -3,6 +3,7 @@ package vn.edu.hcmuaf.fit.bookshop.service;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -55,9 +56,11 @@ public class EmailService {
 
             mailSender.send(message);
             return true;
-
+            
         } catch (MessagingException e) {
             throw new RuntimeException("Không thể tạo email HTML", e);
+        } catch (MailException e) {
+            throw new RuntimeException("Không thể kết nối/gửi SMTP", e);
         }
     }
     //pass mail
