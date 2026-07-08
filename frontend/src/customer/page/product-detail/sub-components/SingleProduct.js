@@ -35,7 +35,7 @@ const SingleProduct = ({product,handleAddToCart}) => {
             const user = JSON.parse(localStorage.getItem("user"));
             if (user && user.id && product?.id) {
                 try {
-                    const wishlistData = await api.fetchData("/wishlist");
+                    const wishlistData = await api.fetchData(`/wishlist/${user.id}`);
                     const isFav = (wishlistData || []).some(item => item.product?.id === product.id);
                     setIsFavorite(isFav);
                 } catch (err) {
@@ -253,7 +253,7 @@ const SingleProduct = ({product,handleAddToCart}) => {
                                     <i className="fa-solid fa-cart-shopping" />
                                     {remainingQuantity === 0 ? "hết hàng" : "thêm vào giỏ hàng"}
                                 </button>
-                                <button
+                                {/* <button
                                     type="button"
                                     disabled={remainingQuantity === 0}
                                     className="buy_now_btn"
@@ -261,7 +261,7 @@ const SingleProduct = ({product,handleAddToCart}) => {
                                 >
                                     <i className="fa-solid fa-wallet" />
                                     mua ngay
-                                </button>
+                                </button> */}
                             </div>
 
                             <div className="add-wishlist-button mt-4">

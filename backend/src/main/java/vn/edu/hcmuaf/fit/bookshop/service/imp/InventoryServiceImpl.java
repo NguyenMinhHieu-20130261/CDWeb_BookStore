@@ -11,7 +11,9 @@ import vn.edu.hcmuaf.fit.bookshop.dto.inventory.InventoryCreateRequest;
 import vn.edu.hcmuaf.fit.bookshop.dto.inventory.InventoryItemRequest;
 import vn.edu.hcmuaf.fit.bookshop.entity.Inventory;
 import vn.edu.hcmuaf.fit.bookshop.entity.Product;
+import vn.edu.hcmuaf.fit.bookshop.entity.ProductDetail;
 import vn.edu.hcmuaf.fit.bookshop.repository.InventoryRepo;
+import vn.edu.hcmuaf.fit.bookshop.repository.ProductDetailRepo;
 import vn.edu.hcmuaf.fit.bookshop.repository.ProductRepo;
 import vn.edu.hcmuaf.fit.bookshop.service.InventoryService;
 import vn.edu.hcmuaf.fit.bookshop.service.SystemLogService;
@@ -31,6 +33,9 @@ public class InventoryServiceImpl implements InventoryService {
 
     @Autowired
     private ProductRepo productRepo;
+
+    @Autowired
+    private ProductDetailRepo productDetailRepo;
     
     @Autowired
     private SystemLogService systemLogService;
@@ -161,7 +166,14 @@ public class InventoryServiceImpl implements InventoryService {
             inventory.setActive(true);
             inventory.setNote(item.getNote());
             Inventory saved = inventoryRepo.save(inventory);
+            //cập nhật tồn kho product
+            ProductDetail detail = product.getDetail();
+            if (detail == null) {
+                throw new RuntimeException("Sản phẩm chưa có ProductDetail: " + product.getId());
+            }
 
+            detail.setQuantity(detail.getQuantity() + item.getQuantity());
+            productDetailRepo.save(detail);
             log.info(
                 "Tạo lô hàng thành công: id={}, batchCode={}",
                 saved.getId(),

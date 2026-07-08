@@ -13,8 +13,8 @@ export const ProductsInWishlist = () => {
             try {
                 const user = JSON.parse(localStorage.getItem("user"));
                 if (user && user.id) {
-                    const data = await api.fetchData("/wishlist");
-                    const products = (data || []).map(item => ({
+                        const data = await api.fetchData(`/wishlist/${user.id}`);                    
+                        const products = (data || []).map(item => ({
                         ...item.product,
                         favorite: true
                     }));

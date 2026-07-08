@@ -668,3 +668,31 @@ select.pdw {
     color: #333;
     font-weight: 500;
 }
+/* change pass */
+.password-popup-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.45);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.password-popup {
+    width: 430px;
+    max-width: 92%;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    position: relative;
+}
+
+.password-popup-close {
+    position: absolute;
+    top: 8px;
+    right: 14px;
+    border: none;
+    background: transparent;
+    font-size: 30px;
+}

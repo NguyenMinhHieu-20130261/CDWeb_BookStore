@@ -2,221 +2,155 @@ package vn.edu.hcmuaf.fit.bookshop.service;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
+import org.springframework.web.client.RestTemplate;
 
 @Service
 public class EmailService {
 
-    @Autowired
-    private JavaMailSender mailSender;
+    // @Autowired
+    // private JavaMailSender mailSender;
+
+    @Value("${brevo.api-key}")
+    private String brevoApiKey;
+
+    @Value("${brevo.sender-email}")
+    private String senderEmail;
+
+    @Value("${brevo.sender-name}")
+    private String senderName;
+
+    private final RestTemplate restTemplate = new RestTemplate();
+
+    private boolean sendEmail(String toEmail, String subject, String htmlContent) {
+        String url = "https://api.brevo.com/v3/smtp/email";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("api-key", brevoApiKey);
+
+        Map<String, Object> sender = new HashMap<>();
+        sender.put("name", senderName);
+        sender.put("email", senderEmail);
+
+        Map<String, Object> to = new HashMap<>();
+        to.put("email", toEmail);
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("sender", sender);
+        body.put("to", List.of(to));
+        body.put("subject", subject);
+        body.put("htmlContent", htmlContent);
+
+        try {
+            ResponseEntity<String> response = restTemplate.postForEntity(
+                    url,
+                    new HttpEntity<>(body, headers),
+                    String.class
+            );
+
+            return response.getStatusCode().is2xxSuccessful();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Không thể gửi mail qua Brevo API: " + e.getMessage(), e);
+        }
+    }
     //pass otp
     public boolean sendOTP(String toEmail, String otp) {
-        try {
-            MimeMessage message = mailSender.createMimeMessage();
-
-            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-            helper.setTo(toEmail);
-            helper.setSubject("Mã OTP đặt lại mật khẩu GoldLeaf");
-
-            String html = """
-                <div style="font-family: Arial, sans-serif; background:#f6f7fb; padding:30px;">
-                    <div style="max-width:520px; margin:auto; background:white; border-radius:14px; padding:28px; box-shadow:0 4px 18px rgba(0,0,0,0.08);">
-                        <h2 style="color:#2f5d3a; margin-top:0;">GoldLeaf BookStore</h2>
-
-                        <p style="font-size:16px; color:#333;">
-                            Bạn đang yêu cầu đặt lại mật khẩu.
-                        </p>
-
-                        <p style="font-size:15px; color:#555;">
-                            Mã OTP của bạn là:
-                        </p>
-
-                        <div style="font-size:32px; font-weight:bold; letter-spacing:6px; color:#2f5d3a; background:#eef7f0; padding:16px; text-align:center; border-radius:10px;">
-                            %s
-                        </div>
-
-                        <p style="font-size:14px; color:#666; margin-top:24px;">
-                            Mã này có hiệu lực trong 5 phút. Không chia sẻ mã này với người khác.
-                        </p>
-
-                        <hr style="border:none; border-top:1px solid #eee; margin:24px 0;">
-
-                        <p style="font-size:12px; color:#999;">
-                            Nếu bạn không yêu cầu đặt lại mật khẩu, hãy bỏ qua email này.
-                        </p>
+        String html = """
+            <div style="font-family: Arial, sans-serif; background:#f6f7fb; padding:30px;">
+                <div style="max-width:520px; margin:auto; background:white; border-radius:14px; padding:28px;">
+                    <h2 style="color:#2f5d3a;">GoldLeaf BookStore</h2>
+                    <p>Bạn đang yêu cầu đặt lại mật khẩu.</p>
+                    <p>Mã OTP của bạn là:</p>
+                    <div style="font-size:32px; font-weight:bold; letter-spacing:6px; color:#2f5d3a; background:#eef7f0; padding:16px; text-align:center; border-radius:10px;">
+                        %s
                     </div>
+                    <p>Mã này có hiệu lực trong 5 phút. Không chia sẻ mã này với người khác.</p>
                 </div>
-                """.formatted(otp);
+            </div>
+            """.formatted(otp);
 
-            helper.setText(html, true);
-
-            mailSender.send(message);
-            return true;
-
-        } catch (MessagingException e) {
-            throw new RuntimeException("Không thể tạo email HTML", e);
-        }
+        return sendEmail(toEmail, "Mã OTP đặt lại mật khẩu GoldLeaf", html);
     }
-    //pass mail
+    //forgot pass
     public boolean sendPasswordChanged(String toEmail, String username) {
-        try {
-            MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-
-            helper.setTo(toEmail);
-            helper.setSubject("Mật khẩu GoldLeaf đã được thay đổi");
-
-            String html = """
-                <div style="font-family:Arial,sans-serif;background:#f6f7fb;padding:30px;">
-                    <div style="max-width:540px;margin:auto;background:white;
-                                border-radius:14px;padding:30px;
-                                box-shadow:0 4px 18px rgba(0,0,0,0.08);">
-
-                        <h2 style="color:#2f5d3a;margin-top:0;">
-                            Đổi mật khẩu thành công
-                        </h2>
-
-                        <p style="font-size:16px;color:#333;">
-                            Xin chào <b>%s</b>,
-                        </p>
-
-                        <p style="font-size:15px;color:#555;">
-                            Mật khẩu tài khoản GoldLeaf của bạn đã được thay đổi thành công.
-                        </p>
-
-                        <div style="background:#eef7f0;
-                                    padding:16px;
-                                    border-radius:10px;
-                                    margin:20px 0;">
-
-                            <b>Email:</b> %s
-                        </div>
-
-                        <p style="font-size:14px;color:#666;">
-                            Nếu chính bạn thực hiện thao tác này thì không cần làm gì thêm.
-                        </p>
-
-                        <div style="background:#fff3cd;
-                                    border-left:4px solid #ffc107;
-                                    padding:14px;
-                                    margin-top:18px;">
-
-                            <b>Không phải bạn?</b><br>
-                            Hãy đăng nhập và đổi mật khẩu ngay hoặc liên hệ quản trị viên.
-                        </div>
-
-                        <hr style="margin:28px 0;">
-
-                        <p style="font-size:12px;color:#999;">
-                            GoldLeaf BookStore - Cảm ơn bạn đã sử dụng dịch vụ.
-                        </p>
-
-                    </div>
+        String html = """
+            <div style="font-family:Arial,sans-serif;background:#f6f7fb;padding:30px;">
+                <div style="max-width:540px;margin:auto;background:white;border-radius:14px;padding:30px;">
+                    <h2 style="color:#2f5d3a;">Đổi mật khẩu thành công</h2>
+                    <p>Xin chào <b>%s</b>,</p>
+                    <p>Mật khẩu tài khoản GoldLeaf của bạn đã được thay đổi thành công.</p>
+                    <p><b>Email:</b> %s</p>
                 </div>
-                """.formatted(username, toEmail);
+            </div>
+            """.formatted(username, toEmail);
 
-            helper.setText(html, true);
-
-            mailSender.send(message);
-            return true;
-
-        } catch (MessagingException e) {
-            throw new RuntimeException("Không gửi được email", e);
-        }
+        return sendEmail(toEmail, "Mật khẩu GoldLeaf đã được thay đổi", html);
     }
-    //register otp
+    //register
     public boolean sendRegisterOTP(String toEmail, String otp) {
-        try {
-            MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-
-            helper.setTo(toEmail);
-            helper.setSubject("Xác thực đăng ký tài khoản GoldLeaf");
-
-            String html = """
-                <div style="font-family:Arial,sans-serif;background:#f6f7fb;padding:30px;">
-                    <div style="max-width:520px;margin:auto;background:white;border-radius:14px;padding:28px;box-shadow:0 4px 18px rgba(0,0,0,0.08);">
-                        <h2 style="color:#2f5d3a;margin-top:0;">GoldLeaf BookStore</h2>
-
-                        <p style="font-size:16px;color:#333;">
-                            Cảm ơn bạn đã đăng ký tài khoản tại GoldLeaf.
-                        </p>
-
-                        <p style="font-size:15px;color:#555;">
-                            Vui lòng nhập mã OTP bên dưới để hoàn tất đăng ký:
-                        </p>
-
-                        <div style="font-size:32px;font-weight:bold;letter-spacing:6px;color:#2f5d3a;background:#eef7f0;padding:16px;text-align:center;border-radius:10px;">
-                            %s
-                        </div>
-
-                        <p style="font-size:14px;color:#666;margin-top:24px;">
-                            Mã OTP có hiệu lực trong 5 phút.
-                        </p>
-
-                        <p style="font-size:12px;color:#999;margin-top:24px;">
-                            Nếu bạn không thực hiện đăng ký, hãy bỏ qua email này.
-                        </p>
+        String html = """
+            <div style="font-family:Arial,sans-serif;background:#f6f7fb;padding:30px;">
+                <div style="max-width:520px;margin:auto;background:white;border-radius:14px;padding:28px;">
+                    <h2 style="color:#2f5d3a;">GoldLeaf BookStore</h2>
+                    <p>Cảm ơn bạn đã đăng ký tài khoản tại GoldLeaf.</p>
+                    <p>Vui lòng nhập mã OTP bên dưới để hoàn tất đăng ký:</p>
+                    <div style="font-size:32px;font-weight:bold;letter-spacing:6px;color:#2f5d3a;background:#eef7f0;padding:16px;text-align:center;border-radius:10px;">
+                        %s
                     </div>
+                    <p>Mã OTP có hiệu lực trong 5 phút.</p>
                 </div>
-                """.formatted(otp);
+            </div>
+            """.formatted(otp);
 
-            helper.setText(html, true);
-            mailSender.send(message);
-            return true;
-
-        } catch (MessagingException e) {
-            throw new RuntimeException("Không thể gửi OTP đăng ký", e);
-        }
+        return sendEmail(toEmail, "Xác thực đăng ký tài khoản GoldLeaf", html);
     }
-    //register mail
+    //register success
     public boolean sendRegisterSuccess(String toEmail, String username) {
-        try {
-            MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-
-            helper.setTo(toEmail);
-            helper.setSubject("Chào mừng bạn đến với GoldLeaf BookStore");
-
-            String html = """
-                <div style="font-family:Arial,sans-serif;background:#f6f7fb;padding:30px;">
-                    <div style="max-width:540px;margin:auto;background:white;border-radius:14px;padding:30px;box-shadow:0 4px 18px rgba(0,0,0,0.08);">
-                        <h2 style="color:#2f5d3a;margin-top:0;">Đăng ký thành công</h2>
-
-                        <p style="font-size:16px;color:#333;">
-                            Xin chào <b>%s</b>,
-                        </p>
-
-                        <p style="font-size:15px;color:#555;">
-                            Tài khoản GoldLeaf BookStore của bạn đã được tạo thành công.
-                        </p>
-
-                        <div style="background:#eef7f0;padding:16px;border-radius:10px;margin:22px 0;">
-                            <p style="margin:0;color:#2f5d3a;font-weight:bold;">
-                                Email đăng ký: %s
-                            </p>
-                        </div>
-
-                        <p style="font-size:14px;color:#666;">
-                            Bây giờ bạn có thể đăng nhập để mua sách, theo dõi đơn hàng và nhận ưu đãi mới nhất.
-                        </p>
-
-                        <p style="font-size:13px;color:#999;margin-top:24px;">
-                            Cảm ơn bạn đã sử dụng GoldLeaf!
-                        </p>
-                    </div>
+        String html = """
+            <div style="font-family:Arial,sans-serif;background:#f6f7fb;padding:30px;">
+                <div style="max-width:540px;margin:auto;background:white;border-radius:14px;padding:30px;">
+                    <h2 style="color:#2f5d3a;">Đăng ký thành công</h2>
+                    <p>Xin chào <b>%s</b>,</p>
+                    <p>Tài khoản GoldLeaf BookStore của bạn đã được tạo thành công.</p>
+                    <p><b>Email đăng ký:</b> %s</p>
                 </div>
-                """.formatted(username, toEmail);
+            </div>
+            """.formatted(username, toEmail);
 
-            helper.setText(html, true);
-            mailSender.send(message);
-            return true;
+        return sendEmail(toEmail, "Chào mừng bạn đến với GoldLeaf BookStore", html);
+    }
+    //change pass user 
+    public boolean sendChangePasswordOTP(String toEmail, String username, String otp) {
+        String html = """
+            <div style="font-family:Arial,sans-serif;background:#f6f7fb;padding:30px;">
+                <div style="max-width:540px;margin:auto;background:white;border-radius:14px;padding:30px;">
+                    <h2 style="color:#2f5d3a;">GoldLeaf BookStore</h2>
+                    <p>Xin chào <b>%s</b>,</p>
+                    <p>Bạn đang yêu cầu đổi mật khẩu tài khoản.</p>
+                    <p>Mã OTP của bạn là:</p>
+                    <div style="font-size:32px;font-weight:bold;letter-spacing:6px;color:#2f5d3a;background:#eef7f0;padding:16px;text-align:center;border-radius:10px;">
+                        %s
+                    </div>
+                    <p>Mã này có hiệu lực trong 5 phút.</p>
+                </div>
+            </div>
+            """.formatted(username, otp);
 
-        } catch (MessagingException e) {
-            throw new RuntimeException("Không thể gửi email đăng ký thành công", e);
-        }
+        return sendEmail(toEmail, "Mã OTP đổi mật khẩu GoldLeaf", html);
     }
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate,Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Breadcrumb from "../../components/general/Breadcrumb";
 import LeftSideBar from "../user-account/sub-components/LeftSideBar";
@@ -10,7 +10,7 @@ import LoadingPage from "../../components/general/LoadingPage";
 import WindowPopup from "../../components/general/WindowPopup";
 
 const UserAddress = () => {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const [addresses, setAddresses] = useState([]);
     const [loading, setLoading] = useState(true);
     const [popupInfo,setPopupInfo] = useState({

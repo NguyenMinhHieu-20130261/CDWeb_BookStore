@@ -12,6 +12,8 @@ import vn.edu.hcmuaf.fit.bookshop.repository.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
+
+import vn.edu.hcmuaf.fit.bookshop.service.NotificationService;
 import vn.edu.hcmuaf.fit.bookshop.service.OrderService;
 import vn.edu.hcmuaf.fit.bookshop.service.SystemLogService;
 
@@ -35,9 +37,14 @@ public class OrderServiceImpl implements OrderService {
     private final AddressRepo addressRepo;
     private final OrderStatusRepo orderStatusRepo;
     private final org.springframework.jdbc.core.JdbcTemplate jdbcTemplate;
-    
+    private final ProductDetailRepo productDetailRepo;
+    private final InventoryRepo inventoryRepo;
+
     @Autowired
     private SystemLogService systemLogService;
+
+    @Autowired
+    private NotificationService notificationService;
 
     @jakarta.annotation.PostConstruct
     public void init() {
@@ -162,18 +169,68 @@ public class OrderServiceImpl implements OrderService {
         for (Cart item : cartItems) {
             Product product = item.getProduct();
             int qty = item.getQuantity();
+
+            ProductDetail productDetail = product.getDetail();
+            if (productDetail == null) {
+                throw new RuntimeException("Sản phẩm chưa có thông tin tồn kho: " + product.getTitle());
+            }
+
+            if (productDetail.getQuantity() < qty) {
+                throw new RuntimeException("Sản phẩm " + product.getTitle() + " không đủ số lượng trong kho");
+            }
+
+            // trừ tồn kho theo lô FIFO
+            List<Inventory> inventories =
+                    inventoryRepo.findByProductIdAndActiveTrueOrderByImportedAtAsc(product.getId());
+
+            int remainingToDeduct = qty;
+
+            for (Inventory inventory : inventories) {
+                if (remainingToDeduct == 0) break;
+
+                if (inventory.getRemainingQuantity() <= 0) continue;
+
+                int deduct = Math.min(remainingToDeduct, inventory.getRemainingQuantity());
+
+                inventory.setRemainingQuantity(inventory.getRemainingQuantity() - deduct);
+                inventoryRepo.save(inventory);
+
+                remainingToDeduct -= deduct;
+            }
+
+            if (remainingToDeduct > 0) {
+                throw new RuntimeException("Không đủ tồn kho theo lô cho sản phẩm: " + product.getTitle());
+            }
+            // trừ tồn tổng
+            productDetail.setQuantity(productDetail.getQuantity() - qty);
+            productDetailRepo.save(productDetail);
+            
             OrderDetail detail = new OrderDetail(order, product, qty);
             orderDetails.add(detail);
 
             orderTotal += product.getCurrentPrice() * qty;
             totalQuantity += qty;
         }
-
+        
         order.setOrderDetails(orderDetails);
         order.setOrderTotal(orderTotal);
         order.setTotalQuantity(totalQuantity);
 
         Order savedOrder = orderRepo.save(order);
+        //notify
+        notificationService.createForUser(
+            user.getId(),
+            NotificationType.ORDER,
+            "Đặt hàng thành công",
+            "Đơn hàng " + savedOrder.getOrderCode() + " đã được tạo thành công",
+            "/user/order/" + savedOrder.getId()
+        );
+        notificationService.createBroadcast(
+            NotificationType.ORDER,
+            "Có đơn hàng mới",
+            "User " + user.getUsername() + " vừa đặt đơn " + savedOrder.getOrderCode(),
+            "/admin/order/" + savedOrder.getId()
+        );
         log.info(
             "Đơn hàng {} được tạo thành công, tổng tiền={}, số lượng={}",
             savedOrder.getOrderCode(),
@@ -207,7 +264,9 @@ public class OrderServiceImpl implements OrderService {
         );
         Order order = orderRepo.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn hàng"));
-        
+        if ("cancelled".equals(order.getStatus().getSlug())) {
+            return order;
+        }
         if (!order.getUser().getId().equals(userId)) {
             throw new RuntimeException("Bạn không có quyền hủy đơn hàng này");
         }
@@ -218,9 +277,44 @@ public class OrderServiceImpl implements OrderService {
 
         OrderStatus cancelledStatus = orderStatusRepo.findById(6)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy trạng thái hủy đơn hàng"));
+        for (OrderDetail detail : order.getOrderDetails()) {
+            Product product = detail.getProduct();
+            int qty = detail.getQuantity();
 
+            ProductDetail productDetail = product.getDetail();
+
+            if (productDetail != null) {
+                productDetail.setQuantity(productDetail.getQuantity() + qty);
+                productDetailRepo.save(productDetail);
+            }
+
+            List<Inventory> inventories =
+                    inventoryRepo.findByProductIdAndActiveTrueOrderByImportedAtDesc(product.getId());
+
+            int remainingToReturn = qty;
+
+            for (Inventory inventory : inventories) {
+                if (remainingToReturn == 0) break;
+
+                int canReturn = inventory.getImportedQuantity() - inventory.getRemainingQuantity();
+
+                if (canReturn <= 0) continue;
+
+                int returnQty = Math.min(remainingToReturn, canReturn);
+
+                inventory.setRemainingQuantity(inventory.getRemainingQuantity() + returnQty);
+                inventoryRepo.save(inventory);
+
+                remainingToReturn -= returnQty;
+            }
+        }
         order.setStatus(cancelledStatus);
-
+        notificationService.createBroadcast(
+            NotificationType.ORDER,
+            "Đơn hàng bị hủy",
+            "User " + order.getUser().getUsername() + " đã hủy đơn " + order.getOrderCode(),
+            "/admin/order/" + order.getId()
+        );
         log.info(
             "Đơn {} đã bị hủy",
             orderId
@@ -322,6 +416,14 @@ public class OrderServiceImpl implements OrderService {
         OrderStatus status = orderStatusRepo.findById(statusId)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy trạng thái"));
         existing.setStatus(status);
+
+        notificationService.createForUser(
+            existing.getUser().getId(),
+            NotificationType.ORDER,
+            "Cập nhật đơn hàng",
+            "Đơn hàng " + existing.getOrderCode() + " chuyển sang trạng thái: " + status.getName(),
+            "/user/order/" + existing.getId()
+        );
         log.info(
             "Đơn {} cập nhật trạng thái thành công",
             id
@@ -366,7 +468,15 @@ public class OrderServiceImpl implements OrderService {
         }
         if (body.containsKey("shopReply")) {
             existing.setShopReply((String) body.get("shopReply"));
+            
         }
+        notificationService.createForUser(
+            existing.getUser().getId(),
+            NotificationType.ORDER,
+            "Shop đã phản hồi đơn hàng",
+            "Shop đã phản hồi đơn hàng " + existing.getOrderCode(),
+            "/user/order/" + existing.getId()
+        );
         // status
         if (body.containsKey("status")) {
             Object statusObj = body.get("status");
@@ -432,6 +542,13 @@ public class OrderServiceImpl implements OrderService {
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn hàng"));
         Address address = order.getShippingAddress();
         orderRepo.delete(order);
+        notificationService.createForUser(
+            order.getUser().getId(),
+            NotificationType.ORDER,
+            "Đơn hàng đã bị xóa",
+            "Đơn hàng " + order.getOrderCode() + " đã bị admin xóa",
+            "/user/order"
+        );
         if (address != null) {
             log.info("Đã xóa đơn {}",id);
             systemLogService.saveLog(
@@ -462,11 +579,41 @@ public class OrderServiceImpl implements OrderService {
     public Order updatePaymentFailed(Integer orderId) {
         Order order = orderRepo.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn hàng"));
-
+        if ("cancelled".equals(order.getStatus().getSlug())) {
+            return order;
+        }
         OrderStatus cancelledStatus = orderStatusRepo.findById(6)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy trạng thái hủy"));
 
+        for (OrderDetail detail : order.getOrderDetails()) {
+            Product product = detail.getProduct();
+            int qty = detail.getQuantity();
+            ProductDetail productDetail = product.getDetail();
+            if (productDetail != null) {
+                productDetail.setQuantity(productDetail.getQuantity() + qty);
+                productDetailRepo.save(productDetail);
+            }
+            List<Inventory> inventories =
+                    inventoryRepo.findByProductIdAndActiveTrueOrderByImportedAtDesc(product.getId());
+            int remainingToReturn = qty;
+            for (Inventory inventory : inventories) {
+                if (remainingToReturn == 0) break;
+                int canReturn = inventory.getImportedQuantity() - inventory.getRemainingQuantity();
+                if (canReturn <= 0) continue;
+                int returnQty = Math.min(remainingToReturn, canReturn);
+                inventory.setRemainingQuantity(inventory.getRemainingQuantity() + returnQty);
+                inventoryRepo.save(inventory);
+                remainingToReturn -= returnQty;
+            }
+        }
         order.setStatus(cancelledStatus);
+        notificationService.createForUser(
+            order.getUser().getId(),
+            NotificationType.ORDER,
+            "Thanh toán thất bại",
+            "Đơn hàng " + order.getOrderCode() + " đã bị hủy do thanh toán thất bại",
+            "/user/order/" + order.getId()
+        );
         return orderRepo.save(order);
     }
 }

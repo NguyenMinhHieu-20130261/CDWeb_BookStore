@@ -3,8 +3,10 @@ package vn.edu.hcmuaf.fit.bookshop.service.imp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import vn.edu.hcmuaf.fit.bookshop.entity.User;
 import vn.edu.hcmuaf.fit.bookshop.entity.UserInformation;
 import vn.edu.hcmuaf.fit.bookshop.repository.UserInfoRepo;
+import vn.edu.hcmuaf.fit.bookshop.repository.UserRepo;
 import vn.edu.hcmuaf.fit.bookshop.service.SystemLogService;
 import vn.edu.hcmuaf.fit.bookshop.service.UserInfoService;
 import vn.edu.hcmuaf.fit.bookshop.service.ValidationService;
@@ -19,6 +21,9 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Autowired
     private SystemLogService systemLogService;
+
+    @Autowired
+    private UserRepo userRepo;
 
     @Override
     public UserInformation getInfoByUserId(Integer userId) {
@@ -35,23 +40,27 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
     @Override
     public UserInformation updateUserInfo(Integer userId, UserInformation userInfo) {
-    UserInformation existingInfo = getInfoByUserId(userId);
-        if (existingInfo == null) {
-            throw new RuntimeException("Không tìm thấy thông tin người dùng");
-        }
+        UserInformation existingInfo = userInfoRepo.findByUser_Id(userId)
+                .orElse(new UserInformation());
+
+        User user = userRepo.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy user"));
+
+        existingInfo.setUser(user);
         existingInfo.setFullName(userInfo.getFullName());
         existingInfo.setPhoneNumber(userInfo.getPhoneNumber());
         existingInfo.setGender(userInfo.getGender());
         existingInfo.setBirthday(userInfo.getBirthday());
         existingInfo.setAvatar(userInfo.getAvatar());
-        log.info("User '{}' đăng nhập thành công", existingInfo.getUser().getUsername());
+
         systemLogService.saveLog(
-                "UPDATE_USER",
+                "UPDATE_USER_INFO",
                 "INFO",
-                "Người dùng đã cập nhật user có id = " + existingInfo.getId() + ", username = " + existingInfo.getFullName(),
+                "Người dùng đã cập nhật thông tin user id = " + userId,
                 null,
                 "USER"
         );
+
         return userInfoRepo.save(existingInfo);
     }
 }
