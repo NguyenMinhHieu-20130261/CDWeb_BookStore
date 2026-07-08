@@ -97,12 +97,17 @@ export interface Inventory extends RaRecord {
     createdAt: string;
     updatedAt: string;
     active: boolean;
+    supplier?: Supplier | null;
     createdBy?: User;
     updatedBy?: User;
     note?: string;
 }
-
 export interface InventoryRequest {
+    supplierId?: number | null;
+    inventoryRequest: InventoryItemRequest[];
+}
+
+export interface InventoryItemRequest {
     productId: number;
     quantity: number;
     importPrice: number;
@@ -205,6 +210,18 @@ export interface Notification extends RaRecord {
     targetUrl?: string;
     isRead: boolean;
     isBroadcast: boolean;
+    createdAt?: string;
+    updatedAt?: string;
+}
+//sup
+export interface Supplier extends RaRecord {
+    id: number;
+    name: string;
+    contactPerson?: string;
+    phone?: string;
+    email?: string;
+    address?: string;
+    active?: boolean;
     createdAt?: string;
     updatedAt?: string;
 }
