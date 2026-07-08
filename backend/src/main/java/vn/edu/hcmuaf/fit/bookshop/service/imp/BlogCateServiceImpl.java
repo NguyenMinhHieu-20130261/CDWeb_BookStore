@@ -26,7 +26,11 @@ public class BlogCateServiceImpl implements BlogCateService {
         log.debug("Lấy toàn bộ danh mục blog");
         return blogCateRepo.findAll();
     }
-
+    @Override
+    public List<BlogCategory> getActiveBlogCategories() {
+        return blogCateRepo.findByActiveTrue();
+    }
+    //admin
     @Override
     public Page<BlogCategory> getAllBlogCate(int page, int perPage, String sort, String filter, String order) {
         log.debug(

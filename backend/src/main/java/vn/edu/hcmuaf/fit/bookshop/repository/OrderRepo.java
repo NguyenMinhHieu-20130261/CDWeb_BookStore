@@ -21,7 +21,7 @@ public interface OrderRepo extends JpaRepository<Order, Integer>, JpaSpecificati
         JOIN o.orderDetails od
         WHERE o.user.id = :userId
         AND od.product.id = :productId
-        AND o.status.name IN ('DELIVERED', 'COMPLETED')
+        AND o.status.slug = 'delivered'
     """)
     boolean existsPurchasedProduct(
             @Param("userId") Integer userId,

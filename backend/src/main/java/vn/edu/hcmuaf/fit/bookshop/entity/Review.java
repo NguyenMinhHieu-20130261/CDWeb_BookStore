@@ -22,15 +22,16 @@ public class Review {
     private Integer id;
 
     @JsonIgnoreProperties({
-            "review",
-            "category",
-            "parentCategory",
-            "createdBy",
-            "updatedBy",
-            "detail",
-            "images",
-            "hibernateLazyInitializer",
-            "handler"
+                "review",
+                "category",
+                "parentCategory",
+                "createdBy",
+                "updatedBy",
+                "detail",
+                "images",
+                "notifications",
+                "hibernateLazyInitializer",
+                "handler"
     })
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")

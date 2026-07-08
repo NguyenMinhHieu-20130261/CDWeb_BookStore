@@ -9,7 +9,7 @@ const BlogNav = ({ onChangeCategory }) => {
     useEffect(() => {
         const loadData = async () => {
             try {
-                const data = await api.fetchData("/blog-cate/all");
+                const data = await api.fetchData("/blog-cate/active");
                 // console.log("BlogCate:", data);
                 setBlogCate(data);
             } catch (error) {

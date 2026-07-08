@@ -43,10 +43,10 @@ public class BlogServiceImpl implements BlogService {
         );
 
         if (categoryId == null) {
-            return blogRepo.findByStatus(1, pageable);
+            return blogRepo.findActiveBlogsSafe(1, pageable);
         }
 
-        return blogRepo.findByStatusAndCategoryId(1, categoryId, pageable);
+        return blogRepo.findActiveBlogsByCategorySafe(1, categoryId, pageable);
     }
     
     @Override
