@@ -57,4 +57,7 @@ public class ProductDetail {
     
     @Column(name = "description", columnDefinition = "LONGTEXT")
     private String description;
+
+    @Column(name = "quantity")
+    private int quantity;
 }

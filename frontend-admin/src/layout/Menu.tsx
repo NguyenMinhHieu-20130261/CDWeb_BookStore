@@ -169,6 +169,12 @@ const Menu = ({dense = false}: any) => {
                     leftIcon={<NotificationsIcon />}
                     dense={dense}
                 />
+                <MenuItemLink
+                    to="/logs"
+                    primaryText="Log"
+                    leftIcon={<ReceiptLongIcon />}
+                    dense={dense}
+                />
             </SubMenu>
         </Box>
     )

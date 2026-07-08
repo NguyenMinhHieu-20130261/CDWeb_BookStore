@@ -253,7 +253,7 @@ const SingleProduct = ({product,handleAddToCart}) => {
                                     <i className="fa-solid fa-cart-shopping" />
                                     {remainingQuantity === 0 ? "hết hàng" : "thêm vào giỏ hàng"}
                                 </button>
-                                <button
+                                {/* <button
                                     type="button"
                                     disabled={remainingQuantity === 0}
                                     className="buy_now_btn"
@@ -261,7 +261,7 @@ const SingleProduct = ({product,handleAddToCart}) => {
                                 >
                                     <i className="fa-solid fa-wallet" />
                                     mua ngay
-                                </button>
+                                </button> */}
                             </div>
 
                             <div className="add-wishlist-button mt-4">
