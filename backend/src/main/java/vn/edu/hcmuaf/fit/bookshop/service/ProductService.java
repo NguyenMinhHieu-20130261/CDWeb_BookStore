@@ -14,6 +14,7 @@ public interface ProductService {
     List<Product> getThreeLatestProductByCategoryTree(Integer categoryId);
     Product getTopRatedProduct();
     List<Product> getTop2MostReviewedProducts();
+    Page<Product> getBestSellingProducts(int page, int size);
     // admin
     Product getProductById(Integer id);
     Product updateProduct(Integer id, Product product);

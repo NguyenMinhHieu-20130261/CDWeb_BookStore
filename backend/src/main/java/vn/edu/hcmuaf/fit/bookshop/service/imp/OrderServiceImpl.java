@@ -175,7 +175,14 @@ public class OrderServiceImpl implements OrderService {
                 throw new RuntimeException("Sản phẩm chưa có thông tin tồn kho: " + product.getTitle());
             }
 
-            if (productDetail.getQuantity() < qty) {
+            Integer currentQuantity = productDetail.getQuantity();
+
+            if (currentQuantity == null) {
+                currentQuantity = 0;
+                productDetail.setQuantity(0);
+            }
+
+            if (currentQuantity < qty) {
                 throw new RuntimeException("Sản phẩm " + product.getTitle() + " không đủ số lượng trong kho");
             }
 
@@ -202,7 +209,7 @@ public class OrderServiceImpl implements OrderService {
                 throw new RuntimeException("Không đủ tồn kho theo lô cho sản phẩm: " + product.getTitle());
             }
             // trừ tồn tổng
-            productDetail.setQuantity(productDetail.getQuantity() - qty);
+            productDetail.setQuantity(currentQuantity - qty);
             productDetailRepo.save(productDetail);
             
             OrderDetail detail = new OrderDetail(order, product, qty);

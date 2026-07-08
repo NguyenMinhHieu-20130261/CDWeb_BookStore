@@ -38,7 +38,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getActiveProducts() {
-        return productRepo.findByActiveTrue();
+        return productRepo.findActiveProductsInStock();
     }
     @Override
     public List<Product> getProductsByCategory(Integer categoryId) {
@@ -93,6 +93,12 @@ public class ProductServiceImpl implements ProductService {
                 .replaceAll("^-|-$", "");
 
         return slug;
+    }
+    //BEST SELLING
+    @Override
+    public Page<Product> getBestSellingProducts(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return productRepo.findBestSellingProducts(pageable);
     }
     //Admin
     @Override

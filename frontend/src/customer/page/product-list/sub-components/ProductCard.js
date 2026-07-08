@@ -7,6 +7,8 @@ import {useNavigate} from "react-router-dom";
 const ProductCard = ({ product,handleAddToCart, onWishlistToggle }) => {
     const navigate = useNavigate();
     const [isFavorite, setIsFavorite] = useState(product.favorite || false);
+    const remainingQuantity = Number(product?.detail?.quantity ?? 0);
+    const isOutOfStock = remainingQuantity <= 0;
 
     useEffect(() => {
         setIsFavorite(product.favorite || false);
@@ -97,8 +99,25 @@ const ProductCard = ({ product,handleAddToCart, onWishlistToggle }) => {
                             >
                                 <i className={isFavorite ? "fa-solid fa-heart" : "fa-regular fa-heart"}></i>
                             </button>
+                            
                         </div>
-
+                        {isOutOfStock && (
+                            <span
+                                style={{
+                                    position: "absolute",
+                                    top: "8px",
+                                    left: "8px",
+                                    background: "#999",
+                                    color: "#fff",
+                                    padding: "4px 8px",
+                                    borderRadius: "4px",
+                                    fontSize: "12px",
+                                    fontWeight: 600
+                                }}
+                            >
+                                Hết hàng
+                            </span>
+                        )}
                         <div className="woocommerce-loop-product__body product__body pt-3 bg-white">
                             <div className="woocommerce-loop-product__format text-uppercase font-size-1 mb-1 text-truncate text-primary">
                                 <Link
@@ -161,22 +180,25 @@ const ProductCard = ({ product,handleAddToCart, onWishlistToggle }) => {
                     <div className="product__hover d-flex align-items-center bwgb-products-carousel__add-to-cart-icon-only mt-3">
                         <div
                             className="button product_type_simple add_to_cart_button text-uppercase text-dark h-dark font-weight-medium atc-text"
-                            style = {{cursor:"pointer", minWidth: "100%"}}
+                            style={{
+                                cursor: isOutOfStock ? "not-allowed" : "pointer",
+                                minWidth: "100%",
+                                opacity: isOutOfStock ? 0.5 : 1
+                            }}
                             title="Add to cart"
-                            onClick={(e) => handleAddToCart(e, product)}
+                            onClick={(e) => {
+                                if (isOutOfStock) {
+                                    e.preventDefault();
+                                    alert("Sản phẩm đã hết hàng");
+                                    return;
+                                }
+                                handleAddToCart(e, product);
+                            }}
                         >
-                            <span className="product__add-to-cart atc-text">Thêm vào giỏ hàng</span>
+                            <span className="product__add-to-cart atc-text">
+                                {isOutOfStock ? "Hết hàng" : "Thêm vào giỏ hàng"}
+                            </span>
                         </div>
-                        {/* <div className="yith-wcwl-add-to-wishlist">
-                            <div className="yith-wcwl-add-button">
-                                <div
-                                
-                                >
-                                    <i className="flaticon-heart"/>
-                                    <span className="text"> Thêm vào yêu thích</span>
-                                </div>
-                            </div>
-                        </div> */}
                     </div>
                 </div>
             </div>

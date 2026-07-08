@@ -113,10 +113,15 @@ public class PromotionServiceImpl implements PromotionService {
         existing.setDiscountPercent(promotion.getDiscountPercent());
         existing.setStartDate(promotion.getStartDate());
         existing.setEndDate(promotion.getEndDate());
-        existing.setUsageCount(promotion.getUsageCount() != null ? promotion.getUsageCount() : 0);
-        existing.setStatus(promotion.getStatus() != null ? promotion.getStatus() : true);
-        
-        // Also update standard discount field as integer (safeguard for legacy systems if needed)
+
+        if (promotion.getUsageCount() != null) {
+            existing.setUsageCount(promotion.getUsageCount());
+        }
+
+        if (promotion.getStatus() != null) {
+            existing.setStatus(promotion.getStatus());
+        }
+
         if (promotion.getDiscountPercent() != null) {
             existing.setDiscount(promotion.getDiscountPercent().intValue());
         }

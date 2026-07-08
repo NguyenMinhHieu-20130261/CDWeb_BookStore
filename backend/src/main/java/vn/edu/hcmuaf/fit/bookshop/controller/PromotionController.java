@@ -26,10 +26,13 @@ public class PromotionController {
 
     @GetMapping("/validate")
     public ResponseEntity<?> validatePromotion(@RequestParam String code, Authentication authentication) {
-        User user = (User) authentication.getPrincipal();
+        if (authentication == null || !(authentication.getPrincipal() instanceof User user)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("message", "Vui lòng đăng nhập để dùng mã giảm giá"));
+        }
         Integer userId = user.getId();
 
-        Optional<Promotion> promoOpt = promotionService.getPromotionByCode(code.trim());
+        Optional<Promotion> promoOpt = promotionService.getPromotionByCode(code.trim().toUpperCase());
         if (promoOpt.isEmpty()) {
             return ResponseEntity.badRequest().body(Map.of("message", "Mã giảm giá không tồn tại"));
         }
@@ -113,7 +116,7 @@ public class PromotionController {
         }
 
         // Save
-        promotion.setCode(promotion.getCode().trim());
+        promotion.setCode(promotion.getCode().trim().toUpperCase());        
         promotion.setName(promotion.getName().trim());
         if (promotion.getDiscountPercent() != null) {
             promotion.setDiscount(promotion.getDiscountPercent().intValue());
@@ -168,7 +171,7 @@ public class PromotionController {
             return ResponseEntity.badRequest().body(Map.of("message", "Tên mã giảm giá này đã được sử dụng, vui lòng chọn tên khác"));
         }
 
-        promotion.setCode(promotion.getCode().trim());
+        promotion.setCode(promotion.getCode().trim().toUpperCase());
         promotion.setName(promotion.getName().trim());
         Promotion updated = promotionService.updatePromotion(id, promotion);
         return ResponseEntity.ok(updated);
