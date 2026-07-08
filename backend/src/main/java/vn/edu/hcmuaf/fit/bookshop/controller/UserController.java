@@ -32,9 +32,11 @@ public class UserController {
     @GetMapping
     public ResponseEntity<?> getAllUsers(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int perPage
+            @RequestParam(defaultValue = "10") int perPage,
+            @RequestParam(defaultValue = "id") String sort,
+            @RequestParam(defaultValue = "ASC") String order
     ) {
-        Page<User> users = userService.getAllUsers(page, perPage);
+        Page<User> users = userService.getAllUsers(page, perPage, sort, order);
         return ResponseEntity.ok(users);
     }
     

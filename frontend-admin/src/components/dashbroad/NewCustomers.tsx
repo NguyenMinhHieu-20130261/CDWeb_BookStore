@@ -10,8 +10,8 @@ import { useGetList } from "react-admin";
 
 const NewCustomers = () => {
     const { data = [] } = useGetList("users", {
-        pagination: { page: 1, perPage: 5 },
-        sort: { field: "id", order: "DESC" },
+        pagination: { page: 1, perPage: 3 },
+        sort: { field: "createdAt", order: "DESC" },
         filter: {},
     });
     return (

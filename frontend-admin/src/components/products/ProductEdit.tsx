@@ -28,11 +28,14 @@ const validateSubImages = (value: string | any[]) => {
 };
 
 const MainImage = () => {
-    const isReturn = useWatch({name: 'image'});
+    const record = useRecordContext<Product>();
+    const imageWatch = useWatch({name: 'image'});
+    const isReturn = imageWatch || (record?.images && record.images.length > 0 ? record.images[0].image : null);
+
     return isReturn ?
         (<>
             <Labeled label="Ảnh chính">
-                <ImageField source="image"/>
+                <img src={isReturn} alt="Ảnh chính" style={{ maxWidth: 200, maxHeight: 200, objectFit: "contain", display: "block", marginBottom: 10 }} />
             </Labeled>
             <ImageInput source="imageNew" label="Thêm ảnh chính mới cho sản phẩm" placeholder="Thả ảnh để tải lên hoặc nhấp để chọn ảnh.">
                 <ImageField source="src"/>

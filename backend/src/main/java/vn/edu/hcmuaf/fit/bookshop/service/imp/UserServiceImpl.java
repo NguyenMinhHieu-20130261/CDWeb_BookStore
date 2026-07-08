@@ -35,9 +35,12 @@ public class UserServiceImpl implements UserService {
     private SystemLogService systemLogService;
 
     @Override
-    public Page<User> getAllUsers(int page, int perPage) {
-        log.debug("Lấy danh sách user: page={}, perPage={}", page, perPage);
-        return userRepo.findAll(PageRequest.of(page, perPage));
+    public Page<User> getAllUsers(int page, int perPage, String sort, String order) {
+        log.debug("Lấy danh sách user: page={}, perPage={}, sort={}, order={}", page, perPage, sort, order);
+        org.springframework.data.domain.Sort.Direction direction = "DESC".equalsIgnoreCase(order)
+                ? org.springframework.data.domain.Sort.Direction.DESC
+                : org.springframework.data.domain.Sort.Direction.ASC;
+        return userRepo.findAll(PageRequest.of(page, perPage, org.springframework.data.domain.Sort.by(direction, sort)));
     }
     @Override
     public Optional<User> getUserByUsername(String username) {

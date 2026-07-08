@@ -70,14 +70,19 @@ public class BlogController {
     }
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Blog> createProduct(
+    public ResponseEntity<?> createBlog(
             @RequestBody Blog blog,
             Authentication authentication
     ) {
-        User admin = (User) authentication.getPrincipal();
-        return ResponseEntity.ok(
-            blogService.createBlog(blog, admin)
-        );
+        try {
+            User admin = (User) authentication.getPrincipal();
+            Blog created = blogService.createBlog(blog, admin);
+            return ResponseEntity.ok(created);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(java.util.Map.of("message", e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(java.util.Map.of("message", "Lỗi hệ thống khi tạo bài viết: " + e.getMessage()));
+        }
     }
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")

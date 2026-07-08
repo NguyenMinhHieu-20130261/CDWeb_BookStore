@@ -8,7 +8,7 @@ import vn.edu.hcmuaf.fit.bookshop.entity.User;
 import java.util.Optional;
 
 public interface UserService {
-    Page<User> getAllUsers(int page, int perPage);
+    Page<User> getAllUsers(int page, int perPage, String sort, String order);
     Optional<User> getUserByUsername(String username);
     //admin
     User getUserById(Integer id);
