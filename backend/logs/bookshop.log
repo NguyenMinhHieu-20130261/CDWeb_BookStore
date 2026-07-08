@@ -23863,3 +23863,7 @@ This generated password is for development use only. Your security configuration
 2026-07-08 21:41:51 INFO  v.e.h.f.b.s.i.FavoriteProductServiceImpl - Fetching favorites for user id 1
 2026-07-08 21:42:02 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
 2026-07-08 21:42:12 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:42:22 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:42:32 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:42:42 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 21:42:52 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
