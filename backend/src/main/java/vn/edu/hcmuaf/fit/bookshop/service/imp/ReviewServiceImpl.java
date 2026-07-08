@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import vn.edu.hcmuaf.fit.bookshop.entity.Review;
+import vn.edu.hcmuaf.fit.bookshop.repository.OrderRepo;
 import vn.edu.hcmuaf.fit.bookshop.repository.ReviewRepo;
 import vn.edu.hcmuaf.fit.bookshop.service.ReviewService;
 import vn.edu.hcmuaf.fit.bookshop.service.SystemLogService;
@@ -25,15 +26,31 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 public class ReviewServiceImpl implements ReviewService {
-    
-    @Autowired
+
     private final ReviewRepo reviewRepo;
+    private final OrderRepo orderRepo;
+    private final SystemLogService systemLogService;
 
-    @Autowired
-    private ValidationService validationService;
+    @Override
+    public Review createReview(Review review) {
+        Integer userId = review.getUser().getId();
+        Integer productId = review.getProduct().getId();
 
-    @Autowired
-    private SystemLogService systemLogService;
+        boolean hasPurchased = orderRepo.existsPurchasedProduct(userId, productId);
+
+        if (!hasPurchased) {
+            throw new RuntimeException("Bạn chỉ có thể đánh giá sản phẩm sau khi đã mua hàng");
+        }
+
+        if (reviewRepo.existsByUser_IdAndProduct_Id(userId, productId)) {
+            throw new RuntimeException("Bạn đã đánh giá sản phẩm này rồi");
+        }
+
+        review.setCreatedAt(new java.util.Date());
+        review.setUpdatedAt(new java.util.Date());
+
+        return reviewRepo.save(review);
+    }
 
     @Override
     public List<Review> getReviewsByProduct(Integer productId, Integer rating, String sort) {

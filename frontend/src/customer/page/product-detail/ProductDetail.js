@@ -7,6 +7,7 @@ import ProductInfo from "./sub-components/ProductInfo";
 import RelatedProducts from "./sub-components/RelatedProduct.js";
 import SideBar from "./sub-components/SideBar.js";
 import api from "../../../service/ApiService.js";
+import WindowPopup from "../../components/general/WindowPopup.js";
 
 export const ProductDetail = () => {
     const { slug } = useParams();
@@ -17,7 +18,12 @@ export const ProductDetail = () => {
     //list
     const [listProduct, setListProduct] = useState([]);
     const [loadingList, setLoadingList] = useState(true);
-
+    const [popupInfo,setPopupInfo] = useState({
+        visible:false,
+        type:"",
+        title:"",
+        message:""
+    });
     useEffect(() => {
         const fetchProductDetail = async () => {
             try {
@@ -73,14 +79,37 @@ export const ProductDetail = () => {
                 product: {id: product.id},
                 quantity: 1
             });
-            alert("Đã thêm sản phẩm vào giỏ hàng");
+            setPopupInfo({
+                visible: true,
+                type: "success",
+                title: "Thành công",
+                message: "Sản phẩm đã được thêm vào giỏ hàng"
+            });
         } catch (error) {
             console.log("Lỗi thêm vào giỏ hàng:", error);
-            alert("Không thể thêm sản phẩm vào giỏ hàng");
+            setPopupInfo({
+                visible: true,
+                type: "error",
+                title: "Thất bại",
+                message: "Sản phẩm không được thêm vào giỏ hàng"
+            });
         }
+    };
+    const hidePopup = () => {
+        setPopupInfo(prev=>({
+            ...prev,
+            visible:false
+        }));
     };
     return (
         <div>
+            <WindowPopup
+                visible={popupInfo.visible}
+                type={popupInfo.type}
+                title={popupInfo.title}
+                message={popupInfo.message}
+                onClose={hidePopup}
+            />
             <Breadcrumbs/>
             <div className="container">
                 <div className="row">

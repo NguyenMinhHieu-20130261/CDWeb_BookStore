@@ -59,5 +59,5 @@ public class ProductDetail {
     private String description;
 
     @Column(name = "quantity")
-    private int quantity;
+    private Integer quantity = 0;
 }

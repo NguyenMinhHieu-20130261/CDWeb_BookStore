@@ -11,4 +11,5 @@ public interface ReviewRepo extends JpaRepository<Review, Integer>, JpaSpecifica
     List<Review> findByProductId(Integer productId, Sort sort);
     List<Review> findByProductIdAndRating(Integer productId, Integer rating, Sort sort);
     List<Review> findByProduct_Id(Integer productId);
+    boolean existsByUser_IdAndProduct_Id(Integer userId, Integer productId);
 }

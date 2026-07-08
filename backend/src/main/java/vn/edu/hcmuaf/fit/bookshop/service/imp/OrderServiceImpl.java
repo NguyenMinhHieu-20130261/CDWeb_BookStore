@@ -204,7 +204,8 @@ public class OrderServiceImpl implements OrderService {
             // trừ tồn tổng
             productDetail.setQuantity(productDetail.getQuantity() - qty);
             productDetailRepo.save(productDetail);
-                        OrderDetail detail = new OrderDetail(order, product, qty);
+            
+            OrderDetail detail = new OrderDetail(order, product, qty);
             orderDetails.add(detail);
 
             orderTotal += product.getCurrentPrice() * qty;

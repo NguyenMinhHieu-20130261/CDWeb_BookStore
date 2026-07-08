@@ -14,4 +14,5 @@ public interface ReviewService {
     Review getReviewById(Integer id);
     Review updateReviewReply(Integer id, String reply);
     void deleteReview(Integer id);
+    Review createReview(Review review);
 }
