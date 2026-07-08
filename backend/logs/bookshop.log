@@ -757,3 +757,10 @@ This generated password is for development use only. Your security configuration
 2026-07-08 14:09:20 INFO  v.e.h.f.b.s.i.FavoriteProductServiceImpl - Fetching favorites for user id 1
 2026-07-08 14:09:29 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
 2026-07-08 14:09:40 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 14:09:50 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 14:10:00 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 14:10:10 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 14:10:20 DEBUG v.e.h.f.b.s.i.NotificationServiceImpl - L?y danh sách notification c?a userId=1
+2026-07-08 14:10:26 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-08 14:10:26 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-07-08 14:10:26 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
