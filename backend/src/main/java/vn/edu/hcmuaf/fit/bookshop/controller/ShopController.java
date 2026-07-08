@@ -41,9 +41,6 @@ import vn.edu.hcmuaf.fit.bookshop.service.EmailService;
 @RequestMapping("/api/auth")
 public class ShopController {
     
-    @Value("${spring.mail.username}")
-    private String mailUsername;
-    
     @Autowired
     private BCryptPasswordEncoder encoder;
 
@@ -163,7 +160,6 @@ public class ShopController {
                 .build();
         otpVerificationRepository.save(otpVerification);
 
-        System.out.println("MAIL USERNAME CONFIG = " + mailUsername);
         emailService.sendOTP(email, otp);
 
         // boolean sent = emailService.sendOTP(email, otp);
