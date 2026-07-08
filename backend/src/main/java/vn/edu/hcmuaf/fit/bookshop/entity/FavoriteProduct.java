@@ -1,4 +1,6 @@
 package vn.edu.hcmuaf.fit.bookshop.entity;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -6,7 +8,6 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Entity
 @Table(name = "favorites")
 public class FavoriteProduct {
@@ -21,5 +22,6 @@ public class FavoriteProduct {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 }

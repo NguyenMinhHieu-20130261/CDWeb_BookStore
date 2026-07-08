@@ -9100,3 +9100,6 @@ This generated password is for development use only. Your security configuration
 2026-07-08 23:16:45 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - Tính t?ng quan ?ánh giá productId=10
 2026-07-08 23:16:45 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - Tính t?ng quan ?ánh giá productId=1
 2026-07-08 23:16:45 DEBUG v.e.h.f.b.s.imp.ReviewServiceImpl - Tính t?ng quan ?ánh giá productId=10
+2026-07-08 23:21:19 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-08 23:21:19 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-5 - Shutdown initiated...
+2026-07-08 23:21:19 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-5 - Shutdown completed.
