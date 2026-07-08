@@ -41,6 +41,10 @@ public class BlogCateController {
                 })
                 .toList();
     }
+    @GetMapping("/active")
+    public ResponseEntity<List<BlogCategory>> getActiveCategories() {
+        return ResponseEntity.ok(blogCateService.getActiveBlogCategories());
+    }
     //admin
     @GetMapping
     public ResponseEntity<?> getBlogCategories(

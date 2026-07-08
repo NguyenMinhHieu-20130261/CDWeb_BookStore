@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public interface BlogCateService {
     List<BlogCategory> getAllBlogCate();
+    List<BlogCategory> getActiveBlogCategories();
     //admin
     Page<BlogCategory> getAllBlogCate(int page, int perPage, String sort, String filter, String order);
     Optional<BlogCategory> getBlogCateById(Integer id);
