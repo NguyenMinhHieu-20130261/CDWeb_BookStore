@@ -8,22 +8,33 @@ import "../../assets/css/sign-in.css";
 const SignIn = () => {
     const [username, setUsername] = React.useState("");
     const [password, setPassword] = React.useState("");
+    const [loading, setLoading] = React.useState(false);
     const location = useLocation();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = React.useState("");
     const handleLogin = async (e) => {
         e.preventDefault();
-        const newUser = {
-            username: username,
-            password: password
-        };
+        // ngăn chặn spam nút login 
+        if (loading) return;
+        setLoading(true);
+        setErrorMessage("");
         try {
-            await loginUser(newUser, dispatch, navigate);
+            // Gọi API đăng nhập người dùng
+            const res = await loginUser({ username, password }, dispatch);
+            // Lưu thông tin người dùng vào localStorage\
+            console.log(res);
+            navigate("/"); 
         } catch (error) {
-            setErrorMessage("Tài khoản hoặc mật khẩu không đúng");
+            const msg =
+                error.response?.data?.message ||
+                "Tài khoản hoặc mật khẩu không đúng";
+
+            setErrorMessage(msg);
+        } finally {
+            setLoading(false);
         }
-    }
+    };
     return (
         <>
             <BreadCrumb location={location}/>
@@ -68,7 +79,10 @@ const SignIn = () => {
                                  
                                             <button className="button_login" 
                                             type="submit" 
-                                            style={{textAlign: "center", padding :"15px"}}>Đăng nhập</button>
+                                            style={{textAlign: "center", padding :"15px"}}
+                                            disabled={loading}>
+                                                {loading ? "Đang đăng nhập..." : "Đăng nhập"}
+                                            </button>
 
                                             <span className="d-block text-center my-4 text-muted"> Đăng nhập với:</span>
 

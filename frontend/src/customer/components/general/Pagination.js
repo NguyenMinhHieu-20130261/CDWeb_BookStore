@@ -1,42 +1,52 @@
 import React from "react";
 
-const Pagination = () => {
+const Pagination = ({ currentPage, totalPages, onPageChange }) => {
+    if (totalPages <= 1) return null;
+    const handleClick = (page) => {
+        if (page < 1 || page > totalPages || page === currentPage) return;
+        onPageChange(page);
+    };
     return (
-        <nav className="woocommerce-pagination" aria-label="Shop Page navigation">
-            <ul className="pagination pagination__custom justify-content-md-center flex-nowrap flex-md-wrap overflow-auto overflow-md-visble">
-                <li className="flex-shrink-0 flex-md-shrink-1 page-item">
-                    <a className="prev page-link" href="https://bookworm.madrasthemes.com/shop/style-v3/page/1/">
+        <nav className="woocommerce-pagination"
+        style={{marginBottom:"15px"}}
+        >
+            <ul className="pagination pagination__custom justify-content-md-center">
+                <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
+                    <button
+                        className="prev page-link"
+                        onClick={() => onPageChange(currentPage - 1)}
+                        disabled={currentPage === 1}
+                    >
                         Previous
-                    </a>
+                    </button>
                 </li>
-                <li className="flex-shrink-0 flex-md-shrink-1 page-item">
-                    <a className="page-link" href="https://bookworm.madrasthemes.com/shop/style-v3/page/1/">1</a>
-                </li>
-                <li className="flex-shrink-0 flex-md-shrink-1 page-item active">
-                    <span aria-current="page" className="page-link current">2</span>
-                </li>
-                <li className="flex-shrink-0 flex-md-shrink-1 page-item">
-                    <a className="page-link" href="https://bookworm.madrasthemes.com/shop/style-v3/page/3/">3</a>
-                </li>
-                <li className="flex-shrink-0 flex-md-shrink-1 page-item">
-                    <a className="page-link" href="https://bookworm.madrasthemes.com/shop/style-v3/page/4/">4</a>
-                </li>
-                <li className="flex-shrink-0 flex-md-shrink-1 page-item">
-                    <a className="page-link" href="https://bookworm.madrasthemes.com/shop/style-v3/page/5/">5</a>
-                </li>
-                <li className="flex-shrink-0 flex-md-shrink-1 page-item">
-                    <a className="page-link" href="https://bookworm.madrasthemes.com/shop/style-v3/page/6/">6</a>
-                </li>
-                <li className="flex-shrink-0 flex-md-shrink-1 page-item">
-                    <a className="page-link" href="https://bookworm.madrasthemes.com/shop/style-v3/page/7/">7</a>
-                </li>
-                <li className="flex-shrink-0 flex-md-shrink-1 page-item">
-                    <a className="page-link" href="https://bookworm.madrasthemes.com/shop/style-v3/page/8/">8</a>
-                </li>
-                <li className="flex-shrink-0 flex-md-shrink-1 page-item">
-                    <a className="next page-link" href="https://bookworm.madrasthemes.com/shop/style-v3/page/3/">
+
+                {Array.from({ length: totalPages }, (_, index) => {
+                    const page = index + 1;
+
+                    return (
+                        <li
+                            key={page}
+                            className={`page-item ${currentPage === page ? "active" : ""}`}
+                        >
+                            <button
+                                className="page-link"
+                                    onClick={() => handleClick(page)}
+                            >
+                                {page}
+                            </button>
+                        </li>
+                    );
+                })}
+
+                <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
+                    <button
+                        className="next page-link"
+                        onClick={() => onPageChange(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                    >
                         Next
-                    </a>
+                    </button>
                 </li>
             </ul>
         </nav>
